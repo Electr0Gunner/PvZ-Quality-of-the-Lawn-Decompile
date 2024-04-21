@@ -296,6 +296,7 @@ void NewOptionsDialog::ButtonPress(int theId)
 void NewOptionsDialog::ButtonDepress(int theId)
 {
     Dialog::ButtonDepress(theId);
+    mApp->isFastMode = false;
 
     switch (theId)
     {

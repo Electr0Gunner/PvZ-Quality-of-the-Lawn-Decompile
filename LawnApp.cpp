@@ -52,6 +52,7 @@ bool gSlowMo = false;  //0x6A9EAA
 bool gFastMo = false;  //0x6A9EAB
 LawnApp* gLawnApp = nullptr;  //0x6A9EC0
 int gSlowMoCounter = 0;  //0x6A9EC4
+bool isFastMode = false;  //the ingame fast mode
 
 //0x44E8A0
 bool LawnGetCloseRequest()
@@ -114,6 +115,7 @@ LawnApp::LawnApp()
 	mSfxVolume = 0.5525;
 	mAutoStartLoadingThread = false;
 	mDebugKeysEnabled = false;
+	isFastMode = false;
 	mProdName = "PlantsVsZombies";
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
@@ -1607,6 +1609,10 @@ void LawnApp::UpdateFrames()
 	else if (gFastMo)
 	{
 		aUpdateCount = 20;
+	}
+	else if (isFastMode)
+	{
+		aUpdateCount = 9;
 	}
 
 	for (int i = 0; i < aUpdateCount; i++)

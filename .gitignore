@@ -10,3 +10,6 @@
 # Fortran module files
 *.mod
 *.smod
+
+/SexyAppFramework/Debug
+/.vs

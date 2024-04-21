@@ -123,6 +123,7 @@ public:
 	TrialType						mTrialType;										//+0x8C0
 	bool							mDebugTrialLocked;								//+0x8C4
 	bool							mMuteSoundsForCutscene;							//+0x8C5
+	bool							isFastMode;
 
 public:
 	LawnApp();

@@ -116,6 +116,7 @@ public:
 	SeedBank*						mSeedBank;												//+0x144
 	GameButton*						mMenuButton;											//+0x148
 	GameButton*						mStoreButton;											//+0x14C
+	GameButton*						mFastButton;											//+0x148
 	bool							mIgnoreMouseUp;											//+0x150
 	ToolTipWidget*					mToolTip;												//+0x154
 	Font*							mDebugFont;												//+0x158

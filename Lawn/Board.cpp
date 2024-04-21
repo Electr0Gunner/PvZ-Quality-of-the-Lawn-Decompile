@@ -160,6 +160,11 @@ Board::Board(LawnApp* theApp)
 	mDebugTextMode = DebugTextMode::DEBUG_TEXT_NONE;
 	mMenuButton = new GameButton(0);
 	mMenuButton->mDrawStoneButton = true;
+	mFastButton = new GameButton(2);
+	mFastButton->mDrawStoneButton = true;
+	mFastButton->mBtnNoDraw = true;
+	mFastButton->mDisabled = true;
+	mFastButton->Resize(680, -90, 96, 46);
 	mStoreButton = nullptr;
 	mIgnoreMouseUp = false;
 
@@ -179,6 +184,9 @@ Board::Board(LawnApp* theApp)
 	{
 		mMenuButton->SetLabel(_S("[MENU_BUTTON]"));
 		mMenuButton->Resize(681, -10, 117, 46);
+		mFastButton->mBtnNoDraw = false;
+		mFastButton->mDisabled = false;
+		mFastButton->SetLabel(_S("fast"));
 	}
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_LAST_STAND)
@@ -215,6 +223,10 @@ Board::~Board()
 	if (mStoreButton)
 	{
 		delete mStoreButton;
+	}
+	if (mFastButton)
+	{
+		delete mFastButton;
 	}
 	mZombies.DataArrayDispose();
 	mPlants.DataArrayDispose();
@@ -1283,6 +1295,7 @@ void Board::InitSurvivalStage()
 	mApp->ShowSeedChooserScreen();
 	mCutScene->StartLevelIntro();
 	mSeedBank->UpdateWidth();
+	mFastButton->mY = -90;
 
 	for (int i = 0; i < SEEDBANK_MAX; i++)
 	{
@@ -1702,6 +1715,8 @@ void Board::StartLevel()
 		return;
 
 	mApp->mMusic->StartGameMusic();
+
+	mFastButton->mY = 30;
 }
 
 //0x40BF10
@@ -3017,6 +3032,7 @@ void Board::UpdateCursor()
 	case GameObjectType::OBJECT_TYPE_STINKY:
 	case GameObjectType::OBJECT_TYPE_TREE_OF_WISDOM:
 	case GameObjectType::OBJECT_TYPE_COIN:
+	case GameObjectType::OBJECT_TYPE_FASTMODE_BUTTON:
 	case GameObjectType::OBJECT_TYPE_PROJECTILE:
 		aShowFinger = true;
 		break;
@@ -4235,6 +4251,11 @@ bool Board::MouseHitTest(int x, int y, HitResult* theHitResult)
 		theHitResult->mObjectType = GameObjectType::OBJECT_TYPE_MENU_BUTTON;
 		return true;
 	}
+	if (mFastButton->IsMouseOver() && CanInteractWithBoardButtons())
+	{
+		theHitResult->mObjectType = GameObjectType::OBJECT_TYPE_FASTMODE_BUTTON;
+		return true;
+	}
 	else if (mStoreButton && mStoreButton->IsMouseOver() && CanInteractWithBoardButtons())
 	{
 		theHitResult->mObjectType = GameObjectType::OBJECT_TYPE_STORE_BUTTON;
@@ -4489,6 +4510,10 @@ void Board::MouseDown(int x, int y, int theClickCount)
 	{
 		mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
 	}
+	if (mFastButton->IsMouseOver() && CanInteractWithBoardButtons() && theClickCount > 0)
+	{
+		mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
+	}
 	else if (mStoreButton && mStoreButton->IsMouseOver() && CanInteractWithBoardButtons() && theClickCount > 0)
 	{
 		if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
@@ -4722,6 +4747,16 @@ void Board::MouseUp(int x, int y, int theClickCount)
 				mApp->mBoardResult = BoardResult::BOARDRESULT_QUIT;
 				mApp->DoBackToMain();
 			}
+		}
+		if (mFastButton->IsMouseOver() && !mApp->GetDialog(Dialogs::DIALOG_GAME_OVER) && !mApp->GetDialog(Dialogs::DIALOG_LEVEL_COMPLETE))
+		{
+			mFastButton->mIsOver = false;
+			mFastButton->mIsDown = false;
+			UpdateCursor();
+			if (mApp->isFastMode)
+				mApp->isFastMode = false;
+			else
+				mApp->isFastMode = true;
 		}
 		else if(mStoreButton && mStoreButton->IsMouseOver())
 		{
@@ -5864,6 +5899,11 @@ void Board::Update()
 		mMenuButton->mDisabled = aDisabled;
 	}
 	mMenuButton->Update();
+	if (!mFastButton->mBtnNoDraw)
+	{
+		mFastButton->mDisabled = aDisabled;
+	}
+	mFastButton->Update();
 	if (mStoreButton)
 	{
 		mStoreButton->mDisabled = aDisabled;
@@ -7316,11 +7356,13 @@ void Board::DrawTopRightUI(Graphics* g)
 		if (mChallenge->mChallengeState == STATECHALLENGE_ZEN_FADING)
 		{
 			mMenuButton->mY = TodAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, -10, -50, TodCurves::CURVE_EASE_IN_OUT);
+			mFastButton->mY = TodAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, -10, 30, TodCurves::CURVE_EASE_IN_OUT);
 			mStoreButton->mX = TodAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, 678, 800, TodCurves::CURVE_EASE_IN_OUT);
 		}
 		else
 		{
 			mMenuButton->mY = -10;
+			mFastButton->mY = 30;
 			mStoreButton->mX = 678;
 		}
 	}
@@ -7331,6 +7373,8 @@ void Board::DrawTopRightUI(Graphics* g)
 		g->SetColor(GetFlashingColor(mMainCounter, 75));
 	}
 	mMenuButton->Draw(g);
+	if(!mFastButton->mBtnNoDraw)
+		mFastButton->Draw(g);
 	g->SetColorizeImages(false);
 
 	if (mStoreButton && mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_LAST_STAND)
