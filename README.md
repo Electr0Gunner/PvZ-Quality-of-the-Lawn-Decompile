@@ -2,6 +2,10 @@
  A edit of the PvZ Decompile that adds QoL features
 
 # Credits:
-Electr0Gunner-Main Coder of this project.
-Creators of OG Decompile
-PvZ Modding Association
+Electr0Gunner.
+
+Creators of OG Decompile.
+
+PvZ Modding Association.
+
+#USE WITH CREDITS
