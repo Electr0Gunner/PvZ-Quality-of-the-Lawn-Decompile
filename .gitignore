@@ -13,3 +13,5 @@
 
 /SexyAppFramework/Debug
 /.vs
+*.tlog
+*.log

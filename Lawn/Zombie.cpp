@@ -1099,6 +1099,10 @@ void Zombie::PickRandomSpeed()
     {
         mVelX = 0.3f;
     }
+    else if (mZombiePhase == ZombiePhase::PHASE_SNORKEL_WALKING_IN_POOL)
+    {
+        mVelX = 0.2f;
+    }
     else if (mZombiePhase == ZombiePhase::PHASE_DIGGER_WALKING)
     {
         if (mApp->IsIZombieLevel())
@@ -1900,11 +1904,13 @@ void Zombie::UpdateZombieSnorkel()
             mApp->PlayFoley(FoleyType::FOLEY_ZOMBIE_ENTERING_WATER);
         }
 
+
         if (aBodyReanim->mLoopCount > 0)
         {
             mZombiePhase = ZombiePhase::PHASE_SNORKEL_WALKING_IN_POOL;
             mInPool = true;
             PlayZombieReanim("anim_swim", ReanimLoopType::REANIM_LOOP_FULL_LAST_FRAME, 0, 12.0f);
+            PickRandomSpeed();
         }
     }
     else if (mZombiePhase == ZombiePhase::PHASE_SNORKEL_WALKING_IN_POOL)
