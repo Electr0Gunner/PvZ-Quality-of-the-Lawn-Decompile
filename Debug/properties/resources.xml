@@ -686,6 +686,7 @@
 <Image id="ALMANAC_ZOMBIEWINDOW" path="Almanac_ZombieWindow" />
 <Image id="ALMANAC_ZOMBIEWINDOW2" path="Almanac_ZombieWindow2" />
 <Image id="ALMANAC_ZOMBIEBLANK" path="Almanac_ZombieBlank" />
+<Image id="ALMANAC_PLANTBLANK" path="Almanac_PlantBlank" />
 <Image id="ALMANAC_GROUNDDAY" path="Almanac_GroundDay" />
 <Image id="ALMANAC_GROUNDNIGHT" path="Almanac_GroundNight" />
 <Image id="ALMANAC_GROUNDPOOL" path="Almanac_GroundPool" />

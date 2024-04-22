@@ -962,6 +962,7 @@ namespace Sexy
     extern Image*       IMAGE_REANIM_ZOMBIE_SCREENDOOR3;                        //0x6A7690
     extern Image*       IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD2_REDEYE;            //0x6A7694
     extern Image*       IMAGE_ALMANAC_ZOMBIEBLANK;                              //0x6A7698
+    extern Image*       IMAGE_ALMANAC_PLANTBLANK;                              
     extern int          SOUND_JALAPENO;                                         //0x6A769C
     extern int		    SOUND_GRAVEBUTTON;                                      //0x6A76A0
     extern Image*       IMAGE_ZOMBOSS_PARTICLES;                                //0x6A76A4

@@ -328,20 +328,27 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 		int aPosX, aPosY;
 		GetSeedPosition(aSeedType, aPosX, aPosY);
 		PlantDefinition& aPlantDef = GetPlantDefinition(aSeedType);
-		//int mRealIndexedPage = (aPlantDef.thePage > )
-		if (mApp->SeedTypeAvailable(aSeedType) && aPlantDef.getPage() == mIndexedPage)
+
+		if (aPlantDef.getPage() == mIndexedPage)
 		{
-			if (aSeedType == SeedType::SEED_IMITATER)
+			if (!mApp->SeedTypeAvailable(aSeedType))
 			{
-				if (aSeedType == aSeedMouseOn)
-					g->DrawImage(Sexy::IMAGE_ALMANAC_IMITATER, aPosX, aPosY);
-				g->DrawImage(Sexy::IMAGE_ALMANAC_IMITATER, aPosX, aPosY);
+				if (aSeedType != SeedType::SEED_IMITATER)
+					g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX, aPosY);
 			}
-			else
-			{
-				DrawSeedPacket(g, aPosX, aPosY, aSeedType, SeedType::SEED_NONE, 0, 255, true, false);
-				if (aSeedType == aSeedMouseOn)
-					g->DrawImage(Sexy::IMAGE_SEEDPACKETFLASH, aPosX, aPosY);
+			else {
+				if (aSeedType == SeedType::SEED_IMITATER)
+				{
+					if (aSeedType == aSeedMouseOn)
+						g->DrawImage(Sexy::IMAGE_ALMANAC_IMITATER, aPosX, aPosY);
+					g->DrawImage(Sexy::IMAGE_ALMANAC_IMITATER, aPosX, aPosY);
+				}
+				else
+				{
+					DrawSeedPacket(g, aPosX, aPosY, aSeedType, SeedType::SEED_NONE, 0, 255, true, false);
+					if (aSeedType == aSeedMouseOn)
+						g->DrawImage(Sexy::IMAGE_SEEDPACKETFLASH, aPosX, aPosY);
+				}
 			}
 		}
 	}
