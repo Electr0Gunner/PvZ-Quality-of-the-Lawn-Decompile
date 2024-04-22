@@ -6,6 +6,5 @@ Electr0Gunner.
 
 Creators of OG Decompile.
 
-PvZ Modding Association.
-
-# USE WITH CREDITS
+PvZ Modding Association Members.
+(BreakfastBrainz2, InLiothixie, omeji_)
