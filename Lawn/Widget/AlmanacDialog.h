@@ -2,9 +2,10 @@
 #define __ALMANACDIALOG_H__
 
 #include "LawnDialog.h"
+#include "../../ConstEnums.h"
 
-#define NUM_ALMANAC_SEEDS 49
-#define NUM_ALMANAC_ZOMBIES 26
+#define NUM_ALMANAC_SEEDS NUM_SEED_TYPES
+#define NUM_ALMANAC_ZOMBIES NUM_ZOMBIE_TYPES
 
 constexpr const float			ALMANAC_PLANT_POSITION_X		= 578.0f;
 constexpr const float			ALMANAC_PLANT_POSITION_Y		= 140.0f;
@@ -20,6 +21,7 @@ class Zombie;
 class LawnApp;
 class GameButton;
 class Reanimation;
+class Slider;
 class AlmanacDialog : public LawnDialog
 {
 private:
@@ -28,7 +30,10 @@ private:
 		ALMANAC_BUTTON_CLOSE = 0,
 		ALMANAC_BUTTON_PLANT = 1,
 		ALMANAC_BUTTON_ZOMBIE = 2,
-		ALMANAC_BUTTON_INDEX = 3
+		ALMANAC_BUTTON_INDEX = 3,
+		AlmanacSlider = 4, 
+		ALMANAC_BUTTON_NEXT = 5,
+		ALMANAC_BUTTON_LAST = 6
 	};
 
 public:
@@ -37,6 +42,9 @@ public:
 	GameButton*					mIndexButton;			//+0x174
 	GameButton*					mPlantButton;			//+0x178
 	GameButton*					mZombieButton;			//+0x17C
+	GameButton* mNextButton;			//+0x178
+	GameButton* mLastButton;			//+0x17C
+	//Sexy::Slider* mSlider;
 	AlmanacPage					mOpenPage;				//+0x180
 	Reanimation*				mReanim[4];				//+0x184
 	SeedType					mSelectedSeed;			//+0x194
@@ -44,6 +52,8 @@ public:
 	Plant*						mPlant;					//+0x19C
 	Zombie*						mZombie;				//+0x1A0
 	Zombie*						mZombiePerfTest[400];	//+0x1A4
+	float						mIncrement;
+	int mIndexedPage;
 	
 public:
 	AlmanacDialog(LawnApp* theApp);
@@ -61,9 +71,9 @@ public:
 	virtual void				Draw(Graphics* g);
 	void						GetSeedPosition(SeedType theSeedType, int& x, int& y);
 	SeedType					SeedHitTest(int x, int y);
-	/*inline*/ bool				ZombieHasSilhouette(ZombieType theZombieType);
-	bool						ZombieIsShown(ZombieType theZombieType);
-	bool						ZombieHasDescription(ZombieType theZombieType);
+	/*inline*/ int				ZombieHasSilhouette(ZombieType theZombieType);
+	int						ZombieIsShown(ZombieType theZombieType);
+	int						ZombieHasDescription(ZombieType theZombieType);
 	void						GetZombiePosition(ZombieType theZombieType, int& x, int& y);
 	ZombieType					ZombieHitTest(int x, int y);
 	virtual void				MouseUp(int x, int y, int theClickCount);
@@ -74,7 +84,7 @@ public:
 	/*inline*/ void				ShowPlant(SeedType theSeedType);
 	/*inline*/ void				ShowZombie(ZombieType theZombieType);
 };
-extern bool gZombieDefeated[NUM_ZOMBIE_TYPES];
+extern int gZombieDefeated[NUM_ZOMBIE_TYPES];
 
 /*inline*/ void					AlmanacInitForPlayer();
 /*inline*/ void					AlmanacPlayerDefeatedZombie(ZombieType theZombieType);

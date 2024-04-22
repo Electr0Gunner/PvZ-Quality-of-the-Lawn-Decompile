@@ -405,6 +405,8 @@ public:
     int                             mFirstAllowedWave;
     int                             mPickWeight;
     const SexyChar*                 mZombieName;
+    int thePage = -10000;   //+0x24
+    int getPage();          //+0x28
 };
 extern ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES];  //0x69DA80
 
