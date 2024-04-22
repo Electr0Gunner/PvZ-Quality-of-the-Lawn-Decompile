@@ -66,7 +66,7 @@ void ToolTipWidget::CalculateSize()
 {
 	std::vector<SexyString> aLines;
 
-	int aTitleWidth = FONT_TINYBOLD->StringWidth(mTitle);
+	int aTitleWidth = FONT_BRIANNETOD12->StringWidth(mTitle);
 	int aWarningWidth = FONT_BRIANNETOD12->StringWidth(mWarningText);
 	int aMaxWidth = max(aTitleWidth, aWarningWidth);
 
@@ -82,11 +82,11 @@ void ToolTipWidget::CalculateSize()
 	int aHeight = 6;
 	if (!mTitle.empty())
 	{
-		aHeight = FONT_TINYBOLD->GetAscent() + 8;
+		aHeight = FONT_BRIANNETOD12->GetAscent() + 8;
 	}
 	if (!mWarningText.empty())
 	{
-		aHeight += FONT_TINYBOLD->GetAscent() + 2;
+		aHeight += FONT_BRIANNETOD12->GetAscent() + 2;
 	}
 	aHeight += aLines.size() * FONT_BRIANNETOD12->GetAscent();
 
@@ -153,9 +153,9 @@ void ToolTipWidget::Draw(Graphics* g)
 
 	if (!mTitle.empty())
 	{
-		g->SetFont(FONT_TINYBOLD);
-		g->DrawString(mTitle, aPosX + (mWidth - FONT_TINYBOLD->StringWidth(mTitle)) / 2, aPosY + FONT_TINYBOLD->GetAscent());
-		aPosY += FONT_TINYBOLD->GetAscent() + 2;
+		g->SetFont(FONT_BRIANNETOD12);
+		g->DrawString(mTitle, aPosX + (mWidth - FONT_BRIANNETOD12->StringWidth(mTitle)) / 2, aPosY + FONT_BRIANNETOD12->GetAscent());
+		aPosY += FONT_BRIANNETOD12->GetAscent() + 2;
 	}
 
 	if (!mWarningText.empty())

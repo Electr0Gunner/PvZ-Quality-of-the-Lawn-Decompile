@@ -1189,7 +1189,6 @@ void Zombie::BungeeLiftTarget()
     if (aPlant == nullptr)
         return;
 
-#ifdef DO_FIX_BUGS
     Zombie* aZombie = nullptr;
     while (mBoard->IterateZombies(aZombie))
     {
@@ -1198,7 +1197,6 @@ void Zombie::BungeeLiftTarget()
             aZombie->mTargetPlantID = PlantID::PLANTID_NULL;  // 修复类似于 IZ 蹦极刷阳光的 Bug
         }
     }
-#endif
 
     aPlant->mOnBungeeState = PlantOnBungeeState::RISING_WITH_BUNGEE;
     mApp->PlayFoley(FoleyType::FOLEY_FLOOP);
@@ -2037,7 +2035,6 @@ void Zombie::UpdateZombieGargantuar()
         Reanimation* aBodyReanim = mApp->ReanimationGet(mBodyReanimID);
         if (aBodyReanim->ShouldTriggerTimedEvent(0.64f))
         {
-#ifdef DO_FIX_BUGS
             if (mMindControlled)  // 魅惑巨人砸僵尸
             {
                 Zombie* aZombie = FindZombieTarget();
@@ -2086,44 +2083,6 @@ void Zombie::UpdateZombieGargantuar()
                     }
                 }
             }
-#else
-            Plant* aPlant = FindPlantTarget(ZombieAttackType::ATTACKTYPE_CHEW);
-            if (aPlant)
-            {
-                if (aPlant->mSeedType == SeedType::SEED_SPIKEROCK)
-                {
-                    TakeDamage(20, 32U);
-                    aPlant->SpikeRockTakeDamage();
-                    if (aPlant->mPlantHealth <= 0)
-                    {
-                        SquishAllInSquare(aPlant->mPlantCol, aPlant->mRow, ZombieAttackType::ATTACKTYPE_CHEW);
-                    }
-                }
-                else
-                {
-                    SquishAllInSquare(aPlant->mPlantCol, aPlant->mRow, ZombieAttackType::ATTACKTYPE_CHEW);
-                }
-            }
-
-            if (mApp->IsScaryPotterLevel())
-            {
-                int aGridX = mBoard->PixelToGridX(mPosX, mPosY);
-                GridItem* aScaryPot = mBoard->GetScaryPotAt(aGridX, mRow);
-                if (aScaryPot)
-                {
-                    mBoard->mChallenge->ScaryPotterOpenPot(aScaryPot);
-                }
-            }
-
-            if (mApp->IsIZombieLevel())
-            {
-                GridItem* aBrain = mBoard->mChallenge->IZombieGetBrainTarget(this);
-                if (aBrain)
-                {
-                    mBoard->mChallenge->IZombieSquishBrain(aBrain);
-                }
-            }
-#endif
 
             mApp->PlayFoley(FoleyType::FOLEY_THUMP);
             mBoard->ShakeBoard(0, 3);
@@ -2175,7 +2134,6 @@ void Zombie::UpdateZombieGargantuar()
             aZombieImp->mAltitude = 88.0f;
             aZombieImp->mRenderOrder = mRenderOrder + 1;
             aZombieImp->mZombiePhase = ZombiePhase::PHASE_IMP_GETTING_THROWN;
-#ifdef DO_FIX_BUGS
             aZombieImp->mScaleZombie = mScaleZombie;
             aZombieImp->mBodyHealth *= mScaleZombie * mScaleZombie;
             aZombieImp->mBodyMaxHealth *= mScaleZombie * mScaleZombie;
@@ -2190,9 +2148,6 @@ void Zombie::UpdateZombieGargantuar()
             {
                 aZombieImp->mVelX = 3.0f;
             }
-#else
-            aZombieImp->mVelX = 3.0f;
-#endif
             aZombieImp->mChilledCounter = mChilledCounter;
             aZombieImp->mVelZ = 0.5f * (aThrowingDistance / aZombieImp->mVelX) * THOWN_ZOMBIE_GRAVITY;
             aZombieImp->PlayZombieReanim("anim_thrown", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 0, 18.0f);
@@ -2219,30 +2174,7 @@ void Zombie::UpdateZombieGargantuar()
         return;
     }
 
-#ifdef DO_FIX_BUGS
     bool doSmash = FindZombieTarget();
-#else
-    bool doSmash = false;
-    if (FindPlantTarget(ZombieAttackType::ATTACKTYPE_CHEW))
-    {
-        doSmash = true;
-    }
-    else if (mApp->IsScaryPotterLevel())
-    {
-        int aGridX = mBoard->PixelToGridX(mPosX, mPosY);
-        if (mBoard->GetScaryPotAt(aGridX, mRow))
-        {
-            doSmash = true;
-        }
-    }
-    else if (mApp->IsIZombieLevel())
-    {
-        if (mBoard->mChallenge->IZombieGetBrainTarget(this))
-        {
-            doSmash = true;
-        }
-    }
-#endif
 
     if (doSmash)
     {
@@ -2306,7 +2238,6 @@ void Zombie::UpdateZombiePeaHead()
 
         float aOriginX = mPosX + aTransform.mTransX - 9.0f;
         float aOriginY = mPosY + aTransform.mTransY + 6.0f - mAltitude;
-#ifdef DO_FIX_BUGS
         if (mMindControlled)  // 魅惑修复
         {
             aOriginX += 90.0f * mScaleZombie;
@@ -2318,10 +2249,6 @@ void Zombie::UpdateZombiePeaHead()
             Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_PEA);
             aProjectile->mMotionType = ProjectileMotion::MOTION_BACKWARDS;
         }
-#else
-        Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_PEA);
-        aProjectile->mMotionType = ProjectileMotion::MOTION_BACKWARDS;
-#endif
 
         mPhaseCounter = 150;
     }
@@ -2368,7 +2295,6 @@ void Zombie::UpdateZombieJalapenoHead()
         mBoard->DoFwoosh(mRow);
         mBoard->ShakeBoard(3, -4);
         
-#ifdef DO_FIX_BUGS
         if (mMindControlled)
         {
             BurnRow(mRow);
@@ -2387,19 +2313,7 @@ void Zombie::UpdateZombieJalapenoHead()
             }
         }
         DieNoLoot();
-#else
-        Plant* aPlant = nullptr;
-        while (mBoard->IteratePlants(aPlant))
-        {
-            //Rect aPlantRect = aPlant->GetPlantRect();
-            if (aPlant->mRow == mRow && !aPlant->NotOnGround())
-            {
-                mBoard->mPlantsEaten++;
-                aPlant->Die();
-            }
-        }
-        DieNoLoot();
-#endif
+
     }
 }
 
@@ -2425,7 +2339,6 @@ void Zombie::UpdateZombieGatlingHead()
 
         float aOriginX = mPosX + aTransform.mTransX - 9.0f;
         float aOriginY = mPosY + aTransform.mTransY + 6.0f;
-#ifdef DO_FIX_BUGS
         if (mMindControlled)  // 魅惑修复
         {
             aOriginX += 90.0f * mScaleZombie;
@@ -2437,10 +2350,7 @@ void Zombie::UpdateZombieGatlingHead()
             Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_PEA);
             aProjectile->mMotionType = ProjectileMotion::MOTION_BACKWARDS;
         }
-#else
-        Projectile* aProjectile = mBoard->AddProjectile(aOriginX, aOriginY, mRenderOrder, mRow, ProjectileType::PROJECTILE_ZOMBIE_PEA);
-        aProjectile->mMotionType = ProjectileMotion::MOTION_BACKWARDS;
-#endif
+
     }
     else if (mPhaseCounter == 0)
     {
@@ -2477,7 +2387,6 @@ void Zombie::UpdateZombieSquashHead()
     if (mZombiePhase == ZombiePhase::PHASE_SQUASH_RISING)
     {
         int aDestX = mBoard->GridToPixelX(mBoard->PixelToGridXKeepOnBoard(mX, mY), mRow);
-#ifdef DO_FIX_BUGS
         if (mMindControlled)
         {
             Zombie* aZombie = FindZombieTarget();
@@ -2490,7 +2399,6 @@ void Zombie::UpdateZombieSquashHead()
                 aDestX += 90.0f * mScaleZombie;
             }
         }
-#endif
         int aPosX = TodAnimateCurve(50, 20, mPhaseCounter, 0, aDestX - mPosX, TodCurves::CURVE_EASE_IN_OUT);
         int aPosY = TodAnimateCurve(50, 20, mPhaseCounter, 0, -20, TodCurves::CURVE_EASE_IN_OUT);
 
@@ -2510,7 +2418,6 @@ void Zombie::UpdateZombieSquashHead()
     {
         int aPosY = TodAnimateCurve(10, 0, mPhaseCounter, -20, 74, TodCurves::CURVE_LINEAR);
         int aDestX = mBoard->GridToPixelX(mBoard->PixelToGridXKeepOnBoard(mX, mY), mRow);
-#ifdef DO_FIX_BUGS
         if (mMindControlled)
         {
             Zombie* aZombie = FindZombieTarget();
@@ -2523,14 +2430,12 @@ void Zombie::UpdateZombieSquashHead()
                 aDestX += 90.0f * mScaleZombie;
             }
         }
-#endif
 
         Reanimation* aHeadReanim = mApp->ReanimationGet(mSpecialHeadReanimID);
         aHeadReanim->SetPosition(mPosX + 6.0f + aDestX - mPosX, mPosY - 21.0f + aPosY);
         
         if (mPhaseCounter == 2)
         {
-#ifdef DO_FIX_BUGS
             if (mMindControlled)  // 魅惑修复
             {
                 Rect aAttackRect(aDestX - 73, mPosY + 4, 65, 90);  // 具体数值未实测，待定
@@ -2552,9 +2457,6 @@ void Zombie::UpdateZombieSquashHead()
             {
                 SquishAllInSquare(mBoard->PixelToGridXKeepOnBoard(mX, mY), mRow, ZombieAttackType::ATTACKTYPE_CHEW);
             }
-#else
-            SquishAllInSquare(mBoard->PixelToGridXKeepOnBoard(mX, mY), mRow, ZombieAttackType::ATTACKTYPE_CHEW);
-#endif
         }
 
         if (mPhaseCounter == 0)
@@ -6086,7 +5988,6 @@ int Zombie::GetDancerFrame()
         aFrameLength = 10;
     }
 
-#ifdef DO_FIX_BUGS
     if (mBoard)
     {
         return (mBoard->mMainCounter % (aFrameLength * aFramesCount)) / aFrameLength;  // 修复“女仆秘籍”
@@ -6095,9 +5996,6 @@ int Zombie::GetDancerFrame()
     {
         return (mApp->mAppCounter % (aFrameLength * aFramesCount)) / aFrameLength;
     }
-#else
-    return (mApp->mAppCounter % (aFrameLength * aFramesCount)) / aFrameLength;
-#endif
 }
 
 //0x52DFE0
@@ -8825,14 +8723,11 @@ void Zombie::DetachShield()
         }
         else if (mShieldType == ShieldType::SHIELDTYPE_LADDER)
         {
-#ifdef DO_FIX_BUGS
             if (mHasArm)  // 修复扶梯僵尸搭梯后断臂重生的 Bug
             {
                 ReanimShowPrefix("Zombie_outerarm", RENDER_GROUP_NORMAL);
             }
-#else
-            ReanimShowPrefix("Zombie_outerarm", RENDER_GROUP_NORMAL);
-#endif
+
             mZombiePhase = ZombiePhase::PHASE_ZOMBIE_NORMAL;
             if (mIsEating)
             {
@@ -9741,11 +9636,7 @@ void Zombie::BossRVAttack()
 {
     RemoveColdEffects();
     mZombiePhase = ZombiePhase::PHASE_BOSS_DROP_RV;
-#ifdef DO_FIX_BUGS
     mTargetRow = RandRangeInt(0, mBoard->StageHas6Rows() ? 4 : 3);  // 泳池僵王兼容
-#else
-    mTargetRow = RandRangeInt(0, 3);
-#endif
     mTargetCol = RandRangeInt(0, 2);
 
     PlayZombieReanim("anim_RV_1", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 20, 16.0f);
@@ -9807,11 +9698,7 @@ void Zombie::BossSpawnAttack()
     case 2:     aTrackName = "anim_spawn_3";    break;
     case 3:     aTrackName = "anim_spawn_4";    break;
     case 4:     aTrackName = "anim_spawn_5";    break;
-#ifdef DO_FIX_BUGS
     default:    aTrackName = "anim_spawn_5";    break;  // 泳池场景放僵尸崩溃的一种妥协的修复方式（不修改动画时）
-#else
-    default:    TOD_ASSERT();                   break;
-#endif
     }
     PlayZombieReanim(aTrackName, ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 20, 12.0f);
     mApp->PlayFoley(FoleyType::FOLEY_HYDRAULIC_SHORT);
@@ -10000,11 +9887,7 @@ void Zombie::BossHeadSpit()
     }
 
     mZombiePhase = ZombiePhase::PHASE_BOSS_HEAD_SPIT;
-#ifdef DO_FIX_BUGS
     mFireballRow = RandRangeInt(0, mBoard->StageHas6Rows() ? 5 : 4);  // 泳池僵王兼容
-#else
-    mFireballRow = RandRangeInt(0, 4);
-#endif
     mIsFireBall = RandRangeInt(0, 1) == 0;
     
     const char* aTrackName;
@@ -10015,11 +9898,7 @@ void Zombie::BossHeadSpit()
     case 2:     aTrackName = "anim_head_attack_3";      break;
     case 3:     aTrackName = "anim_head_attack_4";      break;
     case 4:     aTrackName = "anim_head_attack_5";      break;
-#ifdef DO_FIX_BUGS
     default:    aTrackName = "anim_head_attack_5";      break;  // 泳池场景吐球的一种妥协的修复方式（不修改动画时）
-#else
-    default:    TOD_ASSERT();                           break;
-#endif
     }
     PlayZombieReanim(aTrackName, ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 20, 12.0f);
     
