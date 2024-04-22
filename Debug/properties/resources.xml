@@ -87,7 +87,7 @@
 <Image id="SEEDCHOOSER_BUTTON2" path="SeedChooser_Button2" />
 <Image id="SEEDCHOOSER_BUTTON2_GLOW" path="SeedChooser_Button2_Glow" />
 <Image id="SEEDCHOOSER_IMITATERADDON" path="SeedChooser_ImitaterAddOn" />  
-<Image id="SEEDS" path="seeds" cols="9" />
+<Image id="SEEDS" path="seeds" cols="10" />
 <Image id="SEEDPACKET_LARGER" path="SeedPacket_Larger" />
 <Image id="SEEDPACKETSILHOUETTE" path="SeedPacketSilhouette" />
 <Image id="FLAGMETER" path="FlagMeter" rows="2" minsubdivide="" />

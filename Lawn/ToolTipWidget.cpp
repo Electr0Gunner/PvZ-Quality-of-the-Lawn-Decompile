@@ -32,13 +32,13 @@ void ToolTipWidget::GetLines(std::vector<SexyString>& theLines)
 	{
 		while (aIndexInLine < mLabel.size() && mLabel[aIndexInLine] != ' ' && mLabel[aIndexInLine] != '\n')
 		{
-			aLineWidth += FONT_PICO129->CharWidth(mLabel[aIndexInLine]);
+			aLineWidth += FONT_BRIANNETOD12->CharWidth(mLabel[aIndexInLine]);
 			aIndexInLine++;
 		}
 
 		if (aIndexInLine != mLabel.size() && aLineWidth < mGetsLinesWidth && mLabel[aIndexInLine] != '\n')
 		{
-			aLineWidth += FONT_PICO129->CharWidth(mLabel[aIndexInLine]);
+			aLineWidth += FONT_BRIANNETOD12->CharWidth(mLabel[aIndexInLine]);
 			aIndexInLine++;
 		}
 		else
@@ -67,7 +67,7 @@ void ToolTipWidget::CalculateSize()
 	std::vector<SexyString> aLines;
 
 	int aTitleWidth = FONT_TINYBOLD->StringWidth(mTitle);
-	int aWarningWidth = FONT_PICO129->StringWidth(mWarningText);
+	int aWarningWidth = FONT_BRIANNETOD12->StringWidth(mWarningText);
 	int aMaxWidth = max(aTitleWidth, aWarningWidth);
 
 	mGetsLinesWidth = max(aMaxWidth - 30, 100);
@@ -75,7 +75,7 @@ void ToolTipWidget::CalculateSize()
 
 	for (int i = 0; i < aLines.size(); i++)
 	{
-		int aLineWidth = FONT_PICO129->StringWidth(aLines[i]);
+		int aLineWidth = FONT_BRIANNETOD12->StringWidth(aLines[i]);
 		aMaxWidth = max(aMaxWidth, aLineWidth);
 	}
 
@@ -88,7 +88,7 @@ void ToolTipWidget::CalculateSize()
 	{
 		aHeight += FONT_TINYBOLD->GetAscent() + 2;
 	}
-	aHeight += aLines.size() * FONT_PICO129->GetAscent();
+	aHeight += aLines.size() * FONT_BRIANNETOD12->GetAscent();
 
 	mWidth = aMaxWidth + 10;
 	mHeight = aHeight + aLines.size() * 2 - 2;
@@ -160,9 +160,9 @@ void ToolTipWidget::Draw(Graphics* g)
 
 	if (!mWarningText.empty())
 	{
-		g->SetFont(FONT_PICO129);
-		int x = aPosX + (mWidth - FONT_PICO129->StringWidth(mWarningText)) / 2;
-		int y = aPosY + FONT_PICO129->GetAscent();
+		g->SetFont(FONT_BRIANNETOD12);
+		int x = aPosX + (mWidth - FONT_BRIANNETOD12->StringWidth(mWarningText)) / 2;
+		int y = aPosY + FONT_BRIANNETOD12->GetAscent();
 
 		Color aWarningColor(255, 0, 0);
 		if (mWarningFlashCounter > 0 && mWarningFlashCounter % 20 < 10)
@@ -174,17 +174,17 @@ void ToolTipWidget::Draw(Graphics* g)
 		g->DrawString(mWarningText, x, y);
 		g->SetColor(Color::Black);
 
-		aPosY += FONT_PICO129->GetAscent() + 2;
+		aPosY += FONT_BRIANNETOD12->GetAscent() + 2;
 	}
 
 	std::vector<SexyString> aLines;
 	GetLines(aLines);
 
-	g->SetFont(FONT_PICO129);
+	g->SetFont(FONT_BRIANNETOD12);
 	for (int i = 0; i < aLines.size(); i++)
 	{
 		SexyString aLine = aLines[i];
-		g->DrawString(aLine, aPosX + (mWidth - FONT_PICO129->StringWidth(aLine)) / 2, aPosY + FONT_PICO129->GetAscent());
-		aPosY += FONT_PICO129->GetAscent() + 2;
+		g->DrawString(aLine, aPosX + (mWidth - FONT_BRIANNETOD12->StringWidth(aLine)) / 2, aPosY + FONT_BRIANNETOD12->GetAscent());
+		aPosY += FONT_BRIANNETOD12->GetAscent() + 2;
 	}
 }

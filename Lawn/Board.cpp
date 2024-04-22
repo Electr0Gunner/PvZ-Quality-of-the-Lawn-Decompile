@@ -366,6 +366,8 @@ bool Board::LoadGame(const string& theFileName)
 	mApp->ClearUpdateBacklog();
 	ResetFPSStats();
 	UpdateLayers();
+	if (mApp->mGameScene == GameScenes::SCENE_PLAYING)
+		mFastButton->mY = 30;
 	return true;
 }
 
@@ -1974,7 +1976,7 @@ void Board::FadeOutLevel()
 			mIceTimer[aRow] = mNextSurvivalStageCounter;
 		}
 	}
-
+	mApp->isFastMode = false;
 	mApp->SetCursor(CURSOR_POINTER);
 }
 
