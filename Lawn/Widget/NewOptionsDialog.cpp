@@ -25,6 +25,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
     mAlmanacButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Almanac, this, _S("[VIEW_ALMANAC_BUTTON]"));
     mRestartButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Restart, this, _S("[RESTART_LEVEL]"));
     mBackToMainButton = MakeButton(NewOptionsDialog::NewOptionsDialog_MainMenu, this, _S("[MAIN_MENU_BUTTON]"));
+    mAdvancedButton = MakeButton(NewOptionsDialog::NewOptionsDialog_AdvancedPage, this, _S("[MAIN_MENU_BUTTON]"));
 
     mBackToGameButton = MakeNewButton(
         Dialog::ID_OK, 
@@ -101,6 +102,7 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mAlmanacButton;
     delete mRestartButton;
     delete mBackToMainButton;
+    delete mAdvancedButton;
     delete mBackToGameButton;
 }
 
@@ -121,6 +123,7 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mSfxVolumeSlider);
     AddWidget(mHardwareAccelerationCheckbox);
     AddWidget(mFullscreenCheckbox);
+    AddWidget(mAdvancedButton);
     AddWidget(mBackToGameButton);
 }
 
@@ -135,6 +138,7 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mHardwareAccelerationCheckbox);
     RemoveWidget(mBackToMainButton);
     RemoveWidget(mBackToGameButton);
+    RemoveWidget(mAdvancedButton);
     RemoveWidget(mRestartButton);
 }
 
@@ -147,6 +151,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mHardwareAccelerationCheckbox->Resize(283, 175, 46, 45);
     mFullscreenCheckbox->Resize(284, 206, 46, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
+    mAdvancedButton->Resize(110, 251, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
     mBackToGameButton->Resize(30, 381, mBackToGameButton->mWidth, mBackToGameButton->mHeight);
@@ -301,6 +306,13 @@ void NewOptionsDialog::ButtonDepress(int theId)
     switch (theId)
     {
     case NewOptionsDialog::NewOptionsDialog_Almanac:
+    {
+        AlmanacDialog* aDialog = mApp->DoAlmanacDialog(SeedType::SEED_NONE, ZombieType::ZOMBIE_INVALID);
+        aDialog->WaitForResult(true);
+        break;
+    }
+
+    case NewOptionsDialog::NewOptionsDialog_AdvancedPage:
     {
         AlmanacDialog* aDialog = mApp->DoAlmanacDialog(SeedType::SEED_NONE, ZombieType::ZOMBIE_INVALID);
         aDialog->WaitForResult(true);

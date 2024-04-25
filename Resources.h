@@ -135,6 +135,8 @@ namespace Sexy
         IMAGE_ZEN_WHEELBARROW_ID,
         IMAGE_ZENSHOPBUTTON_ID,
         IMAGE_ZENSHOPBUTTON_HIGHLIGHT_ID,
+        IMAGE_FASTBUTTON_ID,
+        IMAGE_FASTBUTTON_HIGHLIGHT_ID,
         IMAGE_PRESENT_ID,
         IMAGE_PRESENTOPEN_ID,
         IMAGE_SUNFLOWER_TROPHY_ID,
@@ -1205,6 +1207,7 @@ namespace Sexy
     extern Image*       IMAGE_SQUIRREL;
     extern int          SOUND_FIREPEA;                                          //0x6A7A58
     extern Image*       IMAGE_ZENSHOPBUTTON_HIGHLIGHT;                          //0x6A7A5C
+    extern Image*       IMAGE_FASTBUTTON_HIGHLIGHT;                          //0x6A7A5C
     extern Image*       IMAGE_REANIM_ZOMBIE_FOOTBALL_HELMET3;                   //0x6A7A60
     extern Image*       IMAGE_REANIM_ZOMBIE_BALLOON_OUTERARM_UPPER2;            //0x6A7A64
     extern Image*       IMAGE_ICETRAP;                                          //0x6A7A68
@@ -1229,6 +1232,7 @@ namespace Sexy
     extern int          SOUND_CRAZYDAVESHORT2;                                  //0x6A7AB4
     extern int          SOUND_BOWLINGIMPACT;                                    //0x6A7AB8
     extern Image*       IMAGE_ZENSHOPBUTTON;                                    //0x6A7ABC
+    extern Image*       IMAGE_FASTBUTTON;                                    //0x6A7ABC
     extern Image*       IMAGE_SCARY_POT;                                        //0x6A7AC0
     extern Image*       IMAGE_REANIM_SELECTORSCREEN_ADVENTURE_BUTTON;           //0x6A7AC4
     extern int          SOUND_ZOMBIESPLASH;                                     //0x6A7AC8

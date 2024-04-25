@@ -3070,14 +3070,14 @@ void Challenge::DrawRain(Graphics* g)
 
 	int aTime = mBoard->mEffectCounter % 100;
 	int aTimeOffsetXEst = TodAnimateCurve(0, 100, aTime, 0, -100, CURVE_LINEAR);
-	int aTimeOffsetYEst = TodAnimateCurve(0, 20, aTime, -100, 0, CURVE_LINEAR);
+	int aTimeOffsetYEst = TodAnimateCurve(0, 20, aTime % 20, -100, 0, CURVE_LINEAR);
 	// 绘制远景的雨
 	for (int aHorCnt = 9; aHorCnt > 0; aHorCnt--)
 	{
 		for (int aVerCnt = 7; aVerCnt > 0; aVerCnt--)
 		{
-			int aImageX = aTimeOffsetXEst + 100 * aHorCnt + aBoardOffsetX;
-			int aImageY = aTimeOffsetXEst + 100 * aVerCnt;
+			int aImageX = aHorCnt * 100 + aTimeOffsetXEst + aBoardOffsetX;
+			int aImageY = aVerCnt * 100 + aTimeOffsetYEst;
 			g->DrawImage(Sexy::IMAGE_RAIN, aImageX, aImageY);
 		}
 	}

@@ -161,10 +161,12 @@ Board::Board(LawnApp* theApp)
 	mMenuButton = new GameButton(0);
 	mMenuButton->mDrawStoneButton = true;
 	mFastButton = new GameButton(2);
-	mFastButton->mDrawStoneButton = true;
 	mFastButton->mBtnNoDraw = true;
 	mFastButton->mDisabled = true;
-	mFastButton->Resize(680, -90, 96, 46);
+	mFastButton->Resize(740, -90, IMAGE_FASTBUTTON->mWidth, 46);
+	mFastButton->mButtonImage = IMAGE_FASTBUTTON;
+	mFastButton->mOverImage = IMAGE_FASTBUTTON_HIGHLIGHT;
+	mFastButton->mDownImage = IMAGE_FASTBUTTON_HIGHLIGHT;
 	mStoreButton = nullptr;
 	mIgnoreMouseUp = false;
 
@@ -186,7 +188,6 @@ Board::Board(LawnApp* theApp)
 		mMenuButton->Resize(681, -10, 117, 46);
 		mFastButton->mBtnNoDraw = false;
 		mFastButton->mDisabled = false;
-		mFastButton->SetLabel(_S("fast"));
 	}
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_LAST_STAND)

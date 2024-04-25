@@ -158,6 +158,8 @@
 <Image id="ZEN_WHEELBARROW" path="Zen_WheelBarrow" />
 <Image id="ZENSHOPBUTTON" path="zenshopbutton" />
 <Image id="ZENSHOPBUTTON_HIGHLIGHT" path="zenshopbutton_highlight" />
+<Image id="FASTBUTTON" path="button_speed" />
+<Image id="FASTBUTTON_HIGHLIGHT" path="button_speed_hightlight" />
 <Image id="PRESENT" path="Present" />
 <Image id="PRESENTOPEN" path="PresentOpen" />
 <Image id="SUNFLOWER_TROPHY" path="Sunflower_trophy" cols="2" />
