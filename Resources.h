@@ -596,6 +596,8 @@ namespace Sexy
         IMAGE_ALMANAC_CLOSEBUTTONHIGHLIGHT_ID,
         IMAGE_ALMANAC_INDEXBUTTON_ID,
         IMAGE_ALMANAC_INDEXBUTTONHIGHLIGHT_ID,
+        IMAGE_ALMANAC_INDEXBUTTON_DISABLE_ID,
+        IMAGE_ALMANAC_INDEXBUTTONHIGHLIGHT_DISABLE_ID,
         IMAGE_STORE_BACKGROUND_ID,
         IMAGE_STORE_BACKGROUNDNIGHT_ID,
         IMAGE_STORE_CAR_ID,
@@ -795,8 +797,10 @@ namespace Sexy
     extern int          SOUND_IMP2;                                             //0x6A73EC
     extern Image*       IMAGE_REANIM_ZOMBIE_DIGGER_PICKAXE;                     //0x6A73F0
     extern Image*       IMAGE_ALMANAC_INDEXBUTTONHIGHLIGHT;                     //0x6A73F4
+    extern Image*       IMAGE_ALMANAC_INDEXBUTTONHIGHLIGHT_DISABLE;                     //0x6A73F4
     extern int          SOUND_YUCK2;                                            //0x6A73F8
     extern Image*       IMAGE_ALMANAC_INDEXBUTTON;                              //0x6A73FC
+    extern Image*       IMAGE_ALMANAC_INDEXBUTTON_DISABLE;                              //0x6A73FC
     extern Image*       IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_DAMAGE_WITHBALL;      //0x6A7400
     extern Image*       IMAGE_REANIM_SELECTORSCREEN_KEY_SHADOW;                 //0x6A7404
     extern Image*       IMAGE_PROJECTILESNOWPEA;                                //0x6A7408

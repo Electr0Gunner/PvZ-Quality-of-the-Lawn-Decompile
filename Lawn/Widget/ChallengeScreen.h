@@ -3,6 +3,8 @@
 
 #include "../../ConstEnums.h"
 #include "../../SexyAppFramework/Dialog.h"
+#include "../../SexyAppFramework/SliderListener.h"
+#include "../../SexyAppFramework/Slider.h"
 using namespace Sexy;
 
 #define NUM_CHALLENGE_MODES ((int)GameMode::NUM_GAME_MODES - 1)
@@ -10,7 +12,12 @@ using namespace Sexy;
 class LawnApp;
 class ToolTipWidget;
 class NewLawnButton;
-class ChallengeScreen : public Widget, public ButtonListener
+namespace Sexy
+{
+    class Slider;
+};
+
+class ChallengeScreen : public Widget, public ButtonListener, public Sexy::SliderListener
 {
 private:
     enum
@@ -33,6 +40,12 @@ public:
     int                         mUnlockChallengeIndex;                      //+0x1D8
     float                       mLockShakeX;                                //+0x1DC
     float                       mLockShakeY;                                //+0x1E0
+    float						mScrollPosition;
+    float						mScrollAmount;
+    const float					mBaseScrollSpeed = 1.0f;
+    const float					mScrollAccel = 0.1f;
+    float						mMaxScrollPosition;
+    Sexy::Slider* mSlider;
 
 public:
     ChallengeScreen(LawnApp* theApp, ChallengePage thePage);
@@ -51,6 +64,7 @@ public:
     virtual void                ButtonDepress(int theId);
     void                        UpdateToolTip();
     virtual void                KeyChar(char theChar) { ; }
+    void                        SliderVal(int theId, double theVal);
 
     /*inline*/ bool             IsScaryPotterLevel(GameMode theGameMode);
     /*inline*/ bool             IsIZombieLevel(GameMode theGameMode);

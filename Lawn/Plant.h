@@ -310,8 +310,6 @@ public:
     PlantSubClass           mSubClass;          //+0x18
     int                     mLaunchRate;        //+0x1C
     const SexyChar*         mPlantName;         //+0x20
-    int thePage = -10000;   //+0x24
-    int getPage();          //+0x28
 };
 extern PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES];
 

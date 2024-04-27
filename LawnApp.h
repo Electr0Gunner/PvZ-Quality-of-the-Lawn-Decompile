@@ -124,11 +124,13 @@ public:
 	bool							mDebugTrialLocked;								//+0x8C4
 	bool							mMuteSoundsForCutscene;							//+0x8C5
 	bool							isFastMode;
+	int								SpeedValue;
 
 public:
 	LawnApp();
 	virtual ~LawnApp();
 
+	int								GetSpeedVal();
 	bool							KillNewOptionsDialog();
 	virtual void					GotFocus();
 	virtual void					LostFocus();

@@ -26,6 +26,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
     mRestartButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Restart, this, _S("[RESTART_LEVEL]"));
     mBackToMainButton = MakeButton(NewOptionsDialog::NewOptionsDialog_MainMenu, this, _S("[MAIN_MENU_BUTTON]"));
     mAdvancedButton = MakeButton(NewOptionsDialog::NewOptionsDialog_AdvancedPage, this, _S("[MAIN_MENU_BUTTON]"));
+    mAdvancedButton->mBtnNoDraw = true;
 
     mBackToGameButton = MakeNewButton(
         Dialog::ID_OK, 

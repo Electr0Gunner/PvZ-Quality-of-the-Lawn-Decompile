@@ -11,6 +11,10 @@
 #include "../../SexyAppFramework/Debug.h"
 #include "../../Sexy.TodLib/TodStringFile.h"
 #include "../../SexyAppFramework/WidgetManager.h"
+#include "../../SexyAppFramework/Slider.h"
+#include "../../GameConstants.h"
+
+const Rect cChallengeRect = Rect(20, 0, 778, 900);
 
 ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_1,              0,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    0,  0,  _S("[SURVIVAL_DAY_NORMAL]") },
@@ -92,6 +96,10 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 {
 	mLockShakeX = 0;
 	mLockShakeY = 0;
+	mScrollAmount = 0;
+	mScrollPosition = 0;
+	mMaxScrollPosition = 0;
+
 	mPageIndex = thePage;
 	mApp = theApp;
 	mClip = false;
@@ -109,6 +117,26 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mBackButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(42, 42, 90);
 	mBackButton->Resize(18, 568, 111, 26);
 
+	switch (mPageIndex)
+	{
+	case CHALLENGE_PAGE_CHALLENGE:
+		mMaxScrollPosition = 119 * 4 * 2;
+		break;
+	case CHALLENGE_PAGE_LIMBO:
+	case CHALLENGE_PAGE_SURVIVAL:
+	case CHALLENGE_PAGE_PUZZLE:
+	default:
+		mMaxScrollPosition = 0;
+		break;
+	}
+
+	mSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
+	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
+	mSlider->mHorizontal = true;
+	mSlider->Resize(160, 560, 540, 40);
+	//mSlider->mThumbOffsetX -= 1;
+	mSlider->mVisible = mMaxScrollPosition > 0;
+
 	for (int aPageIdx = CHALLENGE_PAGE_SURVIVAL; aPageIdx < MAX_CHALLANGE_PAGES; aPageIdx++)
 	{
 		ButtonWidget* aPageButton = new ButtonWidget(ChallengeScreen::ChallengeScreen_Page + aPageIdx, this);
@@ -121,10 +149,10 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 		aPageButton->mButtonImage = Sexy::IMAGE_BLANK;
 		aPageButton->mOverImage = Sexy::IMAGE_BLANK;
 		aPageButton->mDownImage = Sexy::IMAGE_BLANK;
-		aPageButton->SetFont(Sexy::FONT_BRIANNETOD12);
+		aPageButton->SetFont(Sexy::FONT_DWARVENTODCRAFT18);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(220, 220, 0);
-		aPageButton->Resize(200 + 100 * aPageIdx, 540, 100, 75);
+		aPageButton->Resize(130 + 140 * aPageIdx, 45, 140, 75);
 		if (!ShowPageButtons() || aPageIdx == CHALLENGE_PAGE_SURVIVAL || aPageIdx == CHALLENGE_PAGE_PUZZLE)
 			aPageButton->mVisible = false;
 	}
@@ -181,6 +209,18 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	}
 }
 
+void ChallengeScreen::SliderVal(int theId, double theVal)
+{
+	switch (theId)
+	{
+	case 0:
+		mScrollPosition = theVal * mMaxScrollPosition;
+		break;
+	}
+}
+
+
+
 //0x42E280 & 0x42E2A0
 ChallengeScreen::~ChallengeScreen()
 {
@@ -188,6 +228,7 @@ ChallengeScreen::~ChallengeScreen()
 	for (ButtonWidget* aPageButton : mPageButton) delete aPageButton;
 	for (ButtonWidget* aChallengeButton : mChallengeButtons) delete aChallengeButton;
 	delete mToolTip;
+	delete mSlider;
 }
 
 ChallengeDefinition& GetChallengeDefinition(int theChallengeMode)
@@ -376,12 +417,20 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 	if (aChallengeButton->mVisible)
 	{
 		ChallengeDefinition& aDef = GetChallengeDefinition(theChallengeIndex);
+		int offsetY = aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 125 : 93;
+		aChallengeButton->mX = 38 + aDef.mCol * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 157 : 155) - mScrollPosition;
+		aChallengeButton->mY = offsetY + aDef.mRow * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 145 : 119);
 		int aPosX = aChallengeButton->mX;
 		int aPosY = aChallengeButton->mY;
 		if (aChallengeButton->mIsDown)
 		{
 			aPosX++;
 			aPosY++;
+		}
+
+		if (aChallengeButton->mY + 1 >= cChallengeRect.mY + cChallengeRect.mHeight || aChallengeButton->mY + 121 <= cChallengeRect.mY || mApp->mWidgetManager->mLastMouseY >= cChallengeRect.mY + cChallengeRect.mHeight || mApp->mWidgetManager->mLastMouseY <= cChallengeRect.mY)
+		{
+			aChallengeButton->mY = BOARD_HEIGHT;
 		}
 
 		if (AccomplishmentsNeeded(theChallengeIndex) <= 1)
@@ -407,7 +456,7 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 				}
 				g->SetColorizeImages(true);
 			}
-
+			g->SetClipRect(cChallengeRect);
 			if (mPageIndex == CHALLENGE_PAGE_SURVIVAL)
 			{
 				g->DrawImageCel(Sexy::IMAGE_SURVIVAL_THUMBNAILS, aPosX + 13, aPosY + 4, aDef.mChallengeIconIndex);
@@ -570,6 +619,10 @@ void ChallengeScreen::Update()
 {
 	Widget::Update();
 	UpdateToolTip();
+	float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
+	mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
+	mScrollAmount *= (1.0f - mScrollAccel);
+	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
 
 	if (mUnlockStateCounter > 0) mUnlockStateCounter--;
 	if (mUnlockState == UNLOCK_SHAKING)
@@ -605,6 +658,7 @@ void ChallengeScreen::AddedToManager(WidgetManager* theWidgetManager)
 	AddWidget(mBackButton);
 	for (ButtonWidget* aButton : mPageButton) AddWidget(aButton);
 	for (ButtonWidget* aButton : mChallengeButtons) AddWidget(aButton);
+	AddWidget(mSlider);
 }
 
 //0x42F6B0
@@ -614,6 +668,7 @@ void ChallengeScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 	RemoveWidget(mBackButton);
 	for (ButtonWidget* aButton : mPageButton) RemoveWidget(aButton);
 	for (ButtonWidget* aButton : mChallengeButtons) RemoveWidget(aButton);
+	RemoveWidget(mSlider);
 }
 
 //0x42F720

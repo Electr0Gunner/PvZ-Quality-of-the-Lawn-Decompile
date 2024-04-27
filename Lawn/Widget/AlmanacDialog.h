@@ -42,8 +42,6 @@ public:
 	GameButton*					mIndexButton;			//+0x174
 	GameButton*					mPlantButton;			//+0x178
 	GameButton*					mZombieButton;			//+0x17C
-	GameButton* mNextButton;			//+0x178
-	GameButton* mLastButton;			//+0x17C
 	//Sexy::Slider* mSlider;
 	AlmanacPage					mOpenPage;				//+0x180
 	Reanimation*				mReanim[4];				//+0x184
@@ -53,7 +51,11 @@ public:
 	Zombie*						mZombie;				//+0x1A0
 	Zombie*						mZombiePerfTest[400];	//+0x1A4
 	float						mIncrement;
-	int mIndexedPage;
+	float                   mScrollPosition;
+	float                   mScrollAmount;
+
+	const float             mBaseScrollSpeed = 1.0f;
+	const float             mScrollAccel = 0.1f;
 	
 public:
 	AlmanacDialog(LawnApp* theApp);
@@ -83,6 +85,7 @@ public:
 	static ZombieType			GetZombieType(int theIndex);
 	/*inline*/ void				ShowPlant(SeedType theSeedType);
 	/*inline*/ void				ShowZombie(ZombieType theZombieType);
+	virtual void				MouseWheel(int theDelta);
 };
 extern int gZombieDefeated[NUM_ZOMBIE_TYPES];
 

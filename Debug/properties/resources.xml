@@ -699,6 +699,8 @@
 <Image id="ALMANAC_CLOSEBUTTONHIGHLIGHT" path="Almanac_CloseButtonHighlight" />
 <Image id="ALMANAC_INDEXBUTTON" path="Almanac_IndexButton" />
 <Image id="ALMANAC_INDEXBUTTONHIGHLIGHT" path="Almanac_IndexButtonHighlight" />
+<Image id="ALMANAC_INDEXBUTTON_DISABLE" path="Almanac_IndexButtonDisable" />
+<Image id="ALMANAC_INDEXBUTTONHIGHLIGHT_DISABLE" path="Almanac_IndexButtonHighlightDisable" />
 </Resources>
 
 <Resources id="DelayLoad_Store">

@@ -116,6 +116,7 @@ LawnApp::LawnApp()
 	mAutoStartLoadingThread = false;
 	mDebugKeysEnabled = false;
 	isFastMode = false;
+	SpeedValue = 4;
 	mProdName = "PlantsVsZombies";
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
@@ -793,6 +794,11 @@ void LawnApp::DoUserDialog()
 	CenterDialog(aDialog, aDialog->mWidth, aDialog->mHeight);
 	AddDialog(Dialogs::DIALOG_USERDIALOG, aDialog);
 	mWidgetManager->SetFocus(aDialog);
+}
+
+int LawnApp::GetSpeedVal()
+{
+	return SpeedValue;
 }
 
 //0x450930
@@ -1612,7 +1618,7 @@ void LawnApp::UpdateFrames()
 	}
 	else if (isFastMode)
 	{
-		aUpdateCount = 9;
+		aUpdateCount = SpeedValue;
 	}
 
 	for (int i = 0; i < aUpdateCount; i++)
@@ -2371,7 +2377,23 @@ bool LawnApp::HasSeedType(SeedType theSeedType)
 	{
 		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_IMITATER] > 0;
 	}
-
+	//non store or adventure plants 
+	if (theSeedType == SeedType::SEED_EXPLODE_O_NUT)
+	{
+		return true;
+	}
+	if (theSeedType == SeedType::SEED_GIANT_WALLNUT)
+	{
+		return true;
+	}
+	if (theSeedType == SeedType::SEED_SPROUT)
+	{
+		return true;
+	}
+	if (theSeedType == SeedType::SEED_LEFTPEATER)
+	{
+		return true;
+	}
 	return theSeedType < GetSeedsAvailable();
 }
 

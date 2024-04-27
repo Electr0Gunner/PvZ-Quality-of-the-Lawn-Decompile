@@ -1,20 +1,21 @@
-﻿  LawnApp.cpp
+﻿  AlmanacDialog.cpp
 D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\SexyAppFramework\KeyCodes.h(102,2): warning C4091: 'typedef ': ignored on left of 'Sexy::KeyCode' when no variable is declared
 D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Sexy.TodLib\TodCommon.h(133,82): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
 D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Sexy.TodLib\TodCommon.h(135,80): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(110,24): warning C4244: '=': conversion from '__time64_t' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(706,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(1275,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(1307,32): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(1317,32): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(1675,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(1718,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(1737,14): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(1744,14): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\LawnApp.cpp(2663,20): warning C4018: '<': signed/unsigned mismatch
-  NewOptionsDialog.cpp
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\SexyAppFramework\KeyCodes.h(102,2): warning C4091: 'typedef ': ignored on left of 'Sexy::KeyCode' when no variable is declared
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Sexy.TodLib\TodCommon.h(133,82): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Sexy.TodLib\TodCommon.h(135,80): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(154,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(155,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(327,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(327,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(569,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(585,81): warning C4244: 'argument': conversion from 'float' to '_T', possible loss of data
+          with
+          [
+              _T=int
+          ]
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(680,39): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\AlmanacDialog.cpp(698,48): warning C4244: 'argument': conversion from 'float' to '_T', possible loss of data
+          with
+          [
+              _T=int
+          ]
   SexyAppBase.vcxproj -> D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Debug\LawnProject.exe
