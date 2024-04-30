@@ -120,7 +120,7 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	switch (mPageIndex)
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
-		mMaxScrollPosition = 119 * 4 * 2;
+		mMaxScrollPosition = 0; //119 * 4 * 2;
 		break;
 	case CHALLENGE_PAGE_LIMBO:
 	case CHALLENGE_PAGE_SURVIVAL:
@@ -146,15 +146,15 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 			aPageButton->mLabel = TodStringTranslate(_S("Limbo Page"));
 		else
 			aPageButton->mLabel = TodReplaceNumberString(_S("[PAGE_X]"), _S("{PAGE}"), aPageIdx);
-		aPageButton->mButtonImage = Sexy::IMAGE_BLANK;
-		aPageButton->mOverImage = Sexy::IMAGE_BLANK;
-		aPageButton->mDownImage = Sexy::IMAGE_BLANK;
-		aPageButton->SetFont(Sexy::FONT_DWARVENTODCRAFT18);
+		aPageButton->mButtonImage = Sexy::IMAGE_BUTTON_SMALL;
+		aPageButton->mOverImage = Sexy::IMAGE_BUTTON_SMALL;
+		aPageButton->mDownImage = Sexy::IMAGE_BUTTON_DOWN_SMALL;
+		aPageButton->SetFont(Sexy::FONT_DWARVENTODCRAFT18GREENINSET);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(220, 220, 0);
-		aPageButton->Resize(130 + 140 * aPageIdx, 45, 140, 75);
-		if (!ShowPageButtons() || aPageIdx == CHALLENGE_PAGE_SURVIVAL || aPageIdx == CHALLENGE_PAGE_PUZZLE)
-			aPageButton->mVisible = false;
+		aPageButton->Resize(40 * aPageIdx, 45, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
+		//if (!ShowPageButtons() || aPageIdx == CHALLENGE_PAGE_SURVIVAL || aPageIdx == CHALLENGE_PAGE_PUZZLE)
+			//aPageButton->mVisible = false;
 	}
 	
 	for (int aChallengeMode = 0; aChallengeMode < NUM_CHALLENGE_MODES; aChallengeMode++)
@@ -596,7 +596,8 @@ void ChallengeScreen::Draw(Graphics* g)
 
 	SexyString aTitleString = 
 		mPageIndex == CHALLENGE_PAGE_SURVIVAL ? _S("[PICK_AREA]") : 
-		mPageIndex == CHALLENGE_PAGE_PUZZLE ? _S("[SCARY_POTTER]") : _S("[PICK_CHALLENGE]");
+		mPageIndex == CHALLENGE_PAGE_PUZZLE ? _S("[SCARY_POTTER]") :
+		mPageIndex == CHALLENGE_PAGE_LIMBO ? _S("Limbo Page") : _S("[PICK_CHALLENGE]");
 	TodDrawString(g, aTitleString, 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
 
 	int aTrophiesGot = mApp->GetNumTrophies(mPageIndex);

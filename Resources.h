@@ -58,6 +58,8 @@ namespace Sexy
         IMAGE_BUTTON_LEFT_ID,
         IMAGE_BUTTON_MIDDLE_ID,
         IMAGE_BUTTON_RIGHT_ID,
+        IMAGE_BUTTON_SMALL_ID,
+        IMAGE_BUTTON_DOWN_SMALL_ID,
         IMAGE_BUTTON_DOWN_LEFT_ID,
         IMAGE_BUTTON_DOWN_MIDDLE_ID,
         IMAGE_BUTTON_DOWN_RIGHT_ID,
@@ -693,6 +695,7 @@ namespace Sexy
     extern Image*       IMAGE_REANIM_ZOMBIE_PAPER_LEFTARM_UPPER2;               //0x6A7250
     extern Image*       IMAGE_REANIM_ZOMBIE_CATAPULT_POLE_WITHBALL;             //0x6A7254
     extern Image*       IMAGE_BUTTON_RIGHT;                                     //0x6A7258
+    extern Image*       IMAGE_BUTTON_SMALL;                                     //0x6A7258
     extern Image*       IMAGE_STORE_TREEOFWISDOMICON;                           //0x6A725C
     extern Image*       IMAGE_ZOMBIEIMPHEAD;                                    //0x6A7260
     extern Image*       IMAGE_ZOMBIEBALLOONHEAD;                                //0x6A7264
@@ -1156,6 +1159,7 @@ namespace Sexy
     extern Image*       IMAGE_ALMANAC_GROUNDPOOL;                               //0x6A797C
     extern int		    SOUND_TAP;                                              //0x6A7980
     extern Image*       IMAGE_BUTTON_DOWN_MIDDLE;                               //0x6A7984
+    extern Image*       IMAGE_BUTTON_DOWN_SMALL;                               
     extern int          SOUND_PRIZE;                                            //0x6A7988
     extern Image*       IMAGE_ICETRAP2;                                         //0x6A798C
     extern Font*        FONT_BRIANNETOD32BLACK;                                 //0x6A7990

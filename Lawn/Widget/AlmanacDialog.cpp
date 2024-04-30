@@ -237,7 +237,8 @@ void AlmanacDialog::Update()
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
-		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, 200);
+		mScrollPosition += mScrollAmount * aScrollSpeed;
+		mScrollPosition = ClampFloat(mScrollPosition, 0, 200);
 		mScrollAmount *= (1.0f - mScrollAccel);
 	}
 	else
@@ -245,6 +246,7 @@ void AlmanacDialog::Update()
 		mScrollAmount = 0;
 		mScrollPosition = 0;
 	}
+
 
 	for (Zombie* aZombie : mZombiePerfTest)
 	{
@@ -398,6 +400,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 		ZombieType aZombieType = GetZombieType(i);
 		int aPosX, aPosY;
 		GetZombiePosition(aZombieType, aPosX, aPosY);
+		aPosY += -mScrollPosition;
 		ZombieDefinition aZombieDefiniton = GetZombieDefinition(aZombieType);
 		if (aZombieType != ZombieType::ZOMBIE_INVALID)
 		{
@@ -418,7 +421,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 
 				ZombieType aZombieTypeToDraw = aZombieType;
 				Graphics aZombieGraphics = Graphics(*g);
-				aZombieGraphics.SetClipRect(aPosX + 2, aPosY + 2, 72, 72);
+				//aZombieGraphics.SetClipRect(aPosX + 2, aPosY + 2, 72, 72);
 				aZombieGraphics.Translate(aPosX + 1, aPosY - 6);
 				aZombieGraphics.mScaleX = 0.5f;
 				aZombieGraphics.mScaleY = 0.5f;
@@ -694,8 +697,8 @@ ZombieType AlmanacDialog::ZombieHitTest(int x, int y)
 			{
 				int aZombieX, aZombieY;
 				GetZombiePosition(aZombieType, aZombieX, aZombieY);
-
-				Rect aZombieRect = Rect(aZombieX, aZombieY + -mScrollPosition, 76 , 76);
+				aZombieY += -mScrollPosition;
+				Rect aZombieRect = Rect(aZombieX, aZombieY, 76 , 76);
 				if (aZombieRect.Contains(x, y) && aZombieRect.Contains(x, y))
 				{
 					return aZombieType;

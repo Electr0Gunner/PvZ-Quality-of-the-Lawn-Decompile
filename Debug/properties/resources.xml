@@ -73,10 +73,13 @@
 <Image id="BUTTON_LEFT" path="button_left" />
 <Image id="BUTTON_MIDDLE" path="button_middle" />
 <Image id="BUTTON_RIGHT" path="button_right" />
+<Image id="BUTTON_SMALL" path="button_small" />
 <Image id="BUTTON_DOWN_LEFT" path="button_down_left" />
 <Image id="BUTTON_DOWN_MIDDLE" path="button_down_middle" />
 <Image id="BUTTON_DOWN_RIGHT" path="button_down_right" />
-  
+<Image id="BUTTON_DOWN_SMALL" path="button_down_small" />
+
+
 <SetDefaults path="images" idprefix="IMAGE_" />
 
 <!-- Screens -->
