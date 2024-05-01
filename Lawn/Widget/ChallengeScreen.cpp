@@ -99,6 +99,7 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mScrollAmount = 0;
 	mScrollPosition = 0;
 	mMaxScrollPosition = 0;
+	ShowPages = false;
 
 	mPageIndex = thePage;
 	mApp = theApp;
@@ -117,10 +118,21 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mBackButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(42, 42, 90);
 	mBackButton->Resize(18, 568, 111, 26);
 
+	PageDropper = MakeNewButton(ChallengeScreen::ChallengeScreen_Dropper, this, _S(""), nullptr, Sexy::IMAGE_CHALLENGE_BUTTONS,
+		Sexy::IMAGE_CHALLENGE_BUTTONS, Sexy::IMAGE_CHALLENGE_BUTTONS);
+	PageDropper->mTextDownOffsetX = 1;
+	PageDropper->mTextDownOffsetY = 1;
+	PageDropper->mColors[ButtonWidget::COLOR_LABEL] = Color(42, 42, 90);
+	PageDropper->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(42, 42, 90);
+	if(ShowPages)
+		PageDropper->Resize(-30, -10, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
+	else
+		PageDropper->Resize(-30, -70, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
+
 	switch (mPageIndex)
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
-		mMaxScrollPosition = 0; //119 * 4 * 2;
+		mMaxScrollPosition = 119 * 4 * 2;
 		break;
 	case CHALLENGE_PAGE_LIMBO:
 	case CHALLENGE_PAGE_SURVIVAL:
@@ -137,22 +149,32 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	//mSlider->mThumbOffsetX -= 1;
 	mSlider->mVisible = mMaxScrollPosition > 0;
 
-	for (int aPageIdx = CHALLENGE_PAGE_SURVIVAL; aPageIdx < MAX_CHALLANGE_PAGES; aPageIdx++)
+	for (int aPageIdx = CHALLENGE_PAGE_CHALLENGE; aPageIdx < MAX_CHALLANGE_PAGES; aPageIdx++)
 	{
 		ButtonWidget* aPageButton = new ButtonWidget(ChallengeScreen::ChallengeScreen_Page + aPageIdx, this);
 		aPageButton->mDoFinger = true;
 		mPageButton[aPageIdx] = aPageButton;
 		if (aPageIdx == CHALLENGE_PAGE_LIMBO)
-			aPageButton->mLabel = TodStringTranslate(_S("Limbo Page"));
+			aPageButton->mLabel = TodStringTranslate(_S("L"));
 		else
-			aPageButton->mLabel = TodReplaceNumberString(_S("[PAGE_X]"), _S("{PAGE}"), aPageIdx);
+			aPageButton->mLabel = TodReplaceNumberString(_S("[PAGE_X]"), _S("{PAGE}"), aPageIdx + 1);
 		aPageButton->mButtonImage = Sexy::IMAGE_BUTTON_SMALL;
 		aPageButton->mOverImage = Sexy::IMAGE_BUTTON_SMALL;
 		aPageButton->mDownImage = Sexy::IMAGE_BUTTON_DOWN_SMALL;
 		aPageButton->SetFont(Sexy::FONT_DWARVENTODCRAFT18GREENINSET);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(220, 220, 0);
-		aPageButton->Resize(40 * aPageIdx, 45, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
+		aPageButton->Resize(50 * aPageIdx + 5, 50, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight); /*
+		switch (aPageIdx) {
+			case 0:
+			case 1:
+				aPageButton->Resize(50 * aPageIdx + 5, 0, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
+				break;
+			case 2:
+			case 3:
+				aPageButton->Resize(50 * (aPageIdx - 2) + 5, 45, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
+				break;
+		}*/
 		//if (!ShowPageButtons() || aPageIdx == CHALLENGE_PAGE_SURVIVAL || aPageIdx == CHALLENGE_PAGE_PUZZLE)
 			//aPageButton->mVisible = false;
 	}
@@ -225,6 +247,7 @@ void ChallengeScreen::SliderVal(int theId, double theVal)
 ChallengeScreen::~ChallengeScreen()
 {
 	delete mBackButton;
+	delete PageDropper;
 	for (ButtonWidget* aPageButton : mPageButton) delete aPageButton;
 	for (ButtonWidget* aChallengeButton : mChallengeButtons) delete aChallengeButton;
 	delete mToolTip;
@@ -382,11 +405,20 @@ bool ChallengeScreen::ShowPageButtons()
 //0x42E710
 void ChallengeScreen::UpdateButtons()
 {
+
+
 	for (int aChallengeMode = 0; aChallengeMode < NUM_CHALLENGE_MODES; aChallengeMode++)
 		mChallengeButtons[aChallengeMode]->mVisible = GetChallengeDefinition(aChallengeMode).mPage == mPageIndex;
 	for (int aPage = 0; aPage < MAX_CHALLANGE_PAGES; aPage++)
 	{
 		ButtonWidget* aPageButton = mPageButton[aPage];
+		if (ShowPages)
+		{
+			aPageButton->mY = 0;
+		}
+		else {
+			aPageButton->mY = -50;
+		}
 		if (aPage == mPageIndex)
 		{
 			aPageButton->mColors[ButtonWidget::COLOR_LABEL] = Color(64, 64, 64);
@@ -624,6 +656,36 @@ void ChallengeScreen::Update()
 	mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 	mScrollAmount *= (1.0f - mScrollAccel);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
+	switch (mPageIndex)
+	{
+	case CHALLENGE_PAGE_CHALLENGE:
+		mSlider->mVisible = true;
+		break;
+	case CHALLENGE_PAGE_LIMBO:
+	case CHALLENGE_PAGE_SURVIVAL:
+	case CHALLENGE_PAGE_PUZZLE:
+	default:
+		mSlider->mVisible = false;
+		mScrollPosition = 0;
+		break;
+	}
+
+	if (ShowPages)
+		PageDropper->Resize(-30, -10, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
+	else
+		PageDropper->Resize(-30, -90, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
+
+	for (int aPage = 0; aPage < MAX_CHALLANGE_PAGES; aPage++)
+	{
+		ButtonWidget* aPageButton = mPageButton[aPage];
+		if (ShowPages)
+		{
+			aPageButton->mY = 0;
+		}
+		else {
+			aPageButton->mY = -50;
+		}
+	}
 
 	if (mUnlockStateCounter > 0) mUnlockStateCounter--;
 	if (mUnlockState == UNLOCK_SHAKING)
@@ -657,6 +719,7 @@ void ChallengeScreen::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
 	AddWidget(mBackButton);
+	AddWidget(PageDropper);
 	for (ButtonWidget* aButton : mPageButton) AddWidget(aButton);
 	for (ButtonWidget* aButton : mChallengeButtons) AddWidget(aButton);
 	AddWidget(mSlider);
@@ -667,6 +730,7 @@ void ChallengeScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	Widget::RemovedFromManager(theWidgetManager);
 	RemoveWidget(mBackButton);
+	RemoveWidget(PageDropper);
 	for (ButtonWidget* aButton : mPageButton) RemoveWidget(aButton);
 	for (ButtonWidget* aButton : mChallengeButtons) RemoveWidget(aButton);
 	RemoveWidget(mSlider);
@@ -685,6 +749,14 @@ void ChallengeScreen::ButtonDepress(int theId)
 	{
 		mApp->KillChallengeScreen();
 		mApp->DoBackToMain();
+	}
+
+	if (theId == ChallengeScreen::ChallengeScreen_Dropper)
+	{
+		if(ShowPages)
+			ShowPages = false;
+		else
+			ShowPages = true;
 	}
 
 	int aChallengeMode = theId - ChallengeScreen::ChallengeScreen_Mode;

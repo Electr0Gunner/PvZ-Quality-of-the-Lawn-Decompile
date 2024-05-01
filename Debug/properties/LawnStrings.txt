@@ -2040,7 +2040,7 @@ Back to Menu
 Roll Credits!
 
 [PAGE_X]
-PAGE {PAGE}
+{PAGE}
 
 [RESTART_BUTTON]
 Restart

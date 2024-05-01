@@ -577,6 +577,7 @@ namespace Sexy
         IMAGE_CHALLENGE_WINDOW_HIGHLIGHT_ID,
         IMAGE_CHALLENGE_BLANK_ID,
         IMAGE_CHALLENGE_THUMBNAILS_ID,
+        IMAGE_CHALLENGE_BUTTONS_ID,
         IMAGE_SURVIVAL_THUMBNAILS_ID,
         IMAGE_LOCK_ID,
         IMAGE_LOCK_OPEN_ID,
@@ -724,6 +725,7 @@ namespace Sexy
     extern int          SOUND_PLASTICHIT2;                                      //0x6A72C0
     extern Image*       IMAGE_WATERINGCAN;                                      //0x6A72C4
     extern Image*       IMAGE_CHALLENGE_WINDOW;                                 //0x6A72C8
+    extern Image*       IMAGE_CHALLENGE_BUTTONS; 
     extern Image*       IMAGE_PINATA;                                           //0x6A72CC
     extern int          SOUND_EVILLAUGH;                                        //0x6A72D0
     extern int          SOUND_BOSSEXPLOSION;                                    //0x6A72D4

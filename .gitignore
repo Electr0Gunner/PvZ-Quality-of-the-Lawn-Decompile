@@ -16,3 +16,4 @@
 *.tlog
 *.log
 /SexyAppFramework/Debug
+Debug/LawnProject.pdb

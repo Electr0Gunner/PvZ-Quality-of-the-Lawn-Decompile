@@ -2,15 +2,15 @@
 D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\SexyAppFramework\KeyCodes.h(102,2): warning C4091: 'typedef ': ignored on left of 'Sexy::KeyCode' when no variable is declared
 D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Sexy.TodLib\TodCommon.h(133,82): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
 D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Sexy.TodLib\TodCommon.h(135,80): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(217,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(368,5): warning C4003: not enough arguments for function-like macro invocation 'TOD_ASSERT'
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(421,95): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(495,35): warning C4002: too many arguments for function-like macro invocation '_S'
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(499,20): warning C4002: too many arguments for function-like macro invocation '_S'
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(503,21): warning C4002: too many arguments for function-like macro invocation '_S'
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(508,19): warning C4002: too many arguments for function-like macro invocation '_S'
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(513,20): warning C4002: too many arguments for function-like macro invocation '_S'
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(581,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(581,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(374): warning C4715: 'ChallengeScreen::MoreTrophiesNeeded': not all control paths return a value
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(239,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(391,5): warning C4003: not enough arguments for function-like macro invocation 'TOD_ASSERT'
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(453,95): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(527,35): warning C4002: too many arguments for function-like macro invocation '_S'
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(531,20): warning C4002: too many arguments for function-like macro invocation '_S'
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(535,21): warning C4002: too many arguments for function-like macro invocation '_S'
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(540,19): warning C4002: too many arguments for function-like macro invocation '_S'
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(545,20): warning C4002: too many arguments for function-like macro invocation '_S'
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(613,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(613,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Lawn\Widget\ChallengeScreen.cpp(397): warning C4715: 'ChallengeScreen::MoreTrophiesNeeded': not all control paths return a value
   SexyAppBase.vcxproj -> D:\Games\Plants Vs. Zombies\Popcap\PvZ-Quality-of-the-Lawn-Decompile\Debug\LawnProject.exe

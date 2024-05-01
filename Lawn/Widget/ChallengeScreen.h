@@ -24,7 +24,8 @@ private:
     {
         ChallengeScreen_Back = 100,
         ChallengeScreen_Mode = 200,
-        ChallengeScreen_Page = 300
+        ChallengeScreen_Page = 300,
+        ChallengeScreen_Dropper = 400,
     };
 
 public:
@@ -33,6 +34,7 @@ public:
     ButtonWidget*               mChallengeButtons[NUM_CHALLENGE_MODES];     //+0xA0
     LawnApp*                    mApp;                                       //+0x1C0
     ToolTipWidget*              mToolTip;                                   //+0x1C4
+    NewLawnButton*               PageDropper;
     ChallengePage               mPageIndex;                                 //+0x1C8
     bool                        mCheatEnableChallenges;                     //+0x1CC
     UnlockingState              mUnlockState;                               //+0x1D0
@@ -45,6 +47,7 @@ public:
     const float					mBaseScrollSpeed = 1.0f;
     const float					mScrollAccel = 0.1f;
     float						mMaxScrollPosition;
+    bool						ShowPages;
     Sexy::Slider* mSlider;
 
 public:

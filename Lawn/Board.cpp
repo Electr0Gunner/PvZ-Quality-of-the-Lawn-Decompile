@@ -165,7 +165,7 @@ Board::Board(LawnApp* theApp)
 	mFastButton->mDisabled = true;
 	mFastButton->Resize(740, -90, IMAGE_FASTBUTTON->mWidth, 46);
 	mFastButton->mButtonImage = IMAGE_FASTBUTTON;
-	mFastButton->mOverImage = IMAGE_FASTBUTTON_HIGHLIGHT;
+	mFastButton->mOverImage = IMAGE_FASTBUTTON;
 	mFastButton->mDownImage = IMAGE_FASTBUTTON_HIGHLIGHT;
 	mStoreButton = nullptr;
 	mIgnoreMouseUp = false;
