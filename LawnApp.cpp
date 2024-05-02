@@ -1352,7 +1352,7 @@ void LawnApp::HandleCmdLineParam(const std::string& theParamName, const std::str
 	if (theParamName == "-tod")
 	{
 #ifdef _DEBUG
-		mTodCheatKeys = true;
+		//mTodCheatKeys = true;
 		mDebugKeysEnabled = true;
 #endif
 	}
@@ -2377,22 +2377,23 @@ bool LawnApp::HasSeedType(SeedType theSeedType)
 	{
 		return mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PLANT_IMITATER] > 0;
 	}
-	//non store or adventure plants 
-	if (theSeedType == SeedType::SEED_EXPLODE_O_NUT)
-	{
-		return true;
-	}
-	if (theSeedType == SeedType::SEED_GIANT_WALLNUT)
-	{
-		return true;
-	}
-	if (theSeedType == SeedType::SEED_SPROUT)
-	{
-		return true;
-	}
-	if (theSeedType == SeedType::SEED_LEFTPEATER)
-	{
-		return true;
+	if(mTodCheatKeys){
+		if (theSeedType == SeedType::SEED_EXPLODE_O_NUT)
+		{
+			return true;
+		}
+		if (theSeedType == SeedType::SEED_GIANT_WALLNUT)
+		{
+			return true;
+		}
+		if (theSeedType == SeedType::SEED_SPROUT)
+		{
+			return true;
+		}
+		if (theSeedType == SeedType::SEED_LEFTPEATER)
+		{
+			return true;
+		}
 	}
 	return theSeedType < GetSeedsAvailable();
 }

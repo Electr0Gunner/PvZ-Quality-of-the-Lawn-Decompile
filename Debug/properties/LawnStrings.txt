@@ -971,13 +971,11 @@ Snorkel zombies can swim underwater.
 {FLAVOR}Answer: peer pressure.
 
 [ZOMBONI_DESCRIPTION]
-The Zomboni applies ice, steam and pressure to your plants.
-{SHORTLINE}
 {KEYWORD}Toughness:{STAT} high {1350}
 {KEYWORD}Special:{STAT} crushes plants, leaves an ice trail
-{SHORTLINE}
-{FLAVOR}Often mistaken for a zombie driving an ice machine, the Zomboni is a totally different life-form more closely related to a space ogre than a 
-zombie.
+{FLAVOR}Not to be mistaken for a Zamboni  brand ice resurfacing machine. Zamboni  and the image of the ice-resurfacing
+machine are registered trademarks of Frank J. Zamboni & Co., Inc., and "Zomboni" is used with permission. For all
+your non-zombie related ice resurfacing needs, visit www.zamboni.com!
 
 [ZOMBIE_BOBSLED_TEAM_DESCRIPTION]
 These zombies appear in teams of four.

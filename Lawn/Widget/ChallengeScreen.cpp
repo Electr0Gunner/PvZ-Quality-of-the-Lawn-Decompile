@@ -98,7 +98,7 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mLockShakeY = 0;
 	mScrollAmount = 0;
 	mScrollPosition = 0;
-	mMaxScrollPosition = 0;
+	mMaxScrollPosition = 0.1f;
 	ShowPages = false;
 
 	mPageIndex = thePage;
@@ -118,8 +118,7 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mBackButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(42, 42, 90);
 	mBackButton->Resize(18, 568, 111, 26);
 
-	PageDropper = MakeNewButton(ChallengeScreen::ChallengeScreen_Dropper, this, _S(""), nullptr, Sexy::IMAGE_CHALLENGE_BUTTONS,
-		Sexy::IMAGE_CHALLENGE_BUTTONS, Sexy::IMAGE_CHALLENGE_BUTTONS);
+	PageDropper = MakeNewButton(ChallengeScreen::ChallengeScreen_Dropper, this, _S(""), nullptr, Sexy::IMAGE_CHALLENGE_BUTTONS, Sexy::IMAGE_CHALLENGE_BUTTONS, Sexy::IMAGE_CHALLENGE_BUTTONS);
 	PageDropper->mTextDownOffsetX = 1;
 	PageDropper->mTextDownOffsetY = 1;
 	PageDropper->mColors[ButtonWidget::COLOR_LABEL] = Color(42, 42, 90);
@@ -128,26 +127,6 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 		PageDropper->Resize(-30, -10, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
 	else
 		PageDropper->Resize(-30, -70, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
-
-	switch (mPageIndex)
-	{
-	case CHALLENGE_PAGE_CHALLENGE:
-		mMaxScrollPosition = 119 * 4 * 2;
-		break;
-	case CHALLENGE_PAGE_LIMBO:
-	case CHALLENGE_PAGE_SURVIVAL:
-	case CHALLENGE_PAGE_PUZZLE:
-	default:
-		mMaxScrollPosition = 0;
-		break;
-	}
-
-	mSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
-	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
-	mSlider->mHorizontal = true;
-	mSlider->Resize(160, 560, 540, 40);
-	//mSlider->mThumbOffsetX -= 1;
-	mSlider->mVisible = mMaxScrollPosition > 0;
 
 	for (int aPageIdx = CHALLENGE_PAGE_CHALLENGE; aPageIdx < MAX_CHALLANGE_PAGES; aPageIdx++)
 	{
@@ -164,7 +143,10 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 		aPageButton->SetFont(Sexy::FONT_DWARVENTODCRAFT18GREENINSET);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
 		aPageButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(220, 220, 0);
-		aPageButton->Resize(50 * aPageIdx + 5, 50, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight); /*
+		aPageButton->Resize(50 * aPageIdx + 5, 50, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
+		if (aPageIdx == 1 || aPageIdx == 2 || (aPageIdx == 3 && mApp->mTodCheatKeys))
+			aPageButton->mVisible = mApp->HasFinishedAdventure();
+		/*
 		switch (aPageIdx) {
 			case 0:
 			case 1:
@@ -229,6 +211,13 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 			mApp->mPlayerInfo->mHasNewIZombie = false;
 		}
 	}
+
+	mSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
+	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
+	mSlider->mHorizontal = true;
+	mSlider->Resize(160, 560, 540, 40);
+	//mSlider->mThumbOffsetX -= 1;
+	mSlider->mVisible = true;
 }
 
 void ChallengeScreen::SliderVal(int theId, double theVal)
@@ -489,6 +478,7 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 				g->SetColorizeImages(true);
 			}
 			g->SetClipRect(cChallengeRect);
+			g->SetScale(0.5f, 0.5f, aPosX + 13, aPosY + 4);
 			if (mPageIndex == CHALLENGE_PAGE_SURVIVAL)
 			{
 				g->DrawImageCel(Sexy::IMAGE_SURVIVAL_THUMBNAILS, aPosX + 13, aPosY + 4, aDef.mChallengeIconIndex);
@@ -497,6 +487,7 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 			{
 				g->DrawImageCel(Sexy::IMAGE_CHALLENGE_THUMBNAILS, aPosX + 13, aPosY + 4, aDef.mChallengeIconIndex);
 			}
+			g->SetScale(1.0f, 1.0f, aPosX + 13, aPosY + 4);
 
 			// ============================================================================================
 			// ▲ 绘制小游戏按钮边框
@@ -633,11 +624,14 @@ void ChallengeScreen::Draw(Graphics* g)
 	TodDrawString(g, aTitleString, 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
 
 	int aTrophiesGot = mApp->GetNumTrophies(mPageIndex);
-	int aTrophiesTotal = mPageIndex == CHALLENGE_PAGE_SURVIVAL ? 10 : mPageIndex == CHALLENGE_PAGE_CHALLENGE ? 20 : mPageIndex == CHALLENGE_PAGE_PUZZLE ? 18 : 0;
+	int aTrophiesTotal = mPageIndex == CHALLENGE_PAGE_SURVIVAL ? 10 : mPageIndex == CHALLENGE_PAGE_CHALLENGE ? 20 : mPageIndex == CHALLENGE_PAGE_PUZZLE ? 18 : mPageIndex == CHALLENGE_PAGE_LIMBO ? 0 : 0;
 	if (aTrophiesTotal > 0)
 	{
 		SexyString aTrophyString = StrFormat(_S("%d/%d"), aTrophiesGot, aTrophiesTotal);
 		TodDrawString(g, aTrophyString, 739, 73, Sexy::FONT_DWARVENTODCRAFT12, Color(255, 240, 0), DS_ALIGN_CENTER);
+	}
+	else{
+		TodDrawString(g, "None", 739, 73, Sexy::FONT_DWARVENTODCRAFT12, Color(255, 240, 0), DS_ALIGN_CENTER);
 	}
 	TodDrawImageScaledF(g, Sexy::IMAGE_TROPHY, 718, 26, 0.5f, 0.5f);
 
@@ -660,17 +654,19 @@ void ChallengeScreen::Update()
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
 		mSlider->mVisible = true;
+		mMaxScrollPosition = 119 * 4 * 2;
 		break;
 	case CHALLENGE_PAGE_LIMBO:
 	case CHALLENGE_PAGE_SURVIVAL:
 	case CHALLENGE_PAGE_PUZZLE:
 	default:
 		mSlider->mVisible = false;
-		mScrollPosition = 0;
+		mScrollPosition = 0.1f;
 		break;
 	}
 
-	if (ShowPages)
+
+	if (ShowPages) /// TodAnimateCurve(int theTimeStart, int theTimeEnd, int theTimeAge, int thePositionStart, int thePositionEnd, TodCurves theCurve)
 		PageDropper->Resize(-30, -10, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
 	else
 		PageDropper->Resize(-30, -90, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);
@@ -770,6 +766,8 @@ void ChallengeScreen::ButtonDepress(int theId)
 	if (aPageIndex >= 0 && aPageIndex < 4)
 	{
 		mPageIndex = (ChallengePage)aPageIndex;
+		mSlider->SetValue(0);
+		mScrollPosition = 0;
 		UpdateButtons();
 	}
 }

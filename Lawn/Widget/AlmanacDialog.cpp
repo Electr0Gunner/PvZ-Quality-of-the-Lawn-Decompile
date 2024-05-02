@@ -311,8 +311,8 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 		if (!mApp->SeedTypeAvailable(aSeedType))
 		{
 			if (aSeedType != SeedType::SEED_IMITATER)
-				g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX, aPosY);
 				g->SetClipRect(cSeedClipRect);
+				g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX, aPosY - mScrollPosition);
 			g->ClearClipRect();
 		}
 		else {
@@ -326,9 +326,9 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 			else
 			{
 				g->SetClipRect(cSeedClipRect);
-				DrawSeedPacket(g, aPosX, aPosY, aSeedType, SeedType::SEED_NONE, 0, 255, true, false);
+				DrawSeedPacket(g, aPosX, aPosY + -mScrollPosition, aSeedType, SeedType::SEED_NONE, 0, 255, true, false);
 				if (aSeedType == aSeedMouseOn)
-					g->DrawImage(Sexy::IMAGE_SEEDPACKETFLASH, aPosX, aPosY);
+					g->DrawImage(Sexy::IMAGE_SEEDPACKETFLASH, aPosX, aPosY + -mScrollPosition);
 			}
 		}
 	}
@@ -585,7 +585,7 @@ SeedType AlmanacDialog::SeedHitTest(int x, int y)
 			{
 				int aSeedX, aSeedY;
 				GetSeedPosition(aSeedType, aSeedX, aSeedY);
-				Rect aSeedRect = aSeedType == SeedType::SEED_IMITATER ? Rect(aSeedX, aSeedY + -mScrollPosition, 34, 46) : Rect(aSeedX, aSeedY, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT);
+				Rect aSeedRect = aSeedType != SeedType::SEED_IMITATER ? Rect(aSeedX, aSeedY + -mScrollPosition, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT) : Rect(aSeedX, aSeedY, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT);
 				if (aSeedType != SeedType::SEED_IMITATER) {
 					if (cSeedClipRect.Contains(x, y) && aSeedRect.Contains(x, y))
 					{
