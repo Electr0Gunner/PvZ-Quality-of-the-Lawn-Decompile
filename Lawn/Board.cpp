@@ -167,7 +167,7 @@ Board::Board(LawnApp* theApp)
 	mFastButton = new GameButton(2);
 	mFastButton->mBtnNoDraw = true;
 	mFastButton->mDisabled = true;
-	mFastButton->Resize(740, -90, IMAGE_FASTBUTTON->mWidth, 46);
+	mFastButton->Resize(740, -110, IMAGE_FASTBUTTON->mWidth, 46);
 	mFastButton->mButtonImage = IMAGE_FASTBUTTON;
 	mFastButton->mOverImage = IMAGE_FASTBUTTON;
 	mFastButton->mDownImage = IMAGE_FASTBUTTON_HIGHLIGHT;
@@ -1303,7 +1303,7 @@ void Board::InitSurvivalStage()
 	mApp->ShowSeedChooserScreen();
 	mCutScene->StartLevelIntro();
 	mSeedBank->UpdateWidth();
-	mFastButton->mY = -90;
+	mFastButton->mY = -110;
 
 	for (int i = 0; i < SEEDBANK_MAX; i++)
 	{

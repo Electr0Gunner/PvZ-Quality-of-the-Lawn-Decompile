@@ -1164,7 +1164,7 @@ void CutScene::AnimateBoard()
 		int aTimeSeedChoserSlideOffEnd = TimeSeedChoserSlideOffEnd + mCrazyDaveTime;
 		if (mCutsceneTime > aTimeSeedChoserSlideOffStart && mCutsceneTime <= aTimeSeedChoserSlideOffEnd)
 		{
-			aSeedChoser->Move(BOARD_ADDITIONAL_WIDTH, CalcPosition(aTimeSeedChoserSlideOffStart, aTimeSeedChoserSlideOffEnd, 0, SEED_CHOOSER_OFFSET_Y));
+			aSeedChoser->Move(BOARD_ADDITIONAL_WIDTH, CalcPosition(aTimeSeedChoserSlideOffStart, aTimeSeedChoserSlideOffEnd, SEED_CHOOSER_OFFSET_Y, SEED_CHOOSER_OFFSET_Y));
 			aSeedChoser->mMenuButton->mDisabled = true;
 		}
 	}
@@ -1198,10 +1198,9 @@ void CutScene::AnimateBoard()
 	int aTimeSeedBankRightEnd = TimeSeedBankRightEnd + mCrazyDaveTime;
 	if (mCutsceneTime > aTimeSeedBankRightStart)
 	{
-		int aSeedBankX = CalcPosition(aTimeSeedBankRightStart, aTimeSeedBankRightEnd, SEED_BANK_OFFSET_X, SEED_BANK_OFFSET_X_END);
 		int aDarken = TodAnimateCurve(aTimeSeedBankRightStart, aTimeSeedBankRightEnd, mCutsceneTime, 255, 128, TodCurves::CURVE_EASE_OUT);
 		mBoard->mSeedBank->mCutSceneDarken = aDarken;
-		mBoard->mSeedBank->Move(aSeedBankX, mBoard->mSeedBank->mY);
+		mBoard->mSeedBank->Move(mBoard->mSeedBank->mX, mBoard->mSeedBank->mY);
 	}
 
 	// ====================================================================================================
