@@ -1352,7 +1352,7 @@ void LawnApp::HandleCmdLineParam(const std::string& theParamName, const std::str
 	if (theParamName == "-tod")
 	{
 #ifdef _DEBUG
-		//mTodCheatKeys = true;
+		mTodCheatKeys = true;
 		mDebugKeysEnabled = true;
 #endif
 	}

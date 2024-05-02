@@ -5211,6 +5211,8 @@ void Board::PuzzleSaveStreak()
 //0x413400
 void Board::ZombiesWon(Zombie* theZombie)
 {
+	mApp->isFastMode = false;
+	mFastButton->mBtnNoDraw = true;
 	if (mApp->mGameScene == GameScenes::SCENE_ZOMBIES_WON)
 		return;
 

@@ -4,7 +4,7 @@
 #include "LawnDialog.h"
 #include "../../ConstEnums.h"
 
-#define NUM_ALMANAC_SEEDS NUM_SEED_TYPES
+#define NUM_ALMANAC_SEEDS NUM_SEED_TYPES - 4
 #define NUM_ALMANAC_ZOMBIES NUM_ZOMBIE_TYPES
 
 constexpr const float			ALMANAC_PLANT_POSITION_X		= 578.0f;
