@@ -7,9 +7,12 @@ constexpr const double PI = 3.141592653589793;
 // ============================================================
 // ■ 常数
 // ============================================================
-const int			BOARD_WIDTH = 800;
-const int			BOARD_HEIGHT = 600;
-const int			WIDE_BOARD_WIDTH = 800;
+const int			BOARD_WIDTH = 1280; // PC: 800 - Console : 1280
+const int			BOARD_HEIGHT = 720; // PC : 600 - Console : 720
+const int			WIDE_BOARD_WIDTH = 800; // PC: 800 - Console : 800
+const int			BOARD_OFFSET_X = 220; // PC: 220
+const int			BOARD_OFFSET_Y = 60; // Console : 60
+const int			BOARD_ADDITIONAL_WIDTH = 240; // Console : 240
 const int			BOARD_OFFSET = 220;
 const int			BOARD_EDGE = -100;
 const int			BOARD_IMAGE_WIDTH_OFFSET = 1180;
