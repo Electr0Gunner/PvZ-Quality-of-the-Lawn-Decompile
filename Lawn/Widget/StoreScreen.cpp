@@ -26,7 +26,7 @@ static StoreItem gStoreItemSpots[NUM_STORE_PAGES][MAX_PAGE_SPOTS] =
     { STORE_ITEM_PACKET_UPGRADE,    STORE_ITEM_POOL_CLEANER,        STORE_ITEM_RAKE,                STORE_ITEM_ROOF_CLEANER,
       STORE_ITEM_PLANT_GATLINGPEA,  STORE_ITEM_PLANT_TWINSUNFLOWER, STORE_ITEM_PLANT_GLOOMSHROOM,   STORE_ITEM_PLANT_CATTAIL },
     { STORE_ITEM_PLANT_SPIKEROCK,   STORE_ITEM_PLANT_GOLD_MAGNET,   STORE_ITEM_PLANT_WINTERMELON,   STORE_ITEM_PLANT_COBCANNON,
-      STORE_ITEM_PLANT_IMITATER,    STORE_ITEM_FIRSTAID,            STORE_ITEM_INVALID,             STORE_ITEM_INVALID },
+      STORE_ITEM_PLANT_IMITATER,    STORE_ITEM_FIRSTAID,            STORE_ITEM_INVALID,             STORE_ITEM_INVALID, },
     { STORE_ITEM_POTTED_MARIGOLD_1, STORE_ITEM_POTTED_MARIGOLD_2,   STORE_ITEM_POTTED_MARIGOLD_3,   STORE_ITEM_GOLD_WATERINGCAN,
       STORE_ITEM_FERTILIZER,        STORE_ITEM_BUG_SPRAY,           STORE_ITEM_PHONOGRAPH,          STORE_ITEM_GARDENING_GLOVE },
     { STORE_ITEM_MUSHROOM_GARDEN,   STORE_ITEM_AQUARIUM_GARDEN,     STORE_ITEM_WHEEL_BARROW,        STORE_ITEM_STINKY_THE_SNAIL,
@@ -48,7 +48,7 @@ void StoreScreenOverlay::Draw(Graphics* g)
 //0x489DA0
 StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STORE, true, _S("Store"), _S(""), _S(""), BUTTONS_NONE)
 {
-	mApp = theApp;
+    mApp = theApp;
     mClip = false;
     mStoreTime = 0;
     mBubbleCountDown = 0;
@@ -80,7 +80,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mBackButton->SetFont(Sexy::FONT_HOUSEOFTERROR20);
     mBackButton->mColors[ButtonWidget::COLOR_LABEL] = Color(98, 153, 235);
     mBackButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(167, 192, 235);
-    mBackButton->Resize(366, 512, aMenuImage->mWidth, aMenuImage->mHeight);
+    mBackButton->Resize(400 + BOARD_OFFSET_X, 577, aMenuImage->mWidth, aMenuImage->mHeight);
     mBackButton->mTextOffsetX = -7;
     mBackButton->mTextOffsetY = 1;
     mBackButton->mTextDownOffsetX = 2;
@@ -95,7 +95,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mPrevButton->mDownImage = Sexy::IMAGE_STORE_PREVBUTTONHIGHLIGHT;
     mPrevButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
     mPrevButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(200, 200, 255);
-    mPrevButton->Resize(252, 402, aPrevImage->mWidth, aPrevImage->mHeight);
+    mPrevButton->Resize(260 + BOARD_OFFSET_X, 447, aPrevImage->mWidth, aPrevImage->mHeight);
 
     mNextButton = new NewLawnButton(nullptr, StoreScreen::StoreScreen_Next, this);
     mNextButton->mDoFinger = true;
@@ -106,7 +106,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mNextButton->mDownImage = Sexy::IMAGE_STORE_NEXTBUTTONHIGHLIGHT;
     mNextButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
     mNextButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(200, 200, 255);
-    mNextButton->Resize(596, 402, aNextImage->mWidth, aNextImage->mHeight);
+    mNextButton->Resize(667 + BOARD_OFFSET_X, 448, aNextImage->mWidth, aNextImage->mHeight);
 
     mOverlayWidget = new StoreScreenOverlay(this);
     mOverlayWidget->Resize(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
@@ -160,7 +160,7 @@ bool StoreScreen::IsFullVersionOnly(StoreItem theStoreItem)
 
     if (theStoreItem == STORE_ITEM_PACKET_UPGRADE && mApp->mPlayerInfo->mPurchases[STORE_ITEM_PACKET_UPGRADE] >= 2)
         return true;
-    
+
     return theStoreItem == STORE_ITEM_PLANT_TWINSUNFLOWER;
 }
 
@@ -227,10 +227,10 @@ bool StoreScreen::IsItemUnavailable(StoreItem theStoreItem)
         return aCurrentLevel < 41;
     }
 
-    return 
-        theStoreItem != STORE_ITEM_PLANT_WINTERMELON && 
+    return
+        theStoreItem != STORE_ITEM_PLANT_WINTERMELON &&
         theStoreItem != STORE_ITEM_PLANT_COBCANNON &&
-        theStoreItem != STORE_ITEM_PLANT_IMITATER && 
+        theStoreItem != STORE_ITEM_PLANT_IMITATER &&
         theStoreItem != STORE_ITEM_FIRSTAID;
     */
 
@@ -266,12 +266,12 @@ void StoreScreen::GetStorePosition(int theSpotIndex, int& thePosX, int& thePosY)
 {
     if (theSpotIndex <= 3)
     {
-        thePosX = STORESCREEN_ITEMOFFSET_1_X + STORESCREEN_ITEMSIZE * theSpotIndex;
+        thePosX = STORESCREEN_ITEMOFFSET_1_X + STORESCREEN_ITEMSIZE * theSpotIndex + BOARD_OFFSET_X;
         thePosY = STORESCREEN_ITEMOFFSET_1_Y;
     }
     else
     {
-        thePosX = STORESCREEN_ITEMOFFSET_2_X + STORESCREEN_ITEMSIZE * (theSpotIndex - 4);
+        thePosX = STORESCREEN_ITEMOFFSET_2_X + STORESCREEN_ITEMSIZE * (theSpotIndex - 4) + BOARD_OFFSET_X;
         thePosY = STORESCREEN_ITEMOFFSET_2_Y;
     }
 }
@@ -446,20 +446,20 @@ void StoreScreen::Draw(Graphics* g)
 
     if (!mHatchTimer && mHatchOpen)
     {
-        g->DrawImage(Sexy::IMAGE_STORE_CAR, mShakeX + 196, mShakeY + 138);
-        g->DrawImage(Sexy::IMAGE_STORE_HATCHBACKOPEN, mShakeX + 299, mShakeY);
+        g->DrawImage(Sexy::IMAGE_STORE_CAR, mShakeX + 196 + BOARD_OFFSET_X, mShakeY + 138);
+        g->DrawImage(Sexy::IMAGE_STORE_HATCHBACKOPEN, mShakeX + 299 + BOARD_OFFSET_X, mShakeY);
         if (mApp->IsNight())
         {
-            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 688, mShakeY + 193);
+            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 196 + BOARD_OFFSET_X, mShakeY + 138);
         }
     }
     else
     {
-        g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED, mShakeX + 196, mShakeY + 138);
+        g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED, mShakeX + 196 + BOARD_OFFSET_X, mShakeY + 138);
         if (mApp->IsNight())
         {
-            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 688, mShakeY + 193);
-            g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED_NIGHT, mShakeX + 337, mShakeY + 187);
+            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 688 + BOARD_OFFSET_X, mShakeY + 193);
+            g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED_NIGHT, mShakeX + 337 + BOARD_OFFSET_X, mShakeY + 187);
         }
     }
     g->DrawImage(Sexy::IMAGE_STORE_SIGN, 285, aStoreSignPosY);
@@ -481,11 +481,11 @@ void StoreScreen::Draw(Graphics* g)
         }
     }
 
-    g->DrawImage(Sexy::IMAGE_COINBANK, STORESCREEN_COINBANK_X, STORESCREEN_COINBANK_Y);
+    g->DrawImage(Sexy::IMAGE_COINBANK, STORESCREEN_COINBANK_X + BOARD_OFFSET_X, STORESCREEN_COINBANK_Y);
     g->SetColor(Color(180, 255, 90));
     g->SetFont(Sexy::FONT_CONTINUUMBOLD14);
     SexyString aCoinLabel = mApp->GetMoneyString(mApp->mPlayerInfo->mCoins);
-    g->DrawString(aCoinLabel, STORESCREEN_COINBANK_X + 111 - Sexy::FONT_CONTINUUMBOLD14->StringWidth(aCoinLabel), STORESCREEN_COINBANK_Y + 24);
+    g->DrawString(aCoinLabel, STORESCREEN_COINBANK_X + 111 - Sexy::FONT_CONTINUUMBOLD14->StringWidth(aCoinLabel) + BOARD_OFFSET_X, STORESCREEN_COINBANK_Y + 24);
 
     if (!mPrevButton->mDisabled)
     {
@@ -499,7 +499,7 @@ void StoreScreen::Draw(Graphics* g)
         }
 
         SexyString aPageString = TodReplaceNumberString(TodReplaceNumberString(_S("[STORE_PAGE]"), _S("{PAGE}"), mPage), _S("{NUM_PAGES}"), aNumPages);
-        TodDrawString(g, aPageString, STORESCREEN_PAGESTRING_X, STORESCREEN_COINBANK_Y, Sexy::FONT_BRIANNETOD12, Color(80, 80, 80), DS_ALIGN_CENTER);
+        TodDrawString(g, aPageString, STORESCREEN_PAGESTRING_X + BOARD_OFFSET_X, STORESCREEN_COINBANK_Y, Sexy::FONT_BRIANNETOD12, Color(80, 80, 80), DS_ALIGN_CENTER);
     }
 }
 
@@ -696,7 +696,7 @@ void StoreScreen::Update()
                     mShakeY = 0;
                 }
             }
-            
+
             mBackButton->mX += mShakeX;
             mBackButton->mY += mShakeY;
             mPrevButton->mX += mShakeX;
@@ -716,7 +716,7 @@ void StoreScreen::Update()
                 mBubbleCountDown--;
                 if (mBubbleCountDown == 0)
                 {
-                    if (mApp->mSoundSystem->IsFoleyPlaying(FOLEY_CRAZY_DAVE_SHORT) || 
+                    if (mApp->mSoundSystem->IsFoleyPlaying(FOLEY_CRAZY_DAVE_SHORT) ||
                         mApp->mSoundSystem->IsFoleyPlaying(FOLEY_CRAZY_DAVE_LONG) ||
                         mApp->mSoundSystem->IsFoleyPlaying(FOLEY_CRAZY_DAVE_EXTRA_LONG))
                     {
@@ -921,11 +921,11 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
     else
     {
         LawnDialog* aComfirmDialog = (LawnDialog*)mApp->DoDialog(
-            DIALOG_STORE_PURCHASE, 
-            true, 
-            _S("Buy this item?"), 
-            _S("Are you sure you want to buy this item?"), 
-            _S(""), 
+            DIALOG_STORE_PURCHASE,
+            true,
+            _S("Buy this item?"),
+            _S("Are you sure you want to buy this item?"),
+            _S(""),
             BUTTONS_YES_NO
         );
         aComfirmDialog->mLawnYesButton->SetLabel(_S("[DIALOG_BUTTON_YES]"));
@@ -987,11 +987,11 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
                 mApp->mPlayerInfo->mChallengeRecords[GAMEMODE_TREE_OF_WISDOM] = 1;
 
                 LawnDialog* aDialog = (LawnDialog*)mApp->DoDialog(
-                    DIALOG_STORE_PURCHASE, 
-                    true, 
-                    _S("[VISIT_TREE_HEADER]"), 
-                    _S("[VISIT_TREE_BODY]"), 
-                    _S(""), 
+                    DIALOG_STORE_PURCHASE,
+                    true,
+                    _S("[VISIT_TREE_HEADER]"),
+                    _S("[VISIT_TREE_BODY]"),
+                    _S(""),
                     BUTTONS_YES_NO
                 );
                 aDialog->mLawnYesButton->SetLabel(_S("[DIALOG_BUTTON_YES]"));
@@ -1076,7 +1076,7 @@ void StoreScreen::AdvanceCrazyDaveDialog()
         mApp->WriteCurrentUserConfig();
         mApp->PlaySample(Sexy::SOUND_DIAMOND);
         Coin* aCoin = mCoins.DataArrayAlloc();
-        aCoin->CoinInitialize(80, 520, COIN_DIAMOND, COIN_MOTION_FROM_PRESENT);
+        aCoin->CoinInitialize(80 + BOARD_OFFSET_X, 520, COIN_DIAMOND, COIN_MOTION_FROM_PRESENT);
         aCoin->mVelX = 0;
         aCoin->mVelY = -5;
     }
@@ -1120,7 +1120,7 @@ void StoreScreen::MouseDown(int x, int y, int theClickCount)
                     if (mApp->mDRM) mApp->mDRM->BuyGame();
                 }
             }
-            else if(!IsItemSoldOut(aItemType) && !IsItemUnavailable(aItemType) && !IsComingSoon(aItemType))
+            else if (!IsItemSoldOut(aItemType) && !IsItemUnavailable(aItemType) && !IsComingSoon(aItemType))
                 PurchaseItem(aItemType);
             break;
         }

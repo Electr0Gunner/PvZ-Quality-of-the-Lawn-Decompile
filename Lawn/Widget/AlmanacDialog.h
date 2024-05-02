@@ -3,18 +3,21 @@
 
 #include "LawnDialog.h"
 #include "../../ConstEnums.h"
-
-#define NUM_ALMANAC_SEEDS NUM_SEED_TYPES - 4
+#ifdef _DEBUG
+#define NUM_ALMANAC_SEEDS NUM_SEED_TYPES
+#else
+#define NUM_ALMANAC_SEEDS NUM_SEED_TYPES - 4 
+#endif
 #define NUM_ALMANAC_ZOMBIES NUM_ZOMBIE_TYPES
 
-constexpr const float			ALMANAC_PLANT_POSITION_X		= 578.0f;
+constexpr const float			ALMANAC_PLANT_POSITION_X		= 874.0f;
 constexpr const float			ALMANAC_PLANT_POSITION_Y		= 140.0f;
-constexpr const float			ALMANAC_ZOMBIE_POSITION_X		= 559.0f;
+constexpr const float			ALMANAC_ZOMBIE_POSITION_X		= 920.0f;
 constexpr const float			ALMANAC_ZOMBIE_POSITION_Y		= 175.0f;
-constexpr const int				ALMANAC_INDEXPLANT_POSITION_X	= 167;
-constexpr const int				ALMANAC_INDEXPLANT_POSITION_Y	= 255;
-constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_X	= 535.0f;
-constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_Y	= 215.0f;
+constexpr const int				ALMANAC_INDEXPLANT_POSITION_X	= 157 + BOARD_OFFSET_X;
+constexpr const int				ALMANAC_INDEXPLANT_POSITION_Y	= 255 + BOARD_OFFSET_Y;
+constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_X	= 575.0f + BOARD_OFFSET_X;
+constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_Y	= 225.0f + BOARD_OFFSET_Y;
 
 class Plant;
 class Zombie;
