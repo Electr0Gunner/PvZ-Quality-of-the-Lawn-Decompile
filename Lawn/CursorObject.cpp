@@ -58,8 +58,8 @@ void CursorObject::Update()
     }
 
     mVisible = true;
-    mX = mApp->mWidgetManager->mLastMouseX - 25;
-    mY = mApp->mWidgetManager->mLastMouseY - 35;
+    mX = mApp->mWidgetManager->mLastMouseX - 25 - BOARD_ADDITIONAL_WIDTH;
+    mY = mApp->mWidgetManager->mLastMouseY - 35 - BOARD_OFFSET_Y;
 }
 
 void CursorObject::Die()
@@ -235,8 +235,8 @@ void CursorPreview::Update()
     }
 
     SeedType aSeedType = mBoard->GetSeedTypeInCursor();
-    int aMouseX = mApp->mWidgetManager->mLastMouseX;
-    int aMouseY = mApp->mWidgetManager->mLastMouseY;
+    int aMouseX = mApp->mWidgetManager->mLastMouseX - BOARD_ADDITIONAL_WIDTH;
+    int aMouseY = mApp->mWidgetManager->mLastMouseY - BOARD_OFFSET_Y;
     mGridX = mBoard->PlantingPixelToGridX(aMouseX, aMouseY, aSeedType);
     mGridY = mBoard->PlantingPixelToGridY(aMouseX, aMouseY, aSeedType);
     if (mGridX >= 0 && mGridX < MAX_GRID_SIZE_X && mGridY >= 0 && mGridY <= MAX_GRID_SIZE_Y)

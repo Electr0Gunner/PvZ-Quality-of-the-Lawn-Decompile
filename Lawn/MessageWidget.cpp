@@ -304,7 +304,7 @@ void MessageWidget::Draw(Graphics* g)
 	
 	Font* aFont = GetFont();
 	Font* aOutlineFont = nullptr;
-	int aPosX = BOARD_WIDTH / 2;
+	int aPosX = (BOARD_WIDTH / 2) - BOARD_ADDITIONAL_WIDTH;
 	int aPosY = 596;
 	int aTextOffsetY = 0;
 	int aRectHeight = 0;
@@ -413,7 +413,7 @@ void MessageWidget::Draw(Graphics* g)
 		if (aRectHeight > 0)
 		{
 			aOutlineColor = Color(0, 0, 0, 128);
-			Rect aRect(0, aPosY, BOARD_WIDTH, aRectHeight);
+			Rect aRect(-BOARD_ADDITIONAL_WIDTH, aPosY, BOARD_WIDTH, aRectHeight);
 			g->SetColor(aOutlineColor);
 			g->FillRect(aRect);
 

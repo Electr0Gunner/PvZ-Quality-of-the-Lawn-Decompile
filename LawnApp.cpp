@@ -425,7 +425,8 @@ void LawnApp::MakeNewBoard()
 {
 	KillBoard();
 	mBoard = new Board(this);
-	mBoard->Resize(0, 0, mWidth, mHeight);
+	mBoard->Resize(BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y, mWidth, mHeight);
+	mBoard->Move(BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
 	mWidgetManager->AddWidget(mBoard);
 	mWidgetManager->BringToBack(mBoard);
 	mWidgetManager->SetFocus(mBoard);
