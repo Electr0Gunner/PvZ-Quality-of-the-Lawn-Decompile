@@ -54,6 +54,7 @@ Board::Board(LawnApp* theApp)
 	mCoins.DataArrayInitialize(1024U, "coins");
 	mLawnMowers.DataArrayInitialize(32U, "lawnmowers");
 	mGridItems.DataArrayInitialize(128U, "griditems");
+	mBush.DataArrayInitialize(1024U, "bushes");
 	TodHesitationTrace("board dataarrays");
 
 	mApp->mEffectSystem->EffectSystemFreeAll();
@@ -91,6 +92,7 @@ Board::Board(LawnApp* theApp)
 	mShakeAmountX = 0;
 	mShakeAmountY = 0;
 	mPaused = false;
+	mBushInit = false;
 	mLevelAwardSpawned = false;
 	mFlagRaiseCounter = 0;
 	mIceTrapCounter = 0;
@@ -1396,6 +1398,16 @@ void Board::InitLevel()
 	mLevel = mApp->IsAdventureMode() ? mApp->mPlayerInfo->mLevel : 0;
 	// 设定关卡背景
 	PickBackground();
+	if (!mBushInit) {
+		bool nighty = StageIsNight();
+		for (int i = 0; i < 6; i++) {
+			Bush* bush = mBush.DataArrayAlloc();
+			bush->BushInitialize(BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i), BOARD_OFFSET_Y - 20 + 80 * i + 40 * i, i, i + 1, nighty);
+			mBushList[i] = bush;
+		}
+
+		mBushInit = true;
+	}
 	// 设定关卡出怪
 	InitZombieWaves();
 	// 设定关卡初始阳光数量
@@ -2714,7 +2726,9 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 
 Zombie* Board::AddZombie(ZombieType theZombieType, int theFromWave)
 {
-	return AddZombieInRow(theZombieType, PickRowForNewZombie(theZombieType), theFromWave); 
+	int mRow = PickRowForNewZombie(theZombieType);
+	mBushList[mRow]->AnimateBush(mRow);
+	return AddZombieInRow(theZombieType, mRow, theFromWave);
 }
 
 //0x40DEA0
@@ -6308,6 +6322,12 @@ void Board::DrawGameObjects(Graphics* g)
 		{
 			AddGameObjectRenderItemCoin(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_COIN, aCoin);
 		}
+
+		Bush* aBush = nullptr;
+		while (IterateBushes(aBush))
+		{
+			AddGameObjectRenderItemZombie(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_BUSH, aBush);
+		}
 	}
 	{
 		Zombie* aZombie = nullptr;
@@ -6657,6 +6677,17 @@ void Board::DrawGameObjects(Graphics* g)
 			DrawUITop(g);
 			break;
 			
+		case RenderObjectType::RENDER_ITEM_BUSH:
+		{
+			Bush* bush = aRenderItem.mBush;
+			if (bush->BeginDraw(g))
+			{
+				bush->Draw(g);
+				bush->EndDraw(g);
+			}
+			break;
+		}
+
 		case RenderObjectType::RENDER_ITEM_FOG:
 			DrawFog(g);
 			break;
@@ -8281,6 +8312,10 @@ void Board::KeyChar(SexyChar theChar)
 		{
 			mDebugTextMode = DebugTextMode::DEBUG_TEXT_NONE;
 		}
+	}
+	else if (theChar == _S('-'))
+	{
+		mBushList[1]->AnimateBush(1);
 	}
 
 	if (mApp->mGameScene != GameScenes::SCENE_PLAYING)
@@ -9977,14 +10012,16 @@ bool Board::IsZombieTypeSpawnedOnly(ZombieType theZombieType)
 	return (theZombieType == ZombieType::ZOMBIE_BACKUP_DANCER || theZombieType == ZombieType::ZOMBIE_BOBSLED || theZombieType == ZombieType::ZOMBIE_IMP);
 }
 
+bool Board::IterateBushes(Bush*& theBush)
+{
+	while (mBush.IterateNext(theBush))
+	{
+		if (!theBush->mDead)
+		{
+			return true;
+		}
+	}
 
-
-
-
-
-
-
-
-
-
-
+	theBush = (Bush*)-1;
+	return false;
+}

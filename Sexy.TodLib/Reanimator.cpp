@@ -159,7 +159,13 @@ ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS] = { /
 	{ ReanimationType::REANIM_CREDITS_ANYHOUR,                      "reanim\\Credits_Anyhour.reanim",                   3 },
 	{ ReanimationType::REANIM_CREDITS_WEARETHEUNDEAD,               "reanim\\Credits_WeAreTheUndead.reanim",            1 },
 	{ ReanimationType::REANIM_CREDITS_DISCOLIGHTS,                  "reanim\\Credits_DiscoLights.reanim",               1 },
-	{ ReanimationType::REANIM_FLAG,                                 "reanim\\Zombie_FlagPole.reanim",                   0 }
+	{ ReanimationType::REANIM_FLAG,                                 "reanim\\Zombie_FlagPole.reanim",                   0 },
+	{ ReanimationType::REANIM_BUSH3,                                "reanim\\Zombie_FlagPole.reanim",                           0 },
+	{ ReanimationType::REANIM_BUSH4,                                "reanim\\Zombie_FlagPole.reanim",                           0 },
+	{ ReanimationType::REANIM_BUSH5,                                "reanim\\Zombie_FlagPole.reanim",                           0 },
+	{ ReanimationType::REANIM_BUSH3_NIGHT,                          "reanim\\Night_bushes3.reanim",                     0 },
+	{ ReanimationType::REANIM_BUSH4_NIGHT,                          "reanim\\Night_bushes4.reanim",                     0 },
+	{ ReanimationType::REANIM_BUSH5_NIGHT,                          "reanim\\Night_bushes5.reanim",                     0 },
 };
 
 //0x471540

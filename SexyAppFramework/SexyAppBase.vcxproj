@@ -104,6 +104,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Lawn\Board.cpp" />
+    <ClCompile Include="..\Lawn\Bush.cpp" />
     <ClCompile Include="..\Lawn\Challenge.cpp" />
     <ClCompile Include="..\Lawn\Coin.cpp" />
     <ClCompile Include="..\Lawn\CursorObject.cpp" />
@@ -632,6 +633,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Lawn\Bush.h" />
     <ClInclude Include="..\Lawn\System\DataSync.h" />
     <ClInclude Include="..\Lawn\System\ProfileMgr.h" />
     <ClInclude Include="..\Lawn\System\ReanimationLawn.h" />
