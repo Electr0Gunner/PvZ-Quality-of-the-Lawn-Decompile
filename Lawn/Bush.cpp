@@ -8,6 +8,7 @@
 #include "../Sexy.TodLib/TodDebug.h"
 #include "../Sexy.TodLib/Reanimator.h"
 #include "../Sexy.TodLib/Attachment.h"
+#include "../Sexy.TodLib/EffectSystem.h"
 
 Bush::Bush()
 {
@@ -39,15 +40,20 @@ void Bush::BushInitialize(int theX, int theY, int ID, int mRow, bool NightMode)
     mReanimID = REANIMATIONID_NULL;
     mAttachmentID = AttachmentID::ATTACHMENTID_NULL;
     mRenderOrder = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_ZOMBIE, mRow, 8 * abs(mRow));
-    Reanimation* aBodyReanim = mApp->AddReanimation(theX, theY, mRenderOrder, BushReanims[id]);
-    AttachReanim(mAttachmentID, aBodyReanim, 0, 0);
+    Reanimation* aBodyReanim = mApp->mEffectSystem->mReanimationHolder->AllocReanimation(theX, theY, mRenderOrder, BushReanims[id]);
+    aBodyReanim->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
+    aBodyReanim->mAnimRate = 12.0f;
+    aBodyReanim->PlayReanim("anim_idle", REANIM_PLAY_ONCE_AND_HOLD, 1, 12.0f);
     mReanimID = mApp->ReanimationGetID(aBodyReanim);
-    aBodyReanim->PlayReanim("base bush", REANIM_PLAY_ONCE_AND_HOLD, 0, 0.0f);
+    AttachReanim(mAttachmentID, aBodyReanim, 0, 0);
 }
 
-void Bush::AnimateBush(int ID)
+void Bush::AnimateBush()
 {
-    mApp->ReanimationTryToGet(mReanimID)->PlayReanim("anim_rustle", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 10, RandRangeFloat(9.0f, 14.0f));
+    Reanimation* mReanim = mApp->ReanimationTryToGet(mReanimID);
+    TOD_ASSERT(mReanim);
+    if(mReanim)
+        mReanim->PlayReanim("anim_rustle", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 1, RandRangeFloat(9.0f, 14.0f));
 }
 
 //0x432DD0

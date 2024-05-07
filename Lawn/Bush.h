@@ -30,7 +30,7 @@ public:
     void                    Die();
     void                    Update();
     void                    Draw(Graphics* g);
-    void                    AnimateBush(int ID);
+    void                    AnimateBush();
 
 };
 

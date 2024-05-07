@@ -242,6 +242,7 @@ Board::~Board()
 	mCoins.DataArrayDispose();
 	mLawnMowers.DataArrayDispose();
 	mGridItems.DataArrayDispose();
+	mBush.DataArrayDispose();
 	if (mToolTip)
 	{
 		delete mToolTip;
@@ -884,6 +885,17 @@ void Board::LoadBackgroundImages()
 		TOD_ASSERT();
 		break;
 	}
+
+	//if (!mBushInit) {
+	bool nighty = StageIsNight();
+	for (int i = 0; i < 6; i++) {
+		Bush* bush = mBush.DataArrayAlloc();
+		bush->BushInitialize(BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i), BOARD_OFFSET_Y - 20 + 80 * i + 40 * i, i, i + 1, nighty);
+		mBushList[i] = bush;
+	}
+
+	mBushInit = true;
+	//}
 }
 
 //0x40A550
@@ -1030,6 +1042,17 @@ void Board::PickBackground()
 		break;
 	}
 	LoadBackgroundImages();
+
+	/*if (!mBushInit) {
+		bool nighty = StageIsNight();
+		for (int i = 0; i < 6; i++) {
+			Bush* bush = mBush.DataArrayAlloc();
+			bush->BushInitialize(BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i), BOARD_OFFSET_Y - 20 + 80 * i + 40 * i, i, i + 1, nighty);
+			mBushList[i] = bush;
+		}
+
+		mBushInit = true;
+	}*/
 
 	if (mBackground == BackgroundType::BACKGROUND_1_DAY || mBackground == BackgroundType::BACKGROUND_GREENHOUSE || mBackground == BackgroundType::BACKGROUND_TREEOFWISDOM)
 	{
@@ -1398,16 +1421,6 @@ void Board::InitLevel()
 	mLevel = mApp->IsAdventureMode() ? mApp->mPlayerInfo->mLevel : 0;
 	// 设定关卡背景
 	PickBackground();
-	if (!mBushInit) {
-		bool nighty = StageIsNight();
-		for (int i = 0; i < 6; i++) {
-			Bush* bush = mBush.DataArrayAlloc();
-			bush->BushInitialize(BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i), BOARD_OFFSET_Y - 20 + 80 * i + 40 * i, i, i + 1, nighty);
-			mBushList[i] = bush;
-		}
-
-		mBushInit = true;
-	}
 	// 设定关卡出怪
 	InitZombieWaves();
 	// 设定关卡初始阳光数量
@@ -2714,6 +2727,7 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 	bool aVariant = !Rand(5);
 	Zombie* aZombie = mZombies.DataArrayAlloc();
 	aZombie->ZombieInitialize(theRow, theZombieType, aVariant, nullptr, theFromWave);
+	mBushList[aZombie->mRow]->AnimateBush();
 	if (theZombieType == ZombieType::ZOMBIE_BOBSLED && aZombie->IsOnBoard())
 	{
 		for (int _i = 0; _i < 3; _i++)
@@ -2727,7 +2741,7 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 Zombie* Board::AddZombie(ZombieType theZombieType, int theFromWave)
 {
 	int mRow = PickRowForNewZombie(theZombieType);
-	mBushList[mRow]->AnimateBush(mRow);
+	//mBushList[mRow]->AnimateBush();
 	return AddZombieInRow(theZombieType, mRow, theFromWave);
 }
 
@@ -7287,6 +7301,7 @@ void Board::DrawDebugText(Graphics* g)
 		aText += StrFormat(_S("coins %d\n"), mCoins.mSize);
 		aText += StrFormat(_S("lawn mowers %d\n"), mLawnMowers.mSize);
 		aText += StrFormat(_S("grid items %d\n"), mGridItems.mSize);
+		aText += StrFormat(_S("bushes %d\n"), mBush.mSize);
 		break;
 
 	case DebugTextMode::DEBUG_TEXT_COLLISION:
@@ -8315,7 +8330,7 @@ void Board::KeyChar(SexyChar theChar)
 	}
 	else if (theChar == _S('-'))
 	{
-		mBushList[1]->AnimateBush(1);
+		mBushList[1]->AnimateBush();
 	}
 
 	if (mApp->mGameScene != GameScenes::SCENE_PLAYING)
@@ -8851,6 +8866,16 @@ void Board::ProcessDeleteQueue()
 			if (aGridItem->mDead)
 			{
 				mGridItems.DataArrayFree(aGridItem);
+			}
+		}
+	}
+	{
+		Bush* aBush = nullptr;
+		while (mBush.IterateNext(aBush))
+		{
+			if (aBush->mDead)
+			{
+				mBush.DataArrayFree(aBush);
 			}
 		}
 	}
