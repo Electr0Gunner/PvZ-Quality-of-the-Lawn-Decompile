@@ -886,16 +886,21 @@ void Board::LoadBackgroundImages()
 		break;
 	}
 
-	//if (!mBushInit) {
+	if(LawnHasBushes() && !mBushInit)
+		AddBushes();
+}
+
+void Board::AddBushes() {
 	bool nighty = StageIsNight();
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < MAX_GRID_SIZE_Y; i++) {
 		Bush* bush = mBush.DataArrayAlloc();
-		bush->BushInitialize(BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i), BOARD_OFFSET_Y - 20 + 80 * i + 40 * i, i, i + 1, nighty);
+		int bushX = BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i);
+		int bushY = BOARD_OFFSET_Y - 30 + 80 * i + 40 * i;
+		int mRow = i + 1;
+		bush->BushInitialize(bushX, bushY, mRow, nighty, i);
 		mBushList[i] = bush;
 	}
-
 	mBushInit = true;
-	//}
 }
 
 //0x40A550
@@ -1042,17 +1047,6 @@ void Board::PickBackground()
 		break;
 	}
 	LoadBackgroundImages();
-
-	/*if (!mBushInit) {
-		bool nighty = StageIsNight();
-		for (int i = 0; i < 6; i++) {
-			Bush* bush = mBush.DataArrayAlloc();
-			bush->BushInitialize(BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i), BOARD_OFFSET_Y - 20 + 80 * i + 40 * i, i, i + 1, nighty);
-			mBushList[i] = bush;
-		}
-
-		mBushInit = true;
-	}*/
 
 	if (mBackground == BackgroundType::BACKGROUND_1_DAY || mBackground == BackgroundType::BACKGROUND_GREENHOUSE || mBackground == BackgroundType::BACKGROUND_TREEOFWISDOM)
 	{
@@ -2727,7 +2721,6 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 	bool aVariant = !Rand(5);
 	Zombie* aZombie = mZombies.DataArrayAlloc();
 	aZombie->ZombieInitialize(theRow, theZombieType, aVariant, nullptr, theFromWave);
-	mBushList[aZombie->mRow]->AnimateBush();
 	if (theZombieType == ZombieType::ZOMBIE_BOBSLED && aZombie->IsOnBoard())
 	{
 		for (int _i = 0; _i < 3; _i++)
@@ -2738,10 +2731,12 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 	return aZombie;
 }
 
-Zombie* Board::AddZombie(ZombieType theZombieType, int theFromWave)
+Zombie* Board::AddZombie(ZombieType theZombieType, int theFromWave, bool useBush)
 {
 	int mRow = PickRowForNewZombie(theZombieType);
-	//mBushList[mRow]->AnimateBush();
+	if(useBush && LawnHasBushes() && mApp->mGameMode != GAMEMODE_CHALLENGE_INVISIGHOUL){
+		mBushList[abs(mRow - 1)]->AnimateBush();
+	}
 	return AddZombieInRow(theZombieType, mRow, theFromWave);
 }
 
@@ -4549,7 +4544,7 @@ void Board::MouseDown(int x, int y, int theClickCount)
 	}
 	if (mFastButton->IsMouseOver() && CanInteractWithBoardButtons() && theClickCount > 0)
 	{
-		mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
+		mApp->PlaySample(Sexy::SOUND_TAP);
 	}
 	else if (mStoreButton && mStoreButton->IsMouseOver() && CanInteractWithBoardButtons() && theClickCount > 0)
 	{
@@ -4975,8 +4970,8 @@ void Board::BungeeDropZombie(BungeeDropGrid* theBungeeDropGrid, ZombieType theZo
 	TodWeightedGridArray* aGrid = TodPickFromWeightedGridArray(theBungeeDropGrid->mGridArray, theBungeeDropGrid->mGridArrayCount);
 	aGrid->mWeight = 1;
 
-	Zombie* aBungeeZombie = AddZombie(ZombieType::ZOMBIE_BUNGEE, mCurrentWave);
-	Zombie* aZombie = AddZombie(theZombieType, mCurrentWave);
+	Zombie* aBungeeZombie = AddZombie(ZombieType::ZOMBIE_BUNGEE, mCurrentWave,false);
+	Zombie* aZombie = AddZombie(theZombieType, mCurrentWave,false);
 	TOD_ASSERT(aBungeeZombie && aZombie);
 
 	aBungeeZombie->BungeeDropZombie(aZombie, aGrid->mX, aGrid->mY);
@@ -5057,7 +5052,7 @@ void Board::SpawnZombiesFromGraves()
 		}
 		
 		ZombieType aZombieType = PickGraveRisingZombieType(aZombiePoints);
-		Zombie* aZombie = AddZombie(aZombieType, mCurrentWave);
+		Zombie* aZombie = AddZombie(aZombieType, mCurrentWave, false);
 		if (aZombie == nullptr)
 		{
 			return;
@@ -5102,9 +5097,13 @@ void Board::SpawnZombieWave()
 			if (aZombieType == ZombieType::ZOMBIE_INVALID)
 				break;
 
-			if (aZombieType == ZombieType::ZOMBIE_BUNGEE || aZombieType == ZombieType::ZOMBIE_ZAMBONI)
+			if (aZombieType == ZombieType::ZOMBIE_BUNGEE)
 			{
-				AddZombie(aZombieType, mCurrentWave);
+				AddZombie(aZombieType, mCurrentWave, false);
+			}
+			if (aZombieType == ZombieType::ZOMBIE_ZAMBONI)
+			{
+				AddZombie(aZombieType, mCurrentWave, true);
 			}
 			else
 			{
@@ -5125,12 +5124,12 @@ void Board::SpawnZombieWave()
 			{
 				for (int i = 0; i < MAX_ZOMBIE_FOLLOWERS; i++)
 				{
-					AddZombie(ZombieType::ZOMBIE_NORMAL, mCurrentWave);  // 生成 4 只普通僵尸以代替雪橇僵尸小队
+					AddZombie(ZombieType::ZOMBIE_NORMAL, mCurrentWave, true);  // 生成 4 只普通僵尸以代替雪橇僵尸小队
 				}
 			}
 			else
 			{
-				AddZombie(aZombieType, mCurrentWave);
+				AddZombie(aZombieType, mCurrentWave, true);
 			}
 		}
 	}
@@ -8377,27 +8376,27 @@ void Board::KeyChar(SexyChar theChar)
 	{
 		if (theChar == _S('w'))
 		{
-			AddZombie(ZombieType::ZOMBIE_WALLNUT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			AddZombie(ZombieType::ZOMBIE_WALLNUT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG, true);
 			return;
 		}
 		if (theChar == _S('t'))
 		{
-			AddZombie(ZombieType::ZOMBIE_TALLNUT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			AddZombie(ZombieType::ZOMBIE_TALLNUT_HEAD, Zombie::ZOMBIE_WAVE_DEBUG,true);
 			return;
 		}
 		if (theChar == _S('j'))
 		{
-			AddZombie(ZombieType::ZOMBIE_JALAPENO_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			AddZombie(ZombieType::ZOMBIE_JALAPENO_HEAD, Zombie::ZOMBIE_WAVE_DEBUG, true);
 			return;
 		}
 		if (theChar == _S('g'))
 		{
-			AddZombie(ZombieType::ZOMBIE_GATLING_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			AddZombie(ZombieType::ZOMBIE_GATLING_HEAD, Zombie::ZOMBIE_WAVE_DEBUG, true);
 			return;
 		}
 		if (theChar == _S('s'))
 		{
-			AddZombie(ZombieType::ZOMBIE_SQUASH_HEAD, Zombie::ZOMBIE_WAVE_DEBUG);
+			AddZombie(ZombieType::ZOMBIE_SQUASH_HEAD, Zombie::ZOMBIE_WAVE_DEBUG, true);
 			return;
 		}
 	}
@@ -8535,64 +8534,64 @@ void Board::KeyChar(SexyChar theChar)
 
 	if (theChar == _S('b'))
 	{
-		AddZombie(ZombieType::ZOMBIE_BUNGEE, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_BUNGEE, Zombie::ZOMBIE_WAVE_DEBUG, false);
 		return;
 	}
 	if (theChar == _S('o'))
 	{
-		AddZombie(ZombieType::ZOMBIE_FOOTBALL, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_FOOTBALL, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('s'))
 	{
-		AddZombie(ZombieType::ZOMBIE_DOOR, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_DOOR, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('L'))
 	{
-		AddZombie(ZombieType::ZOMBIE_LADDER, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_LADDER, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('y'))
 	{
-		AddZombie(ZombieType::ZOMBIE_YETI, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_YETI, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('a'))
 	{
-		AddZombie(ZombieType::ZOMBIE_FLAG, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_FLAG, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('w'))
 	{
-		AddZombie(ZombieType::ZOMBIE_NEWSPAPER, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_NEWSPAPER, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('F'))
 	{
-		AddZombie(ZombieType::ZOMBIE_BALLOON, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_BALLOON, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('n'))
 	{
 		if (StageHasPool())
 		{
-			AddZombie(ZombieType::ZOMBIE_SNORKEL, Zombie::ZOMBIE_WAVE_DEBUG);
+			AddZombie(ZombieType::ZOMBIE_SNORKEL, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		}
 	}
 	if (theChar == _S('c'))
 	{
-		AddZombie(ZombieType::ZOMBIE_TRAFFIC_CONE, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_TRAFFIC_CONE, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('m'))
 	{
-		AddZombie(ZombieType::ZOMBIE_DANCER, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_DANCER, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('h'))
 	{
-		AddZombie(ZombieType::ZOMBIE_PAIL, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_PAIL, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	//if (theChar == _S('H')
@@ -8606,50 +8605,50 @@ void Board::KeyChar(SexyChar theChar)
 	//}
 	if (theChar == _S('D'))
 	{
-		AddZombie(ZombieType::ZOMBIE_DIGGER, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_DIGGER, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('p'))
 	{
-		AddZombie(ZombieType::ZOMBIE_POLEVAULTER, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_POLEVAULTER, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('P'))
 	{
-		AddZombie(ZombieType::ZOMBIE_POGO, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_POGO, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('R'))
 	{
 		if (StageHasPool())
 		{
-			AddZombie(ZombieType::ZOMBIE_DOLPHIN_RIDER, Zombie::ZOMBIE_WAVE_DEBUG);
+			AddZombie(ZombieType::ZOMBIE_DOLPHIN_RIDER, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		}
 		return;
 	}
 	else if(theChar == _S('j'))
 	{
-		AddZombie(ZombieType::ZOMBIE_JACK_IN_THE_BOX, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_JACK_IN_THE_BOX, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('g'))
 	{
-		AddZombie(ZombieType::ZOMBIE_GARGANTUAR, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_GARGANTUAR, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('G'))
 	{
-		AddZombie(ZombieType::ZOMBIE_REDEYE_GARGANTUAR, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_REDEYE_GARGANTUAR, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('i'))
 	{
-		AddZombie(ZombieType::ZOMBIE_ZAMBONI, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_ZAMBONI, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('C'))
 	{
-		AddZombie(ZombieType::ZOMBIE_CATAPULT, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_CATAPULT, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('1'))
@@ -8685,7 +8684,7 @@ void Board::KeyChar(SexyChar theChar)
 			mIceMinX[aRow] = aPos;
 		}
 
-		AddZombie(ZombieType::ZOMBIE_BOBSLED, Zombie::ZOMBIE_WAVE_DEBUG);
+		AddZombie(ZombieType::ZOMBIE_BOBSLED, Zombie::ZOMBIE_WAVE_DEBUG, true);
 		return;
 	}
 	if (theChar == _S('r'))
@@ -10035,6 +10034,11 @@ int Board::NumberZombiesInWave(int theWaveIndex)
 bool Board::IsZombieTypeSpawnedOnly(ZombieType theZombieType)
 {
 	return (theZombieType == ZombieType::ZOMBIE_BACKUP_DANCER || theZombieType == ZombieType::ZOMBIE_BOBSLED || theZombieType == ZombieType::ZOMBIE_IMP);
+}
+
+bool Board::LawnHasBushes()
+{
+	return mBackground == BackgroundType::BACKGROUND_1_DAY || mBackground == BackgroundType::BACKGROUND_2_NIGHT || mBackground == BackgroundType::BACKGROUND_3_POOL || mBackground == BackgroundType::BACKGROUND_4_FOG;
 }
 
 bool Board::IterateBushes(Bush*& theBush)

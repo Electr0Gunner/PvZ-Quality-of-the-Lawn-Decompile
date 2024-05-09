@@ -19,18 +19,18 @@ public:
     float                   mScale;
     bool                    mDead;
     bool                    mNight;
-    AttachmentID            mAttachmentID;
     ReanimationID           mReanimID;
 
 public:
     Bush();
     ~Bush();
 
-    void                    BushInitialize(int theX, int theY, int ID, int mRow, bool NightMode);
+    void                    BushInitialize(int theX, int theY, int mRow, bool NightMode, int ID);
     void                    Die();
     void                    Update();
     void                    Draw(Graphics* g);
     void                    AnimateBush();
+    void                    PlayBushReanim(const char* theTrackName, ReanimLoopType theLoopType, int theBlendTime, float theAnimRate);
 
 };
 

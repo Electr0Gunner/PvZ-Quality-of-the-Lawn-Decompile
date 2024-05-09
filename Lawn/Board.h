@@ -131,7 +131,7 @@ public:
 	int								mGridCelLook[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];			//+0x240
 	int								mGridCelOffset[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y][2];	//+0x318
 	int								mGridCelFog[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y + 1];		//+0x4C8
-	Bush*							mBushList[6];
+	Bush*							mBushList[MAX_GRID_SIZE_Y];
 	bool							mEnableGraveStones;										//+0x5C4
 	int								mSpecialGraveStoneX;									//+0x5C8
 	int								mSpecialGraveStoneY;									//+0x5CC
@@ -248,7 +248,7 @@ public:
 	ZombieType						PickGraveRisingZombieType(int theZombiePoints);
 	ZombieType						PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePicker* theZombiePicker);
 	int								PickRowForNewZombie(ZombieType theZombieType);
-	/*inline*/ Zombie*				AddZombie(ZombieType theZombieType, int theFromWave);
+	/*inline*/ Zombie*				AddZombie(ZombieType theZombieType, int theFromWave, bool useBush);
 	void							SpawnZombieWave();
 	void							RemoveAllZombies();
 	void							RemoveCutsceneZombies();
@@ -304,6 +304,7 @@ public:
 	int								GetSeedPacketPositionX(int theIndex);
 	void							AddGraveStones(int theGridX, int theCount, MTRand& theLevelRNG);
 	int								GetGraveStoneCount();
+	void							AddBushes();
 	void							ZombiesWon(Zombie* theZombie = nullptr);
 	void							DrawLevel(Graphics* g);
 	void							DrawShovel(Graphics* g);
@@ -481,6 +482,7 @@ public:
 	void							DoTypingCheck(KeyCode theKey);
 	int								CountZombieByType(ZombieType theZombieType);
 	static /*inline*/ bool			IsZombieTypeSpawnedOnly(ZombieType theZombieType);
+	bool							LawnHasBushes();
 };
 extern bool gShownMoreSunTutorial;
 

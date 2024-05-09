@@ -2893,7 +2893,7 @@ void Challenge::WhackAZombieSpawning()
 				aMaxSpeed = 2;
 			}
 
-			Zombie* aZombie = mBoard->AddZombie(aZombieType, mBoard->mCurrentWave);
+			Zombie* aZombie = mBoard->AddZombie(aZombieType, mBoard->mCurrentWave, false);
 			if (aZombie == nullptr)
 				break;
 
@@ -3133,7 +3133,7 @@ void Challenge::DrawStormNight(Graphics* g)
 //0x426F60
 void Challenge::PlayBossEnter()
 {
-	mBoard->AddZombie(ZOMBIE_BOSS, 0);
+	mBoard->AddZombie(ZOMBIE_BOSS, 0, false);
 }
 
 //0x426FC0

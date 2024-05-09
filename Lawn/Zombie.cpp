@@ -2108,7 +2108,7 @@ void Zombie::UpdateZombieGargantuar()
             ReanimShowTrack("Zombie_gargantuar_whiterope", RENDER_GROUP_HIDDEN);
             mApp->PlayFoley(FoleyType::FOLEY_SWING);
 
-            Zombie* aZombieImp = mBoard->AddZombie(ZombieType::ZOMBIE_IMP, mFromWave);
+            Zombie* aZombieImp = mBoard->AddZombie(ZombieType::ZOMBIE_IMP, mFromWave,false);
             if (aZombieImp == nullptr)
                 return;
             
@@ -2687,7 +2687,7 @@ ZombieID Zombie::SummonBackupDancer(int theRow, int thePosX)
     if (!mBoard->RowCanHaveZombieType(theRow, ZombieType::ZOMBIE_BACKUP_DANCER))
         return ZombieID::ZOMBIEID_NULL;
 
-    Zombie* aZombie = mBoard->AddZombie(ZombieType::ZOMBIE_BACKUP_DANCER, mFromWave);
+    Zombie* aZombie = mBoard->AddZombie(ZombieType::ZOMBIE_BACKUP_DANCER, mFromWave,false);
     if (aZombie == nullptr)
         return ZombieID::ZOMBIEID_NULL;
 
