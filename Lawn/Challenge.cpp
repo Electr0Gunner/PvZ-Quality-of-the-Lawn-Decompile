@@ -2379,8 +2379,8 @@ void Challenge::DrawSlotMachine(Graphics* g)
 		gBoardParent.SetColor(GetFlashingColor(mBoard->mMainCounter, 75));
 		gBoardParent.SetColorizeImages(true);
 	}
-	gBoardParent.mTransX = mBoard->mSeedBank->mX - mBoard->mX;
-	gBoardParent.mTransY = mBoard->mSeedBank->mY - mBoard->mY;
+	gBoardParent.mTransX = mBoard->mSeedBank->mX - mBoard->mX + BOARD_OFFSET_X;
+	gBoardParent.mTransY = mBoard->mSeedBank->mY - mBoard->mY + BOARD_OFFSET_Y;
 	mApp->ReanimationGet(mReanimChallenge)->Draw(&gBoardParent);
 }
 

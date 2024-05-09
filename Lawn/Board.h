@@ -193,6 +193,7 @@ public:
 	ReanimationID					mFwooshID[MAX_GRID_SIZE_Y][12];							//+0x5624
 	int								mFwooshCountDown;										//+0x5744
 	int								mTimeStopCounter;										//+0x5748
+	int								mRoofPoleOffset;									
 	bool							mDroppedFirstCoin;										//+0x574C
 	int								mFinalWaveSoundCounter;									//+0x5750
 	int								mCobCannonCursorDelayCounter;							//+0x5754
@@ -362,6 +363,7 @@ public:
 	unsigned int					SeedNotRecommendedForLevel(SeedType theSeedType);
 	void							DrawTopRightUI(Graphics* g);
 	void							DrawFog(Graphics* g);
+	void							DrawCover(Graphics* g);
 	void							UpdateFog();
 	/*inline*/ int					LeftFogColumn();
 	static /*inline*/ bool			IsZombieTypePoolOnly(ZombieType theZombieType);

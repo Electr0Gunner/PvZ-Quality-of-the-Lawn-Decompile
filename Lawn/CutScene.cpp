@@ -1136,7 +1136,7 @@ void CutScene::AnimateBoard()
 	if (mCutsceneTime > aTimePanRightStart && mCutsceneTime <= aTimePanRightEnd)
 	{
 		int aPanOffset = CalcPosition(aTimePanRightStart, aTimePanRightEnd, -aBoardOffset, aStreetOffset);
-		//mBoard->mRoofPoleOffset = -CalcPosition(aTimePanRightStart, aTimePanRightEnd, 0, WIDE_BOARD_WIDTH);
+		mBoard->mRoofPoleOffset = -CalcPosition(aTimePanRightStart, aTimePanRightEnd, 0, WIDE_BOARD_WIDTH + 200);
 		mBoard->Move(-aPanOffset, BOARD_OFFSET_Y);
 	}
 	
@@ -1175,7 +1175,7 @@ void CutScene::AnimateBoard()
 	if (mCutsceneTime > aTimePanLeftStart)
 	{
 		int aPanOffset = CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, aStreetOffset, -BOARD_ADDITIONAL_WIDTH);
-		//mBoard->mRoofPoleOffset = -CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, WIDE_BOARD_WIDTH, 0);
+		mBoard->mRoofPoleOffset = -CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, WIDE_BOARD_WIDTH, 0);
 		mBoard->Move(-aPanOffset, BOARD_OFFSET_Y);
 	}
 

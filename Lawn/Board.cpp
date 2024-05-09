@@ -91,6 +91,7 @@ Board::Board(LawnApp* theApp)
 	mShakeCounter = 0;
 	mShakeAmountX = 0;
 	mShakeAmountY = 0;
+	mRoofPoleOffset = 0;
 	mPaused = false;
 	mBushInit = false;
 	mLevelAwardSpawned = false;
@@ -894,8 +895,8 @@ void Board::AddBushes() {
 	bool nighty = StageIsNight();
 	for (int i = 0; i < MAX_GRID_SIZE_Y; i++) {
 		Bush* bush = mBush.DataArrayAlloc();
-		int bushX = BOARD_WIDTH - 420 * 1.375f + 40 / (6 - i);
-		int bushY = BOARD_OFFSET_Y - 30 + 80 * i + 40 * i;
+		int bushX = BOARD_WIDTH - 413 * 1.375f + 40 / (6 - i);
+		int bushY = BOARD_OFFSET_Y - 57 + 80 * i + 40 * i;
 		int mRow = i + 1;
 		bush->BushInitialize(bushX, bushY, mRow, nighty, i);
 		mBushList[i] = bush;
@@ -6478,6 +6479,7 @@ void Board::DrawGameObjects(Graphics* g)
 
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_BACKDROP, MakeRenderOrder(RenderLayer::RENDER_LAYER_UI_BOTTOM, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_BOTTOM_UI, aZPos);
+		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_COVER, MakeRenderOrder(RenderLayer::RENDER_LAYER_COVER, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_COIN_BANK, MakeRenderOrder(RenderLayer::RENDER_LAYER_COIN_BANK, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_TOP_UI, MakeRenderOrder(RenderLayer::RENDER_LAYER_UI_TOP, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_SCREEN_FADE, MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0));
@@ -6701,6 +6703,10 @@ void Board::DrawGameObjects(Graphics* g)
 			break;
 		}
 
+		case RenderObjectType::RENDER_ITEM_COVER:
+			DrawCover(g);
+			break;
+
 		case RenderObjectType::RENDER_ITEM_FOG:
 			DrawFog(g);
 			break;
@@ -6868,6 +6874,37 @@ void Board::DrawHouseDoorBottom(Graphics* g)
 	case BackgroundType::BACKGROUND_3_POOL:		g->DrawImage(Sexy::IMAGE_BACKGROUND3_GAMEOVER_INTERIOR_OVERLAY, -171, 241);		break;
 	case BackgroundType::BACKGROUND_4_FOG:		g->DrawImage(Sexy::IMAGE_BACKGROUND4_GAMEOVER_INTERIOR_OVERLAY, -172, 246);		break;
 	default:																													break;
+	}
+}
+
+void Board::DrawCover(Graphics* g)
+{
+	switch (mBackground)
+	{
+	case BACKGROUND_1_DAY:
+		g->DrawImage(Sexy::IMAGE_BACKGROUND1_COVER, 684, 557);
+		break;
+	case BACKGROUND_2_NIGHT:
+		g->DrawImage(Sexy::IMAGE_BACKGROUND2_COVER, 684, 557);
+		break;
+	case BACKGROUND_3_POOL:
+		g->DrawImage(Sexy::IMAGE_BACKGROUND3_COVER, 672, 613);
+		break;
+	case BACKGROUND_4_FOG:
+		g->DrawImage(Sexy::IMAGE_BACKGROUND4_COVER, 672, 613);
+		break;
+	case BackgroundType::BACKGROUND_5_ROOF:
+	{
+		g->DrawImage(Sexy::IMAGE_ROOF_POLE, mRoofPoleOffset * 1.5 + 635, -BOARD_OFFSET_Y);
+		g->DrawImage(Sexy::IMAGE_ROOF_TREE, mRoofPoleOffset * 2.0 + 610, -BOARD_OFFSET_Y);
+		break;
+	}
+	case BackgroundType::BACKGROUND_6_BOSS:
+	{
+		g->DrawImage(Sexy::IMAGE_ROOF_POLE_NIGHT, mRoofPoleOffset * 1.5 + 635, -BOARD_OFFSET_Y);
+		g->DrawImage(Sexy::IMAGE_ROOF_TREE_NIGHT, mRoofPoleOffset * 2.0 + 610, -BOARD_OFFSET_Y);
+		break;
+	}
 	}
 }
 
