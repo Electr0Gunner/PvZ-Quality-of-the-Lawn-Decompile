@@ -896,7 +896,7 @@ void Board::AddBushes() {
 	for (int i = 0; i < MAX_GRID_SIZE_Y; i++) {
 		Bush* bush = mBush.DataArrayAlloc();
 		int bushX = BOARD_WIDTH - 413 * 1.375f + 40 / (6 - i);
-		int bushY = BOARD_OFFSET_Y - 57 + 80 * i + 40 * i;
+		int bushY = BOARD_OFFSET_Y - 70 + 80 * i + 40 * i;
 		int mRow = i + 1;
 		bush->BushInitialize(bushX, bushY, mRow, nighty, i);
 		mBushList[i] = bush;
@@ -7657,50 +7657,45 @@ void Board::UpdateFog()
 //0x41A730
 void Board::DrawFog(Graphics* g)
 {
-	Image* aImageFog = mApp->Is3DAccelerated() ? Sexy::IMAGE_FOG : Sexy::IMAGE_FOG_SOFTWARE;
-	for (int x = 0; x < MAX_GRID_SIZE_X; x++)
+	Image* aImageFog = Sexy::IMAGE_FOG;
+	for (int wideMultiplier = 0; wideMultiplier < 2; wideMultiplier++) 
 	{
-		for (int y = 0; y < MAX_GRID_SIZE_Y + 1; y++)
+		for (int x = 0; x < MAX_GRID_SIZE_X; x++)
 		{
-			int aFadeAmount = mGridCelFog[x][y];
-			if (aFadeAmount == 0)
-				continue;
-
-			// 取得格子内的雾的形状（第 6 行的雾的形状采用与第 0 行相同）
-			// { sub eax,edx } 向前 [y / 6] 列，但 y 超出上限 y - 5 行，故相当于列不变，行 = y % 6；
-			int aCelLook = mGridCelLook[x][y % MAX_GRID_SIZE_Y];
-			int aCelCol = aCelLook % 8;
-			// 本格浓雾横坐标 = 列 * 80 + 浓雾偏移 - 15，纵坐标 = 行 * 85 + 20
-			float aPosX = x * 80 + mFogOffset - 15;
-			float aPosY = y * 85 + 20;
-			// 开始计算周期变化的颜色，aTime 为根据主计时计算的时间
-			float aTime = mMainCounter * PI * 2;
-			// 与行、列有关的初始相位
-			float aPhaseX = 6 * PI * x / MAX_GRID_SIZE_X;
-			float aPhaseY = 6 * PI * y / (MAX_GRID_SIZE_Y + 1);
-			// 根据初相和时间计算当前相位
-			float aMotion = 13 + 4 * sin(aTime / 900 + aPhaseY) + 8 * sin(aTime / 500 + aPhaseX);
-
-			int aColorVariant = 255 - aCelLook * 1.5 - aMotion * 1.5;
-			int aLightnessVariant = 255 - aCelLook - aMotion;
-			if (!mApp->Is3DAccelerated())
+			for (int y = 0; y < MAX_GRID_SIZE_Y + 1; y++)
 			{
-				aPosX += 10;
-				aPosY += 3;
-				aCelCol = aCelLook % Sexy::IMAGE_FOG_SOFTWARE->mNumCols;
-				aColorVariant = 255;
-				aLightnessVariant = 255;
-			}
+				int aFadeAmount = mGridCelFog[x][y];
+				if (aFadeAmount == 0)
+					continue;
 
-			g->SetColorizeImages(true);
-			g->SetColor(Color(aColorVariant, aColorVariant, aLightnessVariant, aFadeAmount));
-			g->DrawImageCel(aImageFog, aPosX, aPosY, aCelCol, 0);
+				// 取得格子内的雾的形状（第 6 行的雾的形状采用与第 0 行相同）
+				// { sub eax,edx } 向前 [y / 6] 列，但 y 超出上限 y - 5 行，故相当于列不变，行 = y % 6；
+				int aCelLook = mGridCelLook[x][y % MAX_GRID_SIZE_Y];
+				int aCelCol = aCelLook % 8;
+				// 本格浓雾横坐标 = 列 * 80 + 浓雾偏移 - 15，纵坐标 = 行 * 85 + 20
+				float aPosX = x * 80 + mFogOffset - 15;
+				float aPosY = y * 85 + 20;
+				// 开始计算周期变化的颜色，aTime 为根据主计时计算的时间
+				float aTime = mMainCounter * PI * 2;
+				// 与行、列有关的初始相位
+				float aPhaseX = 6 * PI * x / MAX_GRID_SIZE_X;
+				float aPhaseY = 6 * PI * y / (MAX_GRID_SIZE_Y + 1);
+				// 根据初相和时间计算当前相位
+				float aMotion = 13 + 4 * sin(aTime / 900 + aPhaseY) + 8 * sin(aTime / 500 + aPhaseX);
 
-			if (x == MAX_GRID_SIZE_X - 1)
-			{
-				g->DrawImageCel(aImageFog, aPosX + 80, aPosY, aCelCol, 0);
+				int aColorVariant = 255 - aCelLook * 1.5 - aMotion * 1.5;
+				int aLightnessVariant = 255 - aCelLook - aMotion;
+
+				g->SetColorizeImages(true);
+				g->SetColor(Color(aColorVariant, aColorVariant, aLightnessVariant, aFadeAmount));
+				g->DrawImageCel(aImageFog, aPosX + (wideMultiplier * 270), aPosY, aCelCol, 0);
+
+				if (x == MAX_GRID_SIZE_X - 1)
+				{
+					g->DrawImageCel(aImageFog, aPosX + 80, aPosY, aCelCol, 0);
+				}
+				g->SetColorizeImages(false);
 			}
-			g->SetColorizeImages(false);
 		}
 	}
 }
