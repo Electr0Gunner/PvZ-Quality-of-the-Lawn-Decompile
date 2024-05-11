@@ -181,7 +181,7 @@ void AwardScreen::DrawBottom(Graphics* g, const SexyString& theTitle, const Sexy
     g->DrawImage(Sexy::IMAGE_AWARDSCREEN_BACK, 0, 0);
     TodDrawString(g, theTitle, BOARD_WIDTH / 2 , 58, Sexy::FONT_DWARVENTODCRAFT24, Color(213, 159, 43), DS_ALIGN_CENTER);
     TodDrawString(g, theAward, BOARD_WIDTH / 2 , 335 + BOARD_OFFSET_Y, Sexy::FONT_DWARVENTODCRAFT18YELLOW, Color::White, DS_ALIGN_CENTER);
-    TodDrawStringWrapped(g, theMessage, Rect(190 + BOARD_OFFSET_X, 360 + BOARD_OFFSET_Y, 240 + BOARD_OFFSET_X, 90 + BOARD_OFFSET_Y), Sexy::FONT_BRIANNETOD16, Color(40, 50, 90), DS_ALIGN_CENTER_VERTICAL_MIDDLE);
+    TodDrawStringWrapped(g, theMessage, Rect(285 + BOARD_OFFSET_X - 40, 360 + BOARD_OFFSET_Y, 230 + BOARD_OFFSET_X - 100, 90 + BOARD_OFFSET_Y), Sexy::FONT_BRIANNETOD16, Color(40, 50, 90), DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 }
 
 //0x4066A0
@@ -197,7 +197,7 @@ void AwardScreen::DrawAwardSeed(Graphics* g)
     DrawBottom(g, _S("[NEW_PLANT]"), aAward, aMessage);
 
     g->SetScale(2, 2, 362, 129);
-    DrawSeedPacket(g, 362 + BOARD_OFFSET_X, 129 + BOARD_OFFSET_Y, aSeedType, SEED_NONE, 0, 255, true, false);
+    DrawAwardPacket(g, 362 + BOARD_OFFSET_X, 129 + BOARD_OFFSET_Y, aSeedType, SEED_NONE, 0, 255, true, false);
     g->SetScale(1, 1, 0, 0);
 }
 
@@ -231,7 +231,7 @@ void AwardScreen::Draw(Graphics* g)
             if (mApp->EarnedGoldTrophy())
             {
                 DrawBottom(g, _S("[BEAT_GAME_MESSAGE1]"), _S("[GOLD_SUNFLOWER_TROPHY]"), _S("[BEAT_GAME_MESSAGE2]"));
-                TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 330 + BOARD_OFFSET_X, 80 + BOARD_OFFSET_Y, 1, 0.7f, 0.7f);
+                TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 330 + BOARD_OFFSET_X, 60 + BOARD_OFFSET_Y, 1, 0.7f, 0.7f);
             }
             else
             {

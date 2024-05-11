@@ -3,6 +3,7 @@
 #include "Challenge.h"
 #include "SeedPacket.h"
 #include "../LawnApp.h"
+#include "Widget/AwardScreen.h"
 #include "CursorObject.h"
 #include "../Resources.h"
 #include "MessageWidget.h"
@@ -570,7 +571,7 @@ void DrawSeedPacket(Graphics* g, float x, float y, SeedType theSeedType, SeedTyp
 		else
 		{
 			SexyMatrix3 aMatrix;
-			TodScaleTransformMatrix(aMatrix, aTextOffsetX * g->mScaleX + x, aTextOffsetY * g->mScaleY + y, g->mScaleX, g->mScaleY);
+			TodScaleTransformMatrix(aMatrix, aTextOffsetX * g->mScaleX + x + BOARD_ADDITIONAL_WIDTH, aTextOffsetY * g->mScaleY + y + BOARD_OFFSET_Y, g->mScaleX, g->mScaleY);
 			if (g->mScaleX > 1.8f)
 			{
 				g->SetLinearBlend(false);
@@ -578,6 +579,320 @@ void DrawSeedPacket(Graphics* g, float x, float y, SeedType theSeedType, SeedTyp
 			TodDrawStringMatrix(g, aTextFont, aMatrix, aCostStr, Color::Black);
 			g->SetLinearBlend(true);
 		}
+	}
+
+	g->SetColorizeImages(false);
+}
+
+void DrawAwardPacket(Graphics* g, float x, float y, SeedType theSeedType, SeedType theImitaterType, float thePercentDark, int theGrayness, bool theDrawCost, bool theUseCurrentCost)
+{
+	SeedType aSeedType = theSeedType;
+	if (aSeedType == SeedType::SEED_IMITATER && theImitaterType != SeedType::SEED_NONE)
+	{
+		aSeedType = theImitaterType;
+	}
+
+	if (theGrayness != 255)
+	{
+		g->SetColor(Color(theGrayness, theGrayness, theGrayness));
+		g->SetColorizeImages(true);
+	}
+	else if (thePercentDark > 0)
+	{
+		g->SetColor(Color(128, 128, 128, 255));
+		g->SetColorizeImages(true);
+	}
+
+	int aPacketBackground =
+		theSeedType == SeedType::SEED_IMITATER ? 0 :
+		Plant::IsUpgrade(aSeedType) ? 1 :
+		theSeedType == SeedType::SEED_BEGHOULED_BUTTON_CRATER ? 3 :
+		theSeedType == SeedType::SEED_BEGHOULED_BUTTON_SHUFFLE ? 4 :
+		theSeedType == SeedType::SEED_SLOT_MACHINE_SUN ? 5 :
+		theSeedType == SeedType::SEED_SLOT_MACHINE_DIAMOND ? 6 :
+		theSeedType == SeedType::SEED_ZOMBIQUARIUM_SNORKLE ? 7 :
+		theSeedType == SeedType::SEED_ZOMBIQUARIUM_TROPHY ? 8 : 2;
+	if (theSeedType == SeedType::SEED_ZOMBIE_NORMAL || theSeedType == SeedType::SEED_ZOMBIE_TRAFFIC_CONE || theSeedType == SeedType::SEED_ZOMBIE_POLEVAULTER
+		|| theSeedType == SeedType::SEED_ZOMBIE_PAIL || theSeedType == SeedType::SEED_ZOMBIE_LADDER || theSeedType == SeedType::SEED_ZOMBIE_DIGGER
+		|| theSeedType == SeedType::SEED_ZOMBIE_BUNGEE || theSeedType == SeedType::SEED_ZOMBIE_FOOTBALL || theSeedType == SeedType::SEED_ZOMBIE_BALLOON
+		|| theSeedType == SeedType::SEED_ZOMBIE_SCREEN_DOOR || theSeedType == SeedType::SEED_ZOMBONI || theSeedType == SeedType::SEED_ZOMBIE_POGO
+		|| theSeedType == SeedType::SEED_ZOMBIE_DANCER || theSeedType == SeedType::SEED_ZOMBIE_GARGANTUAR || theSeedType == SeedType::SEED_ZOMBIE_IMP
+		)
+		aPacketBackground = 9;
+
+	if (g->mScaleX > 1)
+	{
+		TodDrawImageCelScaledF(g, Sexy::IMAGE_SEEDPACKET_LARGER, x, y, 0, 0, g->mScaleX * 0.5f, g->mScaleY * 0.5f);
+	}
+	else
+	{
+		TodDrawImageCelScaledF(g, Sexy::IMAGE_SEEDS, x, y, aPacketBackground, 0, g->mScaleX, g->mScaleY);
+	}
+
+	float aScale = 0.5f;
+	bool aDrawSeedInMiddle = true;
+	float aOffsetX = 5.0f;
+	float aOffsetY = 8.0f;
+	switch (aSeedType)
+	{
+	case SeedType::SEED_TALLNUT:
+		aScale = 0.3f;
+		aOffsetX = 12.0f;
+		aOffsetY = 22.0f;
+		break;
+
+	case SeedType::SEED_INSTANT_COFFEE:
+		aScale = 0.55f;
+		aOffsetX = 0;
+		aOffsetY = 9.0f;
+		break;
+
+	case SeedType::SEED_COBCANNON:
+		aScale = 0.26f;
+		aOffsetX = 6.0f;
+		aOffsetY = 22.0f;
+		break;
+
+	case SeedType::SEED_CACTUS:
+		aOffsetX = 9.0f;
+		aOffsetY = 13.0f;
+		break;
+
+	case SeedType::SEED_POTATOMINE:
+		aScale = 0.4f;
+		aOffsetX = 8.0f;
+		aOffsetY = 12.0f;
+		break;
+
+	case SeedType::SEED_MAGNETSHROOM:
+		aOffsetY = 12.0f;
+		break;
+
+	case SeedType::SEED_FUMESHROOM:
+	case SeedType::SEED_PUMPKINSHELL:
+	case SeedType::SEED_CHOMPER:
+	case SeedType::SEED_DOOMSHROOM:
+	case SeedType::SEED_SQUASH:
+	case SeedType::SEED_HYPNOSHROOM:
+	case SeedType::SEED_SPIKEWEED:
+	case SeedType::SEED_SPIKEROCK:
+	case SeedType::SEED_PLANTERN:
+	case SeedType::SEED_TORCHWOOD:
+	case SeedType::SEED_TANGLEKELP:
+		aScale = 0.4f;
+		aOffsetX = 8.0f;
+		aOffsetY = 12.0f;
+		break;
+
+	case SeedType::SEED_TWINSUNFLOWER:
+	case SeedType::SEED_GLOOMSHROOM:
+		aScale = 0.45f;
+		aOffsetX = 7.0f;
+		aOffsetY = 14.0f;
+		break;
+
+	case SeedType::SEED_CATTAIL:
+		aScale = 0.45f;
+		aOffsetX = 8.0f;
+		aOffsetY = 13.0f;
+		break;
+
+	case SeedType::SEED_UMBRELLA:
+		aScale = 0.5f;
+		aOffsetX = 5.0f;
+		aOffsetY = 10.0f;
+		break;
+
+	case SeedType::SEED_KERNELPULT:
+		aScale = 0.4f;
+		aOffsetX = 13.0f;
+		aOffsetY = 14.0f;
+		break;
+
+	case SeedType::SEED_CABBAGEPULT:
+		aScale = 0.4f;
+		aOffsetX = 15.0f;
+		aOffsetY = 14.0f;
+		break;
+
+	case SeedType::SEED_MELONPULT:
+	case SeedType::SEED_WINTERMELON:
+		aScale = 0.35f;
+		aOffsetX = 18.0f;
+		aOffsetY = 19.0f;
+		break;
+
+	case SeedType::SEED_GRAVEBUSTER:
+		aScale = 0.4f;
+		aOffsetX = 10.0f;
+		aOffsetY = 15.0f;
+		break;
+
+	case SeedType::SEED_SPLITPEA:
+		aScale = 0.45f;
+		aOffsetX = 12.0f;
+		aOffsetY = 12.0f;
+		break;
+
+	case SeedType::SEED_BLOVER:
+		aScale = 0.4f;
+		aOffsetX = 8.0f;
+		aOffsetY = 17.0f;
+		break;
+
+	case SeedType::SEED_STARFRUIT:
+		aScale = 0.5f;
+		aOffsetX = 6.0f;
+		aOffsetY = 8.0f;
+		break;
+
+	case SeedType::SEED_THREEPEATER:
+		aScale = 0.5f;
+		aOffsetX = 5.0f;
+		aOffsetY = 10.0f;
+		break;
+
+	case SeedType::SEED_GATLINGPEA:
+		aScale = 0.5f;
+		aOffsetX = 2.0f;
+		aOffsetY = 8.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_NORMAL:
+	case SeedType::SEED_ZOMBIE_TRAFFIC_CONE:
+	case SeedType::SEED_ZOMBIE_PAIL:
+	case SeedType::SEED_ZOMBIE_DANCER:
+		aScale = 0.35f;
+		aOffsetX = -3.0f;
+		aOffsetY = -7.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_POLEVAULTER:
+		aScale = 0.35f;
+		aOffsetX = -8.0f;
+		aOffsetY = -12.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_LADDER:
+	case SeedType::SEED_ZOMBIE_DIGGER:
+	case SeedType::SEED_ZOMBIE_SCREEN_DOOR:
+	case SeedType::SEED_ZOMBIE_POGO:
+		aScale = 0.35f;
+		aOffsetX = -3.0f;
+		aOffsetY = -10.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_BUNGEE:
+		aScale = 0.3f;
+		aOffsetX = 1.0f;
+		aOffsetY = -1.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_FOOTBALL:
+		aScale = 0.33f;
+		aOffsetX = -7.0f;
+		aOffsetY = -9.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_BALLOON:
+		aScale = 0.35f;
+		aOffsetX = -3.0f;
+		aOffsetY = -5.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_IMP:
+		aScale = 0.4f;
+		aOffsetX = -12.0f;
+		aOffsetY = -17.0f;
+		break;
+
+	case SeedType::SEED_ZOMBONI:
+		aScale = 0.23f;
+		aOffsetX = 12.0f;
+		aOffsetY = 3.0f;
+		break;
+
+	case SeedType::SEED_ZOMBIE_GARGANTUAR:
+		aScale = 0.23f;
+		aOffsetX = 4.0f;
+		aOffsetY = 3.0f;
+		break;
+
+	case SeedType::SEED_BEGHOULED_BUTTON_SHUFFLE:
+	case SeedType::SEED_BEGHOULED_BUTTON_CRATER:
+	case SeedType::SEED_SLOT_MACHINE_SUN:
+	case SeedType::SEED_SLOT_MACHINE_DIAMOND:
+	case SeedType::SEED_ZOMBIQUARIUM_SNORKLE:
+	case SeedType::SEED_ZOMBIQUARIUM_TROPHY:
+		aDrawSeedInMiddle = false;
+		break;
+	}
+	if (((LawnApp*)gSexyAppBase)->mGameMode == GameMode::GAMEMODE_CHALLENGE_BIG_TIME)
+	{
+		if (aSeedType == SeedType::SEED_WALLNUT || aSeedType == SeedType::SEED_SUNFLOWER || aSeedType == SeedType::SEED_MARIGOLD)
+		{
+			aOffsetX = 16.0f;
+			aOffsetY = 34.0f;
+		}
+	}
+	if (aSeedType == SeedType::SEED_GIANT_WALLNUT)
+	{
+		aScale *= 0.75f;
+		aOffsetX = 52.0f;
+		aOffsetY = 58.0f;
+	}
+	aOffsetX = g->mScaleX * aOffsetX;
+	aOffsetY = g->mScaleY * (aOffsetY + 1.0f);
+	if (aDrawSeedInMiddle)
+	{
+		SeedPacketDrawSeed(g, x, y, theSeedType, theImitaterType, aOffsetX, aOffsetY, aScale);
+	}
+
+	if (thePercentDark > 0.0f)
+	{
+		int aDarknessHeight = FloatRoundToInt(68.0f * thePercentDark) + 2;
+		Graphics aPlantG(*g);
+		aPlantG.SetColor(Color(64, 64, 64, 255));
+		aPlantG.SetColorizeImages(true);
+		aPlantG.ClipRect(x, y, SEED_PACKET_WIDTH, aDarknessHeight);
+		TodDrawImageCelScaledF(&aPlantG, Sexy::IMAGE_SEEDS, x, y, aPacketBackground, 0, aPlantG.mScaleX, aPlantG.mScaleY);
+		if (aDrawSeedInMiddle)
+		{
+			SeedPacketDrawSeed(&aPlantG, x, y, theSeedType, theImitaterType, aOffsetX, aOffsetY, aScale);
+		}
+	}
+
+	if (theDrawCost)
+	{
+		SexyString aCostStr;
+		if (gLawnApp->mBoard && gLawnApp->mBoard->PlantUsesAcceleratedPricing(aSeedType))
+		{
+			if (theUseCurrentCost)
+			{
+				aCostStr = StrFormat(_S("%d"), gLawnApp->mBoard->GetCurrentPlantCost(theSeedType, theImitaterType));
+			}
+			else
+			{
+				aCostStr = StrFormat(_S("%d+"), Plant::GetCost(theSeedType, theImitaterType));
+			}
+		}
+		else
+		{
+			aCostStr = StrFormat(_S("%d"), Plant::GetCost(theSeedType, theImitaterType));
+		}
+
+		Font* aTextFont = Sexy::FONT_BRIANNETOD12;
+		int aTextOffsetX = 32 - aTextFont->StringWidth(aCostStr);
+		int aTextOffsetY = aTextFont->GetAscent() + 54;
+		SexyMatrix3 aMatrix;
+		TodScaleTransformMatrix(aMatrix, aTextOffsetX * g->mScaleX + x, aTextOffsetY * g->mScaleY + y, g->mScaleX, g->mScaleY);
+		if (g->mScaleX > 1.8f)
+		{
+			g->SetLinearBlend(false);
+		}
+		TodDrawStringMatrix(g, aTextFont, aMatrix, aCostStr, Color::Black);
+		g->SetLinearBlend(true);
+		
 	}
 
 	g->SetColorizeImages(false);

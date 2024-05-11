@@ -36,7 +36,9 @@ void Bush::BushInitialize(int theX, int theY, int mRow, bool NightMode, int ID)
     
     mReanimID = REANIMATIONID_NULL;
     mRenderOrder = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_ZOMBIE, mRow + 1, 8 * abs(mRow + 1));
-    ReanimatorEnsureDefinitionLoaded(BushReanims[id], true);
+    for (int reanimIndex = 0; reanimIndex <= 5; reanimIndex++) {
+        ReanimatorEnsureDefinitionLoaded(BushReanims[reanimIndex], true);
+    }
     Reanimation* aBodyReanim = mApp->AddReanimation(theX, theY, mRenderOrder, BushReanims[id]);
     if (ID == 3) {
         aBodyReanim->OverrideScale(1.2f, 1.3f);

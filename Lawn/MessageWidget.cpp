@@ -422,7 +422,7 @@ void MessageWidget::Draw(Graphics* g)
 		}
 		else
 		{
-			Rect aRect(aPosX - mApp->mBoard->mX - BOARD_WIDTH / 2, aPosY - aFont->mAscent, BOARD_WIDTH, BOARD_HEIGHT);
+			Rect aRect(aPosX - mApp->mBoard->mX - BOARD_WIDTH / 2 + BOARD_OFFSET_X, aPosY - aFont->mAscent, BOARD_WIDTH, BOARD_HEIGHT);
 			if (aOutlineFont)
 			{
 				TodDrawStringWrapped(g, mLabel, aRect, aOutlineFont, aOutlineColor, DrawStringJustification::DS_ALIGN_CENTER);
@@ -445,7 +445,7 @@ void MessageWidget::Draw(Graphics* g)
 				TodDrawString(
 					g, 
 					aSubStr, 
-					BOARD_WIDTH / 2 - mApp->mBoard->mX, 
+					BOARD_WIDTH / 2 - mApp->mBoard->mX + BOARD_OFFSET_X,
 					aPosY + 26, 
 					Sexy::FONT_HOUSEOFTERROR16, 
 					Color(224, 187, 62, aColor.mAlpha), 

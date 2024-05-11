@@ -2085,7 +2085,7 @@ void Challenge::UpdateSlotMachine()
 			else
 			{
 				mBoard->DisplayAdvice(_S("[ADVICE_SLOT_MACHINE_3_OF_A_KIND]"), MESSAGE_STYLE_SLOT_MACHINE, ADVICE_NONE);
-				for (int i = 0; i < 20; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					mBoard->AddCoin(320 + i * 20, 85, COIN_USABLE_SEED_PACKET, COIN_MOTION_COIN)->mUsableSeedType = aPacket1;
 				}
@@ -2379,8 +2379,12 @@ void Challenge::DrawSlotMachine(Graphics* g)
 		gBoardParent.SetColor(GetFlashingColor(mBoard->mMainCounter, 75));
 		gBoardParent.SetColorizeImages(true);
 	}
-	gBoardParent.mTransX = mBoard->mSeedBank->mX - mBoard->mX + BOARD_OFFSET_X;
-	gBoardParent.mTransY = mBoard->mSeedBank->mY - mBoard->mY + BOARD_OFFSET_Y;
+
+	if (mApp->mGameScene == SCENE_LEVEL_INTRO)
+	{
+		gBoardParent.mTransY = mBoard->mSeedBank->mY - mBoard->mY + BOARD_OFFSET_Y;
+	}
+	
 	mApp->ReanimationGet(mReanimChallenge)->Draw(&gBoardParent);
 }
 

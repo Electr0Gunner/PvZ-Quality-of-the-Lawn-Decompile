@@ -6108,9 +6108,9 @@ void Board::DrawBackdrop(Graphics* g)
 	{
 		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -(BOARD_OFFSET_X + BOARD_ADDITIONAL_WIDTH), -BOARD_OFFSET_Y);
 		g->DrawImage(Sexy::IMAGE_SOD3ROW, 235 - BOARD_OFFSET_X, 149);
-		int aWidth = TodAnimateCurve(0, 1000, mSodPosition, 0, 773, TodCurves::CURVE_LINEAR);
+		int aWidth = TodAnimateCurve(0, 1350, mSodPosition, 240, 1280, TodCurves::CURVE_LINEAR);
 		Rect aSrcRect(232, 0, aWidth, Sexy::IMAGE_BACKGROUND1->GetHeight());
-		g->DrawImage(Sexy::IMAGE_BACKGROUND1, 232 - BOARD_OFFSET_X, 0, aSrcRect);
+		g->DrawImage(Sexy::IMAGE_BACKGROUND1, 232 - (BOARD_OFFSET_X + BOARD_ADDITIONAL_WIDTH), -BOARD_OFFSET_Y, aSrcRect);
 	}
 	else if (aBgImage)
 	{
@@ -7465,9 +7465,6 @@ void Board::DrawTopRightUI(Graphics* g)
 		g->SetColorizeImages(true);
 		g->SetColor(GetFlashingColor(mMainCounter, 75));
 	}
-	mMenuButton->Draw(g);
-	if(!mFastButton->mBtnNoDraw)
-		mFastButton->Draw(g);
 	g->SetColorizeImages(false);
 
 	if (mStoreButton && mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_LAST_STAND)
@@ -7713,6 +7710,9 @@ void Board::DrawUITop(Graphics* g)
 	{
 		DrawTopRightUI(g);
 	}
+	mMenuButton->Draw(g);
+	if (!mFastButton->mBtnNoDraw)
+		mFastButton->Draw(g);
 
 	if (mTimeStopCounter > 0)
 	{
