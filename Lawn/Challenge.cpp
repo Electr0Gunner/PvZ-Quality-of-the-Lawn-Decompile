@@ -2085,7 +2085,7 @@ void Challenge::UpdateSlotMachine()
 			else
 			{
 				mBoard->DisplayAdvice(_S("[ADVICE_SLOT_MACHINE_3_OF_A_KIND]"), MESSAGE_STYLE_SLOT_MACHINE, ADVICE_NONE);
-				for (int i = 0; i < 20; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					mBoard->AddCoin(320 + i * 20, 85, COIN_USABLE_SEED_PACKET, COIN_MOTION_COIN)->mUsableSeedType = aPacket1;
 				}

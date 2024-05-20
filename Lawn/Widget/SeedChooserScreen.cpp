@@ -577,8 +577,8 @@ void SeedChooserScreen::MouseWheel(int theDelta)
 {
 	if (mChooseState != CHOOSE_NORMAL) return;
 
-	mScrollAmount += mBaseScrollSpeed * theDelta;
-	mScrollAmount += mScrollAmount * mScrollAccel;
+	mScrollAmount -= mBaseScrollSpeed * theDelta;
+	mScrollAmount -= mScrollAmount * mScrollAccel;
 }
 
 //0x485340

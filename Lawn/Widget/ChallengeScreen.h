@@ -68,6 +68,7 @@ public:
     void                        UpdateToolTip();
     virtual void                KeyChar(char theChar) { ; }
     void                        SliderVal(int theId, double theVal);
+    virtual void			    MouseWheel(int theDelta);
 
     /*inline*/ bool             IsScaryPotterLevel(GameMode theGameMode);
     /*inline*/ bool             IsIZombieLevel(GameMode theGameMode);

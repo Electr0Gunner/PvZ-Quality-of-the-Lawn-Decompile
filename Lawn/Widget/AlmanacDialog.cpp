@@ -17,7 +17,7 @@
 
 int gZombieDefeated[NUM_ZOMBIE_TYPES] = { false };
 const Rect cSeedClipRect = Rect(0, 90, 800, 463);
-
+const Rect cZombieClipRect = Rect(0, 80, 800, 480);
 
 //0x401010
 AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANAC, true, _S("Almanac"), _S(""), _S(""), BUTTONS_NONE)
@@ -396,7 +396,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 	ZombieType aZombieMouseOn = ZombieHitTest(mApp->mWidgetManager->mLastMouseX, mApp->mWidgetManager->mLastMouseY);
 	for (int i = 0; i < NUM_ALMANAC_ZOMBIES; i++)
 	{
-		g->SetClipRect(cSeedClipRect);
+		g->SetClipRect(cZombieClipRect);
 		ZombieType aZombieType = GetZombieType(i);
 		int aPosX, aPosY;
 		GetZombiePosition(aZombieType, aPosX, aPosY);
@@ -421,7 +421,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 
 				ZombieType aZombieTypeToDraw = aZombieType;
 				Graphics aZombieGraphics = Graphics(*g);
-				//aZombieGraphics.SetClipRect(aPosX + 2, aPosY + 2, 72, 72);
+				aZombieGraphics.SetClipRect(aPosX + 2, aPosY + 2, 72, 72);
 				aZombieGraphics.Translate(aPosX + 1, aPosY - 6);
 				aZombieGraphics.mScaleX = 0.5f;
 				aZombieGraphics.mScaleY = 0.5f;
@@ -761,6 +761,6 @@ void AlmanacPlayerDefeatedZombie(ZombieType theZombieType)
 
 void AlmanacDialog::MouseWheel(int theDelta)
 {
-	mScrollAmount += mBaseScrollSpeed * theDelta;
-	mScrollAmount += mScrollAmount * mScrollAccel;
+	mScrollAmount -= mBaseScrollSpeed * theDelta;
+	mScrollAmount -= mScrollAmount * mScrollAccel;
 }

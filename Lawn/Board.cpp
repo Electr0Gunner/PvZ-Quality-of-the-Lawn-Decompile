@@ -4515,7 +4515,7 @@ void Board::MouseDown(int x, int y, int theClickCount)
 	}
 	if (mFastButton->IsMouseOver() && CanInteractWithBoardButtons() && theClickCount > 0)
 	{
-		mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
+		mApp->PlaySample(Sexy::SOUND_TAP);
 	}
 	else if (mStoreButton && mStoreButton->IsMouseOver() && CanInteractWithBoardButtons() && theClickCount > 0)
 	{
@@ -7377,9 +7377,7 @@ void Board::DrawTopRightUI(Graphics* g)
 		g->SetColorizeImages(true);
 		g->SetColor(GetFlashingColor(mMainCounter, 75));
 	}
-	mMenuButton->Draw(g);
-	if(!mFastButton->mBtnNoDraw)
-		mFastButton->Draw(g);
+
 	g->SetColorizeImages(false);
 
 	if (mStoreButton && mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_LAST_STAND)
@@ -7630,6 +7628,10 @@ void Board::DrawUITop(Graphics* g)
 	{
 		DrawTopRightUI(g);
 	}
+
+	mMenuButton->Draw(g);
+	if (!mFastButton->mBtnNoDraw)
+		mFastButton->Draw(g);
 
 	if (mTimeStopCounter > 0)
 	{

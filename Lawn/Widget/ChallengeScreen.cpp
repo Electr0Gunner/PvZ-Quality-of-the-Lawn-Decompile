@@ -14,7 +14,7 @@
 #include "../../SexyAppFramework/Slider.h"
 #include "../../GameConstants.h"
 
-const Rect cChallengeRect = Rect(20, 0, 778, 900);
+const Rect cChallengeRect = Rect(20, 92, 778, 475);
 
 ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_1,              0,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    0,  0,  _S("[SURVIVAL_DAY_NORMAL]") },
@@ -146,19 +146,6 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 		aPageButton->Resize(50 * aPageIdx + 5, 50, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
 		if (aPageIdx == 1 || aPageIdx == 2 || (aPageIdx == 3 && mApp->mTodCheatKeys))
 			aPageButton->mVisible = mApp->HasFinishedAdventure();
-		/*
-		switch (aPageIdx) {
-			case 0:
-			case 1:
-				aPageButton->Resize(50 * aPageIdx + 5, 0, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
-				break;
-			case 2:
-			case 3:
-				aPageButton->Resize(50 * (aPageIdx - 2) + 5, 45, IMAGE_BUTTON_SMALL->mWidth, IMAGE_BUTTON_SMALL->mHeight);
-				break;
-		}*/
-		//if (!ShowPageButtons() || aPageIdx == CHALLENGE_PAGE_SURVIVAL || aPageIdx == CHALLENGE_PAGE_PUZZLE)
-			//aPageButton->mVisible = false;
 	}
 	
 	for (int aChallengeMode = 0; aChallengeMode < NUM_CHALLENGE_MODES; aChallengeMode++)
@@ -212,11 +199,10 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 		}
 	}
 
-	mSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
+	mSlider = new Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
-	mSlider->mHorizontal = true;
-	mSlider->Resize(160, 560, 540, 40);
-	//mSlider->mThumbOffsetX -= 1;
+	mSlider->mHorizontal = false;
+	mSlider->Resize(770, 85, 20, 470);
 	mSlider->mVisible = true;
 }
 
@@ -229,8 +215,6 @@ void ChallengeScreen::SliderVal(int theId, double theVal)
 		break;
 	}
 }
-
-
 
 //0x42E280 & 0x42E2A0
 ChallengeScreen::~ChallengeScreen()
@@ -439,8 +423,8 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 	{
 		ChallengeDefinition& aDef = GetChallengeDefinition(theChallengeIndex);
 		int offsetY = aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 125 : 93;
-		aChallengeButton->mX = 38 + aDef.mCol * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 157 : 155) - mScrollPosition;
-		aChallengeButton->mY = offsetY + aDef.mRow * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 145 : 119);
+		aChallengeButton->mX = 38 + aDef.mCol * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 157 : 155);
+		aChallengeButton->mY = offsetY + aDef.mRow * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 145 : 119) - mScrollPosition;
 		int aPosX = aChallengeButton->mX;
 		int aPosY = aChallengeButton->mY;
 		if (aChallengeButton->mIsDown)
@@ -653,9 +637,9 @@ void ChallengeScreen::Update()
 	switch (mPageIndex)
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
-		mSlider->mVisible = true;
-		mMaxScrollPosition = 119 * 4 * 2;
-		break;
+		//mSlider->mVisible = true;
+		//mMaxScrollPosition = 119 * 4 * 2;
+		//break;
 	case CHALLENGE_PAGE_LIMBO:
 	case CHALLENGE_PAGE_SURVIVAL:
 	case CHALLENGE_PAGE_PUZZLE:
@@ -708,6 +692,12 @@ void ChallengeScreen::Update()
 	}
 
 	MarkDirty();
+}
+
+void ChallengeScreen::MouseWheel(int theDelta)
+{
+	mScrollAmount -= mBaseScrollSpeed * theDelta;
+	mScrollAmount -= mScrollAmount * mScrollAccel;
 }
 
 //0x42F640

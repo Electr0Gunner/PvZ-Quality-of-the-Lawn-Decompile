@@ -97,6 +97,7 @@ namespace Sexy
         IMAGE_OPTIONS_MENUBACK_ID,
         IMAGE_OPTIONS_SLIDERKNOB2_ID,
         IMAGE_OPTIONS_SLIDERSLOT_ID,
+        IMAGE_CHALLENGE_SLIDERSLOT_ID,
         IMAGE_SELECTORSCREEN_HELP1_ID,
         IMAGE_SELECTORSCREEN_HELP2_ID,
         IMAGE_SELECTORSCREEN_OPTIONS1_ID,
@@ -1088,6 +1089,7 @@ namespace Sexy
     extern Image*	    IMAGE_ZOMBIE_BOBSLED_INSIDE;                            //0x6A7854
     extern Image*	    IMAGE_REANIM_ZOMBIE_BOSS_JAW_DAMAGE1;                   //0x6A7858
     extern Image*	    IMAGE_OPTIONS_SLIDERSLOT;                               //0x6A785C
+    extern Image*       IMAGE_CHALLENGE_SLIDERSLOT;                               //0x6A785C
     extern Image*       IMAGE_MINIGAME_TROPHY;                                  //0x6A7860
     extern Image*       IMAGE_DIALOG_CENTERLEFT;                                //0x6A7864
     extern Image*	    IMAGE_STORE_PVZICON;                                    //0x6A7868
