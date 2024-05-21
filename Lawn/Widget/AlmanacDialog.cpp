@@ -14,6 +14,7 @@
 #include "../../Sexy.TodLib/TodStringFile.h"
 #include "../../SexyAppFramework/WidgetManager.h"
 #include "../../SexyAppFramework/Font.h"
+#include "../../SexyAppFramework/Slider.h"
 
 int gZombieDefeated[NUM_ZOMBIE_TYPES] = { false };
 const Rect cSeedClipRect = Rect(0, 90, 800, 463);
@@ -84,6 +85,12 @@ AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANA
 	mZombieButton->mDrawStoneButton = true;
 	mZombieButton->mParentWidget = this;
 
+	mSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
+	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
+	mSlider->mHorizontal = false;
+	mSlider->Resize(10, 85, 20, 470);
+	mSlider->mVisible = true;
+
 	SetPage(ALMANAC_PAGE_INDEX);
 	if (!mApp->mBoard || !mApp->mBoard->mPaused)
 		mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_CHOOSE_YOUR_SEEDS);
@@ -96,8 +103,7 @@ AlmanacDialog::~AlmanacDialog()
 	if (mIndexButton)	delete mIndexButton;
 	if (mPlantButton)	delete mPlantButton;
 	if (mZombieButton)	delete mZombieButton;
-	//RemoveWidget(mSlider);
-	//delete mSlider;
+	delete mSlider;
 	ClearPlantsAndZombies();
 }
 
@@ -132,7 +138,15 @@ void AlmanacDialog::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	LawnDialog::RemovedFromManager(theWidgetManager);
 	ClearPlantsAndZombies();
+	RemoveWidget(mSlider);
 }
+
+void AlmanacDialog::AddedToManager(WidgetManager* theWidgetManager)
+{
+	Widget::AddedToManager(theWidgetManager);
+	AddWidget(mSlider);
+}
+
 
 //0x401A30
 void AlmanacDialog::SetupPlant()
@@ -171,6 +185,7 @@ void AlmanacDialog::SetupZombie()
 void AlmanacDialog::SetPage(AlmanacPage thePage)
 {
 	mOpenPage = thePage;
+	mSlider->SetValue(0.1f);
 	ClearPlantsAndZombies();
 
 	if (mOpenPage == AlmanacPage::ALMANAC_PAGE_INDEX)
@@ -227,25 +242,31 @@ void AlmanacDialog::Update()
 	mZombieButton->Update();
 	if (mPlant) mPlant->Update();
 	if (mZombie) mZombie->Update();
+	mSlider->mVisible = true;
 
 	if (mOpenPage == ALMANAC_PAGE_PLANTS)
 	{
+		mMaxScrollPosition = 200;
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
-		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, 500);
+		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
 	}
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
+		mMaxScrollPosition = 200;
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition += mScrollAmount * aScrollSpeed;
-		mScrollPosition = ClampFloat(mScrollPosition, 0, 200);
+		mScrollPosition = ClampFloat(mScrollPosition, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
 	}
 	else
 	{
 		mScrollAmount = 0;
 		mScrollPosition = 0;
+		mSlider->mVisible = false;
 	}
+
+	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
 
 
 	for (Zombie* aZombie : mZombiePerfTest)
@@ -763,4 +784,13 @@ void AlmanacDialog::MouseWheel(int theDelta)
 {
 	mScrollAmount -= mBaseScrollSpeed * theDelta;
 	mScrollAmount -= mScrollAmount * mScrollAccel;
+}
+void AlmanacDialog::SliderVal(int theId, double theVal)
+{
+	switch (theId)
+	{
+	case 0:
+		mScrollPosition = theVal * mMaxScrollPosition;
+		break;
+	}
 }

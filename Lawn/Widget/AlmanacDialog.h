@@ -3,6 +3,8 @@
 
 #include "LawnDialog.h"
 #include "../../ConstEnums.h"
+#include "../../SexyAppFramework/SliderListener.h"
+#include "../../SexyAppFramework/Slider.h"
 
 #define NUM_ALMANAC_SEEDS NUM_SEED_TYPES - 4
 #define NUM_ALMANAC_ZOMBIES NUM_ZOMBIE_TYPES
@@ -22,7 +24,7 @@ class LawnApp;
 class GameButton;
 class Reanimation;
 class Slider;
-class AlmanacDialog : public LawnDialog
+class AlmanacDialog : public LawnDialog, public Sexy::SliderListener
 {
 private:
 	enum
@@ -42,7 +44,7 @@ public:
 	GameButton*					mIndexButton;			//+0x174
 	GameButton*					mPlantButton;			//+0x178
 	GameButton*					mZombieButton;			//+0x17C
-	//Sexy::Slider* mSlider;
+	Sexy::Slider* mSlider;
 	AlmanacPage					mOpenPage;				//+0x180
 	Reanimation*				mReanim[4];				//+0x184
 	SeedType					mSelectedSeed;			//+0x194
@@ -51,11 +53,11 @@ public:
 	Zombie*						mZombie;				//+0x1A0
 	Zombie*						mZombiePerfTest[400];	//+0x1A4
 	float						mIncrement;
-	float                   mScrollPosition;
-	float                   mScrollAmount;
-
-	const float             mBaseScrollSpeed = 1.0f;
-	const float             mScrollAccel = 0.1f;
+	float						mScrollPosition;
+	float						mScrollAmount;
+	const float					mBaseScrollSpeed = 1.0f;
+	const float					mScrollAccel = 0.1f;
+	float						mMaxScrollPosition;
 	
 public:
 	AlmanacDialog(LawnApp* theApp);
@@ -63,6 +65,8 @@ public:
 
 	void						ClearPlantsAndZombies();
 	virtual void				RemovedFromManager(WidgetManager* theWidgetManager);
+	virtual void				AddedToManager(WidgetManager* theWidgetManager);
+	void                        SliderVal(int theId, double theVal);
 	void						SetupPlant();
 	void						SetupZombie();
 	void						SetPage(AlmanacPage thePage);
