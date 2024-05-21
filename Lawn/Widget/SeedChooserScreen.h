@@ -5,10 +5,13 @@
 #include "../../SexyAppFramework/Widget.h"
 #include "../../SexyAppFramework/ScrollListener.h"
 #include "../../SexyAppFramework/ScrollbarWidget.h"
+#include "../../SexyAppFramework/SliderListener.h"
+#include "../../SexyAppFramework/Slider.h"
 
 using namespace Sexy;
 
 class Board;
+class Slider;
 class LawnApp;
 class GameButton;
 class ToolTipWidget;
@@ -37,7 +40,7 @@ public:
     bool                    mCrazyDavePicked;                  //+0x38
 };
 
-class SeedChooserScreen : public Widget
+class SeedChooserScreen : public Widget, public Sexy::SliderListener
 {
 private:
     enum
@@ -75,9 +78,11 @@ public:
     int                     mViewLawnTime;                      //+0xD3C
     float                   mScrollPosition;
     float                   mScrollAmount;
-
+    Sexy::Slider*           mSlider;
     const float             mBaseScrollSpeed = 1.0f;
     const float             mScrollAccel = 0.1f;
+    float					mMaxScrollPosition;
+
 
 public:
     SeedChooserScreen();
@@ -120,6 +125,9 @@ public:
     virtual void            KeyChar(SexyChar theChar);
     virtual void			MouseWheel(int theDelta);
     void                    UpdateAfterPurchase();
+    void                    SliderVal(int theId, double theVal);
+    virtual void				RemovedFromManager(WidgetManager* theWidgetManager);
+    virtual void				AddedToManager(WidgetManager* theWidgetManager);
 };
 
 #endif

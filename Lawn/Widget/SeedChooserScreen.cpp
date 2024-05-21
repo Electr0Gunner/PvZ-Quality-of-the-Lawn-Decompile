@@ -20,6 +20,7 @@
 #include "../../SexyAppFramework/MTRand.h"
 #include "../../Sexy.TodLib/TodStringFile.h"
 #include "../../SexyAppFramework/WidgetManager.h"
+#include "../../SexyAppFramework/Slider.h"
 
 const Rect cSeedClipRect = Rect(0, 119, 800, 426);
 
@@ -186,6 +187,12 @@ SeedChooserScreen::SeedChooserScreen()
 	if (mApp->IsAdventureMode() && !mApp->IsFirstTimeAdventureMode())
 		CrazyDavePickSeeds();
 	UpdateImitaterButton();
+
+	mSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
+	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
+	mSlider->mHorizontal = false;
+	mSlider->Resize(10, 115, 20, 470);
+	mSlider->mVisible = true;
 }
 
 int SeedChooserScreen::PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArray* theArray, int theCount, MTRand& theLevelRNG)
@@ -312,7 +319,21 @@ SeedChooserScreen::~SeedChooserScreen()
 	if (mStoreButton) delete mStoreButton;
 	if (mToolTip) delete mToolTip;
 	if (mMenuButton) delete mMenuButton;
+	if (mSlider) delete mSlider;
 }
+
+void SeedChooserScreen::RemovedFromManager(WidgetManager* theWidgetManager)
+{
+	Widget::RemovedFromManager(theWidgetManager);
+	RemoveWidget(mSlider);
+}
+
+void SeedChooserScreen::AddedToManager(WidgetManager* theWidgetManager)
+{
+	Widget::AddedToManager(theWidgetManager);
+	AddWidget(mSlider);
+}
+
 
 //0x4845E0
 unsigned int SeedChooserScreen::SeedNotRecommendedToPick(SeedType theSeedType)
@@ -532,9 +553,12 @@ void SeedChooserScreen::Update()
 	float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 
 	// NOTE: 500 is the furthest it can go down. Adjust it to your needs.
-	mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, 500);
+	mMaxScrollPosition = SeedType::NUM_SEEDS_IN_CHOOSER / 8 * 36.5 - 128;
+	mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 
 	mScrollAmount *= (1.0f - mScrollAccel);
+
+	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
 
 	mLastMouseX = mApp->mWidgetManager->mLastMouseX;
 	mLastMouseY = mApp->mWidgetManager->mLastMouseY;
@@ -1228,4 +1252,15 @@ void SeedChooserScreen::UpdateAfterPurchase()
 	}
 	EnableStartButton(mSeedsInBank == mBoard->mSeedBank->mNumPackets);
 	UpdateImitaterButton();
+}
+
+
+void SeedChooserScreen::SliderVal(int theId, double theVal)
+{
+	switch (theId)
+	{
+	case 0:
+		mScrollPosition = theVal * mMaxScrollPosition;
+		break;
+	}
 }
