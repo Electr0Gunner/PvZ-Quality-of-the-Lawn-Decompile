@@ -442,7 +442,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 
 				ZombieType aZombieTypeToDraw = aZombieType;
 				Graphics aZombieGraphics = Graphics(*g);
-				aZombieGraphics.SetClipRect(aPosX + 2, aPosY + 2, 72, 72);
+				aZombieGraphics.ClipRect(aPosX + 2, aPosY + 2, 72, 72);
 				aZombieGraphics.Translate(aPosX + 1, aPosY - 6);
 				aZombieGraphics.mScaleX = 0.5f;
 				aZombieGraphics.mScaleY = 0.5f;
@@ -720,7 +720,7 @@ ZombieType AlmanacDialog::ZombieHitTest(int x, int y)
 				GetZombiePosition(aZombieType, aZombieX, aZombieY);
 				aZombieY += -mScrollPosition;
 				Rect aZombieRect = Rect(aZombieX, aZombieY, 76 , 76);
-				if (aZombieRect.Contains(x, y) && aZombieRect.Contains(x, y))
+				if (aZombieRect.Contains(x, y) && cZombieClipRect.Contains(x, y))
 				{
 					return aZombieType;
 				}

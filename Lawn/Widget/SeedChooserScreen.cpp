@@ -191,7 +191,7 @@ SeedChooserScreen::SeedChooserScreen()
 	mSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mSlider->mHorizontal = false;
-	mSlider->Resize(10, 115, 20, 470);
+	mSlider->Resize(770, 110, 20, 470);
 	mSlider->mVisible = true;
 }
 
@@ -317,9 +317,9 @@ SeedChooserScreen::~SeedChooserScreen()
 	if (mAlmanacButton) delete mAlmanacButton;
 	//if (mImitaterButton) delete mImitaterButton;
 	if (mStoreButton) delete mStoreButton;
+	if (mSlider) delete mSlider;
 	if (mToolTip) delete mToolTip;
 	if (mMenuButton) delete mMenuButton;
-	if (mSlider) delete mSlider;
 }
 
 void SeedChooserScreen::RemovedFromManager(WidgetManager* theWidgetManager)
