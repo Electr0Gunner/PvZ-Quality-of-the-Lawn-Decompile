@@ -116,7 +116,7 @@ LawnApp::LawnApp()
 	mAutoStartLoadingThread = false;
 	mDebugKeysEnabled = false;
 	isFastMode = false;
-	SpeedValue = 4;
+	SpeedValue = 2;
 	mProdName = "PlantsVsZombies";
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
@@ -677,7 +677,17 @@ void LawnApp::DoNewOptions(bool theFromGameSelector)
 {
 	//FinishModelessDialogs();
 
-	NewOptionsDialog* aDialog = new NewOptionsDialog(this, theFromGameSelector);
+	NewOptionsDialog* aDialog = new NewOptionsDialog(this, theFromGameSelector, false);
+	CenterDialog(aDialog, IMAGE_OPTIONS_MENUBACK->mWidth, IMAGE_OPTIONS_MENUBACK->mHeight);
+	AddDialog(Dialogs::DIALOG_NEWOPTIONS, aDialog);
+	mWidgetManager->SetFocus(aDialog);
+}
+
+void LawnApp::DoAdvanced()
+{
+	//FinishModelessDialogs();
+
+	NewOptionsDialog* aDialog = new NewOptionsDialog(this, false, true);
 	CenterDialog(aDialog, IMAGE_OPTIONS_MENUBACK->mWidth, IMAGE_OPTIONS_MENUBACK->mHeight);
 	AddDialog(Dialogs::DIALOG_NEWOPTIONS, aDialog);
 	mWidgetManager->SetFocus(aDialog);
@@ -1115,6 +1125,7 @@ bool LawnApp::KillNewOptionsDialog()
 	bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
 	bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
 	SwitchScreenMode(wantWindowed, want3D, false);
+	ToggleDebugMode();
 
 	KillDialog(Dialogs::DIALOG_NEWOPTIONS);
 	ClearUpdateBacklog();
@@ -3453,6 +3464,15 @@ void LawnApp::SwitchScreenMode(bool wantWindowed, bool is3d, bool force)
 	if (aNewOptionsDialog)
 	{
 		aNewOptionsDialog->mFullscreenCheckbox->SetChecked(!mIsWindowed);
+	}
+}
+
+void LawnApp::ToggleDebugMode()
+{
+	NewOptionsDialog* aNewOptionsDialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS);
+	if (aNewOptionsDialog)
+	{
+		mTodCheatKeys = mDebugKeysEnabled = aNewOptionsDialog->mDebugModeBox->IsChecked();
 	}
 }
 

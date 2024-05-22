@@ -179,6 +179,7 @@ public:
 	void							DoBackToMain();
 	void							DoConfirmBackToMain();
 	void							DoNewOptions(bool theFromGameSelector);
+	void							DoAdvanced();
 	void							DoRegister();
 	void							DoRegisterError();
 	bool							CanDoRegisterDialog();
@@ -314,6 +315,7 @@ public:
 	/*inline*/ bool					CanDoDanceMode();
 	/*inline*/ bool					CanDoDaisyMode();
 	virtual void					SwitchScreenMode(bool wantWindowed, bool is3d, bool force = false);
+	virtual void					ToggleDebugMode();
 	static /*inline*/ void			CenterDialog(Dialog* theDialog, int theWidth, int theHeight);
 };
 

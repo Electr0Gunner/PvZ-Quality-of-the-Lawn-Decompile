@@ -27,6 +27,9 @@ protected:
 		NewOptionsDialog_SoundVolume,
 		NewOptionsDialog_Fullscreen,
 		NewOptionsDialog_HardwareAcceleration,
+		NewOptionsDialog_DebugMode,
+		NewOptionsDialog_Advanced,
+		NewOptionsDialog_Speed,
 	};
 
 public:
@@ -35,14 +38,17 @@ public:
 	Sexy::Slider*			mSfxVolumeSlider;					//+0x160
 	Sexy::Checkbox*			mFullscreenCheckbox;				//+0x164
 	Sexy::Checkbox*			mHardwareAccelerationCheckbox;		//+0x168
+	Sexy::Checkbox*			mDebugModeBox;
 	LawnStoneButton*		mAlmanacButton;						//+0x16C
 	LawnStoneButton*		mBackToMainButton;					//+0x170
 	LawnStoneButton*		mRestartButton;						//+0x174
 	NewLawnButton*			mBackToGameButton;					//+0x178
+	LawnStoneButton*		mAdvancedButton;					
 	bool					mFromGameSelector;					//+0x17C
+	bool					mAdvancedMode;	
 
 public:
-	NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector);
+	NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bool theAdvanced);
 	~NewOptionsDialog();
 
 	int						GetPreferredHeight(int theWidth);

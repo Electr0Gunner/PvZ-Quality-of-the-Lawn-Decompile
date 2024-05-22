@@ -16,15 +16,17 @@
 using namespace Sexy;
 
 //0x45C050
-NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) : 
+NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bool theAdvanced) :
 	Dialog(nullptr, nullptr, Dialogs::DIALOG_NEWOPTIONS, true, _S("Options"), _S(""), _S(""), Dialog::BUTTONS_NONE)
 {
     mApp = theApp;
     mFromGameSelector = theFromGameSelector;
+    mAdvancedMode = theAdvanced;
     SetColor(Dialog::COLOR_BUTTON_TEXT, Color(255, 255, 100));
     mAlmanacButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Almanac, this, _S("[VIEW_ALMANAC_BUTTON]"));
     mRestartButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Restart, this, _S("[RESTART_LEVEL]"));
     mBackToMainButton = MakeButton(NewOptionsDialog::NewOptionsDialog_MainMenu, this, _S("[MAIN_MENU_BUTTON]"));
+    mAdvancedButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Advanced, this, _S("[ADVANCED_OPTIONS]"));
 
     mBackToGameButton = MakeNewButton(
         Dialog::ID_OK, 
@@ -56,6 +58,15 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
 
     mFullscreenCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Fullscreen, this, !theApp->mIsWindowed);
     mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->Is3DAccelerated());
+    mDebugModeBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_DebugMode, this, mApp->mTodCheatKeys);
+
+    if (mAdvancedMode)
+    {
+        mRestartButton->SetVisible(false);
+        mAlmanacButton->SetVisible(false);
+        mBackToMainButton->SetVisible(false);
+        mAdvancedButton->SetVisible(false);
+    }
 
     if (mFromGameSelector)
     {
@@ -68,7 +79,12 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
         else
         {
             mBackToMainButton->SetVisible(false);
+            mAdvancedButton->SetVisible(false);
         }
+    }
+    else
+    {
+        mAdvancedButton->SetVisible(false);
     }
 
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE || 
@@ -98,9 +114,11 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mSfxVolumeSlider;
     delete mFullscreenCheckbox;
     delete mHardwareAccelerationCheckbox;
+    delete mDebugModeBox;
     delete mAlmanacButton;
     delete mRestartButton;
     delete mBackToMainButton;
+    delete mAdvancedButton;
     delete mBackToGameButton;
 }
 
@@ -117,9 +135,11 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mAlmanacButton);
     AddWidget(mRestartButton);
     AddWidget(mBackToMainButton);
+    AddWidget(mAdvancedButton);
     AddWidget(mMusicVolumeSlider);
     AddWidget(mSfxVolumeSlider);
     AddWidget(mHardwareAccelerationCheckbox);
+    AddWidget(mDebugModeBox);
     AddWidget(mFullscreenCheckbox);
     AddWidget(mBackToGameButton);
 }
@@ -133,7 +153,9 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mSfxVolumeSlider);
     RemoveWidget(mFullscreenCheckbox);
     RemoveWidget(mHardwareAccelerationCheckbox);
+    RemoveWidget(mDebugModeBox);
     RemoveWidget(mBackToMainButton);
+    RemoveWidget(mAdvancedButton);
     RemoveWidget(mBackToGameButton);
     RemoveWidget(mRestartButton);
 }
@@ -145,10 +167,12 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mMusicVolumeSlider->Resize(199, 116, 135, 40);
     mSfxVolumeSlider->Resize(199, 143, 135, 40);
     mHardwareAccelerationCheckbox->Resize(283, 175, 46, 45);
+    mDebugModeBox->Resize(270, 148, 46, 45);
     mFullscreenCheckbox->Resize(284, 206, 46, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
+    mAdvancedButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToGameButton->Resize(30, 381, mBackToGameButton->mWidth, mBackToGameButton->mHeight);
 
     if (mFromGameSelector)
@@ -156,7 +180,15 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         mMusicVolumeSlider->mY += 5;
         mSfxVolumeSlider->mY += 10;
         mHardwareAccelerationCheckbox->mY += 15;
+        mDebugModeBox->SetVisible(false);
         mFullscreenCheckbox->mY += 20;
+    }
+    if (mAdvancedMode)
+    {
+        mMusicVolumeSlider->SetVisible(false);
+        mSfxVolumeSlider->SetVisible(false);
+        mHardwareAccelerationCheckbox->SetVisible(false);
+        mFullscreenCheckbox->SetVisible(false);
     }
 
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
@@ -183,10 +215,18 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
     }
     Sexy::Color aTextColor(107, 109, 145);
 
-    TodDrawString(g, _S("Music"), 186, 140 + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-    TodDrawString(g, _S("Sound FX"), 186, 167 + aSfxOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-    TodDrawString(g, _S("3D Acceleration"), 274, 197 + a3DAccelOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-    TodDrawString(g, _S("Full Screen"), 274, 229 + aFullScreenOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+    if (!mAdvancedMode)
+    {
+        TodDrawString(g, _S("Music"), 186, 140 + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, _S("Sound FX"), 186, 167 + aSfxOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, _S("3D Acceleration"), 274, 197 + a3DAccelOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, _S("Full Screen"), 274, 229 + aFullScreenOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+    }
+    else
+    {
+        TodDrawString(g, _S("Debug Mode"), 260, 167, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+    }
+
 }
 
 //0x45CF50
@@ -236,22 +276,7 @@ void NewOptionsDialog::CheckboxChecked(int theId, bool checked)
     case NewOptionsDialog::NewOptionsDialog_HardwareAcceleration:
         if (checked)
         {
-            if (!mApp->Is3DAccelerationSupported())
-            {
-                mHardwareAccelerationCheckbox->SetChecked(false, false);
-                mApp->DoDialog(
-                    Dialogs::DIALOG_INFO,
-                    true,
-                    _S("Not Supported"),
-                    _S( "Hardware Acceleration cannot be enabled on this computer.\n\n"
-                        "Your video card does not\n"
-                        "meet the minimum requirements\n"
-                        "for this game."),
-                    _S("OK"),
-                    Dialog::BUTTONS_FOOTER
-                );
-            }
-            else if (!mApp->Is3DAccelerationRecommended())
+            if (!mApp->Is3DAccelerationRecommended())
             {
                 mApp->DoDialog(
                     Dialogs::DIALOG_INFO,
@@ -304,6 +329,11 @@ void NewOptionsDialog::ButtonDepress(int theId)
     {
         AlmanacDialog* aDialog = mApp->DoAlmanacDialog(SeedType::SEED_NONE, ZombieType::ZOMBIE_INVALID);
         aDialog->WaitForResult(true);
+        break;
+    }
+    case NewOptionsDialog::NewOptionsDialog_Advanced:
+    {
+        mApp->DoAdvanced();
         break;
     }
     case NewOptionsDialog::NewOptionsDialog_MainMenu:

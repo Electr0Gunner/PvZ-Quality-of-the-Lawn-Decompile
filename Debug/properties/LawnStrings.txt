@@ -2034,6 +2034,9 @@ View Zombies
 [BACK_TO_MENU]
 Back to Menu
 
+[ADVANCED_OPTIONS]
+Advanced Options
+
 [ROLL_CREDITS]
 Roll Credits!
 
