@@ -59,6 +59,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mFullscreenCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Fullscreen, this, !theApp->mIsWindowed);
     mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->Is3DAccelerated());
     mDebugModeBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_DebugMode, this, mApp->mTodCheatKeys);
+    mDebugModeBox->SetVisible(false);
 
     if (mAdvancedMode)
     {
@@ -180,7 +181,6 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         mMusicVolumeSlider->mY += 5;
         mSfxVolumeSlider->mY += 10;
         mHardwareAccelerationCheckbox->mY += 15;
-        mDebugModeBox->SetVisible(false);
         mFullscreenCheckbox->mY += 20;
     }
     if (mAdvancedMode)
@@ -189,6 +189,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         mSfxVolumeSlider->SetVisible(false);
         mHardwareAccelerationCheckbox->SetVisible(false);
         mFullscreenCheckbox->SetVisible(false);
+        mDebugModeBox->SetVisible(true);
     }
 
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)

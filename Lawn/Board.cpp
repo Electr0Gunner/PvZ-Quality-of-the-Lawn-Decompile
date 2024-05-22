@@ -1708,7 +1708,7 @@ void Board::StartLevel()
 		FreezeEffectsForCutscene(false);
 		mApp->mSoundSystem->GamePause(false);
 	}
-
+	mFastButton->mY = 30;
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE || 
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || 
 		mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM ||
@@ -1718,8 +1718,6 @@ void Board::StartLevel()
 		return;
 
 	mApp->mMusic->StartGameMusic();
-
-	mFastButton->mY = 30;
 }
 
 //0x40BF10
