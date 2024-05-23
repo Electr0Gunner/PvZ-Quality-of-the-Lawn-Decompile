@@ -28,7 +28,6 @@ class StoreScreen;
 class AlmanacDialog;
 class TypingCheck;
 class MiniCreditsScreen;
-class DiscordRPC;
 
 namespace Sexy
 {
@@ -75,7 +74,6 @@ public:
 	bool							mTodCheatKeys;									//+0x7F5
 	GameMode						mGameMode;										//+0x7F8
 	GameScenes						mGameScene;										//+0x7FC
-	DiscordRPC*						mDiscord;
 	bool							mLoadingZombiesThreadCompleted;					//+0x800
 	bool							mFirstTimeGameSelector;							//+0x801
 	int								mGamesPlayed;									//+0x804
@@ -197,6 +195,7 @@ public:
 	virtual void					Shutdown();
 	virtual void					Init();
 	virtual void					Start();
+	void							StartDiscord();
 	virtual Dialog*					NewDialog(int theDialogId, bool isModal, const SexyString& theDialogHeader, const SexyString& theDialogLines, const SexyString& theDialogFooter, int theButtonMode);
 	virtual bool					KillDialog(int theDialogId);
 	virtual void					ModalOpen();
@@ -209,6 +208,7 @@ public:
 	virtual void					ButtonDepress(int theId);
 	virtual void					UpdateFrames();
 	virtual bool					UpdateApp();
+	virtual void					UpdateDiscordRPC(const char* State = "Playing", const char* Details = "In the menus", const char* ImageLarge = "logo", const char* ImageSmall = "logo_small");
 	/*inline*/ bool					IsAdventureMode();
 	/*inline*/ bool					IsSurvivalMode();
 	bool							IsContinuousChallenge();

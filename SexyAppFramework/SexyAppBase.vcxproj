@@ -117,7 +117,6 @@
     <ClCompile Include="..\Lawn\LawnMower.cpp" />
     <ClCompile Include="..\Lawn\Projectile.cpp" />
     <ClCompile Include="..\Lawn\System\DataSync.cpp" />
-    <ClCompile Include="..\Lawn\System\DiscordRPC.cpp" />
     <ClCompile Include="..\Lawn\System\Music.cpp" />
     <ClCompile Include="..\Lawn\System\PlayerInfo.cpp" />
     <ClCompile Include="..\Lawn\System\PoolEffect.cpp" />
@@ -683,7 +682,6 @@
     <ClInclude Include="..\DiscordRPC\rpc_connection.h" />
     <ClInclude Include="..\DiscordRPC\serialization.h" />
     <ClInclude Include="..\Lawn\System\DataSync.h" />
-    <ClInclude Include="..\Lawn\System\DiscordRPC.h" />
     <ClInclude Include="..\Lawn\System\discord_register.h" />
     <ClInclude Include="..\Lawn\System\discord_rpc.h" />
     <ClInclude Include="..\Lawn\System\ProfileMgr.h" />

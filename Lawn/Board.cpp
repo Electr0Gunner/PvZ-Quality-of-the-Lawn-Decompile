@@ -5877,6 +5877,8 @@ void Board::Update()
 	Widget::Update();
 	MarkDirty();
 
+	mApp->UpdateDiscordRPC();
+
 	mCutScene->Update();
 	UpdateMousePosition();
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)

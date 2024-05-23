@@ -43,7 +43,7 @@
 #include "SexyAppFramework/WidgetManager.h"
 #include "SexyAppFramework/ResourceManager.h"
 
-#include "Lawn/System/DiscordRPC.h"
+#include "Lawn/System/discord_rpc.h"
 #include "SexyAppFramework/Checkbox.h"
 #include "SexyAppFramework/BassMusicInterface.h"
 #include "SexyAppFramework/Dialog.h"
@@ -153,12 +153,12 @@ LawnApp::LawnApp()
 	mCrazyDaveMessageIndex = -1;
 	mBigArrowCursor = LoadCursor(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDC_CURSOR1));
 	mDRM = nullptr;
-	mDiscord = new DiscordRPC();
 }
 
 //0x44EDD0、0x44EDF0
 LawnApp::~LawnApp()
 {
+	Discord_Shutdown();
 	if (mBoard)
 	{
 		WriteCurrentUserConfig();
@@ -329,7 +329,6 @@ void LawnApp::Shutdown()
 			delete mDRM;
 		}
 		mDRM = nullptr;
-		mDiscord = nullptr;
 	}
 }
 
@@ -765,6 +764,7 @@ void LawnApp::DoContinueDialog()
 void LawnApp::DoPauseDialog()
 {
 	mBoard->Pause(true);
+	UpdateDiscordRPC();
 	//FinishModelessDialogs();
 
 	LawnDialog* aDialog = (LawnDialog*)DoDialog(
@@ -1284,8 +1284,9 @@ void LawnApp::Init()
 	gBetaSubmitFunc = BetaSubmitFunc;
 	TodLog("session id: %u", mSessionID);
 #endif
-	mDiscord->Initialize();
 
+	StartDiscord();
+	UpdateDiscordRPC();
 
 	if (!mResourceManager->ParseResourcesFile("properties\\resources.xml"))
 	{
@@ -1321,6 +1322,8 @@ void LawnApp::Init()
 	mTitleScreen->Resize(0, 0, mWidth, mHeight);
 	mWidgetManager->AddWidget(mTitleScreen);
 	mWidgetManager->SetFocus(mTitleScreen);
+
+
 
 #ifdef _DEBUG
 	int aDuration = mTimer.GetDuration();
@@ -1384,6 +1387,24 @@ void LawnApp::Start()
 		return;
 
 	SexyAppBase::Start();
+}
+
+void LawnApp::StartDiscord()
+{
+	// Initialize Discord RPC
+	DiscordEventHandlers handlers;
+	memset(&handlers, 0, sizeof(handlers));
+	handlers.ready = [](const DiscordUser* connectedUser) {
+		TodTrace("discord ready");
+	};
+	handlers.disconnected = [](int errcode, const char* message) {
+		TodTrace("discord disconnected");
+	};
+	handlers.errored = [](int errcode, const char* message) {
+		TodTrace("discord error");
+	};
+
+	Discord_Initialize("1243252904878542908", &handlers, 1, NULL);
 }
 
 //0x4522C0
@@ -2329,12 +2350,27 @@ bool LawnApp::UpdateApp()
 
 	bool updated = SexyAppBase::UpdateApp();
 
+
 	//if (mLoadingThreadCompleted && !mExitToTop)
 	//{
 	//	CheckForUpdates();
 	//}
 
 	return updated;
+}
+
+void LawnApp::UpdateDiscordRPC(const char* State, const char* Details, const char* ImageLarge, const char* ImageSmall)
+{
+	// Update Discord RPC presence
+	DiscordRichPresence discordPresence;
+	memset(&discordPresence, 0, sizeof(discordPresence));
+	discordPresence.state = State;
+	discordPresence.details = Details;
+	discordPresence.largeImageKey = ImageLarge;
+	discordPresence.smallImageKey = ImageSmall;
+	Discord_UpdatePresence(&discordPresence);
+
+	Discord_RunCallbacks();
 }
 
 //0x453A70
