@@ -43,6 +43,7 @@
 #include "SexyAppFramework/WidgetManager.h"
 #include "SexyAppFramework/ResourceManager.h"
 
+#include "Lawn/System/DiscordRPC.h"
 #include "SexyAppFramework/Checkbox.h"
 #include "SexyAppFramework/BassMusicInterface.h"
 #include "SexyAppFramework/Dialog.h"
@@ -152,6 +153,7 @@ LawnApp::LawnApp()
 	mCrazyDaveMessageIndex = -1;
 	mBigArrowCursor = LoadCursor(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDC_CURSOR1));
 	mDRM = nullptr;
+	mDiscord = new DiscordRPC();
 }
 
 //0x44EDD0、0x44EDF0
@@ -327,6 +329,7 @@ void LawnApp::Shutdown()
 			delete mDRM;
 		}
 		mDRM = nullptr;
+		mDiscord = nullptr;
 	}
 }
 
@@ -1281,6 +1284,8 @@ void LawnApp::Init()
 	gBetaSubmitFunc = BetaSubmitFunc;
 	TodLog("session id: %u", mSessionID);
 #endif
+	mDiscord->Initialize();
+
 
 	if (!mResourceManager->ParseResourcesFile("properties\\resources.xml"))
 	{

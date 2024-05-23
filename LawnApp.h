@@ -28,6 +28,7 @@ class StoreScreen;
 class AlmanacDialog;
 class TypingCheck;
 class MiniCreditsScreen;
+class DiscordRPC;
 
 namespace Sexy
 {
@@ -74,6 +75,7 @@ public:
 	bool							mTodCheatKeys;									//+0x7F5
 	GameMode						mGameMode;										//+0x7F8
 	GameScenes						mGameScene;										//+0x7FC
+	DiscordRPC*						mDiscord;
 	bool							mLoadingZombiesThreadCompleted;					//+0x800
 	bool							mFirstTimeGameSelector;							//+0x801
 	int								mGamesPlayed;									//+0x804
