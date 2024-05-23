@@ -331,9 +331,10 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 		PlantDefinition& aPlantDef = GetPlantDefinition(aSeedType);
 		if (!mApp->SeedTypeAvailable(aSeedType))
 		{
-			if (aSeedType != SeedType::SEED_IMITATER)
+			if (aSeedType != SeedType::SEED_IMITATER){
 				g->SetClipRect(cSeedClipRect);
 				g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX, aPosY - mScrollPosition);
+			}
 			g->ClearClipRect();
 		}
 		else {
