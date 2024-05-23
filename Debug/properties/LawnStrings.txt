@@ -2968,6 +2968,9 @@ Play it from the main menu!
 Survival mode unlocked!
 Play it from the main menu!
 
+[CREDITS_BUTTON]
+Play the Music Video
+
 [CREDITS_GAMENAME]
 PLANTS VS. ZOMBIES
 

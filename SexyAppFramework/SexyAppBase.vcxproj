@@ -126,6 +126,7 @@
     <ClCompile Include="..\Lawn\Widget\CreditScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\GameSelector.cpp" />
     <ClCompile Include="..\Lawn\Widget\ImitaterDialog.cpp" />
+    <ClCompile Include="..\Lawn\Widget\MiniCreditsScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\NewOptionsDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\NewUserDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\TitleScreen.cpp" />
@@ -645,6 +646,7 @@
     <ClInclude Include="..\Lawn\Widget\CreditScreen.h" />
     <ClInclude Include="..\Lawn\Widget\GameSelector.h" />
     <ClInclude Include="..\Lawn\Widget\ImitaterDialog.h" />
+    <ClInclude Include="..\Lawn\Widget\MiniCreditsScreen.h" />
     <ClInclude Include="..\Lawn\Widget\NewOptionsDialog.h" />
     <ClInclude Include="..\Lawn\Widget\NewUserDialog.h" />
     <ClInclude Include="..\Lawn\Widget\TitleScreen.h" />

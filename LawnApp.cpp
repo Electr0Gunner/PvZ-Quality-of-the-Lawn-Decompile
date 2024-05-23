@@ -34,6 +34,7 @@
 #include "Sexy.TodLib/TodStringFile.h"
 #include "Lawn/Widget/AlmanacDialog.h"
 #include "Lawn/Widget/NewUserDialog.h"
+#include "Lawn/Widget/MiniCreditsScreen.h"
 #include "Lawn/Widget/ContinueDialog.h"
 #include "Lawn/System/ReanimationLawn.h"
 #include "Lawn/Widget/ChallengeScreen.h"
@@ -79,6 +80,7 @@ LawnApp::LawnApp()
 	mAwardScreen = nullptr;
 	mCreditScreen = nullptr;
 	mTitleScreen = nullptr;
+	mMiniCreditsScreen = nullptr;
 	mSoundSystem = nullptr;
 	mKonamiCheck = nullptr;
 	mMustacheCheck = nullptr;
@@ -228,6 +230,11 @@ LawnApp::~LawnApp()
 	{
 		mWidgetManager->RemoveWidget(mChallengeScreen);
 		delete mChallengeScreen;
+	}
+	if (mMiniCreditsScreen)
+	{
+		mWidgetManager->RemoveWidget(mMiniCreditsScreen);
+		delete mMiniCreditsScreen;
 	}
 	if (mSeedChooserScreen)
 	{
@@ -558,6 +565,28 @@ void LawnApp::KillCreditScreen()
 		mWidgetManager->RemoveWidget(mCreditScreen);
 		SafeDeleteWidget(mCreditScreen);
 		mCreditScreen = nullptr;
+	}
+}
+
+//0x44FB30
+void LawnApp::ShowMiniCreditScreen()
+{
+	mGameScene = GameScenes::SCENE_CREDIT;
+	mMiniCreditsScreen = new MiniCreditsScreen(this);
+	mMiniCreditsScreen->Resize(0, 0, mWidth, mHeight);
+	mWidgetManager->AddWidget(mMiniCreditsScreen);
+	mWidgetManager->BringToBack(mMiniCreditsScreen);
+	mWidgetManager->SetFocus(mMiniCreditsScreen);
+}
+
+//0x44FBF0
+void LawnApp::KillMiniCreditScreen()
+{
+	if (mMiniCreditsScreen)
+	{
+		mWidgetManager->RemoveWidget(mMiniCreditsScreen);
+		SafeDeleteWidget(mMiniCreditsScreen);
+		mMiniCreditsScreen = nullptr;
 	}
 }
 
