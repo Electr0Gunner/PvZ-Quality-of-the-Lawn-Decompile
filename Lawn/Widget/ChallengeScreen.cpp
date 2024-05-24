@@ -637,18 +637,22 @@ void ChallengeScreen::Update()
 	switch (mPageIndex)
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
-		//mSlider->mVisible = true;
+		//mSlider->mVisible = true; !CHANGE THESE TO ACTIVATE THE SLIDER
 		//mMaxScrollPosition = 119 * 4 * 2;
-		//break;
+		mApp->UpdateDiscordRPC("In The Minigames Page");
+		break;
 	case CHALLENGE_PAGE_LIMBO:
+		mApp->UpdateDiscordRPC("In The Limbo Page");
+		break;
 	case CHALLENGE_PAGE_SURVIVAL:
+		mApp->UpdateDiscordRPC("In The Survival Page");
+		break;
 	case CHALLENGE_PAGE_PUZZLE:
-	default:
-		mSlider->mVisible = false;
-		mScrollPosition = 0.1f;
+		mApp->UpdateDiscordRPC("In The Puzzle Page");
 		break;
 	}
-
+	mSlider->mVisible = false;
+	mScrollPosition = 0.1f;
 
 	if (ShowPages) /// TodAnimateCurve(int theTimeStart, int theTimeEnd, int theTimeAge, int thePositionStart, int thePositionEnd, TodCurves theCurve)
 		PageDropper->Resize(-30, -10, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);

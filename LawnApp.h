@@ -195,6 +195,7 @@ public:
 	virtual void					Shutdown();
 	virtual void					Init();
 	virtual void					Start();
+	void							StartDiscord();
 	virtual Dialog*					NewDialog(int theDialogId, bool isModal, const SexyString& theDialogHeader, const SexyString& theDialogLines, const SexyString& theDialogFooter, int theButtonMode);
 	virtual bool					KillDialog(int theDialogId);
 	virtual void					ModalOpen();
@@ -207,6 +208,7 @@ public:
 	virtual void					ButtonDepress(int theId);
 	virtual void					UpdateFrames();
 	virtual bool					UpdateApp();
+	virtual void					UpdateDiscordRPC(const char* Details, const char* State = "Playing", const char* ImageLarge = "logo", const char* ImageSmall = "logo_small");
 	/*inline*/ bool					IsAdventureMode();
 	/*inline*/ bool					IsSurvivalMode();
 	bool							IsContinuousChallenge();

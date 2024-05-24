@@ -124,6 +124,21 @@
     <Filter Include="Lawn\Board\Board Source">
       <UniqueIdentifier>{f3e853ae-1d79-4c3e-bdeb-63ea2671fc57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DiscordRPC">
+      <UniqueIdentifier>{753a0e9f-6be0-4f0c-996f-22a58b31164b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordRPC\rapidjson">
+      <UniqueIdentifier>{f8dfa3de-aabe-400e-a017-bddbf9b7dfb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordRPC\rapidjson\error">
+      <UniqueIdentifier>{8743aa12-fcfe-41dd-98b4-feec1244219b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordRPC\rapidjson\internal">
+      <UniqueIdentifier>{cb0f5994-8d6a-41c0-bfcd-95cb4841c801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordRPC\rapidjson\msinttypes">
+      <UniqueIdentifier>{88d16067-8969-4723-b946-348e92e1e023}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Color.cpp">
@@ -905,6 +920,24 @@
     <ClCompile Include="..\Lawn\Widget\MiniCreditsScreen.cpp">
       <Filter>Lawn\Widget\Widget Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\DiscordRPC\connection_win.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DiscordRPC\discord_register_win.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DiscordRPC\discord_rpc.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DiscordRPC\dllmain.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DiscordRPC\rpc_connection.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DiscordRPC\serialization.cpp">
+      <Filter>DiscordRPC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -1446,6 +1479,138 @@
     <ClInclude Include="..\Lawn\Widget\MiniCreditsScreen.h">
       <Filter>Lawn\Widget\Widget Include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Lawn\System\discord_register.h">
+      <Filter>Lawn\System\System Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lawn\System\discord_rpc.h">
+      <Filter>Lawn\System\System Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\backoff.h">
+      <Filter>DiscordRPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\connection.h">
+      <Filter>DiscordRPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\msg_queue.h">
+      <Filter>DiscordRPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rpc_connection.h">
+      <Filter>DiscordRPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\serialization.h">
+      <Filter>DiscordRPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\allocators.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\cursorstreamwrapper.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\document.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\encodedstream.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\encodings.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\filereadstream.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\filewritestream.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\fwd.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\istreamwrapper.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\memorybuffer.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\memorystream.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\ostreamwrapper.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\pointer.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\prettywriter.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\rapidjson.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\reader.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\schema.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\stream.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\stringbuffer.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\writer.h">
+      <Filter>DiscordRPC\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\msinttypes\inttypes.h">
+      <Filter>DiscordRPC\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\msinttypes\stdint.h">
+      <Filter>DiscordRPC\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\biginteger.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\clzll.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\diyfp.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\dtoa.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\ieee754.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\itoa.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\meta.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\pow10.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\regex.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\stack.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\strfunc.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\strtod.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\internal\swap.h">
+      <Filter>DiscordRPC\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\error\en.h">
+      <Filter>DiscordRPC\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DiscordRPC\rapidjson\error\error.h">
+      <Filter>DiscordRPC\rapidjson\error</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="BltRotatedHelper.inc">
@@ -1631,5 +1796,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\main_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\DiscordRPC\CMakeLists.txt">
+      <Filter>DiscordRPC</Filter>
+    </Text>
   </ItemGroup>
 </Project>

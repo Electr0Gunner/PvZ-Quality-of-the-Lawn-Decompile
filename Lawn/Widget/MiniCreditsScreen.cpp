@@ -93,6 +93,7 @@ void MiniCreditsScreen::ButtonPress(int theId)
 
 void MiniCreditsScreen::Update()
 {
+	mApp->UpdateDiscordRPC("In The Credits");
 	mBackButton->Update();
 	mMusicButton->Update();
 }

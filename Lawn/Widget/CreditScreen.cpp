@@ -1053,6 +1053,7 @@ void CreditScreen::UpdateBlink()
 void CreditScreen::Update()
 {
     Widget::Update();
+    mApp->UpdateDiscordRPC("In The Credits");
     if (!mCreditsPaused && !mMainMenuButton->mIsOver && !mReplayButton->mIsOver)
     {
         mApp->SetCursor(CURSOR_POINTER);

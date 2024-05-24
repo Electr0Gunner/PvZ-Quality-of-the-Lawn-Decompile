@@ -3074,3 +3074,6 @@ Replay level?
 
 [REPLAY_LEVEL_BODY]
 Do you wish to replay level 3-4?
+
+[DISCORD_ADVENTURE]
+Adventure
