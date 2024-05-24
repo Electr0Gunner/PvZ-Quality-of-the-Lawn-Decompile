@@ -5877,12 +5877,22 @@ void Board::Update()
 	Widget::Update();
 	MarkDirty();
 
+	std::string State;
+	if (!mPaused)
+	{
+		State = "Playing";
+	}
+	else
+	{
+		State = "Paused";
+	}
 
 	if(mApp->mGameMode != GameMode::GAMEMODE_ADVENTURE){
 		const char* Details;
 		std::string Challenge = TodStringTranslate(mApp->GetCurrentChallengeDef().mChallengeName);
 		Details = Challenge.c_str();
-		mApp->UpdateDiscordRPC(Details);
+		const char* StateConst = State.c_str();
+		mApp->UpdateDiscordRPC(Details, StateConst);
 	}
 	else
 	{
@@ -5890,7 +5900,8 @@ void Board::Update()
 		int aSub = mLevel - (aStage - 1) * 10;
 		std::string Details = "Adventure " + std::to_string(aStage) + "-" + std::to_string(aSub);
 		const char* DetailsChar = Details.c_str();
-		mApp->UpdateDiscordRPC(DetailsChar);
+		const char* StateConst = State.c_str();
+		mApp->UpdateDiscordRPC(DetailsChar, StateConst);
 	}
 
 	mCutScene->Update();
