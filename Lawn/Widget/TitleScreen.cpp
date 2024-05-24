@@ -41,6 +41,7 @@ TitleScreen::TitleScreen(LawnApp* theApp)
 	mStartButton->mUnderlineSize = 0;
 	mStartButton->mDisabled = true;
 	mStartButton->mVisible = false;
+
 }
 
 //0x48D6B0¡¢0x48D6D0
@@ -193,6 +194,8 @@ void TitleScreen::Update()
 	{
 		return;
 	}
+
+	mApp->UpdateDiscordRPC("In The Title Screen");
 
 	MarkDirty();
 	if (!mDrawnYet)

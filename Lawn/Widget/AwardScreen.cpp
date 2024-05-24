@@ -338,6 +338,7 @@ void AwardScreen::Draw(Graphics* g)
 void AwardScreen::Update()
 {
     Widget::Update();
+    mApp->UpdateDiscordRPC("In The Award Screen");
     if (mApp->GetDialogCount() > 0) return;
     mStartButton->Update();
     mMenuButton->Update();

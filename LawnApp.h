@@ -208,7 +208,7 @@ public:
 	virtual void					ButtonDepress(int theId);
 	virtual void					UpdateFrames();
 	virtual bool					UpdateApp();
-	virtual void					UpdateDiscordRPC(const char* State = "Playing", const char* Details = "In the menus", const char* ImageLarge = "logo", const char* ImageSmall = "logo_small");
+	virtual void					UpdateDiscordRPC(const char* Details, const char* State = "Playing", const char* ImageLarge = "logo", const char* ImageSmall = "logo_small");
 	/*inline*/ bool					IsAdventureMode();
 	/*inline*/ bool					IsSurvivalMode();
 	bool							IsContinuousChallenge();

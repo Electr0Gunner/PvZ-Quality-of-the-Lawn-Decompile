@@ -56,6 +56,9 @@ LawnApp* gLawnApp = nullptr;  //0x6A9EC0
 int gSlowMoCounter = 0;  //0x6A9EC4
 bool isFastMode = false;  //the ingame fast mode
 
+
+const char* CLIENT_ID = "1243252904878542908";
+
 //0x44E8A0
 bool LawnGetCloseRequest()
 {
@@ -153,6 +156,7 @@ LawnApp::LawnApp()
 	mCrazyDaveMessageIndex = -1;
 	mBigArrowCursor = LoadCursor(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDC_CURSOR1));
 	mDRM = nullptr;
+	StartDiscord();
 }
 
 //0x44EDD0、0x44EDF0
@@ -764,7 +768,6 @@ void LawnApp::DoContinueDialog()
 void LawnApp::DoPauseDialog()
 {
 	mBoard->Pause(true);
-	UpdateDiscordRPC();
 	//FinishModelessDialogs();
 
 	LawnDialog* aDialog = (LawnDialog*)DoDialog(
@@ -1285,8 +1288,7 @@ void LawnApp::Init()
 	TodLog("session id: %u", mSessionID);
 #endif
 
-	StartDiscord();
-	UpdateDiscordRPC();
+	UpdateDiscordRPC("Starting Game");
 
 	if (!mResourceManager->ParseResourcesFile("properties\\resources.xml"))
 	{
@@ -1391,20 +1393,46 @@ void LawnApp::Start()
 
 void LawnApp::StartDiscord()
 {
-	// Initialize Discord RPC
 	DiscordEventHandlers handlers;
 	memset(&handlers, 0, sizeof(handlers));
 	handlers.ready = [](const DiscordUser* connectedUser) {
-		TodTrace("discord ready");
+		TodTraceAndLog("Discord: connected to user");
 	};
 	handlers.disconnected = [](int errcode, const char* message) {
-		TodTrace("discord disconnected");
+		std::string s = std::to_string(errcode);
+		char const* errchar = s.c_str();  //use char const* as target type
+
+		TodTraceAndLog("Discord: disconnected from user");
+		TodTraceAndLog(errchar);
 	};
 	handlers.errored = [](int errcode, const char* message) {
-		TodTrace("discord error");
+		std::string s = std::to_string(errcode);
+		char const* errchar = s.c_str();  //use char const* as target type
+
+		TodTraceAndLog("Discord: error");
+		TodTraceAndLog(errchar);
 	};
 
-	Discord_Initialize("1243252904878542908", &handlers, 1, NULL);
+	Discord_Initialize(CLIENT_ID, &handlers, 1, NULL);
+}
+
+void LawnApp::UpdateDiscordRPC(const char* Details, const char* State, const char* ImageLarge, const char* ImageSmall)
+{
+	static time_t lastUpdateTime = time(NULL);
+	time_t now = time(NULL);
+
+	if (difftime(now, lastUpdateTime) >= 1) {
+		DiscordRichPresence discordPresence;
+		memset(&discordPresence, 0, sizeof(discordPresence));
+		discordPresence.state = State;
+		discordPresence.details = Details;
+		discordPresence.largeImageKey = ImageLarge;
+		discordPresence.smallImageKey = ImageSmall;
+		Discord_UpdatePresence(&discordPresence);
+		lastUpdateTime = now;
+
+		Discord_RunCallbacks();
+	}
 }
 
 //0x4522C0
@@ -2359,19 +2387,7 @@ bool LawnApp::UpdateApp()
 	return updated;
 }
 
-void LawnApp::UpdateDiscordRPC(const char* State, const char* Details, const char* ImageLarge, const char* ImageSmall)
-{
-	// Update Discord RPC presence
-	DiscordRichPresence discordPresence;
-	memset(&discordPresence, 0, sizeof(discordPresence));
-	discordPresence.state = State;
-	discordPresence.details = Details;
-	discordPresence.largeImageKey = ImageLarge;
-	discordPresence.smallImageKey = ImageSmall;
-	Discord_UpdatePresence(&discordPresence);
 
-	Discord_RunCallbacks();
-}
 
 //0x453A70
 void LawnApp::CloseRequestAsync()
@@ -3610,5 +3626,3 @@ void LawnApp::UpdateRegisterInfo()
 {
 
 }
-
-
