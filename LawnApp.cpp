@@ -124,7 +124,7 @@ LawnApp::LawnApp()
 	isFastMode = false;
 	SpeedValue = 2;
 	mProdName = "PlantsVsZombies";
-	mReconVersion = "PvZ QoTL 1.0.0";
+	mReconVersion = "PvZ QoTL 1.1.0";
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
 	aTitleName += " BETA ";
