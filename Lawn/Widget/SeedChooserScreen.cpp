@@ -915,7 +915,12 @@ void SeedChooserScreen::ClickedSeedInChooser(ChosenSeed& theChosenSeed)
 	if (mSeedsInBank == mBoard->mSeedBank->mNumPackets)
 		return;
 
-	if (mSeedsInBank == 0 && theChosenSeed.mSeedType == SEED_IMITATER)
+	SeedType mPrevPlant = SeedType::SEED_NONE;
+	if (mSeedsInBank >= 0)
+		mPrevPlant = FindSeedInBank(mSeedsInBank - 1);
+
+
+	if ((mSeedsInBank == 0 || Plant::IsUpgrade(mPrevPlant)) && theChosenSeed.mSeedType == SEED_IMITATER)
 		return;
 
 	if (theChosenSeed.mSeedType == SEED_IMITATER)
