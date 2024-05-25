@@ -58,6 +58,8 @@ public:
 	int						mDisplayWidth;
 	int						mDisplayHeight;
 	Ratio					mDisplayAspect;
+	bool					mAspectCorrect;
+	bool					mAspectNoStretch;
 
 	Rect					mPresentationRect;
 	int						mFullscreenBits;

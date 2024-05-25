@@ -62,12 +62,14 @@ struct BASS_INSTANCE
 	BOOL (WINAPI *BASS_ChannelPreBuf)(DWORD handle, DWORD length);
 	HSYNC (WINAPI *BASS_ChannelSetSync)(DWORD handle, DWORD theType, QWORD theParam, SYNCPROC* proc, DWORD user);
 	BOOL (WINAPI *BASS_ChannelRemoveSync)(DWORD handle, HSYNC sync);
+	float (WINAPI *BASS_ChannelBytes2Seconds)(DWORD handle, QWORD pos);
 	
 	HMUSIC(WINAPI *BASS_MusicLoad)(BOOL mem, void *file, DWORD offset, DWORD length, DWORD flags);
 	HMUSIC(WINAPI *BASS_MusicLoad2)(BOOL mem, void *file, DWORD offset, DWORD length, DWORD flags, DWORD freq);
 	void(WINAPI *BASS_MusicFree)(HMUSIC handle);
 
 	HSTREAM(WINAPI *BASS_StreamCreateFile)(BOOL mem, void *file, DWORD offset, DWORD length, DWORD flags); 
+	HSTREAM(WINAPI *BASS_StreamCreate)(DWORD freq, DWORD chans, DWORD flags, STREAMPROC *proc, DWORD user); 
 	void(WINAPI *BASS_StreamFree)(HSTREAM handle);
 
 	BOOL (WINAPI *BASS_FXSetParameters)(HFX handle, void *par);

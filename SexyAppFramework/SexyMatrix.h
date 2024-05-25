@@ -38,6 +38,10 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 class SexyTransform2D : public SexyMatrix3
 {
+	// only useful internally
+protected:
+	double determinantOfMinor( int theRowHeightY, int theColumnWidthX) const;
+
 public:
 	SexyTransform2D();
 	SexyTransform2D(bool loadIdentity);
@@ -45,6 +49,9 @@ public:
 
 	const SexyTransform2D& operator=(const SexyMatrix3 &theMat);
 
+
+	double GetDeterminant() const;
+	SexyTransform2D Inverse() const;
 
 	void Translate(float tx, float ty);
 

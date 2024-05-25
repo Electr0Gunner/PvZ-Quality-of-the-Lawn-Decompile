@@ -10,6 +10,7 @@ Image::Image()
 
 	mNumRows = 1;
 	mNumCols = 1;
+	mNumTotal = 1;
 
 	mAnimInfo = NULL;
 	mDrawn = false;
@@ -19,7 +20,8 @@ Image::Image(const Image& theImage) :
 	mWidth(theImage.mWidth),
 	mHeight(theImage.mHeight),
 	mNumRows(theImage.mNumRows),
-	mNumCols(theImage.mNumCols)
+	mNumCols(theImage.mNumCols),
+	mNumTotal(theImage.mNumTotal)
 {
 	mDrawn = false;
 	if (theImage.mAnimInfo != NULL)
@@ -200,6 +202,7 @@ void Image::CopyAttributes(Image *from)
 {
 	mNumCols = from->mNumCols;
 	mNumRows = from->mNumRows;
+	mNumTotal = from->mNumTotal;
 	delete mAnimInfo;
 	mAnimInfo = NULL;
 	if (from->mAnimInfo != NULL)

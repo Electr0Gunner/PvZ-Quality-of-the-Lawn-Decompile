@@ -127,6 +127,7 @@ public:
 	bool							mMuteSoundsForCutscene;							//+0x8C5
 	bool							isFastMode;
 	int								SpeedValue;
+	SexyString						mReconVersion;
 
 public:
 	LawnApp();

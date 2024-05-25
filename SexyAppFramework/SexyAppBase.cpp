@@ -241,6 +241,7 @@ SexyAppBase::SexyAppBase()
 	mStandardWordWrap = true;
 	mbAllowExtendedChars = true;
 	mEnableMaximizeButton = false;
+	mMouseSensitivity = 1.0f;
 
 	mMusicVolume = 0.85;
 	mSfxVolume = 0.85;
@@ -283,6 +284,8 @@ SexyAppBase::SexyAppBase()
 	mEnableWindowAspect = false;
 	mWindowAspect.Set(4, 3);
 	mIsWideWindow = false;
+	mAspectCorrect = true;
+	mAspectNoStretch = false;
 
 	int i;
 
@@ -447,7 +450,7 @@ SexyAppBase::~SexyAppBase()
 	while (aSharedImageItr != mSharedImageMap.end())
 	{
 		SharedImage* aSharedImage = &aSharedImageItr->second;
-		DBG_ASSERTE(aSharedImage->mRefCount == 0);		
+	//	DBG_ASSERTE(aSharedImage->mRefCount == 0);		// Possibly the stupidest thing ever, I'm tired of tripping this
 		delete aSharedImage->mImage;
 		mSharedImageMap.erase(aSharedImageItr++);		
 	}
@@ -1136,11 +1139,14 @@ void SexyAppBase::SetCursorImage(int theCursorNum, Image* theImage)
 	}
 }
 
-void SexyAppBase::TakeScreenshot()
+void WriteScreenShotThread(void *theArg)
 {
-	if (mDDInterface==NULL || mDDInterface->mDrawSurface==NULL)
-		return;
+	//////////////////////////////////////////////////////////////////////////
+	// Validate the passed parameter
+	DDImage* theImage = (DDImage*)theArg;
+	if(theImage == NULL) return;
 
+	//////////////////////////////////////////////////////////////////////////
 	// Get free image name
 	std::string anImageDir = GetAppDataFolder() + "_screenshots";
 	MkDir(anImageDir);
@@ -1166,6 +1172,25 @@ void SexyAppBase::TakeScreenshot()
 	}
 	std::string anImageName = anImageDir + anImagePrefix + StrFormat("%d.png",aMaxId+1);
 
+	//////////////////////////////////////////////////////////////////////////
+	// Write image
+	ImageLib::Image aSaveImage;
+	aSaveImage.mBits = theImage->mBits;
+	aSaveImage.mWidth = theImage->mWidth;
+	aSaveImage.mHeight = theImage->mHeight;
+	ImageLib::WritePNGImage(anImageName, &aSaveImage);
+	aSaveImage.mBits = NULL;
+
+	//////////////////////////////////////////////////////////////////////////
+	// delete the image in this thread
+	delete theImage;
+}
+
+void SexyAppBase::TakeScreenshot()
+{
+	if (mDDInterface==NULL || mDDInterface->mDrawSurface==NULL)
+		return;
+
 	// Capture screen
 	LPDIRECTDRAWSURFACE aSurface = mDDInterface->mDrawSurface;
 	
@@ -1173,61 +1198,21 @@ void SexyAppBase::TakeScreenshot()
 	// returns false so we can lock the surface.
 	mDDInterface->mDrawSurface = NULL; 
 	
-	DDImage anImage(mDDInterface);
-	anImage.SetSurface(aSurface);
-	anImage.GetBits();
-	anImage.DeleteDDSurface();
+	DDImage* anImage = new DDImage(mDDInterface);
+	anImage->SetSurface(aSurface);
+	anImage->GetBits();
+	anImage->DeleteDDSurface();
 	mDDInterface->mDrawSurface = aSurface; 
 
-	if (anImage.mBits==NULL)
-		return;
-		
-	// Write image
-	ImageLib::Image aSaveImage;
-	aSaveImage.mBits = anImage.mBits;
-	aSaveImage.mWidth = anImage.mWidth;
-	aSaveImage.mHeight = anImage.mHeight;
-	ImageLib::WritePNGImage(anImageName, &aSaveImage);
-	aSaveImage.mBits = NULL;
-		
-
-/*
-	keybd_event(VK_MENU,0,0,0);
-    keybd_event(VK_SNAPSHOT,0,0,0);
-    keybd_event(VK_MENU,0,KEYEVENTF_KEYUP,0);
-	if (OpenClipboard(mHWnd))
+	if (anImage->mBits==NULL)
 	{
-		HBITMAP aBitmap = (HBITMAP)GetClipboardData(CF_BITMAP);
-		if (aBitmap!=NULL)
-		{
-			BITMAP anObject;
-			ZeroMemory(&anObject,sizeof(anObject));
-			GetObject(aBitmap,sizeof(anObject),&anObject);
+		delete anImage;
+		return;
+	}
 
-			BITMAPINFO anInfo;
-			ZeroMemory(&anInfo,sizeof(anInfo));
-			BITMAPINFOHEADER &aHeader = anInfo.bmiHeader;
-			aHeader.biBitCount = 32;
-			aHeader.biPlanes = 1;
-			aHeader.biHeight = -abs(anObject.bmHeight);
-			aHeader.biWidth = abs(anObject.bmWidth);
-			aHeader.biSize = sizeof(aHeader);
-			aHeader.biSizeImage = aHeader.biHeight*aHeader.biWidth*4;
-			ImageLib::Image aSaveImage;
-			aSaveImage.mBits = new DWORD[abs(anObject.bmWidth*anObject.bmHeight)];
-			aSaveImage.mWidth = abs(anObject.bmWidth);
-			aSaveImage.mHeight = abs(anObject.bmHeight);
-
-			HDC aDC = GetDC(NULL);
-			if (GetDIBits(aDC,aBitmap,0,aSaveImage.mHeight,aSaveImage.mBits,&anInfo,DIB_RGB_COLORS))
-				ImageLib::WritePNGImage(anImageName, &aSaveImage);
-
-			ReleaseDC(NULL,aDC);
-		}
-		CloseClipboard();
-	}*/
-
-	ClearUpdateBacklog();
+	_beginthread(WriteScreenShotThread, 0, anImage);
+	
+//	ClearUpdateBacklog();
 }
 
 void SexyAppBase::DumpProgramInfo()
@@ -1574,11 +1559,14 @@ void SexyAppBase::WriteToRegistry()
 	RegistryWriteInteger("SfxVolume", (int) (mSfxVolume * 100));
 	RegistryWriteInteger("Muted", (mMuteCount - mAutoMuteCount > 0) ? 1 : 0);
 	RegistryWriteInteger("ScreenMode", mIsWindowed ? 0 : 1);
+	RegistryWriteInteger("AspectCorrection", mAspectCorrect ? 0 : 1);
+	RegistryWriteInteger("AspectNoStretch", mAspectNoStretch ? 0 : 1);
 	RegistryWriteInteger("PreferredX", mPreferredX);
 	RegistryWriteInteger("PreferredY", mPreferredY);
 	RegistryWriteInteger("CustomCursors", mCustomCursorsEnabled ? 1 : 0);		
 	RegistryWriteInteger("InProgress", 0);
 	RegistryWriteBoolean("WaitForVSync", mWaitForVSync);	
+	RegistryWriteInteger("MouseSensitivity", (int) (mMouseSensitivity * 100));
 }
 
 bool SexyAppBase::RegistryEraseKey(const SexyString& _theKeyName)
@@ -1907,6 +1895,15 @@ void SexyAppBase::ReadFromRegistry()
 
 	if (RegistryReadInteger("ScreenMode", &anInt))
 		mIsWindowed = anInt == 0;
+
+	if (RegistryReadInteger("MouseSensitivity", &anInt))
+		mMouseSensitivity = anInt / 100.0f;
+	if (RegistryReadInteger("AspectCorrection", &anInt))
+		mAspectCorrect = anInt == 0;
+
+// TODO: Uncomment this line to make this value persistent
+// 	if (RegistryReadInteger("AspectNoStretch", &anInt))
+// 		mAspectNoStretch = anInt == 0;
 
 	RegistryReadInteger("PreferredX", &mPreferredX);
 	RegistryReadInteger("PreferredY", &mPreferredY);	
@@ -2302,22 +2299,6 @@ void SexyAppBase::Redraw(Rect* theClipRect)
 			aRetryTick = aTick;
 
 			mWidgetManager->mImage = NULL;
-
-			// Re-check resolution at this point, because we hit here when you change your resolution.
-			if (((mWidth >= GetSystemMetrics(SM_CXFULLSCREEN)) || (mHeight >= GetSystemMetrics(SM_CYFULLSCREEN))) && (mIsWindowed))
-			{
-				if (mForceWindowed)
-				{
-					Popup(GetString("PLEASE_SET_COLOR_DEPTH", _S("Please set your desktop color depth to 16 bit."))); 
-					Shutdown();
-					return;
-				}
-				mForceFullscreen = true;
-
-				SwitchScreenMode(false);
-				return;
-			}
-
 
 			int aResult = InitDDInterface();
 
@@ -3569,6 +3550,53 @@ LRESULT CALLBACK SexyAppBase::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 						}
 					}
 				}
+				
+				// apply mouse sensitivity
+				if (uMsg == WM_MOUSEMOVE && aSexyApp->mMouseSensitivity != 1.0f)
+				{
+					int x = (short) LOWORD(lParam);
+					int y = (short) HIWORD(lParam);
+
+					static int aLastX = x;
+					static int aLastY = y-1;
+					static float aFracX = 0;
+					static float aFracY = 0;
+
+					int aCurrentX = x;
+					int aCurrentY = y;
+
+					if(aSexyApp->mMouseIn)
+					{
+						int xDiff = aCurrentX - aLastX;
+						int yDiff = aCurrentY - aLastY;
+
+						float offsetX = aFracX + aSexyApp->mMouseSensitivity * xDiff;
+						float offsetY = aFracY + aSexyApp->mMouseSensitivity * yDiff;
+
+						aFracX = (offsetX - int(offsetX));
+						aFracY = (offsetY - int(offsetY));
+
+						aCurrentX = aLastX + (int)(offsetX);
+						aCurrentY = aLastY + (int)(offsetY);
+					}
+					
+					if (aLastX != aCurrentX || aLastY != aCurrentY)
+					{
+						POINT aPoint = {aCurrentX, aCurrentY};
+						::ClientToScreen(aSexyApp->mHWnd, &aPoint);
+						::SetCursorPos(aPoint.x, aPoint.y);
+
+						aLastX = aCurrentX;
+						aLastY = aCurrentY;
+						
+						lParam = (aLastY << 16) | ( aLastX );
+					}
+					else
+					{
+						// skip message if no mouse moves
+						pushMessage = false;
+					}
+				}
 
 				if (pushMessage)
 				{
@@ -3641,6 +3669,13 @@ LRESULT CALLBACK SexyAppBase::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		}
 		if (wParam==SC_SCREENSAVE && aSexyApp!=NULL && (!aSexyApp->mLoaded || !aSexyApp->mIsPhysWindowed))
 			return FALSE;
+		if((wParam & 0x0000FFF0) == SC_MOVE && aSexyApp!=NULL)
+		{
+			aSexyApp->mPaused = true;
+			aSexyApp->mWidgetManager->MarkAllDirty();
+			aSexyApp->DrawDirtyStuff();
+			aSexyApp->mPaused = false;
+		}
 
 		break;
 
@@ -4027,6 +4062,20 @@ bool SexyAppBase::IsAltKeyUsed(WPARAM wParam)
 			return false;
 	}
 }
+void SexyAppBase::ShowFPS(bool show)
+{
+	mShowFPS = show;
+		
+	mWidgetManager->MarkAllDirty();
+
+	if (mShowFPS)
+	{
+		gFPSTimer.Start();
+		gFrameCount = 0;
+		gFPSDisplay = 0;
+		gForceDisplay = true;
+	}
+}
 
 bool SexyAppBase::DebugKeyDown(int theKey)
 {
@@ -4046,22 +4095,12 @@ bool SexyAppBase::DebugKeyDown(int theKey)
 	{
 		if(mWidgetManager->mKeyDown[KEYCODE_SHIFT])
 		{
-			mShowFPS = true;
 			if (++mShowFPSMode >= Num_FPS_Types)
 				mShowFPSMode = 0;
+			ShowFPS(true);
 		}
 		else
-			mShowFPS = !mShowFPS;
-
-		mWidgetManager->MarkAllDirty();
-
-		if (mShowFPS)
-		{
-			gFPSTimer.Start();
-			gFrameCount = 0;
-			gFPSDisplay = 0;
-			gForceDisplay = true;
-		}
+			ShowFPS(!mShowFPS);
 	}
 	else if (theKey == VK_F8)
 	{
@@ -4665,7 +4704,7 @@ void SexyAppBase::MakeWindow()
 				aPlaceX = aDesktopRect.right - aWidth - aSpacing;
 			
 			if (aPlaceY + aHeight >= aDesktopRect.bottom - aSpacing)
-				aPlaceY = aDesktopRect.bottom - aHeight - aSpacing;
+				aPlaceY = aDesktopRect.bottom - aHeight;
 		}
 
 		if (CheckFor98Mill())
@@ -5689,13 +5728,13 @@ bool SexyAppBase::LoadProperties(const std::string& theFileName, bool required, 
 	PropertiesParser aPropertiesParser(this);
 
 	// Load required language-file properties
-		if (!aPropertiesParser.ParsePropertiesBuffer(aBuffer))
-		{
-			Popup(aPropertiesParser.GetErrorText());		
-			return false;
-		}
-		else
-			return true;
+	if (!aPropertiesParser.ParsePropertiesBuffer(aBuffer))
+	{
+		Popup(aPropertiesParser.GetErrorText());		
+		return false;
+	}
+	else
+		return true;
 }
 
 bool SexyAppBase::LoadProperties()
@@ -6058,12 +6097,12 @@ void SexyAppBase::Init()
 	InitPropertiesHook();
 	ReadFromRegistry();	
 
-	if (CheckForVista())
+//  	if (CheckForVista())
 	{
 		HMODULE aMod;
 		SHGetFolderPathFunc aFunc = (SHGetFolderPathFunc)GetSHGetFolderPath("shell32.dll", &aMod);
 		if (aFunc == NULL || aMod == NULL)
-			SHGetFolderPathFunc aFunc = (SHGetFolderPathFunc)GetSHGetFolderPath("shfolder.dll", &aMod);
+			aFunc = (SHGetFolderPathFunc)GetSHGetFolderPath("shfolder.dll", &aMod);
 
 		if (aMod != NULL)
 		{

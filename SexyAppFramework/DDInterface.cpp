@@ -36,6 +36,8 @@ DDInterface::DDInterface(SexyAppBase* theApp)
 	mInitialized = false;
 	mVideoOnlyDraw = false;	
 	mScanLineFailCount = 0;
+	mAspectCorrect = true;
+	mAspectNoStretch = false;
 
 	//TODO: Standards, anyone?
 	mNextCursorX = 0;
@@ -297,6 +299,8 @@ int DDInterface::Init(HWND theWindow, bool IsWindowed)
 	mFullscreenBits = mApp->mFullscreenBits;
 	mIsWindowed = IsWindowed;
 	mHasOldCursorArea = false;
+	mAspectCorrect = mApp->mAspectCorrect;
+	mAspectNoStretch = mApp->mAspectNoStretch;
 
 	OutputDebug(_S("Application requests %4lu x %4lu [%2d:%2d]\n"), mWidth, mHeight, mAspect.mNumerator, mAspect.mDenominator);
 
@@ -403,10 +407,59 @@ int DDInterface::Init(HWND theWindow, bool IsWindowed)
 	{
 		OutputDebug(_S("Desktop is           %4lu x %4lu [%2d:%2d]\n"), mDesktopWidth, mDesktopHeight, mDesktopAspect.mNumerator, mDesktopAspect.mDenominator);
 
-		if ( mIs3D && mAspect < mDesktopAspect )
+		if ( mIs3D && mAspect < mDesktopAspect && mAspectCorrect)
 		{
 			mIsWidescreen = true;
 
+			bool bFoundCompatibleMode = false;
+			if(mDesktopHeight != mHeight && mAspectNoStretch)
+			{
+				BOOL bMoreModes = FALSE;
+				DEVMODE	devmode;
+				memset(&devmode, 0, sizeof(DEVMODE));
+				devmode.dmSize = sizeof(DEVMODE);
+
+				DWORD iMode = 0;
+				std::vector<std::pair<int,int>> aModeList;
+
+				do
+				{
+					bMoreModes = ::EnumDisplaySettings(NULL, iMode, &devmode);
+					iMode++;
+					if (bMoreModes)
+					{
+						if (devmode.dmBitsPerPel == mFullscreenBits && devmode.dmPelsHeight == mHeight)
+						{
+							aModeList.push_back(std::pair<int,int>(devmode.dmPelsWidth, devmode.dmPelsHeight));
+						}
+// 						sDevMode.Format("%d x %d, %d bits %dhtz",
+// 							devmode.dmPelsWidth, devmode.dmPelsHeight,
+// 							devmode.dmBitsPerPel, devmode.dmDisplayFrequency);
+// 
+// 						// list box for all modes (see demo) 
+// 
+// 						if (m_lb1.AddString(sDevMode)==LB_ERR)
+// 							AfxMessageBox("An error occurred!!!");
+					}
+				}
+				while (bMoreModes);			
+
+				if (aModeList.size())
+				{
+					for (unsigned int i = 0; i < aModeList.size(); ++i)
+					{
+						Ratio aTestAspect(aModeList[i].first, aModeList[i].second);
+						if (aTestAspect == mDesktopAspect || mDisplayAspect < aTestAspect)
+						{
+							mDesktopWidth = aModeList[i].first;
+							mDesktopHeight = aModeList[i].second;
+							bFoundCompatibleMode = true;
+							break;
+						}
+					}
+				}
+			}
+			
 			// Set the display mode to the size of the desktop.
 			mDisplayWidth = mDesktopWidth;
 			mDisplayHeight = mDesktopHeight;
@@ -1151,7 +1204,7 @@ void DDInterface::RestoreOldCursorAreaFrom(LPDIRECTDRAWSURFACE theSurface, bool 
 
 void DDInterface::DrawCursorTo(LPDIRECTDRAWSURFACE theSurface, bool adjust)
 {
-	if ((mCursorImage != NULL) && (mPrimarySurface != NULL))
+	if ((mOldCursorArea != NULL) && (mCursorImage != NULL) && (mPrimarySurface != NULL))
 	{
 		DDSURFACEDESC aDesc;
 		ZeroMemory(&aDesc, sizeof(aDesc));

@@ -66,6 +66,7 @@ protected:
 		bool mMinimizeSubdivisions;
 		int mRows;
 		int mCols;	
+		int mTotal;
 		DWORD mAlphaColor;
 		AnimInfo mAnimInfo;
 
