@@ -97,7 +97,7 @@ std::string Sexy::GetAppDataFolder()
 
 void Sexy::SetAppDataFolder(const std::string& thePath)
 {
-	if (CheckForVista())
+// 	if (CheckForVista())
 	{
 		std::string aPath = thePath;
 		if (!aPath.empty())
@@ -253,11 +253,11 @@ std::wstring Sexy::SexyStringToWString(const SexyString& theString)
 std::string Sexy::Trim(const std::string& theString)
 {
 	int aStartPos = 0;
-	while ( aStartPos < (int) theString.length() && isspace(theString[aStartPos]) )
+	while ( aStartPos < (int) theString.length() && isspace((unsigned char)theString[aStartPos]) )
 		aStartPos++;
 
 	int anEndPos = theString.length() - 1;
-	while ( anEndPos >= 0 && isspace(theString[anEndPos]) )
+	while ( anEndPos >= 0 && isspace((unsigned char)theString[anEndPos]) )
 		anEndPos--;
 
 	return theString.substr(aStartPos, anEndPos - aStartPos + 1);
@@ -706,6 +706,8 @@ bool Sexy::AllowAllAccess(const std::string& theFileName)
 						result = true;
 				}
 			}
+
+			delete [] pSD;
 		}
 	}
 
@@ -978,7 +980,7 @@ std::wstring Sexy::vformat(const wchar_t* fmt, va_list argPtr)
 	{
         // Try a bigger size
         attemptedSize *= 2;
-		heapBuffer = (wchar_t*)realloc(heapBuffer, (attemptedSize + 1));
+		heapBuffer = (wchar_t*)realloc(heapBuffer, (attemptedSize + 1)*sizeof(wchar_t));
 #ifdef _WIN32
 		numChars = _vsnwprintf(heapBuffer, attemptedSize, fmt, argPtr);
 #else
@@ -988,7 +990,7 @@ std::wstring Sexy::vformat(const wchar_t* fmt, va_list argPtr)
 
 	heapBuffer[numChars] = 0;
 
-	std::wstring result = std::wstring(heapBuffer);
+	std::wstring result(heapBuffer);
 
     free(heapBuffer);
 
