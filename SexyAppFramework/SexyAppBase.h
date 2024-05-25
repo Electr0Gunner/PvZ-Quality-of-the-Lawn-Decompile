@@ -131,7 +131,6 @@ public:
 	SexyString				mTitle;	
 	std::string				mRegKey;
 	std::string				mChangeDirTo;
-	std::string				mReconVersion;
 	
 	int						mRelaxUpdateBacklogCount; // app doesn't try to catch up for this many frames
 	int						mPreferredX;
@@ -262,6 +261,7 @@ public:
 	bool					mCustomCursorDirty;	
 	bool					mLastShutdownWasGraceful;
 	bool					mIsWideWindow;
+	float					mMouseSensitivity;
 
 	int						mNumLoadingThreadTasks;
 	int						mCompletedLoadingThreadTasks;
@@ -313,6 +313,8 @@ public:
 	Rect					mScreenBounds;
 	bool					mEnableWindowAspect;
 	Ratio					mWindowAspect;
+	bool					mAspectCorrect;
+	bool					mAspectNoStretch;
 
 	StringWStringMap		mStringProperties;
 	StringBoolMap			mBoolProperties;
@@ -568,6 +570,7 @@ public:
 	void					ClearUpdateBacklog(bool relaxForASecond = false);
 	bool					IsScreenSaver();
 	virtual bool			AppCanRestore();
+	virtual void			ShowFPS(bool show);
 	static LRESULT CALLBACK	WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);		
 };
 

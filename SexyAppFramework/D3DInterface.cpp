@@ -361,7 +361,7 @@ bool D3DInterface::PreDraw()
 		HRESULT hr;
 
 
-		if (!SUCCEEDED(mD3DDevice->SetRenderTarget(mDDSDrawSurface, 0))) // this happens when there's been a mode switch (this caused the nvidia screensaver bluescreen)
+		if (mD3DDevice == NULL || mDDSDrawSurface == NULL || !SUCCEEDED(mD3DDevice->SetRenderTarget(mDDSDrawSurface, 0))) // this happens when there's been a mode switch (this caused the nvidia screensaver bluescreen)
 		{
 			gD3DInterfacePreDrawError = true;
 			return false;
@@ -911,7 +911,7 @@ void TextureData::CreateTextureDimensions(MemoryImage *theImage)
 	// Calculate inner piece sizes
 	mTexPieceWidth = aWidth;
 	mTexPieceHeight = aHeight;
-	bool usePow2 = gTextureSizeMustBePow2 || mPixelFormat==PixelFormat_Palette8;
+	bool usePow2 = true; //gTextureSizeMustBePow2 || mPixelFormat==PixelFormat_Palette8;
 	GetBestTextureDimensions(mTexPieceWidth, mTexPieceHeight,false,usePow2,mImageFlags);
 
 	// Calculate right boundary piece sizes
@@ -936,8 +936,8 @@ void TextureData::CreateTextureDimensions(MemoryImage *theImage)
 	GetBestTextureDimensions(aCornerWidth, aCornerHeight,true,usePow2,mImageFlags);
 /**/
 
-	//mTexPieceWidth = 64;
-	//mTexPieceHeight = 64;
+//	mTexPieceWidth = 64;
+//	mTexPieceHeight = 64;
 
 
 	// Allocate texture array
@@ -1099,9 +1099,7 @@ LPDIRECTDRAWSURFACE7 TextureData::GetTexture(int x, int y, int &width, int &heig
 	int tx = x/mTexPieceWidth;
 	int ty = y/mTexPieceHeight;
 
-
-	int posI=ty*mTexVecWidth + tx;
-	TextureDataPiece &aPiece = mTextures[posI];
+	TextureDataPiece &aPiece = mTextures[ty*mTexVecWidth + tx];
 
 	int left = x%mTexPieceWidth;
 	int top = y%mTexPieceHeight;
@@ -1320,10 +1318,10 @@ static inline D3DTLVERTEX Interpolate(const D3DTLVERTEX &v1, const D3DTLVERTEX &
 	aVertex.tv = v1.tv + t*(v2.tv-v1.tv);
 	if (v1.color!=v2.color)
 	{
-		int r = RGBA_GETRED(v1.color) + t*(RGBA_GETRED(v2.color) - RGBA_GETRED(v1.color));
-		int g = RGBA_GETGREEN(v1.color) + t*(RGBA_GETGREEN(v2.color) - RGBA_GETGREEN(v1.color));
-		int b = RGBA_GETBLUE(v1.color) + t*(RGBA_GETBLUE(v2.color) - RGBA_GETBLUE(v1.color));
-		int a = RGBA_GETALPHA(v1.color) + t*(RGBA_GETALPHA(v2.color) - RGBA_GETALPHA(v1.color));
+		int r = RGBA_GETRED(v1.color) + t*((int)RGBA_GETRED(v2.color) - (int)RGBA_GETRED(v1.color));;
+		int g = RGBA_GETGREEN(v1.color) + t*((int)RGBA_GETGREEN(v2.color) - (int)RGBA_GETGREEN(v1.color));
+		int b = RGBA_GETBLUE(v1.color) + t*((int)RGBA_GETBLUE(v2.color) - (int)RGBA_GETBLUE(v1.color));
+		int a = RGBA_GETALPHA(v1.color) + t*((int)RGBA_GETALPHA(v2.color) - (int)RGBA_GETALPHA(v1.color));
 		aVertex.color = RGBA_MAKE(r,g,b,a);
 	}
 	

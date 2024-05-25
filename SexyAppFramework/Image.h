@@ -59,6 +59,7 @@ public:
 	// for image strips
 	int						mNumRows; 
 	int						mNumCols;
+	int						mNumTotal;
 
 	// for animations
 	AnimInfo				*mAnimInfo;

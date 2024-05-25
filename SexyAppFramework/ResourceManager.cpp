@@ -330,6 +330,12 @@ bool ResourceManager::ParseImageResource(XMLElement &theElement)
 	else
 		aRes->mCols = 1;
 
+	anItr = theElement.mAttributes.find(_S("total"));
+	if (anItr != theElement.mAttributes.end())
+		aRes->mTotal = sexyatoi(anItr->second.c_str());
+	else
+		aRes->mTotal = aRes->mRows * aRes->mCols;
+
 	anItr = theElement.mAttributes.find(_S("anim"));
 	AnimType anAnimType = AnimType_None;
 	if (anItr != theElement.mAttributes.end())
@@ -349,7 +355,7 @@ bool ResourceManager::ParseImageResource(XMLElement &theElement)
 	aRes->mAnimInfo.mAnimType = anAnimType;
 	if (anAnimType != AnimType_None)
 	{
-		int aNumCels = max(aRes->mRows,aRes->mCols);
+		int aNumCels = aRes->mTotal;
 		int aBeginDelay = 0, anEndDelay = 0;
 
 		anItr = theElement.mAttributes.find(_S("framedelay"));
@@ -782,6 +788,7 @@ bool ResourceManager::DoLoadImage(ImageRes *theRes)
 
 	aDDImage->mNumRows = theRes->mRows;
 	aDDImage->mNumCols = theRes->mCols;
+	aDDImage->mNumTotal = theRes->mTotal;
 
 	if (aDDImage->mPurgeBits)
 		aDDImage->PurgeBits();

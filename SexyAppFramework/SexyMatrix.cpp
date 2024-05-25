@@ -293,3 +293,48 @@ const SexyTransform2D& Transform::GetMatrix() const
 	CalcMatrix();
 	return mMatrix;
 }
+
+double Sexy::SexyTransform2D::determinantOfMinor( int theRowHeightY, int theColumnWidthX) const
+{
+	int x1 = theColumnWidthX == 0 ? 1 : 0;  /* always either 0 or 1 */
+	int x2 = theColumnWidthX == 2 ? 1 : 2;  /* always either 1 or 2 */
+	int y1 = theRowHeightY   == 0 ? 1 : 0;  /* always either 0 or 1 */
+	int y2 = theRowHeightY   == 2 ? 1 : 2;  /* always either 1 or 2 */
+
+	return ( m [y1] [x1]  *  m [y2] [x2] )
+		-  ( m [y1] [x2]  *  m [y2] [x1] );
+}
+
+double Sexy::SexyTransform2D::GetDeterminant() const
+{
+	return ( m [0] [0]  *  determinantOfMinor( 0, 0) )
+		-  ( m [0] [1]  *  determinantOfMinor( 0, 1) )
+		+  ( m [0] [2]  *  determinantOfMinor( 0, 2) );
+}
+
+Sexy::SexyTransform2D Sexy::SexyTransform2D::Inverse() const
+{
+	SexyTransform2D aRetTrans(true);
+	double det = GetDeterminant();
+
+	if ( abs(det) < 1e-2 )
+		return aRetTrans;
+
+	double oneOverDeterminant = 1.0 / det;
+
+	for (   int y = 0;  y < 3;  y ++ )
+	{
+		for ( int x = 0;  x < 3;  x ++   )
+		{
+			/* Rule is Inverse = 1/det * minor of the TRANSPOSE matrix.  *
+			* Note (y,x) becomes (x,y) INTENTIONALLY here!              */
+			aRetTrans.m[y][x] = determinantOfMinor( x, y ) * oneOverDeterminant;
+
+			/* (y0,x1)  (y1,x0)  (y1,x2)  and (y2,x1)  all need to be negated. */
+			if( 1 == ((x + y) % 2) )
+				aRetTrans.m[y][x] = - aRetTrans.m[y][x];
+		}
+	}
+
+	return aRetTrans;
+}

@@ -196,7 +196,7 @@ static bool StrToLongHex(const std::string& aString, DWORD* theValue)
 
 void SEHCatcher::GetSymbolsFromMapFile(std::string &theDebugDump)
 {
-	DWORD aTick = GetTickCount();
+    DWORD aTick = GetTickCount();
 	WIN32_FIND_DATAA aFindData;
 	HANDLE aFindHandle = FindFirstFileA("*.map",&aFindData);
 	if (aFindHandle==INVALID_HANDLE_VALUE)
@@ -276,7 +276,7 @@ void SEHCatcher::GetSymbolsFromMapFile(std::string &theDebugDump)
 				}
 			}
 		}
-	}
+    }
 
 	// Parse stack trace
 	for (int i = 0; i < (int)theDebugDump.length(); i++)
@@ -352,7 +352,7 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 
 	char aBuffer[2048];
    
-		///////////////////////////
+    ///////////////////////////
 	// first name the exception	
 	char  *szName = NULL;
     for (int i=0; gMsgTable[i].dwExceptionCode != 0xFFFFFFFF; i++) 
@@ -399,7 +399,7 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 	if (aWalkString.length() == 0)
 		aWalkString = IntelWalk(lpEP->ContextRecord, 0);
 
-	aDebugDump += aWalkString;
+    aDebugDump += aWalkString;
 
 	aDebugDump += "\r\n";
 	sprintf(aBuffer, ("EAX:%08X EBX:%08X ECX:%08X EDX:%08X ESI:%08X EDI:%08X\r\n"),
@@ -415,7 +415,7 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 	aDebugDump += "\r\n";
 	aDebugDump += GetSysInfo();	
 
-	if (mApp != NULL)
+    if (mApp != NULL)
 	{
 		std::string aGameSEHInfo = mApp->GetGameSEHInfo();
 		if (aGameSEHInfo.length() > 0)
@@ -427,9 +427,14 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 		mApp->CopyToClipboard(aDebugDump);
 	}		
 
+    // just for any case
+    // some time we can't go through GetSymbolsFromMapFile, probably because of some memory corruption
+    WriteToFile(aDebugDump);
+
 	if (hasImageHelp)
 		GetSymbolsFromMapFile(aDebugDump);
-
+    
+    // rewrite crash file
 	WriteToFile(aDebugDump);
 
 #ifdef ZYLOM
@@ -585,6 +590,10 @@ std::string SEHCatcher::ImageHelpWalk(PCONTEXT theContext, int theSkipCount)
 		aDebugDump += "\r\n";
 
 		aLevelCount++;
+    
+        // check for loop
+        if (aLevelCount > 1000)
+            break;
 	}
 
 	return aDebugDump;
@@ -847,7 +856,7 @@ LRESULT CALLBACK SEHCatcher::SubmitInfoWindowProc(HWND hWnd, UINT uMsg, WPARAM w
 
 void SEHCatcher::WriteToFile(const std::string& theErrorText)
 {
-	std::fstream aStream("crash.txt", std::ios::out);
+    std::fstream aStream("crash.txt", std::ios::out);
 	aStream << theErrorText.c_str() << std::endl;
 }
 
