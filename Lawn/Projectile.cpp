@@ -742,14 +742,17 @@ void Projectile::UpdateMotion()
 	{
 		mPosY += aSlopeHeightChange;
 	}
-	if (mMotionType == ProjectileMotion::MOTION_LOBBED)
+	if (mMotionType == ProjectileMotion::MOTION_LOBBED && mProjectileType != ProjectileType::PROJECTILE_COBBIG)
 	{
 		mPosY += aSlopeHeightChange;
 		mPosZ -= aSlopeHeightChange;
 	}
-	mShadowY += aSlopeHeightChange;
-	mX = (int)mPosX;
-	mY = (int)(mPosY + mPosZ);
+	if(mProjectileType == ProjectileType::PROJECTILE_COBBIG)
+	{ 
+		mShadowY += aSlopeHeightChange;
+		mX = (int)mPosX;
+		mY = (int)(mPosY + mPosZ);
+	}
 }
 
 //0x46DD30

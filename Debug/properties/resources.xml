@@ -175,6 +175,7 @@
 <Image id="TREEFOOD" path="TreeFood" />
 <Image id="PACKET_PLANTS" path="packet_plants" cols="13" />
 <Image id="ZEN_NEED_ICONS" path="zen_need_icons" cols="3" />
+<Image id="SQUIRREL" path="squirrel" />
 
 <!-- Various strips -->
 <Image id="PROJECTILEPEA" path="projectilepea" />
