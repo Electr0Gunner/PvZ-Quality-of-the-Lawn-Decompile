@@ -280,7 +280,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	TodHesitationTrace("gameselectorinit");
 }
 
-//0x449D00、0x449D20
+//0x449D00隆垄0x449D20
 GameSelector::~GameSelector()
 {
 	if (mAdventureButton)
@@ -577,8 +577,8 @@ void GameSelector::DrawOverlay(Graphics* g)
 		float aTransSubX = aTransAreaX;
 		float aTransSubY = aTransAreaY;
 
-		int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, 6);  // 大关
-		int aSub = mLevel - (aStage - 1) * 10;  // 小关
+		int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, 6);  // 麓贸鹿脴
+		int aSub = mLevel - (aStage - 1) * 10;  // 脨隆鹿脴
 		if (mApp->IsTrialStageLocked() && (mLevel >= 25 || mApp->HasFinishedAdventure()))
 		{
 			aStage = 3;
@@ -602,7 +602,7 @@ void GameSelector::DrawOverlay(Graphics* g)
 
 		g->SetColorizeImages(true);
 		g->SetColor(mAdventureButton->mColors[ButtonWidget::COLOR_BKG]);
-		TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransAreaX + 486.0f, aTransAreaY + 125.0f, aStage, 0);  // 绘制大关数
+		TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransAreaX + 486.0f, aTransAreaY + 125.0f, aStage, 0);  // 禄忙脰脝麓贸鹿脴脢媒
 		if (aSub < 10)
 		{
 			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 504.0f, aTransSubY + 128.0f, aSub, 0);
@@ -706,7 +706,7 @@ void GameSelector::Update()
 				mApp->PreNewGame(GameMode::GAMEMODE_CHALLENGE_ICE, false);
 				return;
 			}
-			if (mApp->IsFirstTimeAdventureMode() && mLevel == 0 && mApp->SaveFileExists())
+			if (mApp->IsFirstTimeAdventureMode() && mLevel == 1 && mApp->SaveFileExists())
 			{
 				mApp->PreNewGame(GameMode::GAMEMODE_INTRO, false);
 				return;
