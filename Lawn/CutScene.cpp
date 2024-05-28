@@ -464,6 +464,9 @@ void CutScene::PreloadResources()
 		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_TRAFFIC_CONE);
 		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_PAIL);
 		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_ZAMBONI);
+		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_SNORKEL);
+		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_CATAPULT);
+		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_FOOTBALL);
 		Plant::PreloadPlantResources(SeedType::SEED_SUNFLOWER);
 		Plant::PreloadPlantResources(SeedType::SEED_PEASHOOTER);
 		Plant::PreloadPlantResources(SeedType::SEED_SQUASH);
@@ -473,6 +476,7 @@ void CutScene::PreloadResources()
 		Plant::PreloadPlantResources(SeedType::SEED_SPIKEWEED);
 		Plant::PreloadPlantResources(SeedType::SEED_TANGLEKELP);
 	}
+
 
 	PlaceStreetZombies();
 
