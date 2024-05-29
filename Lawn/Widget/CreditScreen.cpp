@@ -323,7 +323,7 @@ CreditScreen::CreditScreen(LawnApp* theApp)
     mDrawBrain = false;
 
 	mMainMenuButton = MakeButton(CreditScreen::Credits_Button_MainMenu, this, _S("[CREDITS_MAIN_MENU_BUTTON]"));
-	mMainMenuButton->Resize(298, 554, 209, 46);
+	mMainMenuButton->Resize(298 + BOARD_OFFSET_X, 554 + BOARD_OFFSET_Y, 209, 46);
 	mMainMenuButton->SetVisible(false);
 
 	mReplayButton = MakeNewButton(CreditScreen::Credits_Button_Replay, this, _S("[CREDITS_REPLAY_BUTTON]"), FONT_HOUSEOFTERROR16, IMAGE_CREDITS_PLAYBUTTON, nullptr, nullptr);
@@ -331,7 +331,7 @@ CreditScreen::CreditScreen(LawnApp* theApp)
 	mReplayButton->mTextDownOffsetY = 1;
 	mReplayButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 255, 255);
 	mReplayButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(213, 159, 43);
-	mReplayButton->Resize(10, 530, 125, 65);
+	mReplayButton->Resize(10 + BOARD_OFFSET_X, 530 + BOARD_OFFSET_Y, 125, 65);
     mReplayButton->SetVisible(false);
 	mReplayButton->mTextOffsetX = 33;
 	mReplayButton->mTextOffsetY = -5;
@@ -560,7 +560,7 @@ Reanimation* CreditScreen::PlayReanim(int aIndex)
 
     if (aIndex == 1)
     {
-        aCreditsReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_CREDITS_MAIN);
+        aCreditsReanim = mApp->AddReanimation(0.0f + BOARD_OFFSET_X, 0.0f, 0, ReanimationType::REANIM_CREDITS_MAIN);
         aCreditsReanim->AssignRenderGroupToPrefix("Background", 1);
         aCreditsReanim->AssignRenderGroupToPrefix("attacher__Zombie", 2);
         aCreditsReanim->AssignRenderGroupToPrefix("Words", 3);
@@ -568,7 +568,7 @@ Reanimation* CreditScreen::PlayReanim(int aIndex)
     }
     else if (aIndex == 2)
     {
-        aCreditsReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_CREDITS_MAIN2);
+        aCreditsReanim = mApp->AddReanimation(0.0f + BOARD_OFFSET_X, 0.0f, 0, ReanimationType::REANIM_CREDITS_MAIN2);
         aCreditsReanim->AssignRenderGroupToPrefix("Background", 1);
         aCreditsReanim->AssignRenderGroupToPrefix("attacher__Zombie", 2);
         aCreditsReanim->AssignRenderGroupToPrefix("Words", 3);
@@ -577,7 +577,7 @@ Reanimation* CreditScreen::PlayReanim(int aIndex)
     }
     else if (aIndex == 3)
     {
-        aCreditsReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_CREDITS_MAIN3);
+        aCreditsReanim = mApp->AddReanimation(0.0f + BOARD_OFFSET_X, 0.0f, 0, ReanimationType::REANIM_CREDITS_MAIN3);
         aCreditsReanim->AssignRenderGroupToPrefix("Background", 1);
         aCreditsReanim->AssignRenderGroupToPrefix("attacher__Zombie", 2);
         aCreditsReanim->AssignRenderGroupToPrefix("attacher__DiscoLights", 2);
@@ -604,13 +604,13 @@ void DrawDisco(Graphics* g, float aCenterX, float aCenterY, float theTime)
     if (!gSexyAppBase->Is3DAccelerated())
         return;
 
-    float x1 = cos(theTime) * 600.0f;
+    float x1 = cos(theTime) * 600.0f + BOARD_OFFSET_X;
     float y1 = sin(theTime) * 200.0f;
-    float x2 = cos(theTime + PI / 2) * 600.0f;
+    float x2 = cos(theTime + PI / 2) * 600.0f + BOARD_OFFSET_X;
     float y2 = sin(theTime + PI / 2) * 200.0f;
-    float x3 = cos(theTime + PI) * 600.0f;
+    float x3 = cos(theTime + PI) * 600.0f + BOARD_OFFSET_X;
     float y3 = sin(theTime + PI) * 200.0f;
-    float x4 = cos(theTime + PI + PI / 2) * 600.0f;
+    float x4 = cos(theTime + PI + PI / 2) * 600.0f + BOARD_OFFSET_X;
     float y4 = sin(theTime + PI + PI / 2) * 200.0f;
 
     TriVertex aVerts[2][3];
@@ -722,7 +722,7 @@ void CreditScreen::DrawOverlay(Graphics* g)
 //0x435550
 void CreditScreen::DrawFinalCredits(Graphics* g)
 {
-    TodDrawString(g, _S("[CREDITS_GAMENAME]"), BOARD_WIDTH / 2, 60, FONT_HOUSEOFTERROR28, Color::White, DrawStringJustification::DS_ALIGN_CENTER);
+    TodDrawString(g, _S("[CREDITS_GAMENAME]"), BOARD_WIDTH / 2 + BOARD_OFFSET_X, 60, FONT_HOUSEOFTERROR28, Color::White, DrawStringJustification::DS_ALIGN_CENTER);
 
     Rect aRectNames1(405, 90, 200, 200);
     TodDrawStringWrapped(g, _S("[CREDITS_NAMES1]"), aRectNames1, FONT_HOUSEOFTERROR16, Color::White, DrawStringJustification::DS_ALIGN_LEFT);
@@ -761,11 +761,11 @@ void CreditScreen::Draw(Graphics* g)
     mDrawCount++;
     if (mDrawCount == 2)
     {
-        g->DrawImage(IMAGE_BACKGROUND1, 0, 0);
-        g->DrawImage(IMAGE_BACKGROUND2, 0, 0);
-        g->DrawImage(IMAGE_BACKGROUND3, 0, 0);
-        g->DrawImage(IMAGE_BACKGROUND4, 0, 0);
-        g->DrawImage(IMAGE_BACKGROUND5, 0, 0);
+        g->DrawImage(IMAGE_BACKGROUND1, -BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
+        g->DrawImage(IMAGE_BACKGROUND2, -BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
+        g->DrawImage(IMAGE_BACKGROUND3, -BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
+        g->DrawImage(IMAGE_BACKGROUND4, -BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
+        g->DrawImage(IMAGE_BACKGROUND5, -BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
         DrawReanimToPreload(g, ReanimationType::REANIM_CREDITS_BOSSDANCE);
         DrawReanimToPreload(g, ReanimationType::REANIM_CREDITS_CRAZYDAVE);
         DrawReanimToPreload(g, ReanimationType::REANIM_ZOMBIE_CREDITS_DANCE);
@@ -812,21 +812,21 @@ void CreditScreen::Draw(Graphics* g)
         
         if (aTransformBackground2.mFrame != -1.0f)
         {
-            aBackground2G.ClipRect(aTransformBackground2.mTransX, aTransformBackground2.mTransY, aTransformBackground2.mImage->mWidth - 1, aTransformBackground2.mImage->mHeight - 1);
-            aBackground2G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground2.mTransX - BOARD_WIDTH / 2, aTransformBackground2.mTransY - BOARD_HEIGHT / 2);
+            aBackground2G.ClipRect(aTransformBackground2.mTransX + BOARD_OFFSET_X, aTransformBackground2.mTransY, aTransformBackground2.mImage->mWidth - 1, aTransformBackground2.mImage->mHeight - 1);
+            aBackground2G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground2.mTransX - BOARD_WIDTH / 2 + BOARD_OFFSET_X, aTransformBackground2.mTransY - BOARD_HEIGHT / 2);
             aBackground2G.ClearClipRect();
         }
         if (aTransformBackground3.mFrame != -1.0f)
         {
             Graphics aBackground3G(*g);
-            aBackground3G.ClipRect(aTransformBackground3.mTransX, aTransformBackground3.mTransY, aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
-            aBackground3G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground3.mTransX - BOARD_WIDTH / 2, aTransformBackground3.mTransY - BOARD_HEIGHT / 2);
+            aBackground3G.ClipRect(aTransformBackground3.mTransX + BOARD_OFFSET_X, aTransformBackground3.mTransY, aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
+            aBackground3G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground3.mTransX - BOARD_WIDTH / 2 + BOARD_OFFSET_X, aTransformBackground3.mTransY - BOARD_HEIGHT / 2);
         }
         if (aTransformBackground4.mFrame != -1.0f)
         {
             Graphics aBackground4G(*g);
-            aBackground4G.ClipRect(aTransformBackground4.mTransX, aTransformBackground4.mTransY, aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
-            aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
+            aBackground4G.ClipRect(aTransformBackground4.mTransX + BOARD_OFFSET_X, aTransformBackground4.mTransY, aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
+            aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2 + BOARD_OFFSET_X, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
         }
     }
     if (aDrawClippedBackgrounds2)
@@ -844,23 +844,23 @@ void CreditScreen::Draw(Graphics* g)
         if (aTransformBackground1.mFrame != -1.0f)
         {
             Graphics aBackground1G(*g);
-            aBackground1G.ClipRect(aTransformBackground1.mTransX, aTransformBackground1.mTransY, aTransformBackground1.mImage->mWidth - 1, aTransformBackground1.mImage->mHeight - 1);
-            aBackground1G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground1.mTransX - BOARD_WIDTH / 2, aTransformBackground1.mTransY - BOARD_HEIGHT / 2);
+            aBackground1G.ClipRect(aTransformBackground1.mTransX + BOARD_OFFSET_X, aTransformBackground1.mTransY, aTransformBackground1.mImage->mWidth - 1, aTransformBackground1.mImage->mHeight - 1);
+            aBackground1G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground1.mTransX - BOARD_WIDTH / 2 + BOARD_OFFSET_X, aTransformBackground1.mTransY - BOARD_HEIGHT / 2);
         }
         if (aTransformBackground3.mFrame != -1.0f)
         {
             Graphics aBackground3G(*g);
             aBackground3G.mTransX += aTransformBackground3.mTransX - 20.0f;
             aBackground3G.mTransY += aTransformBackground3.mTransY - 260.0f;
-            aBackground3G.ClipRect(20, 260, aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
-            aBackground3G.DrawImageF(IMAGE_BACKGROUND3, -220.0f, 0.0f);
-            aBackground3G.DrawImageF(IMAGE_POOL, 34.0f, 278.0f);
+            aBackground3G.ClipRect(20 + BOARD_OFFSET_X, 260, aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
+            aBackground3G.DrawImageF(IMAGE_BACKGROUND3, -220.0f + BOARD_OFFSET_X, 0.0f);
+            aBackground3G.DrawImageF(IMAGE_POOL, 34.0f + BOARD_OFFSET_X, 278.0f);
         }
         if (aTransformBackground4.mFrame != -1.0f)
         {
             Graphics aBackground4G(*g);
-            aBackground4G.ClipRect(aTransformBackground4.mTransX, aTransformBackground4.mTransY, aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
-            aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
+            aBackground4G.ClipRect(aTransformBackground4.mTransX + BOARD_OFFSET_X, aTransformBackground4.mTransY, aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
+            aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2 + BOARD_OFFSET_X, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
         }
     }
     aCreditsReanim->DrawRenderGroup(g, 1);

@@ -389,6 +389,9 @@ void MessageWidget::Draw(Graphics* g)
 		break;
 	}
 
+	aPosX -= BOARD_OFFSET_X;
+	aPosY -= BOARD_OFFSET_Y;
+
 	if (mReanimType != ReanimationType::REANIM_NONE)
 	{
 		if (aFont == Sexy::FONT_CONTINUUMBOLD14)
@@ -413,7 +416,7 @@ void MessageWidget::Draw(Graphics* g)
 		if (aRectHeight > 0)
 		{
 			aOutlineColor = Color(0, 0, 0, 128);
-			Rect aRect(0, aPosY, BOARD_WIDTH, aRectHeight);
+			Rect aRect(-BOARD_ADDITIONAL_WIDTH, aPosY, BOARD_WIDTH, aRectHeight);
 			g->SetColor(aOutlineColor);
 			g->FillRect(aRect);
 
@@ -422,7 +425,7 @@ void MessageWidget::Draw(Graphics* g)
 		}
 		else
 		{
-			Rect aRect(aPosX - mApp->mBoard->mX - BOARD_WIDTH / 2, aPosY - aFont->mAscent, BOARD_WIDTH, BOARD_HEIGHT);
+			Rect aRect(aPosX - mApp->mBoard->mX - BOARD_WIDTH / 2 + BOARD_OFFSET_X, aPosY - aFont->mAscent, BOARD_WIDTH, BOARD_HEIGHT);
 			if (aOutlineFont)
 			{
 				TodDrawStringWrapped(g, mLabel, aRect, aOutlineFont, aOutlineColor, DrawStringJustification::DS_ALIGN_CENTER);
@@ -445,7 +448,7 @@ void MessageWidget::Draw(Graphics* g)
 				TodDrawString(
 					g, 
 					aSubStr, 
-					BOARD_WIDTH / 2 - mApp->mBoard->mX, 
+					BOARD_WIDTH / 2 - mApp->mBoard->mX + BOARD_OFFSET_X,
 					aPosY + 26, 
 					Sexy::FONT_HOUSEOFTERROR16, 
 					Color(224, 187, 62, aColor.mAlpha), 

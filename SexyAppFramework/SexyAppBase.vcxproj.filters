@@ -938,6 +938,9 @@
     <ClCompile Include="..\DiscordRPC\serialization.cpp">
       <Filter>DiscordRPC</Filter>
     </ClCompile>
+    <ClCompile Include="..\Lawn\Bush.cpp">
+      <Filter>Lawn\Board\Board Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -1610,6 +1613,9 @@
     </ClInclude>
     <ClInclude Include="..\DiscordRPC\rapidjson\error\error.h">
       <Filter>DiscordRPC\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lawn\Bush.h">
+      <Filter>Lawn\Board\Board Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

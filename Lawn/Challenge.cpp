@@ -2077,7 +2077,7 @@ void Challenge::UpdateSlotMachine()
 			else if (aPacket1 == SEED_SLOT_MACHINE_SUN)
 			{
 				mBoard->DisplayAdvice(_S("[ADVICE_SLOT_MACHINE_SUN_JACKPOT]"), MESSAGE_STYLE_SLOT_MACHINE, ADVICE_NONE);
-				for (int i = 0; i < 20; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					mBoard->AddCoin(320 + i * 3, 85, COIN_SUN, COIN_MOTION_COIN);
 				}
@@ -2379,8 +2379,10 @@ void Challenge::DrawSlotMachine(Graphics* g)
 		gBoardParent.SetColor(GetFlashingColor(mBoard->mMainCounter, 75));
 		gBoardParent.SetColorizeImages(true);
 	}
-	gBoardParent.mTransX = mBoard->mSeedBank->mX - mBoard->mX;
-	gBoardParent.mTransY = mBoard->mSeedBank->mY - mBoard->mY;
+	if (mApp->mGameScene == SCENE_LEVEL_INTRO)
+	{
+		gBoardParent.mTransY = mBoard->mSeedBank->mY - mBoard->mY + BOARD_OFFSET_Y;
+	}
 	mApp->ReanimationGet(mReanimChallenge)->Draw(&gBoardParent);
 }
 

@@ -54,10 +54,12 @@ SeedChooserScreen::SeedChooserScreen()
 	mStartButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color::White;
 	mStartButton->Resize(154, 545, 156, 42);
 	mStartButton->mTextOffsetY = -1;
+	mStartButton->mParentWidget = this;
 	EnableStartButton(false);
 
 	mMenuButton = new GameButton(SeedChooserScreen::SeedChooserScreen_Menu);
 	mMenuButton->SetLabel(_S("[MENU_BUTTON]"));
+	mMenuButton->mParentWidget = this;
 	mMenuButton->Resize(681, -10, 117, 46);
 	mMenuButton->mDrawStoneButton = true;
 
@@ -69,6 +71,7 @@ SeedChooserScreen::SeedChooserScreen()
 	mRandomButton->SetFont(Sexy::FONT_BRIANNETOD12);
 	mRandomButton->mColors[0] = Color(255, 240, 0);
 	mRandomButton->mColors[1] = Color(200, 200, 255);
+	mRandomButton->mParentWidget = this;
 	mRandomButton->Resize(332, 546, 100, 30);
 	if (!mApp->mTodCheatKeys)
 	{
@@ -414,8 +417,8 @@ void SeedChooserScreen::Draw(Graphics* g)
 			else if (aSeedState == SEED_IN_BANK)
 			{
 				g->ClearClipRect();
-				aPosX = aChosenSeed.mX + mX;
-				aPosY = aChosenSeed.mY + mY;
+				aPosX = aChosenSeed.mX;
+				aPosY = aChosenSeed.mY;
 			}
 			else
 			{
@@ -560,8 +563,8 @@ void SeedChooserScreen::Update()
 
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
 
-	mLastMouseX = mApp->mWidgetManager->mLastMouseX;
-	mLastMouseY = mApp->mWidgetManager->mLastMouseY;
+	mLastMouseX = mApp->mWidgetManager->mLastMouseX - BOARD_ADDITIONAL_WIDTH;
+	mLastMouseY = mApp->mWidgetManager->mLastMouseY - BOARD_OFFSET_Y;
 
 	mSeedChooserAge++;
 	mToolTip->Update();
@@ -1023,7 +1026,7 @@ void SeedChooserScreen::ShowToolTip()
 					GetSeedPositionInChooser(aSeedType, aSeedX, aSeedY);
 				}
 
-				mToolTip->mX = ClampInt((SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + aSeedX, 0, BOARD_WIDTH - mToolTip->mWidth);
+				mToolTip->mX = (SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + aSeedX;
 				mToolTip->mY = aSeedY + 70;
 				mToolTip->mVisible = true;
 				mToolTipSeed = aSeedType;
@@ -1134,7 +1137,7 @@ void SeedChooserScreen::MouseDown(int x, int y, int theClickCount)
 	{
 		if (!mBoard->mSeedBank->ContainsPoint(x, y) && !mAlmanacButton->IsMouseOver() && !mStoreButton->IsMouseOver() && mApp->CanShowAlmanac())
 		{
-			Zombie* aZombie = mBoard->ZombieHitTest(x - mBoard->mX, y - mBoard->mY);
+			Zombie* aZombie = mBoard->ZombieHitTest(x - mBoard->mX + BOARD_ADDITIONAL_WIDTH, y - mBoard->mY + BOARD_OFFSET_Y);
 			if (aZombie && aZombie->mFromWave == Zombie::ZOMBIE_WAVE_CUTSCENE && aZombie->mZombieType != ZOMBIE_REDEYE_GARGANTUAR)
 			{
 				mApp->DoAlmanacDialog(SEED_NONE, aZombie->mZombieType)->WaitForResult(true);

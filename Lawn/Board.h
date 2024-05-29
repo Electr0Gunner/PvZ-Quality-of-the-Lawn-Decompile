@@ -12,6 +12,7 @@
 #include "Coin.h"
 #include "LawnMower.h"
 #include "GridItem.h"
+#include "Bush.h"
 
 using namespace Sexy;
 
@@ -69,6 +70,7 @@ public:
 		Reanimation*				mReanimation;
 		GridItem*					mGridItem;
 		LawnMower*					mMower;
+		Bush*						mBush;
 		BossPart					mBossPart;
 		int							mBoardGridY;
 	};
@@ -110,6 +112,7 @@ public:
 	DataArray<Coin>					mCoins;													//+0xE4
 	DataArray<LawnMower>			mLawnMowers;											//+0x100
 	DataArray<GridItem>				mGridItems;												//+0x11C
+	DataArray<Bush>					mBush;												
 	CursorObject*					mCursorObject;											//+0x138
 	CursorPreview*					mCursorPreview;											//+0x13C
 	MessageWidget*					mAdvice;												//+0x140
@@ -123,10 +126,12 @@ public:
 	CutScene*						mCutScene;												//+0x15C
 	Challenge*						mChallenge;												//+0x160
 	bool							mPaused;												//+0x164
+	bool							mBushInit;
 	GridSquareType					mGridSquareType[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];		//+0x168
 	int								mGridCelLook[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];			//+0x240
 	int								mGridCelOffset[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y][2];	//+0x318
 	int								mGridCelFog[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y + 1];		//+0x4C8
+	Bush*							mBushList[MAX_GRID_SIZE_Y];
 	bool							mEnableGraveStones;										//+0x5C4
 	int								mSpecialGraveStoneX;									//+0x5C8
 	int								mSpecialGraveStoneY;									//+0x5CC
@@ -141,6 +146,7 @@ public:
 	TodSmoothArray					mRowPickingArray[MAX_GRID_SIZE_Y];						//+0x654
 	ZombieType						mZombiesInWave[MAX_ZOMBIE_WAVES][MAX_ZOMBIES_IN_WAVE];	//+0x6B4
 	bool							mZombieAllowed[100];									//+0x54D4
+	int								mRoofPoleOffset;
 	int								mSunCountDown;											//+0x5538
 	int								mNumSunsFallen;											//+0x553C
 	int								mShakeCounter;											//+0x5540
@@ -279,6 +285,8 @@ public:
 	/*inline*/ bool					StageHas6Rows();
 	/*inline*/ bool					StageHasFog();
 	bool							StageHasGraveStones();
+	/*inline*/ bool					StageHasBushes();
+	void							AddBushes();
 	int								PixelToGridX(int theX, int theY);
 	int								PixelToGridY(int theX, int theY);
 	/*inline*/ int					GridToPixelX(int theGridX, int theGridY);
@@ -328,6 +336,7 @@ public:
 	bool							IteratePlants(Plant*& thePlant);
 	bool							IterateProjectiles(Projectile*& theProjectile);
 	bool							IterateCoins(Coin*& theCoin);
+	bool							IterateBushes(Bush*& theBush);
 	bool							IterateLawnMowers(LawnMower*& theLawnMower);
 	bool							IterateParticles(TodParticleSystem*& theParticle);
 	bool							IterateReanimations(Reanimation*& theReanimation);

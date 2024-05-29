@@ -26,51 +26,51 @@
 #include "../SexyAppFramework/PerfTimer.h"
 #include "../SexyAppFramework/WidgetManager.h"
 
-static const int	TimePanRightStart				= 1500;
-static const int	TimePanRightEnd					= 3500;		//[0x6A4FFC]
-static const int	TimeEarlyDaveEnterStart			= 2000;		//[0x6A5000]
-static const int	TimeEarlyDaveEnterEnd			= 2750;		//[0x6AA220]
-static const int	TimeEarlyDaveLeaveStart			= 3250;		//[0x6AA224]
-static const int	TimeEarlyDaveLeaveEnd			= 4000;		//[0x6AA228]
-static const int	TimeSeedChoserSlideOnStart		= 4000;		//[0x6AA22C]
-static const int	TimeSeedChoserSlideOnEnd		= 4250;		//[0x6AA230]
-static const int	TimeSeedChoserSlideOffStart		= 4500;		//[0x6AA234]
-static const int	TimeSeedChoserSlideOffEnd		= 4750;		//[0x6AA238]
-static const int	TimeSeedBankOnStart				= 4000;		//[0x6AA23C]
-static const int	TimeSeedBankOnEnd				= 4250;		//[0x6AA240]
-static const int	TimePanLeftStart				= 4500;		//[0x6AA244]
-static const int	TimePanLeftEnd					= 6000;		//[0x6AA248]
-static const int	TimeSeedBankRightStart			= 4750;		//[0x6AA24C]
-static const int	TimeSeedBankRightEnd			= 6000;		//[0x6AA250]
-static const int	TimeRollSodStart				= 6000;		//[0x6AA254]
-static const int	TimeRollSodEnd					= 8000;		//[0x6AA258]
-static const int	TimeGraveStoneStart				= 6000;		//[0x6AA25C]
-static const int	TimeGraveStoneEnd				= 7000;		//[0x6AA260]
-static const int	TimeReadySetPlantStart			= 6000;		//[0x6AA264]
-static const int	TimeReadySetPlantEnd			= 7830;		//[0x6AA268]
-static const int	TimeFogRollIn					= 5950;		//[0x6AA26C]
-static const int	TimeCrazyDaveEnterStart			= 6500;		//[0x6AA270]
-static const int	TimeCrazyDaveEnterEnd			= 7250;		//[0x6AA274]
-static const int	TimeCrazyDaveLeaveStart			= 7750;		//[0x6AA278]
-static const int	TimeCrazyDaveLeaveEnd			= 8500;		//[0x6AA27C]
-static const int	TimeIntroEnd					= 6000;		//[0x6AA280]
-static const int	LostTimePanRightStart			= 1500;
-static const int	LostTimePanRightEnd				= 3500;		//[0x6A5004]
-static const int	LostTimeBrainGraphicStart		= 6000;		//[0x6AA284]
-static const int	LostTimeBrainGraphicShake		= 7000;		//[0x6AA288]
-static const int	LostTimeBrainGraphicCancelShake	= 8000;		//[0x6AA28C]
-static const int	LostTimeBrainGraphicEnd			= 11000;	//[0x6AA290]
-static const int	LostTimeEnd						= 11000;	//[0x6AA294]
-static const int	TimeIntro_PresentsFadeIn		= 1000;
-static const int	TimeIntro_LogoStart				= 5500;		//[0x6A5008]
-static const int	TimeIntro_LogoEnd				= 5900;		//[0x6AA298]
-static const int	TimeIntro_PanRightStart			= 5890;		//[0x6A500C]
-static const int	TimeIntro_PanRightEnd			= 11890;	//[0x6AA29C]
-static const int	TimeIntro_FadeOut				= 10890;	//[0x6AA2A0]
-static const int	TimeIntro_FadeOutEnd			= 11890;	//[0x6AA2A4]
-static const int	TimeIntro_End					= 13890;	//[0x6AA2A8]
-static const int	TimeLawnMowerDuration			= 250;
-static const int	TimeLawnMowerStart[6]			= { 6300, 6250, 6200, 6150, 6100, 6050 };	//[0x6AA2AC]
+static const int	TimePanRightStart = 1500;
+static const int	TimePanRightEnd = 3500;		//[0x6A4FFC]
+static const int	TimeEarlyDaveEnterStart = 2000;		//[0x6A5000]
+static const int	TimeEarlyDaveEnterEnd = 2750;		//[0x6AA220]
+static const int	TimeEarlyDaveLeaveStart = 3250;		//[0x6AA224]
+static const int	TimeEarlyDaveLeaveEnd = 4000;		//[0x6AA228]
+static const int	TimeSeedChoserSlideOnStart = 4000;		//[0x6AA22C]
+static const int	TimeSeedChoserSlideOnEnd = 4250;		//[0x6AA230]
+static const int	TimeSeedChoserSlideOffStart = 4500;		//[0x6AA234]
+static const int	TimeSeedChoserSlideOffEnd = 4750;		//[0x6AA238]
+static const int	TimeSeedBankOnStart = 4000;		//[0x6AA23C]
+static const int	TimeSeedBankOnEnd = 4250;		//[0x6AA240]
+static const int	TimePanLeftStart = 4500;		//[0x6AA244]
+static const int	TimePanLeftEnd = 6000;		//[0x6AA248]
+static const int	TimeSeedBankRightStart = 4750;		//[0x6AA24C]
+static const int	TimeSeedBankRightEnd = 6000;		//[0x6AA250]
+static const int	TimeRollSodStart = 6000;		//[0x6AA254]
+static const int	TimeRollSodEnd = 8000;		//[0x6AA258]
+static const int	TimeGraveStoneStart = 6000;		//[0x6AA25C]
+static const int	TimeGraveStoneEnd = 7000;		//[0x6AA260]
+static const int	TimeReadySetPlantStart = 6000;		//[0x6AA264]
+static const int	TimeReadySetPlantEnd = 7830;		//[0x6AA268]
+static const int	TimeFogRollIn = 5950;		//[0x6AA26C]
+static const int	TimeCrazyDaveEnterStart = 6500;		//[0x6AA270]
+static const int	TimeCrazyDaveEnterEnd = 7250;		//[0x6AA274]
+static const int	TimeCrazyDaveLeaveStart = 7750;		//[0x6AA278]
+static const int	TimeCrazyDaveLeaveEnd = 8500;		//[0x6AA27C]
+static const int	TimeIntroEnd = 6000;		//[0x6AA280]
+static const int	LostTimePanRightStart = 1500;
+static const int	LostTimePanRightEnd = 3500;		//[0x6A5004]
+static const int	LostTimeBrainGraphicStart = 6000;		//[0x6AA284]
+static const int	LostTimeBrainGraphicShake = 7000;		//[0x6AA288]
+static const int	LostTimeBrainGraphicCancelShake = 8000;		//[0x6AA28C]
+static const int	LostTimeBrainGraphicEnd = 11000;	//[0x6AA290]
+static const int	LostTimeEnd = 11000;	//[0x6AA294]
+static const int	TimeIntro_PresentsFadeIn = 1000;
+static const int	TimeIntro_LogoStart = 5500;		//[0x6A5008]
+static const int	TimeIntro_LogoEnd = 5900;		//[0x6AA298]
+static const int	TimeIntro_PanRightStart = 5890;		//[0x6A500C]
+static const int	TimeIntro_PanRightEnd = 11890;	//[0x6AA29C]
+static const int	TimeIntro_FadeOut = 10890;	//[0x6AA2A0]
+static const int	TimeIntro_FadeOutEnd = 11890;	//[0x6AA2A4]
+static const int	TimeIntro_End = 13890;	//[0x6AA2A8]
+static const int	TimeLawnMowerDuration = 250;
+static const int	TimeLawnMowerStart[6] = { 6300, 6250, 6200, 6150, 6100, 6050 };	//[0x6AA2AC]
 
 //0x4390E0
 CutScene::CutScene()
@@ -119,8 +119,10 @@ void CutScene::PlaceAZombie(ZombieType theZombieType, int theGridX, int theGridY
 
 	Zombie* aZombie = mBoard->AddZombieInRow(theZombieType, theGridY, -2);
 	TOD_ASSERT(aZombie);
-	aZombie->mPosX = theGridX * 56 + 830;
-	aZombie->mPosY = theGridY * 90 + 70;
+	bool aStageHasRoof = mBoard->StageHasRoof();
+
+	aZombie->mPosX = theGridX * STREET_ZOMBIE_GRID_SIZE_X + (aStageHasRoof ? STREET_ZOMBIE_ROOF_START_X : STREET_ZOMBIE_START_X);
+	aZombie->mPosY = theGridY * STREET_ZOMBIE_GRID_SIZE_Y + STREET_ZOMBIE_START_Y;
 	if (theGridX % 2 == 1)
 	{
 		aZombie->mPosY += 30.0f;
@@ -134,7 +136,7 @@ void CutScene::PlaceAZombie(ZombieType theZombieType, int theGridX, int theGridY
 	if (mBoard->StageHasRoof())
 	{
 		aZombie->mPosY -= theGridY * 2 - theGridX * 7 + 30;  //7 * (5 - theGridX) - 2 * (5 - theGridY) + 5;
-		aZombie->mPosX -= 5.0f;
+		aZombie->mPosY -= theGridY * 2 - theGridX * 7 + STREET_ZOMBIE_ROOF_OFFSET;  //7 * (5 - theGridX) - 2 * (5 - theGridY) + 5;
 	}
 	if (theZombieType == ZombieType::ZOMBIE_ZAMBONI)
 	{
@@ -227,9 +229,9 @@ bool CutScene::CanZombieGoInGridSpot(ZombieType theZombieType, int theGridX, int
 		return false;
 	}
 
-	if (Is2x2Zombie(theZombieType) || 
-		theZombieType == ZombieType::ZOMBIE_ZAMBONI || 
-		theZombieType == ZombieType::ZOMBIE_BOBSLED || 
+	if (Is2x2Zombie(theZombieType) ||
+		theZombieType == ZombieType::ZOMBIE_ZAMBONI ||
+		theZombieType == ZombieType::ZOMBIE_BOBSLED ||
 		theZombieType == ZombieType::ZOMBIE_POLEVAULTER)
 	{
 		if (theGridX == 0)
@@ -464,9 +466,6 @@ void CutScene::PreloadResources()
 		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_TRAFFIC_CONE);
 		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_PAIL);
 		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_ZAMBONI);
-		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_SNORKEL);
-		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_CATAPULT);
-		Zombie::PreloadZombieResources(ZombieType::ZOMBIE_FOOTBALL);
 		Plant::PreloadPlantResources(SeedType::SEED_SUNFLOWER);
 		Plant::PreloadPlantResources(SeedType::SEED_PEASHOOTER);
 		Plant::PreloadPlantResources(SeedType::SEED_SQUASH);
@@ -476,7 +475,6 @@ void CutScene::PreloadResources()
 		Plant::PreloadPlantResources(SeedType::SEED_SPIKEWEED);
 		Plant::PreloadPlantResources(SeedType::SEED_TANGLEKELP);
 	}
-
 
 	PlaceStreetZombies();
 
@@ -552,7 +550,7 @@ void CutScene::PlaceStreetZombies()
 	{
 		aZombieTypeCount[(int)ZombieType::ZOMBIE_DUCKY_TUBE] = 1;  // 泳池关卡，必定出现鸭子僵尸预览
 	}
-	
+
 	bool aZombieGrid[5][5] = { false };
 	int aPreviewCapacity = 10;
 	if (mApp->IsLittleTroubleLevel())
@@ -611,23 +609,23 @@ void CutScene::PlaceLawnItems()
 //0x43A710
 bool CutScene::IsSurvivalRepick()
 {
-	return (mApp->IsSurvivalMode() && mBoard->mChallenge->mSurvivalStage > 0 && mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO); 
+	return (mApp->IsSurvivalMode() && mBoard->mChallenge->mSurvivalStage > 0 && mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO);
 }
 
 //0x43A740
 bool CutScene::IsNonScrollingCutscene()
 {
 	return
-		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE || 
-		mApp->mGameMode == GameMode::GAMEMODE_UPSELL || 
+		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE ||
+		mApp->mGameMode == GameMode::GAMEMODE_UPSELL ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
-		mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM || 
-		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM || 
-		mApp->IsScaryPotterLevel() || 
-		mApp->IsIZombieLevel() || 
+		mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM ||
+		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM ||
+		mApp->IsScaryPotterLevel() ||
+		mApp->IsIZombieLevel() ||
 		mApp->IsWhackAZombieLevel() ||
-		mApp->IsShovelLevel() || 
-		mApp->IsSquirrelLevel() || 
+		mApp->IsShovelLevel() ||
+		mApp->IsSquirrelLevel() ||
 		mApp->IsWallnutBowlingLevel();
 }
 
@@ -666,9 +664,9 @@ bool CutScene::CanGetPacketUpgrade(int theUpgradeIndex)
 {
 	int aCost = StoreScreen::GetItemCost(StoreItem::STORE_ITEM_PACKET_UPGRADE);
 
-	return 
+	return
 		mApp->mPlayerInfo->mPurchases[StoreItem::STORE_ITEM_PACKET_UPGRADE] == theUpgradeIndex &&  // theUpgradeIndex 从首次为 0 开始计算
-		mApp->mPlayerInfo->mCoins >= aCost && 
+		mApp->mPlayerInfo->mCoins >= aCost &&
 		mApp->mPlayerInfo->mDidntPurchasePacketUpgrade < 2;
 }
 
@@ -867,7 +865,7 @@ void CutScene::StartLevelIntro()
 
 	if (IsScrolledLeftAtStart())
 	{
-		mBoard->Move(220, 0);
+		mBoard->Move(BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
 	}
 	if (IsNonScrollingCutscene() && mCrazyDaveTime == 0)
 	{
@@ -1128,17 +1126,20 @@ void CutScene::AnimateBoard()
 	// ====================================================================================================
 	// ▲ 关卡界面右移的更新
 	// ====================================================================================================
-	int aBoardOffset = IsScrolledLeftAtStart() ? BOARD_OFFSET : 0;
+	int aBoardOffset = IsScrolledLeftAtStart() ? BOARD_OFFSET_X + BOARD_ADDITIONAL_WIDTH : BOARD_ADDITIONAL_WIDTH;
+	int aStreetOffset = BOARD_IMAGE_WIDTH_OFFSET + BOARD_ADDITIONAL_WIDTH - mApp->mWidth;
+
 	if (mCutsceneTime <= aTimePanRightStart)
 	{
-		mBoard->Move(aBoardOffset, 0);
+		mBoard->Move(aBoardOffset, BOARD_OFFSET_Y);
 	}
 	if (mCutsceneTime > aTimePanRightStart && mCutsceneTime <= aTimePanRightEnd)
 	{
-		int aPanOffset = CalcPosition(aTimePanRightStart, aTimePanRightEnd, -aBoardOffset, BOARD_IMAGE_WIDTH_OFFSET - mApp->mWidth);
-		mBoard->Move(-aPanOffset, 0);
+		int aPanOffset = CalcPosition(aTimePanRightStart, aTimePanRightEnd, -aBoardOffset, aStreetOffset);
+		mBoard->mRoofPoleOffset = -CalcPosition(aTimePanRightStart, aTimePanRightEnd, 0, WIDE_BOARD_WIDTH + 200);
+		mBoard->Move(-aPanOffset, BOARD_OFFSET_Y);
 	}
-	
+
 	// ====================================================================================================
 	// ▲ 选卡界面动态的更新
 	// ====================================================================================================
@@ -1152,9 +1153,9 @@ void CutScene::AnimateBoard()
 		// ====================================================================================================
 		if (mCutsceneTime > aTimeSeedChoserSlideOnStart && mCutsceneTime <= aTimeSeedChoserSlideOnEnd)
 		{
-			aSeedChoser->Move(0, CalcPosition(aTimeSeedChoserSlideOnStart, aTimeSeedChoserSlideOnEnd, SEED_CHOOSER_OFFSET_Y, 0));
-			aSeedChoser->mMenuButton->mY = CalcPosition(aTimeSeedChoserSlideOnStart, aTimeSeedChoserSlideOnEnd, -50, -10);
-			aSeedChoser->mMenuButton->mBtnNoDraw = false;
+			aSeedChoser->Move(BOARD_ADDITIONAL_WIDTH, CalcPosition(aTimeSeedChoserSlideOnStart, aTimeSeedChoserSlideOnEnd, SEED_CHOOSER_OFFSET_Y, BOARD_OFFSET_Y));
+			aSeedChoser->mMenuButton->mY = CalcPosition(aTimeSeedChoserSlideOnStart, aTimeSeedChoserSlideOnEnd, -50 - BOARD_OFFSET_Y, BOARD_OFFSET_Y);
+			aSeedChoser->mMenuButton->mX = -BOARD_ADDITIONAL_WIDTH;
 		}
 		// ====================================================================================================
 		// △ 选卡界面滑落
@@ -1163,7 +1164,7 @@ void CutScene::AnimateBoard()
 		int aTimeSeedChoserSlideOffEnd = TimeSeedChoserSlideOffEnd + mCrazyDaveTime;
 		if (mCutsceneTime > aTimeSeedChoserSlideOffStart && mCutsceneTime <= aTimeSeedChoserSlideOffEnd)
 		{
-			aSeedChoser->Move(0, CalcPosition(aTimeSeedChoserSlideOffStart, aTimeSeedChoserSlideOffEnd, 0, SEED_CHOOSER_OFFSET_Y));
+			aSeedChoser->Move(BOARD_ADDITIONAL_WIDTH, CalcPosition(aTimeSeedChoserSlideOffStart, aTimeSeedChoserSlideOffEnd, SEED_CHOOSER_OFFSET_Y, SEED_CHOOSER_OFFSET_Y));
 			aSeedChoser->mMenuButton->mDisabled = true;
 		}
 	}
@@ -1173,8 +1174,9 @@ void CutScene::AnimateBoard()
 	// ====================================================================================================
 	if (mCutsceneTime > aTimePanLeftStart)
 	{
-		int aPanOffset = CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, BOARD_IMAGE_WIDTH_OFFSET - mApp->mWidth, 0);
-		mBoard->Move(-aPanOffset, 0);
+		int aPanOffset = CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, aStreetOffset, -BOARD_ADDITIONAL_WIDTH);
+		mBoard->mRoofPoleOffset = -CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, WIDE_BOARD_WIDTH, 0);
+		mBoard->Move(-aPanOffset, BOARD_OFFSET_Y);
 	}
 
 	// ====================================================================================================
@@ -1189,17 +1191,16 @@ void CutScene::AnimateBoard()
 	int aTimeSeedBankOnEnd = TimeSeedBankOnEnd + aTimePrepareEnd + mCrazyDaveTime;
 	if (!mApp->IsChallengeWithoutSeedBank() && mCutsceneTime > aTimeSeedBankOnStart && mCutsceneTime <= aTimeSeedBankOnEnd)
 	{
-		int aSeedBankY = CalcPosition(aTimeSeedBankOnStart, aTimeSeedBankOnEnd, -IMAGE_SEEDBANK->GetHeight(), 0);
-		mBoard->mSeedBank->Move(SEED_BANK_OFFSET_X, aSeedBankY);
+		int aSeedBankY = CalcPosition(aTimeSeedBankOnStart, aTimeSeedBankOnEnd, -IMAGE_SEEDBANK->GetHeight(), BOARD_OFFSET_Y);
+		mBoard->mSeedBank->Move(BOARD_ADDITIONAL_WIDTH, aSeedBankY);
 	}
 	int aTimeSeedBankRightStart = TimeSeedBankRightStart + mCrazyDaveTime;
 	int aTimeSeedBankRightEnd = TimeSeedBankRightEnd + mCrazyDaveTime;
 	if (mCutsceneTime > aTimeSeedBankRightStart)
 	{
-		int aSeedBankX = CalcPosition(aTimeSeedBankRightStart, aTimeSeedBankRightEnd, SEED_BANK_OFFSET_X, SEED_BANK_OFFSET_X_END);
 		int aDarken = TodAnimateCurve(aTimeSeedBankRightStart, aTimeSeedBankRightEnd, mCutsceneTime, 255, 128, TodCurves::CURVE_EASE_OUT);
 		mBoard->mSeedBank->mCutSceneDarken = aDarken;
-		mBoard->mSeedBank->Move(aSeedBankX, mBoard->mSeedBank->mY);
+		mBoard->mSeedBank->Move(mBoard->mSeedBank->mX, mBoard->mSeedBank->mY);
 	}
 
 	// ====================================================================================================
@@ -1306,7 +1307,7 @@ void CutScene::AnimateBoard()
 		mBoard->mChallenge->mChallengeState = ChallengeState::STATECHALLENGE_STORM_FLASH_2;
 		mBoard->mChallenge->mChallengeStateCounter = 310;
 	}
-	
+
 	// ====================================================================================================
 	// ▲ 僵王博士的入场
 	// ====================================================================================================
@@ -1357,12 +1358,12 @@ void CutScene::AnimateBoard()
 //0x43C140
 void CutScene::ShowShovel()
 {
-	if (mApp->IsWhackAZombieLevel() || 
-		mApp->IsWallnutBowlingLevel() || 
-		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED || 
+	if (mApp->IsWhackAZombieLevel() ||
+		mApp->IsWallnutBowlingLevel() ||
+		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED_TWIST ||
-		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || 
-		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM || 
+		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
+		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM ||
 		mApp->IsIZombieLevel())
 		return;
 
@@ -1376,8 +1377,8 @@ void CutScene::ShowShovel()
 bool CutScene::IsInShovelTutorial()
 {
 	return
-		mBoard->mTutorialState == TutorialState::TUTORIAL_SHOVEL_PICKUP || 
-		mBoard->mTutorialState == TutorialState::TUTORIAL_SHOVEL_DIG || 
+		mBoard->mTutorialState == TutorialState::TUTORIAL_SHOVEL_PICKUP ||
+		mBoard->mTutorialState == TutorialState::TUTORIAL_SHOVEL_DIG ||
 		mBoard->mTutorialState == TutorialState::TUTORIAL_SHOVEL_KEEP_DIGGING;
 }
 
@@ -1484,6 +1485,7 @@ void CutScene::Update()
 
 		ShowShovel();
 		mApp->StartPlaying();
+		mBoard->mSeedBank->Move(0, 0);
 		return;
 	}
 
@@ -1507,9 +1509,9 @@ void CutScene::UpdateZombiesWon()
 	// 画面滚动
 	if (mCutsceneTime > LostTimePanRightStart && mCutsceneTime <= LostTimePanRightEnd)
 	{
-		mBoard->Move(CalcPosition(LostTimePanRightStart, LostTimePanRightEnd, 0, BOARD_OFFSET), 0);
+		mBoard->Move(CalcPosition(LostTimePanRightStart, LostTimePanRightEnd, BOARD_ADDITIONAL_WIDTH, BOARD_ADDITIONAL_WIDTH + BOARD_OFFSET_X), BOARD_OFFSET_Y);
 	}
-	
+
 	// 啃食脑子的音效
 	if (mCutsceneTime == LostTimeBrainGraphicStart - 400 || mCutsceneTime == LostTimeBrainGraphicStart - 900)
 	{
@@ -1521,7 +1523,7 @@ void CutScene::UpdateZombiesWon()
 	{
 		ReanimatorEnsureDefinitionLoaded(ReanimationType::REANIM_ZOMBIES_WON, true);
 		int aRenderPosition = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0);
-		Reanimation* aReanimation = mApp->AddReanimation(-BOARD_OFFSET, 0, aRenderPosition, ReanimationType::REANIM_ZOMBIES_WON);
+		Reanimation* aReanimation = mApp->AddReanimation(-BOARD_OFFSET_X, 0, aRenderPosition, ReanimationType::REANIM_ZOMBIES_WON);
 		aReanimation->mAnimRate = 12.0f;
 		aReanimation->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
 		aReanimation->GetTrackInstanceByName("fullscreen")->mTrackColor = Color::Black;
@@ -1737,11 +1739,11 @@ void CutScene::KeyDown(KeyCode theKey)
 			mApp->mMusic->GameMusicPause(true);
 
 			int aResult = mApp->LawnMessageBox(
-				Dialogs::DIALOG_MESSAGE, 
-				_S("[UPSELL_PAUSE_HEADER]"), 
-				_S("[UPSELL_PAUSE_BODY]"), 
-				_S("[UPSELL_RESUME_BUTTON]"), 
-				_S("[MAIN_MENU_BUTTON]"), 
+				Dialogs::DIALOG_MESSAGE,
+				_S("[UPSELL_PAUSE_HEADER]"),
+				_S("[UPSELL_PAUSE_BODY]"),
+				_S("[UPSELL_RESUME_BUTTON]"),
+				_S("[MAIN_MENU_BUTTON]"),
 				Dialog::BUTTONS_YES_NO
 			);
 			if (aResult == Dialog::ID_NO)
@@ -1802,7 +1804,7 @@ void CutScene::ClearUpsellBoard()
 		mBoard->mIceTimer[i] = 0;
 		mBoard->mIceMinX[i] = BOARD_WIDTH;
 	}
-	
+
 	mBoard->mZombies.DataArrayFreeAll();
 	mBoard->mPlants.DataArrayFreeAll();
 	mBoard->mCoins.DataArrayFreeAll();
@@ -2334,16 +2336,16 @@ void CutScene::DrawIntro(Graphics* g)
 	if (mCutsceneTime > TimeIntro_PresentsFadeIn && mCutsceneTime <= aTimePanRightStart)
 	{
 		int anAlpha = mCutsceneTime < aTimePanRightStart - 600 ?
-					  TodAnimateCurve(TimeIntro_PresentsFadeIn, TimeIntro_PresentsFadeIn + 300, mCutsceneTime, 0, 255, TodCurves::CURVE_LINEAR) :
-					  TodAnimateCurve(aTimePanRightStart - 600, aTimePanRightStart - 300, mCutsceneTime, 255, 0, TodCurves::CURVE_LINEAR);
+			TodAnimateCurve(TimeIntro_PresentsFadeIn, TimeIntro_PresentsFadeIn + 300, mCutsceneTime, 0, 255, TodCurves::CURVE_LINEAR) :
+			TodAnimateCurve(aTimePanRightStart - 600, aTimePanRightStart - 300, mCutsceneTime, 255, 0, TodCurves::CURVE_LINEAR);
 
 		TodDrawString(
-			g, 
-			_S("[INTRO_PRESENTS]"), 
-			BOARD_WIDTH / 2 - mBoard->mX, 
-			310 - mBoard->mY, 
+			g,
+			_S("[INTRO_PRESENTS]"),
+			BOARD_WIDTH / 2 - mBoard->mX,
+			310 - mBoard->mY,
 			FONT_BRIANNETOD16,
-			Color(255, 255, 255, anAlpha), 
+			Color(255, 255, 255, anAlpha),
 			DrawStringJustification::DS_ALIGN_CENTER
 		);
 	}
