@@ -109,6 +109,7 @@
     <ClCompile Include="..\DiscordRPC\dllmain.cpp" />
     <ClCompile Include="..\DiscordRPC\rpc_connection.cpp" />
     <ClCompile Include="..\DiscordRPC\serialization.cpp" />
+    <ClCompile Include="..\Lawn\Achivements.cpp" />
     <ClCompile Include="..\Lawn\Board.cpp" />
     <ClCompile Include="..\Lawn\Challenge.cpp" />
     <ClCompile Include="..\Lawn\Coin.cpp" />
@@ -681,6 +682,7 @@
     <ClInclude Include="..\DiscordRPC\rapidjson\writer.h" />
     <ClInclude Include="..\DiscordRPC\rpc_connection.h" />
     <ClInclude Include="..\DiscordRPC\serialization.h" />
+    <ClInclude Include="..\Lawn\Achivements.h" />
     <ClInclude Include="..\Lawn\System\DataSync.h" />
     <ClInclude Include="..\Lawn\System\discord_register.h" />
     <ClInclude Include="..\Lawn\System\discord_rpc.h" />

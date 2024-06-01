@@ -5,6 +5,7 @@
 #include "GameSelector.h"
 #include "../../LawnApp.h"
 #include "AlmanacDialog.h"
+#include "../Achivements.h"
 #include "../../Resources.h"
 #include "../System/Music.h"
 #include "../ToolTipWidget.h"
@@ -20,6 +21,7 @@
 #include "../../Sexy.TodLib/TodParticle.h"
 #include "../../SexyAppFramework/Dialog.h"
 #include "../../SexyAppFramework/WidgetManager.h"
+#include "../../SexyAppFramework/SysFont.h"
 
 static float gFlowerCenter[3][2] = { { 765.0f, 483.0f }, { 663.0f, 455.0f }, { 701.0f, 439.0f } };  //0x665430
 
@@ -46,6 +48,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mLoading = false;
 	mHasTrophy = false;
 	mToolTip = new ToolTipWidget();
+	//mApp->mAchivement->
 
 	mAdventureButton = MakeNewButton(
 		GameSelector::GameSelector_Adventure, 
@@ -545,6 +548,31 @@ void GameSelector::Draw(Graphics* g)
 		if (aTrophyParticle)
 			aTrophyParticle->Draw(g);
 	}
+
+	Font* mDebugFont;
+	mDebugFont = new SysFont("Arial Unicode MS", 10, true, false, false);
+	SexyString aText;
+	aText += StrFormat(_S("ACHIVEMENTS DEBUG\n"));
+	for (int i = 0; i <= AchivementType::TOTAL_ACHIVEMENTS; i++){
+		aText += StrFormat(_S("ACHIVEMENT %d: "), i);
+		if (mApp->mPlayerInfo->mEarnedAchievements[i])
+		{
+			aText += StrFormat(_S("TRUE\n"));
+		}
+		else
+		{
+			aText += StrFormat(_S("FALSE\n"));
+		}
+	}
+
+	g->SetFont(mDebugFont);
+	g->SetColor(Color::Black);
+	g->DrawStringWordWrapped(aText, 10, 89);
+	g->DrawStringWordWrapped(aText, 11, 91);
+	g->DrawStringWordWrapped(aText, 9, 90);
+	g->DrawStringWordWrapped(aText, 11, 90);
+	g->SetColor(Color(255, 255, 255));
+	g->DrawStringWordWrapped(aText, 10, 90);
 }
 
 //0x44AB50

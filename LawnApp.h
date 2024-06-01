@@ -10,6 +10,7 @@ class ChallengeDefinition;
 class SeedChooserScreen;
 class AwardScreen;
 class CreditScreen;
+class Achivements;
 class TodFoley;
 class PoolEffect;
 class ZenGarden;
@@ -125,6 +126,7 @@ public:
 	TrialType						mTrialType;										//+0x8C0
 	bool							mDebugTrialLocked;								//+0x8C4
 	bool							mMuteSoundsForCutscene;							//+0x8C5
+	Achivements*						mAchivement;
 	bool							isFastMode;
 	int								SpeedValue;
 	SexyString						mReconVersion;

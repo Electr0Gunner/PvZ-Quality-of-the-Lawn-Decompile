@@ -76,6 +76,10 @@ void PlayerInfo::SyncDetails(DataSync& theSync)
 	{
 		theSync.SyncBytes(&mPottedPlant[i], sizeof(PottedPlant));
 	}
+	for (int i = 0; i < 20; i++)
+	{
+		theSync.SyncBool(mEarnedAchievements[i]);
+	}
 }
 
 //0x469400
@@ -158,6 +162,7 @@ void PlayerInfo::Reset()
 	mPlaceHolderPlayerStats = 0;
 	memset(mPottedPlant, 0, sizeof(mPottedPlant));
 	mNumPottedPlants = 0;
+	memset(mEarnedAchievements, 0, sizeof(mEarnedAchievements));
 }
 
 void PlayerInfo::AddCoins(int theAmount)

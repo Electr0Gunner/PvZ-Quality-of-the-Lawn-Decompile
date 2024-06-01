@@ -42,6 +42,7 @@
 #include "Lawn/Widget/SeedChooserScreen.h"
 #include "SexyAppFramework/WidgetManager.h"
 #include "SexyAppFramework/ResourceManager.h"
+#include "Lawn/Achivements.h"
 
 #include "Lawn/System/discord_rpc.h"
 #include "SexyAppFramework/Checkbox.h"
@@ -109,6 +110,7 @@ LawnApp::LawnApp()
 	mEffectSystem = nullptr;
 	mReanimatorCache = nullptr;
 	mCloseRequest = false;
+	mAchivement = nullptr;
 	mWidth = BOARD_WIDTH;
 	mHeight = BOARD_HEIGHT;
 	mFullscreenBits = 32;
@@ -186,6 +188,7 @@ LawnApp::~LawnApp()
 
 	delete mSoundSystem;
 	delete mMusic;
+
 
 	if (mKonamiCheck)
 	{
@@ -1325,8 +1328,8 @@ void LawnApp::Init()
 	mTitleScreen->Resize(0, 0, mWidth, mHeight);
 	mWidgetManager->AddWidget(mTitleScreen);
 	mWidgetManager->SetFocus(mTitleScreen);
-
-
+	mAchivement = new Achivements(this);
+	mAchivement->InitAchivement();
 
 #ifdef _DEBUG
 	int aDuration = mTimer.GetDuration();
