@@ -611,7 +611,7 @@
 <Image id="BACKGROUND2" path="background2" ddsurface="" a8r8g8b8="" />
 <Image id="BACKGROUND2_GAMEOVER_INTERIOR_OVERLAY" path="background2_gameover_interior_overlay" />
 <Image id="BACKGROUND2_GAMEOVER_MASK" path="background2_gameover_mask" />
-<Image id="BACKGROUND2COVER" path="background2_cover" ddsurface="" a8r8g8b8="" />
+<Image id="BACKGROUND2_COVER" path="background2_cover" ddsurface="" a8r8g8b8="" />
 </Resources>
   
 <Resources id="DelayLoad_Background3">
