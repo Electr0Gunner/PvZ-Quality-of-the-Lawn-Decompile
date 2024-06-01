@@ -126,7 +126,7 @@ public:
 	CutScene*						mCutScene;												//+0x15C
 	Challenge*						mChallenge;												//+0x160
 	bool							mPaused;												//+0x164
-	bool							mBushInit;
+	//bool							mBushInit;
 	GridSquareType					mGridSquareType[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];		//+0x168
 	int								mGridCelLook[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];			//+0x240
 	int								mGridCelOffset[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y][2];	//+0x318
@@ -249,7 +249,7 @@ public:
 	ZombieType						PickGraveRisingZombieType(int theZombiePoints);
 	ZombieType						PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePicker* theZombiePicker);
 	int								PickRowForNewZombie(ZombieType theZombieType);
-	/*inline*/ Zombie*				AddZombie(ZombieType theZombieType, int theFromWave);
+	/*inline*/ Zombie*				AddZombie(ZombieType theZombieType, int theFromWave, bool introBush = true);
 	void							SpawnZombieWave();
 	void							RemoveAllZombies();
 	void							RemoveCutsceneZombies();
@@ -484,6 +484,7 @@ public:
 	void							DoTypingCheck(KeyCode theKey);
 	int								CountZombieByType(ZombieType theZombieType);
 	static /*inline*/ bool			IsZombieTypeSpawnedOnly(ZombieType theZombieType);
+	void							AnimateBush(int row);
 };
 extern bool gShownMoreSunTutorial;
 

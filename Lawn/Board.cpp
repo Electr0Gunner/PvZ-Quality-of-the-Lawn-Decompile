@@ -54,7 +54,10 @@ Board::Board(LawnApp* theApp)
 	mCoins.DataArrayInitialize(1024U, "coins");
 	mLawnMowers.DataArrayInitialize(32U, "lawnmowers");
 	mGridItems.DataArrayInitialize(128U, "griditems");
-	mBush.DataArrayInitialize(128U, "bushes");
+	mBush.DataArrayInitialize(32U, "bushes");
+	for (int i = 0; i < 6; i++) {
+		mBushList[i] = mBush.DataArrayAlloc();
+	}
 	TodHesitationTrace("board dataarrays");
 
 	mApp->mEffectSystem->EffectSystemFreeAll();
@@ -93,7 +96,7 @@ Board::Board(LawnApp* theApp)
 	mShakeAmountX = 0;
 	mShakeAmountY = 0;
 	mPaused = false;
-	mBushInit = false;
+	//mBushInit = false;
 	mLevelAwardSpawned = false;
 	mFlagRaiseCounter = 0;
 	mIceTrapCounter = 0;
@@ -888,21 +891,19 @@ void Board::LoadBackgroundImages()
 		TOD_ASSERT();
 		break;
 	}
-	if (StageHasBushes() && !mBushInit)
-		AddBushes();
+
 }
 
 void Board::AddBushes() {
 	bool nighty = StageIsNight();
 	for (int i = 0; i < MAX_GRID_SIZE_Y; i++) {
-		Bush* bush = mBush.DataArrayAlloc();
+		Bush* bush = mBushList[i];
 		int bushX = BOARD_WIDTH - 413 * 1.375f + 40 / (6 - i);
 		int bushY = BOARD_OFFSET_Y - 70 + 80 * i + 40 * i;
 		int mRow = i + 1;
 		bush->BushInitialize(bushX, bushY, mRow, nighty, i);
-		mBushList[i] = bush;
 	}
-	mBushInit = true;
+	//mBushInit = true;
 }
 
 bool Board::StageHasBushes() {
@@ -1202,6 +1203,9 @@ void Board::PickBackground()
 		}
 	}
 	PickSpecialGraveStone();
+
+	if (StageHasBushes())
+		AddBushes();
 }
 
 //0x40AB10
@@ -2735,9 +2739,13 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 	return aZombie;
 }
 
-Zombie* Board::AddZombie(ZombieType theZombieType, int theFromWave)
+Zombie* Board::AddZombie(ZombieType theZombieType, int theFromWave, bool introBush)
 {
-	return AddZombieInRow(theZombieType, PickRowForNewZombie(theZombieType), theFromWave); 
+	int row = PickRowForNewZombie(theZombieType);
+	introBush = mApp->mGameScene != GameScenes::SCENE_LEVEL_INTRO;
+	if (introBush && theZombieType != ZOMBIE_BACKUP_DANCER && !theZombieType != ZOMBIE_BUNGEE && !theZombieType != ZOMBIE_DIGGER)
+		AnimateBush(row);
+	return AddZombieInRow(theZombieType, row, theFromWave);
 }
 
 //0x40DEA0
@@ -10065,14 +10073,16 @@ bool Board::IsZombieTypeSpawnedOnly(ZombieType theZombieType)
 	return (theZombieType == ZombieType::ZOMBIE_BACKUP_DANCER || theZombieType == ZombieType::ZOMBIE_BOBSLED || theZombieType == ZombieType::ZOMBIE_IMP);
 }
 
+void Board::AnimateBush(int row) {
+	Bush* aBush = mBushList[row];
+	if (aBush == nullptr || mApp->mGameMode == GAMEMODE_CHALLENGE_INVISIGHOUL)
+		return;
 
-
-
-
-
-
-
-
-
-
-
+	aBush->AnimateBush();
+	if (!StageHas6Rows() && row == 4)
+	{
+		aBush = mBushList[row + 1];
+		aBush->AnimateBush();
+	}
+	
+}

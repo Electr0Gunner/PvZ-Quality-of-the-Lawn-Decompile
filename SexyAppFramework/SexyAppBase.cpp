@@ -6110,7 +6110,7 @@ void SexyAppBase::Init()
 			aFunc(NULL, CSIDL_COMMON_APPDATA, NULL, SHGFP_TYPE_CURRENT, aPath);
 
 			std::string aDataPath = RemoveTrailingSlash(aPath) + "\\" + mFullCompanyName + "\\" + mProdName;
-			SetAppDataFolder(aDataPath + "\\");
+			SetAppDataFolder("savefiles\\");
 			//MkDir(aDataPath);
 			//AllowAllAccess(aDataPath);
 			if (mDemoFileName.length() < 2 || (mDemoFileName[1] != ':' && mDemoFileName[2] != '\\'))

@@ -194,7 +194,7 @@ SeedChooserScreen::SeedChooserScreen()
 	mSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mSlider->mHorizontal = false;
-	mSlider->Resize(770, 110, 20, 470);
+	mSlider->Resize(-20, 110, 20, 470);
 	mSlider->mVisible = true;
 }
 
@@ -473,23 +473,23 @@ void SeedChooserScreen::UpdateViewLawn()
 	if (mViewLawnTime == 100) mBoard->DisplayAdviceAgain("[CLICK_TO_CONTINUE]", MESSAGE_STYLE_HINT_STAY, ADVICE_CLICK_TO_CONTINUE);
 	else if (mViewLawnTime == 251) mViewLawnTime = 250;
 
-	int aBoardX = BOARD_IMAGE_WIDTH_OFFSET - mApp->mWidth;
+	int aBoardX = mApp->mWidth - BOARD_IMAGE_WIDTH_OFFSET;
 	int aSeedChooserY = SEED_CHOOSER_OFFSET_Y - Sexy::IMAGE_SEEDCHOOSER_BACKGROUND->mHeight;
 	if (mViewLawnTime <= 100)
 	{
-		mBoard->Move(-TodAnimateCurve(0, 100, mViewLawnTime, aBoardX, 0, CURVE_EASE_IN_OUT), 0);
-		Move(0, TodAnimateCurve(0, 40, mViewLawnTime, aSeedChooserY, SEED_CHOOSER_OFFSET_Y, CURVE_EASE_IN_OUT));
+		mBoard->Move(-TodAnimateCurve(0, 100, mViewLawnTime, aBoardX, -BOARD_ADDITIONAL_WIDTH, CURVE_EASE_IN_OUT), BOARD_OFFSET_Y);
+		Move(BOARD_ADDITIONAL_WIDTH, TodAnimateCurve(0, 40, mViewLawnTime, aSeedChooserY, SEED_CHOOSER_OFFSET_Y, CURVE_EASE_IN_OUT));
 	}
 	else if (mViewLawnTime <= 250)
 	{
-		mBoard->Move(0, 0);
-		Move(0, SEED_CHOOSER_OFFSET_Y);
+		mBoard->Move(BOARD_ADDITIONAL_WIDTH, BOARD_OFFSET_Y);
+		Move(BOARD_ADDITIONAL_WIDTH, SEED_CHOOSER_OFFSET_Y);
 	}
 	else if (mViewLawnTime <= 350)
 	{
 		mBoard->ClearAdvice(ADVICE_CLICK_TO_CONTINUE);
-		mBoard->Move(-TodAnimateCurve(250, 350, mViewLawnTime, 0, aBoardX, CURVE_EASE_IN_OUT), 0);
-		Move(0, TodAnimateCurve(310, 350, mViewLawnTime, SEED_CHOOSER_OFFSET_Y, aSeedChooserY, CURVE_EASE_IN_OUT));
+		mBoard->Move(-TodAnimateCurve(250, 350, mViewLawnTime, -BOARD_ADDITIONAL_WIDTH, aBoardX, CURVE_EASE_IN_OUT), BOARD_OFFSET_Y);
+		Move(BOARD_ADDITIONAL_WIDTH, TodAnimateCurve(310, 350, mViewLawnTime, SEED_CHOOSER_OFFSET_Y, aSeedChooserY, CURVE_EASE_IN_OUT));
 	}
 	else
 	{

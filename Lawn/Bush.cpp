@@ -35,7 +35,7 @@ void Bush::BushInitialize(int theX, int theY, int mRow, bool NightMode, int ID)
     mScale = 1.0f;
     
     mReanimID = REANIMATIONID_NULL;
-    mRenderOrder = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_ZOMBIE, mRow, 8 * abs(mRow));
+    mRenderOrder = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_ZOMBIE, mRow, 9);
     for (int reanimIndex = 0; reanimIndex <= 5; reanimIndex++) {
         ReanimatorEnsureDefinitionLoaded(BushReanims[reanimIndex], true);
     }
@@ -49,16 +49,9 @@ void Bush::BushInitialize(int theX, int theY, int mRow, bool NightMode, int ID)
 
 void Bush::AnimateBush()
 {
-    PlayBushReanim("anim_rustle", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 10, RandRangeFloat(9.0f, 14.0f));
-}
-
-void Bush::PlayBushReanim(const char* theTrackName, ReanimLoopType theLoopType, int theBlendTime, float theAnimRate)
-{
-    Reanimation* aBodyReanim = mApp->ReanimationTryToGet(mReanimID);
-    if (aBodyReanim == nullptr)
-        return;
-
-    aBodyReanim->PlayReanim(theTrackName, theLoopType, theBlendTime, theAnimRate);
+    Reanimation* mReanim = mApp->ReanimationTryToGet(mReanimID);
+    if (mReanim)
+        mReanim->PlayReanim("anim_rustle", REANIM_PLAY_ONCE_AND_HOLD, 10, RandRangeFloat(8.0f, 10.0f));
 }
 
 //0x432DD0
@@ -75,5 +68,7 @@ void Bush::Update()
 
 void Bush::Draw(Graphics* g) {
     Graphics aBushGraphics(*g);
-    mApp->ReanimationGet(mReanimID)->Draw(&aBushGraphics);
+    Reanimation* mReanim = mApp->ReanimationTryToGet(mReanimID);
+    if(mReanim)
+        mReanim->Draw(&aBushGraphics);
 }

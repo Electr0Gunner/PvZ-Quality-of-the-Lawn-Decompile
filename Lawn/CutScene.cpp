@@ -959,7 +959,7 @@ void CutScene::CancelIntro()
 		mCutsceneTime = TimeSeedChoserSlideOnEnd + mCrazyDaveTime - 20;
 		if (!IsNonScrollingCutscene())
 		{
-			mBoard->Move(mApp->mWidth - BOARD_IMAGE_WIDTH_OFFSET, 0);
+			mBoard->Move(mApp->mWidth - BOARD_IMAGE_WIDTH_OFFSET, BOARD_OFFSET_Y);
 		}
 		if (mBoard->mAdvice->mMessageStyle == MessageStyle::MESSAGE_STYLE_HOUSE_NAME)
 		{
@@ -2291,7 +2291,7 @@ void CutScene::DrawUpsell(Graphics* g)
 //0x441480
 void CutScene::UpdateIntro()
 {
-	mBoard->Move(TodAnimateCurve(TimeIntro_PanRightStart, TimeIntro_PanRightEnd, mCutsceneTime, -100, 100, TodCurves::CURVE_LINEAR), 0);
+	mBoard->Move(TodAnimateCurve(TimeIntro_PanRightStart, TimeIntro_PanRightEnd, mCutsceneTime, -100, 100, TodCurves::CURVE_LINEAR), BOARD_OFFSET_Y);
 
 	if (mCutsceneTime == 10)
 	{

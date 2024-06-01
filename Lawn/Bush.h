@@ -30,7 +30,6 @@ public:
     void                    Update();
     void                    Draw(Graphics* g);
     void                    AnimateBush();
-    void                    PlayBushReanim(const char* theTrackName, ReanimLoopType theLoopType, int theBlendTime, float theAnimRate);
 
 };
 

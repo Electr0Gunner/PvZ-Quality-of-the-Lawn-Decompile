@@ -47,7 +47,7 @@ AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANA
 	Color aColor = Color(42, 42, 90);
 	mCloseButton->mColors[ButtonWidget::COLOR_LABEL] = aColor;
 	mCloseButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = aColor;
-	mCloseButton->Resize(676, 567, 89, 26);
+	mCloseButton->Resize(676 + BOARD_OFFSET_X, 567 + BOARD_OFFSET_Y, 89, 26);
 	mCloseButton->mParentWidget = this;
 	mCloseButton->mTextOffsetX = -8;
 	mCloseButton->mTextOffsetY = 1;
@@ -60,7 +60,7 @@ AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANA
 	mIndexButton->SetFont(Sexy::FONT_BRIANNETOD12);
 	mIndexButton->mColors[ButtonWidget::COLOR_LABEL] = aColor;
 	mIndexButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = aColor;
-	mIndexButton->Resize(32, 567, 164, 26);
+	mIndexButton->Resize(32 + BOARD_OFFSET_X, 567 + BOARD_OFFSET_Y, 164, 26);
 	mIndexButton->mParentWidget = this;
 	mIndexButton->mTextOffsetX = 8;
 	mIndexButton->mTextOffsetY = 1;
@@ -75,13 +75,13 @@ AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANA
 	mPlantButton->SetFont(Sexy::FONT_DWARVENTODCRAFT18YELLOW);
 	mPlantButton->mColors[ButtonWidget::COLOR_LABEL] = Color::White;
 	mPlantButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color::White;
-	mPlantButton->Resize(130, 345, 156, 42);
+	mPlantButton->Resize(130 + BOARD_OFFSET_X, 345 + BOARD_OFFSET_Y, 156, 42);
 	mPlantButton->mTextOffsetY = -1;
 	mPlantButton->mParentWidget = this;
 
 	mZombieButton = new GameButton(AlmanacDialog::ALMANAC_BUTTON_ZOMBIE);
 	mZombieButton->SetLabel(_S("[VIEW_ZOMBIES]"));
-	mZombieButton->Resize(487, 345, 210, 48);
+	mZombieButton->Resize(487 + BOARD_OFFSET_X, 345 + BOARD_OFFSET_Y, 210, 48);
 	mZombieButton->mDrawStoneButton = true;
 	mZombieButton->mParentWidget = this;
 
@@ -155,8 +155,8 @@ void AlmanacDialog::SetupPlant()
 {
 	ClearPlantsAndZombies();
 
-	float aPosX = ALMANAC_PLANT_POSITION_X;
-	float aPosY = ALMANAC_PLANT_POSITION_Y;
+	float aPosX = ALMANAC_PLANT_POSITION_X + BOARD_OFFSET_X;
+	float aPosY = ALMANAC_PLANT_POSITION_Y + BOARD_OFFSET_Y;
 	if (mSelectedSeed == SEED_TALLNUT)				aPosY += 18;
 	else if (mSelectedSeed == SEED_COBCANNON)		aPosX -= 40;
 	else if (mSelectedSeed == SEED_FLOWERPOT)		aPosY -= 20;
@@ -179,8 +179,8 @@ void AlmanacDialog::SetupZombie()
 	mZombie = new Zombie();
 	mZombie->mBoard = nullptr;
 	mZombie->ZombieInitialize(0, mSelectedZombie, false, nullptr, Zombie::ZOMBIE_WAVE_UI);
-	mZombie->mPosX = ALMANAC_ZOMBIE_POSITION_X;
-	mZombie->mPosY = ALMANAC_ZOMBIE_POSITION_Y;
+	mZombie->mPosX = ALMANAC_ZOMBIE_POSITION_X + BOARD_OFFSET_X;
+	mZombie->mPosY = ALMANAC_ZOMBIE_POSITION_Y + BOARD_OFFSET_Y;
 }
 
 //0x401BE0
@@ -196,14 +196,14 @@ void AlmanacDialog::SetPage(AlmanacPage thePage)
 		mPlant->mBoard = nullptr;
 		mPlant->mIsOnBoard = false;
 		mPlant->PlantInitialize(0, 0, SeedType::SEED_SUNFLOWER, SeedType::SEED_NONE);
-		mPlant->mX = ALMANAC_INDEXPLANT_POSITION_X;
-		mPlant->mY = ALMANAC_INDEXPLANT_POSITION_Y;
+		mPlant->mX = ALMANAC_INDEXPLANT_POSITION_X + BOARD_OFFSET_X;
+		mPlant->mY = ALMANAC_INDEXPLANT_POSITION_Y + BOARD_OFFSET_Y;
 
 		mZombie = new Zombie();
 		mZombie->mBoard = nullptr;
 		mZombie->ZombieInitialize(0, ZombieType::ZOMBIE_NORMAL, false, nullptr, Zombie::ZOMBIE_WAVE_UI);
-		mZombie->mPosX = ALMANAC_INDEXZOMBIE_POSITION_X;
-		mZombie->mPosY = ALMANAC_INDEXZOMBIE_POSITION_Y;
+		mZombie->mPosX = ALMANAC_INDEXZOMBIE_POSITION_X + BOARD_OFFSET_X;
+		mZombie->mPosY = ALMANAC_INDEXZOMBIE_POSITION_Y + BOARD_OFFSET_Y;
 
 		mIndexButton->mBtnNoDraw = true;
 		mPlantButton->mBtnNoDraw = false;
@@ -333,11 +333,12 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 		int aPosX, aPosY;
 		GetSeedPosition(aSeedType, aPosX, aPosY);
 		PlantDefinition& aPlantDef = GetPlantDefinition(aSeedType);
+		aPosX += BOARD_OFFSET_X;
 		if (!mApp->SeedTypeAvailable(aSeedType))
 		{
 			if (aSeedType != SeedType::SEED_IMITATER){
 				g->SetClipRect(cSeedClipRect);
-				g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX, aPosY - mScrollPosition);
+				g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX , aPosY - mScrollPosition);
 			}
 			g->ClearClipRect();
 		}
@@ -369,8 +370,10 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 		{
 			g->SetClipRect(475, 0, 397, 500);
 			g->mTransY -= 145;
+			g->mTransX -= BOARD_OFFSET_X;
 			mApp->mPoolEffect->PoolEffectDraw(g, aNight);
 			g->mTransY += 145;
+			g->mTransX += BOARD_OFFSET_X;
 			g->ClearClipRect();
 		}
 	}
@@ -379,7 +382,7 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 		g->DrawImage(
 			Plant::IsNocturnal(mSelectedSeed) || mSelectedSeed == SeedType::SEED_GRAVEBUSTER || mSelectedSeed == SeedType::SEED_PLANTERN ? Sexy::IMAGE_ALMANAC_GROUNDNIGHT :
 			mSelectedSeed == SeedType::SEED_FLOWERPOT ? Sexy::IMAGE_ALMANAC_GROUNDROOF : Sexy::IMAGE_ALMANAC_GROUNDDAY,
-			521, 107
+			521 + BOARD_OFFSET_X, 107 + BOARD_OFFSET_X
 		);
 	}
 	

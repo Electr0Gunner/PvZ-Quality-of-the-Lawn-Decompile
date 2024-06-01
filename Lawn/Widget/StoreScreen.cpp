@@ -80,7 +80,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mBackButton->SetFont(Sexy::FONT_HOUSEOFTERROR20);
     mBackButton->mColors[ButtonWidget::COLOR_LABEL] = Color(98, 153, 235);
     mBackButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(167, 192, 235);
-    mBackButton->Resize(366, 512, aMenuImage->mWidth, aMenuImage->mHeight);
+    mBackButton->Resize(370 + BOARD_OFFSET_X, 572 + BOARD_OFFSET_Y, aMenuImage->mWidth, aMenuImage->mHeight);
     mBackButton->mTextOffsetX = -7;
     mBackButton->mTextOffsetY = 1;
     mBackButton->mTextDownOffsetX = 2;
@@ -95,7 +95,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mPrevButton->mDownImage = Sexy::IMAGE_STORE_PREVBUTTONHIGHLIGHT;
     mPrevButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
     mPrevButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(200, 200, 255);
-    mPrevButton->Resize(252, 402, aPrevImage->mWidth, aPrevImage->mHeight);
+    mPrevButton->Resize(218 + BOARD_OFFSET_X, 431 + BOARD_OFFSET_Y, aPrevImage->mWidth, aPrevImage->mHeight);
 
     mNextButton = new NewLawnButton(nullptr, StoreScreen::StoreScreen_Next, this);
     mNextButton->mDoFinger = true;
@@ -106,7 +106,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mNextButton->mDownImage = Sexy::IMAGE_STORE_NEXTBUTTONHIGHLIGHT;
     mNextButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 240, 0);
     mNextButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(200, 200, 255);
-    mNextButton->Resize(596, 402, aNextImage->mWidth, aNextImage->mHeight);
+    mNextButton->Resize(618 + BOARD_OFFSET_X, 431 + BOARD_OFFSET_Y, aNextImage->mWidth, aNextImage->mHeight);
 
     mOverlayWidget = new StoreScreenOverlay(this);
     mOverlayWidget->Resize(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
@@ -446,27 +446,27 @@ void StoreScreen::Draw(Graphics* g)
 
     if (!mHatchTimer && mHatchOpen)
     {
-        g->DrawImage(Sexy::IMAGE_STORE_CAR, mShakeX + 196, mShakeY + 138);
-        g->DrawImage(Sexy::IMAGE_STORE_HATCHBACKOPEN, mShakeX + 299, mShakeY);
+        g->DrawImage(Sexy::IMAGE_STORE_CAR, mShakeX + 166 + BOARD_OFFSET_X, mShakeY + 138 + BOARD_OFFSET_Y);
+        g->DrawImage(Sexy::IMAGE_STORE_HATCHBACKOPEN, mShakeX + 269 + BOARD_OFFSET_X, mShakeY + BOARD_OFFSET_Y);
         if (mApp->IsNight())
         {
-            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 688, mShakeY + 193);
+            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 166 + BOARD_OFFSET_X, mShakeY + 138 + BOARD_OFFSET_Y);
         }
     }
     else
     {
-        g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED, mShakeX + 196, mShakeY + 138);
+        g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED, mShakeX + 166 + BOARD_OFFSET_X, mShakeY + 138 + BOARD_OFFSET_Y);
         if (mApp->IsNight())
         {
-            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 688, mShakeY + 193);
-            g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED_NIGHT, mShakeX + 337, mShakeY + 187);
+            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 166 + BOARD_OFFSET_X, mShakeY + 138 + BOARD_OFFSET_Y);
+            g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED_NIGHT, mShakeX + 307 + BOARD_OFFSET_X, mShakeY + 187 + BOARD_OFFSET_Y);
         }
     }
-    g->DrawImage(Sexy::IMAGE_STORE_SIGN, 285, aStoreSignPosY);
+    g->DrawImage(Sexy::IMAGE_STORE_SIGN, 285 + BOARD_OFFSET_X, aStoreSignPosY);
 
     Graphics gCrazyDave = Graphics(*g);
-    gCrazyDave.mTransX -= 42.0f;
-    gCrazyDave.mTransY += 68.0f;
+    gCrazyDave.mTransX -= 66.0f - BOARD_OFFSET_X;
+    gCrazyDave.mTransY += 68.0f + BOARD_OFFSET_Y;
     mApp->DrawCrazyDave(&gCrazyDave);
 
     if (!mHatchTimer && mHatchOpen)
