@@ -907,7 +907,9 @@ void Board::AddBushes() {
 }
 
 bool Board::StageHasBushes() {
-	return mBackground != BackgroundType::BACKGROUND_5_ROOF || mBackground != BackgroundType::BACKGROUND_6_BOSS;
+	if (mBackground == BackgroundType::BACKGROUND_5_ROOF || mBackground == BackgroundType::BACKGROUND_6_BOSS)
+		return false;
+	return true;
 }
 
 //0x40A550
@@ -2743,7 +2745,7 @@ Zombie* Board::AddZombie(ZombieType theZombieType, int theFromWave, bool introBu
 {
 	int row = PickRowForNewZombie(theZombieType);
 	introBush = mApp->mGameScene != GameScenes::SCENE_LEVEL_INTRO;
-	if (introBush && theZombieType != ZOMBIE_BACKUP_DANCER && !theZombieType != ZOMBIE_BUNGEE && !theZombieType != ZOMBIE_DIGGER)
+	if (introBush && theZombieType != ZOMBIE_BACKUP_DANCER && theZombieType != ZOMBIE_BUNGEE && theZombieType != ZOMBIE_DIGGER)
 		AnimateBush(row);
 	return AddZombieInRow(theZombieType, row, theFromWave);
 }
@@ -6509,6 +6511,7 @@ void Board::DrawGameObjects(Graphics* g)
 
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_BACKDROP, MakeRenderOrder(RenderLayer::RENDER_LAYER_UI_BOTTOM, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_BOTTOM_UI, aZPos);
+		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_COVER, MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_COIN_BANK, MakeRenderOrder(RenderLayer::RENDER_LAYER_COIN_BANK, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_TOP_UI, MakeRenderOrder(RenderLayer::RENDER_LAYER_UI_TOP, 0, 0));
 		AddUIRenderItem(aRenderList, aRenderItemCount, RenderObjectType::RENDER_ITEM_SCREEN_FADE, MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0));
@@ -6731,7 +6734,10 @@ void Board::DrawGameObjects(Graphics* g)
 			}
 			break;
 		}
-			
+		case RenderObjectType::RENDER_ITEM_COVER:
+			DrawCover(g);
+			break;
+
 		case RenderObjectType::RENDER_ITEM_FOG:
 			DrawFog(g);
 			break;
@@ -7432,7 +7438,34 @@ void Board::DrawFadeOut(Graphics* g)
 	{
 		g->SetColor(Color(255, 255, 255, anAlpha));
 	}
-	g->FillRect(0, 0, mWidth, mHeight);
+	g->FillRect(-BOARD_ADDITIONAL_WIDTH, -BOARD_OFFSET_Y, mWidth + BOARD_ADDITIONAL_WIDTH, mHeight + BOARD_OFFSET_Y);
+}
+
+void Board::DrawCover(Graphics* g)
+{
+	switch (mBackground)
+	{
+		case BACKGROUND_1_DAY:
+			g->DrawImage(Sexy::IMAGE_BACKGROUND1_COVER, 685, 557);
+			break;
+		case BACKGROUND_2_NIGHT:
+			g->DrawImage(Sexy::IMAGE_BACKGROUND2_COVER, 685, 557);
+			break;
+		case BACKGROUND_3_POOL:
+			g->DrawImage(Sexy::IMAGE_BACKGROUND3_COVER, 671, 613);
+			break;
+		case BACKGROUND_4_FOG:
+			g->DrawImage(Sexy::IMAGE_BACKGROUND4_COVER, 671, 613);
+			break;
+		case BACKGROUND_5_ROOF:
+			g->DrawImage(Sexy::IMAGE_BACKGROUND5_POLE, mRoofPoleOffset * 1.5 + 635, -BOARD_OFFSET_Y);
+			g->DrawImage(Sexy::IMAGE_BACKGROUND5_TREES, mRoofPoleOffset * 1.5 + 635, -BOARD_OFFSET_Y);
+			break;
+		case BACKGROUND_6_BOSS:
+			g->DrawImage(Sexy::IMAGE_BACKGROUND6_POLE, mRoofPoleOffset * 1.5 + 635, -BOARD_OFFSET_Y);
+			g->DrawImage(Sexy::IMAGE_BACKGROUND6_TREES, mRoofPoleOffset * 1.5 + 635, -BOARD_OFFSET_Y);
+			break;
+	}
 }
 
 //0x419F60

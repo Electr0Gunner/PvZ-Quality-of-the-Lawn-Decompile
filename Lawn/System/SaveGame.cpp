@@ -476,6 +476,12 @@ void FixBoardAfterLoad(Board* theBoard)
 			aGridItem->mBoard = theBoard;
 		}
 	}
+	Bush* aBush = nullptr;
+	while (theBoard->mBush.IterateNext(aBush))
+	{
+		aBush->mApp = theBoard->mApp;
+		aBush->mBoard = theBoard;
+	}
 
 	theBoard->mAdvice->mApp = theBoard->mApp;
 	theBoard->mCursorObject->mApp = theBoard->mApp;

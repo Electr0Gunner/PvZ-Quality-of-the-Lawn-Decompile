@@ -364,6 +364,7 @@ public:
 	unsigned int					SeedNotRecommendedForLevel(SeedType theSeedType);
 	void							DrawTopRightUI(Graphics* g);
 	void							DrawFog(Graphics* g);
+	void							DrawCover(Graphics* g);
 	void							UpdateFog();
 	/*inline*/ int					LeftFogColumn();
 	static /*inline*/ bool			IsZombieTypePoolOnly(ZombieType theZombieType);
