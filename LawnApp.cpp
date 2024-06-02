@@ -2505,6 +2505,17 @@ bool LawnApp::SeedTypeAvailable(SeedType theSeedType)
 	return (theSeedType == SeedType::SEED_GATLINGPEA && mPlayerInfo->mPurchases[StoreItem::STORE_ITEM_PLANT_GATLINGPEA]) || HasSeedType(theSeedType);
 }
 
+bool LawnApp::HasAllUpgrades()
+{
+	int availablePlants = 0;
+	for (int seed = SEED_GATLINGPEA; seed <= SEED_IMITATER; seed++) {
+		if (SeedTypeAvailable(SeedType(seed))) {
+			availablePlants++;
+		}
+	}
+	return availablePlants == 9;
+}
+
 //0x453C30
 Reanimation* LawnApp::AddReanimation(float theX, float theY, int theRenderOrder, ReanimationType theReanimationType)
 {

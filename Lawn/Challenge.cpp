@@ -5450,6 +5450,11 @@ void Challenge::TreeOfWisdomGrow()
 	{
 		mChallengeState = STATECHALLENGE_NORMAL;
 	}
+
+	if (TreeOfWisdomGetSize() == 100)
+	{
+		mApp->GetAchievement(TOWERING_WISDOM);
+	}
 }
 
 //0x42D360
@@ -5555,6 +5560,7 @@ void Challenge::TreeOfWisdomSayRepeat()
 void Challenge::TreeOfWisdomToolUpdate(GridItem* theZenTool)
 {
 	Reanimation* aReanim = mApp->ReanimationTryToGet(theZenTool->mGridItemReanimID);
+
 	if (aReanim && aReanim->mLoopCount > 0)
 	{
 		TreeOfWisdomGrow();

@@ -1524,6 +1524,17 @@ Hey neighbor! Got some new items for sale!
 [CRAZY_DAVE_3400]
 {NO_CLICK}To use Wall-nut First Aid, simply plant a fresh new Wall-nut over the damaged one!
 
+[CRAZY_DAVE_4000]
+{NO_CLICK}{MOUTH_BIG_OH}You just bought the final plant!
+[CRAZY_DAVE_4001]
+{NO_CLICK}{SCREAM}You're an all-plant haver, by gum!
+[CRAZY_DAVE_4002]
+{NO_CLICK}Why isn't there a word for that kind of achievement?
+[CRAZY_DAVE_4003]
+{NO_CLICK}I've got it... 
+[CRAZY_DAVE_4004]
+{NO_CLICK}{SHAKE}Morticulturalist!!!{MOUTH_BIG_SMILE}
+
 [MENU_BUTTON]
 Menu
 

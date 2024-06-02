@@ -51,6 +51,7 @@ void Achievements::GiveAchievement(LawnApp* theApp, AchievementType theAchivemen
 
 	if(theApp->mBoard)
 		theApp->mBoard->DisplayAdvice(aMessage, MESSAGE_STYLE_HINT_FAST, AdviceType::ADVICE_NONE);
+
 	theApp->PlaySample(SOUND_ACHIEVEMENT);
 }
 

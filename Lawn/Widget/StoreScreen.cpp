@@ -774,6 +774,20 @@ void StoreScreen::Update()
         Widget::Update();
         MarkDirty();
     }
+
+    if (mApp->mCrazyDaveMessageIndex >= 4000 && mApp->mCrazyDaveMessageIndex < 4004)
+    {
+        if (mBubbleCountDown <= 100)
+        {
+            mApp->mCrazyDaveMessageIndex++;
+            SetBubbleText(mApp->mCrazyDaveMessageIndex, 300, false);
+        }
+        if (mApp->mCrazyDaveMessageIndex == 4004)
+        {
+            mWaitForDialog = false;
+            mApp->GetAchievement(AchievementType::MORTICULTURALIST);
+        }
+    }
 }
 
 //0x48C350
@@ -1029,6 +1043,15 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
             if (mApp->mSeedChooserScreen)
             {
                 mApp->mSeedChooserScreen->UpdateAfterPurchase();
+            }
+
+            if (theStoreItem >= STORE_ITEM_PLANT_GATLINGPEA && theStoreItem <= STORE_ITEM_PLANT_IMITATER) {
+                if (mApp->HasAllUpgrades())
+                {
+                    mWaitForDialog = true;
+                    SetBubbleText(4000, 300, false);
+                    AdvanceCrazyDaveDialog();
+                }
             }
 
             mApp->WriteCurrentUserConfig();
