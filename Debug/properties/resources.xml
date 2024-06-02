@@ -424,6 +424,7 @@
 <Resources id="LoadingSounds">
   
 <SetDefaults path="sounds" idprefix="SOUND_" />
+<Sound id="ACHIEVEMENT" path="achievement" /> 
 <Sound id="AWOOGA" path="awooga" /> 
 <Sound id="BLEEP" path="bleep" /> 
 <Sound id="BUZZER" path="buzzer" />

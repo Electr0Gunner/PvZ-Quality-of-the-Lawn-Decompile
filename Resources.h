@@ -569,6 +569,7 @@ namespace Sexy
 
 	// LoadingSounds Resources
 	bool ExtractLoadingSoundsResources(ResourceManager *theMgr);
+	extern int SOUND_ACHIEVEMENT;
 	extern int SOUND_AWOOGA;
 	extern int SOUND_BALLOONINFLATE;
 	extern int SOUND_BALLOON_POP;
@@ -1106,6 +1107,7 @@ namespace Sexy
 		IMAGE_REANIM_CRAZYDAVE_MOUTH6_ID,
 		IMAGE_REANIM_ZOMBIE_MUSTACHE2_ID,
 		IMAGE_REANIM_ZOMBIE_MUSTACHE3_ID,
+		SOUND_ACHIEVEMENT_ID,
 		SOUND_AWOOGA_ID,
 		SOUND_BLEEP_ID,
 		SOUND_BUZZER_ID,

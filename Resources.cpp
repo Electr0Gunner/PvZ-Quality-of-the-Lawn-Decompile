@@ -1479,6 +1479,7 @@ bool Sexy::ExtractLoadingImagesResources(ResourceManager *theManager)
 }
 
 // LoadingSounds Resources
+int Sexy::SOUND_ACHIEVEMENT;
 int Sexy::SOUND_AWOOGA;
 int Sexy::SOUND_BALLOONINFLATE;
 int Sexy::SOUND_BALLOON_POP;
@@ -1651,6 +1652,7 @@ bool Sexy::ExtractLoadingSoundsResources(ResourceManager *theManager)
 	ResourceManager &aMgr = *theManager;
 	try
 	{
+		SOUND_ACHIEVEMENT = aMgr.GetSoundThrow("SOUND_ACHIEVEMENT");
 		SOUND_AWOOGA = aMgr.GetSoundThrow("SOUND_AWOOGA");
 		SOUND_BALLOONINFLATE = aMgr.GetSoundThrow("SOUND_BALLOONINFLATE");
 		SOUND_BALLOON_POP = aMgr.GetSoundThrow("SOUND_BALLOON_POP");
@@ -2195,6 +2197,7 @@ static void* gResources[] =
 	&IMAGE_REANIM_CRAZYDAVE_MOUTH6,
 	&IMAGE_REANIM_ZOMBIE_MUSTACHE2,
 	&IMAGE_REANIM_ZOMBIE_MUSTACHE3,
+	&SOUND_ACHIEVEMENT,
 	&SOUND_AWOOGA,
 	&SOUND_BLEEP,
 	&SOUND_BUZZER,
@@ -2913,6 +2916,7 @@ const char* Sexy::GetStringIdById(int theId)
 		case IMAGE_REANIM_CRAZYDAVE_MOUTH6_ID: return "IMAGE_REANIM_CRAZYDAVE_MOUTH6";
 		case IMAGE_REANIM_ZOMBIE_MUSTACHE2_ID: return "IMAGE_REANIM_ZOMBIE_MUSTACHE2";
 		case IMAGE_REANIM_ZOMBIE_MUSTACHE3_ID: return "IMAGE_REANIM_ZOMBIE_MUSTACHE3";
+		case SOUND_ACHIEVEMENT_ID: return "SOUND_ACHIEVEMENT";
 		case SOUND_AWOOGA_ID: return "SOUND_AWOOGA";
 		case SOUND_BLEEP_ID: return "SOUND_BLEEP";
 		case SOUND_BUZZER_ID: return "SOUND_BUZZER";

@@ -3075,5 +3075,65 @@ Replay level?
 [REPLAY_LEVEL_BODY]
 Do you wish to replay level 3-4?
 
-[DISCORD_ADVENTURE]
-Adventure
+[ACHIEVEMENT_GET]
+{ACHIEVEMENT} Achievement!
+
+[HOME_LAWN_SECURITY]
+Home Lawn Security
+
+[NOBEL_PEAS_PRIZE]
+Nobel Peas Prize
+
+[BETTER_OFF_DEAD]
+Better Off Dead
+
+[CHINA_SHOP]
+China Shop
+
+[SPUDOW]
+SPUDOW!
+
+[EXPLODONATOR]
+Explodanator
+
+[MORTICULTURALIST]
+Morticulturalist
+
+[DONT_PEA_IN_THE_POOL]
+Don't Pea In The Pool
+
+[ROLL_SOME_HEADS]
+Roll Some Heads
+
+[GROUNDED]
+Grounded
+
+[ZOMBOLOGIST]
+Zombologist
+
+[PENNY_PINCHER]
+Penny Pincher
+
+[SUNNY_DAYS]
+Sunny Days
+
+[POPCORN_PARTY]
+Popcorn Party
+
+[GOOD_MORNING]
+Good Morning
+
+[NO_FUNGUS_AMONG_US]
+No Fungus Among Us
+
+[BEYOND_THE_GRAVE]
+Beyond The Grave
+
+[IMMORTAL]
+Immortal
+
+[TOWERING_WISDOM]
+Towering Wisdom
+
+[MUSTACHE_MODE]
+Mustache Mode

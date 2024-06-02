@@ -1702,6 +1702,11 @@ void Board::StartLevel()
 	mApp->mLastLevelStats->Reset();
 	mChallenge->StartLevel();
 
+	if (mApp->IsSurvivalEndless(mApp->mGameMode) && GetSurvivalFlagsCompleted() >= 20)
+	{
+		mApp->GetAchievement(AchievementType::IMMORTAL);
+	}
+
 	if (mApp->IsSurvivalMode() && mChallenge->mSurvivalStage > 0)
 	{
 		mApp->EraseFile(GetSavedGameName(mApp->mGameMode, mApp->mPlayerInfo->mId));
@@ -7756,6 +7761,11 @@ void Board::SetMustacheMode(bool theEnableMustache)
 	mMustacheMode = theEnableMustache;
 	mApp->mMustacheMode = theEnableMustache;
 
+	if (mMustacheMode)
+	{
+		mApp->GetAchievement(MUSTACHE_MODE);
+	}
+
 	Zombie* aZombie = nullptr;
 	while (IterateZombies(aZombie))
 	{
@@ -9822,6 +9832,28 @@ void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius
 			}
 		}
 	}
+}
+
+int Board::GetAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange)
+{
+	Zombie* aZombie = nullptr;
+	int TotalZombies = 0;
+	while (IterateZombies(aZombie))
+	{
+		Rect aZombieRect = aZombie->GetZombieRect();
+		int aRowDist = aZombie->mRow - theRow;
+		if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
+		{
+			aRowDist = 0;
+		}
+
+		if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
+		{
+			TotalZombies++;
+		}
+	}
+
+	return TotalZombies;
 }
 
 //0x41DA10

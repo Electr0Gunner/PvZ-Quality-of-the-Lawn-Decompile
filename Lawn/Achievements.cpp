@@ -46,12 +46,12 @@ void Achievements::GiveAchievement(LawnApp* theApp, AchievementType theAchivemen
 
 	theApp->mPlayerInfo->mEarnedAchievements[theAchivementType] = true;
 
-	std::string aAchievementName = gAchievementDefs[theAchivementType].mAchievementName;
-	aAchievementName.append(" Achievement!");
+	SexyString aAchivementText = gAchievementDefs[theAchivementType].mAchievementName;
+	SexyString aMessage = TodReplaceString(_S("[ACHIEVEMENT_GET]"), _S("{ACHIEVEMENT}"), aAchivementText);
 
 	if(theApp->mBoard)
-		theApp->mBoard->DisplayAdvice(aAchievementName, MESSAGE_STYLE_HINT_FAST, AdviceType::ADVICE_NONE);
-	theApp->PlaySample(SOUND_BOSSEXPLOSION);
+		theApp->mBoard->DisplayAdvice(aMessage, MESSAGE_STYLE_HINT_FAST, AdviceType::ADVICE_NONE);
+	theApp->PlaySample(SOUND_ACHIEVEMENT);
 }
 
 void Achievements::InitAchievement()
