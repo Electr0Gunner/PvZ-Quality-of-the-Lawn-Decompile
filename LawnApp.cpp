@@ -42,7 +42,7 @@
 #include "Lawn/Widget/SeedChooserScreen.h"
 #include "SexyAppFramework/WidgetManager.h"
 #include "SexyAppFramework/ResourceManager.h"
-#include "Lawn/Achivements.h"
+#include "Lawn/Achievements.h"
 
 #include "Lawn/System/discord_rpc.h"
 #include "SexyAppFramework/Checkbox.h"
@@ -110,7 +110,7 @@ LawnApp::LawnApp()
 	mEffectSystem = nullptr;
 	mReanimatorCache = nullptr;
 	mCloseRequest = false;
-	mAchivement = nullptr;
+	mAchievement = nullptr;
 	mWidth = BOARD_WIDTH;
 	mHeight = BOARD_HEIGHT;
 	mFullscreenBits = 32;
@@ -1328,8 +1328,8 @@ void LawnApp::Init()
 	mTitleScreen->Resize(0, 0, mWidth, mHeight);
 	mWidgetManager->AddWidget(mTitleScreen);
 	mWidgetManager->SetFocus(mTitleScreen);
-	mAchivement = new Achivements(this);
-	mAchivement->InitAchivement();
+	mAchievement = new Achievements(this);
+	mAchievement->InitAchievement();
 
 #ifdef _DEBUG
 	int aDuration = mTimer.GetDuration();
@@ -3508,6 +3508,13 @@ SexyString LawnGetCurrentLevelName()
 	}
 
 	return gLawnApp->GetCurrentChallengeDef().mChallengeName;
+}
+
+void LawnApp::GetAchievement(AchievementType theAchievementType)
+{
+	if (mPlayerInfo == nullptr || gLawnApp == nullptr || mAchievement == nullptr)
+		return;
+	mAchievement->GiveAchievement(this, theAchievementType);
 }
 
 //0x456060

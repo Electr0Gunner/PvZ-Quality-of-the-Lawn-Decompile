@@ -250,3 +250,240 @@ LOADING:Long reanim 'reanim\Credits_Main.reanim' 106 ms on Game Loading
 First Draw Time: 5594 ms
 Discord: connected to user
 LOADED: 'LoaderBar' 49 ms on Game Loading
+Started Sun Jun  2 18:36:10 2024
+
+session id: 1717342569
+LOADING:Long reanim 'reanim\Zombie.reanim' 109 ms on Game Loading
+LOADING:Long reanim 'reanim\Zombie_gargantuar.reanim' 111 ms on Game Loading
+LOADING:Long reanim 'reanim\Zombie_digger.reanim' 119 ms on Game Loading
+LOADING:Long reanim 'reanim\Zombie_catapult.reanim' 106 ms on Game Loading
+LOADING:Long reanim 'reanim\Zombie_boss.reanim' 215 ms on Game Loading
+LOADING:Long reanim 'reanim\CrazyDave.reanim' 201 ms on Game Loading
+LOADING:Long reanim 'reanim\SelectorScreen.reanim' 173 ms on Game Loading
+LOADING:Long reanim 'reanim\TreeOfWisdom.reanim' 185 ms on Game Loading
+LOADING:Long reanim 'reanim\Credits_Main.reanim' 109 ms on Game Loading
+First Draw Time: 6110 ms
+Discord: connected to user
+LOADED: 'LoaderBar' 54 ms on Game Loading
+LOADED: 'DelayLoad_ChallengeScreen' 59 ms on Challenge Screen
+LOADED: 'DelayLoad_Background1' 31 ms on Challenge Screen
+Board cheat key '0'
+Board cheat key '9'
+Board cheat key '8'
+Started Sun Jun  2 18:44:26 2024
+
+session id: 1717343065
+Started Sun Jun  2 18:45:51 2024
+
+session id: 1717343150
+LOADING:Long reanim 'reanim\Zombie_digger.reanim' 101 ms on Game Loading
+LOADING:Long reanim 'reanim\Zombie_boss.reanim' 178 ms on Game Loading
+LOADING:Long reanim 'reanim\CrazyDave.reanim' 161 ms on Game Loading
+LOADING:Long reanim 'reanim\SelectorScreen.reanim' 145 ms on Game Loading
+LOADING:Long reanim 'reanim\TreeOfWisdom.reanim' 152 ms on Game Loading
+LOADING:Long reanim 'reanim\Credits_Main.reanim' 102 ms on Game Loading
+First Draw Time: 5141 ms
+Discord: connected to user
+LOADED: 'LoaderBar' 52 ms on Game Loading
+Selector cheat key 'a'
+Selector cheat key 'a'
+LOADED: 'DelayLoad_ChallengeScreen' 47 ms on Challenge Screen
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+LOADED: 'DelayLoad_Background1' 25 ms on Game Selector
+LOADED: 'DelayLoad_BackgroundUnsodded' 44 ms on Game Selector
+Board cheat key 'l'
+Board cheat key ''
+Board cheat key '7'
+Board cheat key '8'
+Board cheat key '6'
+Board cheat key '6'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Started Sun Jun  2 18:48:50 2024
+
+session id: 1717343329
+LOADING:Long reanim 'reanim\Zombie.reanim' 106 ms on Game Loading
+LOADING:Long reanim 'reanim\Zombie_boss.reanim' 179 ms on Game Loading
+LOADING:Long reanim 'reanim\CrazyDave.reanim' 157 ms on Game Loading
+LOADING:Long reanim 'reanim\SelectorScreen.reanim' 145 ms on Game Loading
+LOADING:Long reanim 'reanim\TreeOfWisdom.reanim' 152 ms on Game Loading
+First Draw Time: 5094 ms
+Discord: connected to user
+LOADED: 'LoaderBar' 48 ms on Game Loading
+Selector cheat key 'z'
+Selector cheat key 'a'
+Selector cheat key 'a'
+LOADED: 'DelayLoad_ChallengeScreen' 48 ms on Challenge Screen
+LOADED: 'DelayLoad_Background1' 24 ms on Award Screen
+Started Sun Jun  2 19:04:09 2024
+
+session id: 1717344249
+LOADING:Long reanim 'reanim\Zombie_boss.reanim' 170 ms on Game Loading
+LOADING:Long reanim 'reanim\CrazyDave.reanim' 159 ms on Game Loading
+LOADING:Long reanim 'reanim\SelectorScreen.reanim' 154 ms on Game Loading
+LOADING:Long reanim 'reanim\TreeOfWisdom.reanim' 148 ms on Game Loading
+LOADING:Long reanim 'reanim\Credits_Main.reanim' 101 ms on Game Loading
+First Draw Time: 4985 ms
+Discord: connected to user
+LOADED: 'LoaderBar' 44 ms on Game Loading
+LOADED: 'DelayLoad_ChallengeScreen' 45 ms on Challenge Screen
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Selector cheat key 'a'
+Started Sun Jun  2 19:05:06 2024
+
+session id: 1717344306
+LOADING:Long reanim 'reanim\Zombie_boss.reanim' 172 ms on Game Loading
+LOADING:Long reanim 'reanim\CrazyDave.reanim' 154 ms on Game Loading
+LOADING:Long reanim 'reanim\SelectorScreen.reanim' 142 ms on Game Loading
+LOADING:Long reanim 'reanim\TreeOfWisdom.reanim' 149 ms on Game Loading
+First Draw Time: 4890 ms
+Discord: connected to user
+LOADED: 'LoaderBar' 47 ms on Game Loading
+Selector cheat key ' '
+LOADED: 'DelayLoad_ChallengeScreen' 46 ms on Challenge Screen
+LOADED: 'DelayLoad_Background2' 26 ms on Challenge Screen
+Board cheat key '8'
+Board cheat key '!'
+Board cheat key '!'
+Board cheat key 'l'
+Board cheat key ''
+Board cheat key ';'
+Board cheat key 'l'
+Board cheat key ''
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key 'q'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'
+Board cheat key '6'

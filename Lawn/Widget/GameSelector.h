@@ -74,6 +74,7 @@ public:
     ToolTipWidget*              mToolTip;                   //+0x128
     bool                        mHasTrophy;                 //+0x12C
     bool                        mUnlockSelectorCheat;       //+0x12D
+    bool                        mDebugText;
 
 public:
     GameSelector(LawnApp* theApp);
@@ -99,6 +100,7 @@ public:
     void                        UpdateTooltip();
     /*inline*/ bool             ShouldDoZenTuturialBeforeAdventure();
     void                        AddPreviewProfiles();
+    void                        KeyChar();
 };
 
 class GameSelectorOverlay : public Widget

@@ -71,7 +71,7 @@ enum AdviceType
     ADVICE_NEED_WHEELBARROW,
     NUM_ADVICE_TYPES
 };
-enum AchivementType
+enum AchievementType
 {
     HOME_LAWN_SECURITY = 0,
     NOBEL_PEAS_PRIZE = 1,
@@ -93,7 +93,7 @@ enum AchivementType
     IMMORTAL = 17,
     TOWERING_WISDOM = 18,
     MUSTACHE_MODE = 19,
-    TOTAL_ACHIVEMENTS = 20
+    TOTAL_ACHIEVEMENTS = 20
 };
 enum AlmanacPage
 {

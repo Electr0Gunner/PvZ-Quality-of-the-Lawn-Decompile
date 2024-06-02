@@ -10,7 +10,7 @@ class ChallengeDefinition;
 class SeedChooserScreen;
 class AwardScreen;
 class CreditScreen;
-class Achivements;
+class Achievements;
 class TodFoley;
 class PoolEffect;
 class ZenGarden;
@@ -126,7 +126,7 @@ public:
 	TrialType						mTrialType;										//+0x8C0
 	bool							mDebugTrialLocked;								//+0x8C4
 	bool							mMuteSoundsForCutscene;							//+0x8C5
-	Achivements*						mAchivement;
+	Achievements*						mAchievement;
 	bool							isFastMode;
 	int								SpeedValue;
 	SexyString						mReconVersion;
@@ -326,6 +326,7 @@ public:
 	virtual void					SwitchScreenMode(bool wantWindowed, bool is3d, bool force = false);
 	virtual void					ToggleDebugMode();
 	static /*inline*/ void			CenterDialog(Dialog* theDialog, int theWidth, int theHeight);
+	void							GetAchievement(AchievementType theAchievementType);
 };
 
 SexyString							LawnGetCurrentLevelName();

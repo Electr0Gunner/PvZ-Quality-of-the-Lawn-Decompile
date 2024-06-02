@@ -5,7 +5,7 @@
 #include "GameSelector.h"
 #include "../../LawnApp.h"
 #include "AlmanacDialog.h"
-#include "../Achivements.h"
+#include "../Achievements.h"
 #include "../../Resources.h"
 #include "../System/Music.h"
 #include "../ToolTipWidget.h"
@@ -48,7 +48,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mLoading = false;
 	mHasTrophy = false;
 	mToolTip = new ToolTipWidget();
-	//mApp->mAchivement->
+	mDebugText = false;
 
 	mAdventureButton = MakeNewButton(
 		GameSelector::GameSelector_Adventure, 
@@ -314,6 +314,7 @@ GameSelector::~GameSelector()
 	delete mToolTip;
 }
 
+
 //0x449E60
 void GameSelector::SyncButtons()
 {
@@ -549,30 +550,33 @@ void GameSelector::Draw(Graphics* g)
 			aTrophyParticle->Draw(g);
 	}
 
-	Font* mDebugFont;
-	mDebugFont = new SysFont("Arial Unicode MS", 10, true, false, false);
-	SexyString aText;
-	aText += StrFormat(_S("ACHIVEMENTS DEBUG\n"));
-	for (int i = 0; i <= AchivementType::TOTAL_ACHIVEMENTS; i++){
-		aText += StrFormat(_S("ACHIVEMENT %d: "), i);
-		if (mApp->mPlayerInfo->mEarnedAchievements[i])
-		{
-			aText += StrFormat(_S("TRUE\n"));
+	if(mDebugText)
+	{
+		Font* mDebugFont;
+		mDebugFont = new SysFont("Arial Unicode MS", 10, true, false, false);
+		SexyString aText;
+		aText += StrFormat(_S("ACHIEVEMENTS DEBUG\n"));
+		for (int i = 0; i <= AchievementType::TOTAL_ACHIEVEMENTS - 1; i++){
+			aText += StrFormat(_S("ACHIEVEMENT %d: "), i);
+			if (mApp->mPlayerInfo->mEarnedAchievements[i])
+			{
+				aText += StrFormat(_S("TRUE\n"));
+			}
+			else
+			{
+				aText += StrFormat(_S("FALSE\n"));
+			}
 		}
-		else
-		{
-			aText += StrFormat(_S("FALSE\n"));
-		}
-	}
 
-	g->SetFont(mDebugFont);
-	g->SetColor(Color::Black);
-	g->DrawStringWordWrapped(aText, 10, 89);
-	g->DrawStringWordWrapped(aText, 11, 91);
-	g->DrawStringWordWrapped(aText, 9, 90);
-	g->DrawStringWordWrapped(aText, 11, 90);
-	g->SetColor(Color(255, 255, 255));
-	g->DrawStringWordWrapped(aText, 10, 90);
+		g->SetFont(mDebugFont);
+		g->SetColor(Color::Black);
+		g->DrawStringWordWrapped(aText, 10, 89);
+		g->DrawStringWordWrapped(aText, 11, 91);
+		g->DrawStringWordWrapped(aText, 9, 90);
+		g->DrawStringWordWrapped(aText, 11, 90);
+		g->SetColor(Color(255, 255, 255));
+		g->DrawStringWordWrapped(aText, 10, 90);
+	}
 }
 
 //0x44AB50
@@ -1068,6 +1072,11 @@ void GameSelector::KeyChar(char theChar)
 			mPuzzleLocked = false;
 			mSurvivalLocked = false;
 			SyncButtons();
+		}
+		if (theChar == _S('a'))
+		{
+			mDebugText = !mDebugText;
+			return;
 		}
 	}
 }

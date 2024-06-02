@@ -4088,6 +4088,8 @@ void Challenge::ScaryPotterPopulate()
 			ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_JACK_IN_THE_BOX, SEED_NONE, 1, aGridArray, aGridArrayCount);
 			ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_GARGANTUAR, SEED_NONE, 1 + aNumExtraGargantuars, aGridArray, aGridArrayCount);
 			ScaryPotterChangePotType(GRIDITEM_STATE_SCARY_POT_LEAF, 2);
+			if (mSurvivalStage == 15) // @Patoke: add achievement
+				mApp->GetAchievement(AchievementType::CHINA_SHOP);
 			break;
 		}
 		default:
@@ -4655,6 +4657,9 @@ void Challenge::IZombieInitLevel()
 		break;
 	case GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS:
 	{
+		if (mSurvivalStage == 10)
+			mApp->GetAchievement(AchievementType::BETTER_OFF_DEAD);
+
 		int aFormationHit = RandRangeInt(0, 4);
 
 		int aPuffshroomCount = RandRangeInt(ClampInt(2 + mSurvivalStage / 3, 2, 4), ClampInt(3 + mSurvivalStage / 2, 2, 6));
