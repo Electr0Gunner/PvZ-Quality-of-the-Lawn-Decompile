@@ -18,14 +18,17 @@ public:
     LawnApp*                mApp;
     void                    GiveAchievement(LawnApp* theApp, AchievementType theAchivementType);
     void                    InitAchievement();
+    SexyString              ReturnAchievementName(int theAchivementIndex);
+    bool                    ReturnShowInAwards(int theAchivementIndex);
 };
 
 class AchievementDefinition
 {
 public:
-    AchievementType              mAchievementType;
+    AchievementType             mAchievementType;
     int                         mAchievementIconIndex;
-    const SexyChar*             mAchievementName;         
+    const SexyChar*             mAchievementName;
+    bool                        mShowInAwards;
 };
 extern AchievementDefinition gAchievementDefs[NUM_ACHIEVEMENTS];
 AchievementDefinition& GetAchievementDefinition(AchievementType theAchivementType);

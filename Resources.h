@@ -38,6 +38,7 @@ namespace Sexy
 	// DelayLoad_AwardScreen Resources
 	bool ExtractDelayLoad_AwardScreenResources(ResourceManager *theMgr);
 	extern Image* IMAGE_AWARDSCREEN_BACK;
+	extern Image* IMAGE_ACHIEVEMENTS_PORTRAITS;
 
 	// DelayLoad_Background1 Resources
 	bool ExtractDelayLoad_Background1Resources(ResourceManager *theMgr);
@@ -1374,6 +1375,7 @@ namespace Sexy
 		IMAGE_CREDITS_ZOMBIENOTE_ID,
 		IMAGE_CREDITS_PLAYBUTTON_ID,
 		IMAGE_SQUIRREL_ID,
+		IMAGE_ACHIEVEMENTS_PORTRAITS_ID,
 		RESOURCE_ID_MAX
 	};
 

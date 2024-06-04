@@ -7974,6 +7974,89 @@ void Board::KeyChar(SexyChar theChar)
 
 	TodTraceAndLog("Board cheat key '%c'", theChar);
 
+
+
+	if (theChar == _S('z'))
+	{
+		mApp->GetAchievement(HOME_LAWN_SECURITY);
+	}
+	if (theChar == _S('x'))
+	{
+		mApp->GetAchievement(BETTER_OFF_DEAD);
+	}/*
+	if (theChar == _S('c'))
+	{
+		mApp->GetAchievement(BETTER_OFF_DEAD);
+	}
+	if (theChar == _S('a3'))
+	{
+		mApp->GetAchievement(CHINA_SHOP);
+	}
+	if (theChar == _S('a4'))
+	{
+		mApp->GetAchievement(SPUDOW);
+	}
+	if (theChar == _S('a5'))
+	{
+		mApp->GetAchievement(EXPLODONATOR);
+	}
+	if (theChar == _S('a6'))
+	{
+		mApp->GetAchievement(MORTICULTURALIST);
+	}
+	if (theChar == _S('a7'))
+	{
+		mApp->GetAchievement(DONT_PEA_IN_THE_POOL);
+	}
+	if (theChar == _S('a8'))
+	{
+		mApp->GetAchievement(ROLL_SOME_HEADS);
+	}
+	if (theChar == _S('a9'))
+	{
+		mApp->GetAchievement(GROUNDED);
+	}
+	if (theChar == _S('a10'))
+	{
+		mApp->GetAchievement(ZOMBOLOGIST);
+	}
+	if (theChar == _S('a11'))
+	{
+		mApp->GetAchievement(PENNY_PINCHER);
+	}
+	if (theChar == _S('a12'))
+	{
+		mApp->GetAchievement(SUNNY_DAYS);
+	}
+	if (theChar == _S('a13'))
+	{
+		mApp->GetAchievement(POPCORN_PARTY);
+	}
+	if (theChar == _S('a14'))
+	{
+		mApp->GetAchievement(GOOD_MORNING);
+	}
+	if (theChar == _S('a15'))
+	{
+		mApp->GetAchievement(NO_FUNGUS_AMONG_US);
+	}
+	if (theChar == _S('a16'))
+	{
+		mApp->GetAchievement(BEYOND_THE_GRAVE);
+	}
+	if (theChar == _S('a17'))
+	{
+		mApp->GetAchievement(IMMORTAL);
+	}
+	if (theChar == _S('a18'))
+	{
+		mApp->GetAchievement(TOWERING_WISDOM);
+	}
+	if (theChar == _S('a19'))
+	{
+		mApp->GetAchievement(MUSTACHE_MODE);
+	}*/
+
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
 	{
 		if (theChar == _S('m'))

@@ -119,6 +119,7 @@ bool Sexy::ExtractDelayLoad_AlmanacResources(ResourceManager *theManager)
 
 // DelayLoad_AwardScreen Resources
 Image* Sexy::IMAGE_AWARDSCREEN_BACK;
+Image* Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS;
 
 bool Sexy::ExtractDelayLoad_AwardScreenResources(ResourceManager *theManager)
 {
@@ -128,6 +129,7 @@ bool Sexy::ExtractDelayLoad_AwardScreenResources(ResourceManager *theManager)
 	try
 	{
 		IMAGE_AWARDSCREEN_BACK = aMgr.GetImageThrow("IMAGE_AWARDSCREEN_BACK");
+		IMAGE_ACHIEVEMENTS_PORTRAITS = aMgr.GetImageThrow("IMAGE_ACHIEVEMENTS_PORTRAITS");
 	}
 	catch(ResourceManagerException&)
 	{
@@ -2464,6 +2466,7 @@ static void* gResources[] =
 	&IMAGE_CREDITS_ZOMBIENOTE,
 	&IMAGE_CREDITS_PLAYBUTTON,
 	&IMAGE_SQUIRREL,
+	&IMAGE_ACHIEVEMENTS_PORTRAITS,
 	NULL
 };
 
@@ -3109,6 +3112,7 @@ const char* Sexy::GetStringIdById(int theId)
 		case IMAGE_WAVECENTER_ID: return "IMAGE_WAVECENTER";
 		case IMAGE_WAVESIDE_ID: return "IMAGE_WAVESIDE";
 		case IMAGE_AWARDSCREEN_BACK_ID: return "IMAGE_AWARDSCREEN_BACK";
+		case IMAGE_ACHIEVEMENTS_PORTRAITS_ID: return "IMAGE_ACHIEVEMENTS_PORTRAITS";
 		case IMAGE_CHALLENGE_BACKGROUND_ID: return "IMAGE_CHALLENGE_BACKGROUND";
 		case IMAGE_CHALLENGE_WINDOW_ID: return "IMAGE_CHALLENGE_WINDOW";
 		case IMAGE_CHALLENGE_WINDOW_HIGHLIGHT_ID: return "IMAGE_CHALLENGE_WINDOW_HIGHLIGHT";

@@ -73,6 +73,7 @@ public:
     int                 mNumPottedPlants;                   //+0x350
     PottedPlant         mPottedPlant[MAX_POTTED_PLANTS];    //+0x358
     bool                mEarnedAchievements[20];
+    bool                mShownedAchievements[20];
 
 public:
     PlayerInfo();
