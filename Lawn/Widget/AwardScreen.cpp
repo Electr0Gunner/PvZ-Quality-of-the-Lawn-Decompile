@@ -366,13 +366,18 @@ void AwardScreen::Draw(Graphics* g)
         TodDrawString(g, aTitleString, 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
         mMenuButton->mBtnNoDraw = true;
         for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
+            int yPosIndex = i;
+            while (yPosIndex > 0 && (!mApp->mPlayerInfo->mEarnedAchievements[yPosIndex - 1] || !mApp->mPlayerInfo->mShownedAchievements[yPosIndex - 1] || !mApp->mAchievement->ReturnShowInAwards(yPosIndex - 1)))
+                yPosIndex--;
+
+            yPosIndex = i - yPosIndex;
             if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievement->ReturnShowInAwards(i)) 
             {
                 SexyString aAchievementName = StrFormat(_S("%s"), mApp->mAchievement->ReturnAchievementName(i).c_str());
-                int yPos = TodAnimateCurve(200, 0, mAchievementCounter, BOARD_HEIGHT + 50, 100 + (i * 90), TodCurves::CURVE_EASE_IN_OUT);
+                int yPos = TodAnimateCurve(200, 0, mAchievementCounter, BOARD_HEIGHT + 50, 100 + (yPosIndex * 90), TodCurves::CURVE_EASE_IN_OUT);
 
-                TodDrawString(g, aAchievementName, 180, yPos, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
-                g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, 60, yPos, i);
+                TodDrawString(g, aAchievementName, 180, yPos, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
+                g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, 60, yPos, yPosIndex);
             }
         }
 
