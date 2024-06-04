@@ -3148,3 +3148,63 @@ Towering Wisdom
 
 [MUSTACHE_MODE]
 Mustache Mode
+
+[HOME_LAWN_SECURITY_DESCRIPTION]
+Complete Adventure Mode.
+
+[NOBEL_PEAS_PRIZE_DESCRIPTION]
+Get the golden sunflower trophy.
+
+[BETTER_OFF_DEAD_DESCRIPTION]
+Get to a streak of 10 in I, Zombie Endless
+
+[CHINA_SHOP_DESCRIPTION]
+Get to a streak of 15 in Vasebreaker Endless
+
+[SPUDOW_DESCRIPTION]
+Blow up a zombie using a Potato Mine.
+
+[EXPLODONATOR_DESCRIPTION]
+Take out 10 full-sized zombies with a single Cherry Bomb.
+
+[MORTICULTURALIST_DESCRIPTION]
+Collect all 49 plants (including plants from Crazy Dave's shop).
+
+[DONT_PEA_IN_THE_POOL_DESCRIPTION]
+Complete a daytime pool level without using pea shooters of any kind.
+
+[ROLL_SOME_HEADS_DESCRIPTION]
+Complete a daytime pool level without using pea shooters of any kind.
+
+[GROUNDED_DESCRIPTION]
+Defeat a normal roof level without using any catapult plants.
+
+[ZOMBOLOGIST_DESCRIPTION]
+Discover the Yeti zombie.
+
+[PENNY_PINCHER_DESCRIPTION]
+Pick up 30 coins in a row on a single level without letting any disappear.
+
+[SUNNY_DAYS_DESCRIPTION]
+Get 8000 sun during a single level.
+
+[POPCORN_PARTY_DESCRIPTION]
+Defeat 2 Gargantuars with Corn Cob missiles in a single level.
+
+[GOOD_MORNING_DESCRIPTION]
+Complete a daytime level by planting only Mushrooms and Coffee Beans.
+
+[NO_FUNGUS_AMONG_US_DESCRIPTION]
+Complete a nighttime level without planting any Mushrooms.
+
+[BEYOND_THE_GRAVE_DESCRIPTION]
+Beat all 20 mini games.
+
+[IMMORTAL_DESCRIPTION]
+Survive 20 waves of pure zombie ferocity.
+
+[TOWERING_WISDOM_DESCRIPTION]
+Grow the Tree of Wisdom to 100 feet.
+
+[MUSTACHE_MODE_DESCRIPTION]
+Enable Mustache Mode

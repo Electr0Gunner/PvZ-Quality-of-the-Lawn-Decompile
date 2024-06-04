@@ -7976,22 +7976,22 @@ void Board::KeyChar(SexyChar theChar)
 
 
 
-	if (theChar == _S('z'))
+	if (theChar == _S('u'))
 	{
 		mApp->GetAchievement(HOME_LAWN_SECURITY);
 	}
-	if (theChar == _S('x'))
-	{
-		mApp->GetAchievement(BETTER_OFF_DEAD);
-	}/*
-	if (theChar == _S('c'))
+	if (theChar == _S('i'))
 	{
 		mApp->GetAchievement(BETTER_OFF_DEAD);
 	}
-	if (theChar == _S('a3'))
+	if (theChar == _S('o'))
+	{
+		mApp->GetAchievement(BETTER_OFF_DEAD);
+	}
+	if (theChar == _S('p'))
 	{
 		mApp->GetAchievement(CHINA_SHOP);
-	}
+	}/*
 	if (theChar == _S('a4'))
 	{
 		mApp->GetAchievement(SPUDOW);

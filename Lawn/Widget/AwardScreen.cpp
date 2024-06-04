@@ -358,32 +358,56 @@ void AwardScreen::Draw(Graphics* g)
             DrawAwardSeed(g);
         }
     }
-    
     if (mShowAchievements)
     {
         g->DrawImage(Sexy::IMAGE_CHALLENGE_BACKGROUND, 0, 0);
+        mStartButton->SetLabel("[CONTINUE_BUTTON]");
         SexyString aTitleString = _S("ACHIEVEMENTS");
         TodDrawString(g, aTitleString, 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
         mMenuButton->mBtnNoDraw = true;
-        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
-            int yPosIndex = i;
-            while (yPosIndex > 0 && (!mApp->mPlayerInfo->mEarnedAchievements[yPosIndex - 1] || !mApp->mPlayerInfo->mShownedAchievements[yPosIndex - 1] || !mApp->mAchievement->ReturnShowInAwards(yPosIndex - 1)))
-                yPosIndex--;
-
-            yPosIndex = i - yPosIndex;
+        int yPosIndex = 0;
+        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) 
+        {
             if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievement->ReturnShowInAwards(i)) 
             {
-                SexyString aAchievementName = StrFormat(_S("%s"), mApp->mAchievement->ReturnAchievementName(i).c_str());
-                int yPos = TodAnimateCurve(200, 0, mAchievementCounter, BOARD_HEIGHT + 50, 100 + (yPosIndex * 90), TodCurves::CURVE_EASE_IN_OUT);
+                yPosIndex++;
+                SexyString aAchievementName = StrFormat(_S("[%s]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
+                SexyString aAchievementDesc = StrFormat(_S("[%s_DESCRIPTION]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
+                int yPos = TodAnimateCurve(200, 0, mAchievementCounter, BOARD_HEIGHT + 50, 90 + (yPosIndex * 100), TodCurves::CURVE_EASE_IN_OUT);
 
-                TodDrawString(g, aAchievementName, 180, yPos, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
-                g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, 60, yPos, yPosIndex);
+                TodDrawString(g, aAchievementName, 150, yPos + 20, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
+                //TodDrawString(g, aAchievementDesc, 150, yPos + 50, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 255, 255, 255), DS_ALIGN_LEFT);
+                TodDrawStringWrapped(g, aAchievementDesc, Rect(150, yPos + 30, 258, 230), Sexy::FONT_DWARVENTODCRAFT12, Color(255, 255, 255), DS_ALIGN_LEFT);
+                g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, 60, yPos, i);
             }
         }
 
     }
     else
     {
+        if (mAwardType == AWARD_HELP_ZOMBIENOTE)
+        {
+            mStartButton->SetLabel("[MAIN_MENU_BUTTON]");
+        }
+        else if (!mApp->IsAdventureMode())
+        {
+            mStartButton->SetLabel("[MAIN_MENU_BUTTON]");
+        }
+        else if (aLevel == 1)
+        {
+            mStartButton->SetLabel("[CONTINUE_BUTTON]");
+        }
+        else if (aLevel == 15)
+            mStartButton->SetLabel("[VIEW_ALMANAC_BUTTON]");
+        else if (aLevel == 25 || aLevel == 35 || aLevel == 45)
+            mStartButton->SetLabel("[CONTINUE_BUTTON]");
+        else
+            mStartButton->SetLabel("[NEXT_LEVEL_BUTTON]");
+
+        if (mApp->HasFinishedAdventure())
+        {
+            mStartButton->SetLabel("[CONTINUE_BUTTON]");
+        }
         mMenuButton->mBtnNoDraw = false;
     }
     mMenuButton->Draw(g);
