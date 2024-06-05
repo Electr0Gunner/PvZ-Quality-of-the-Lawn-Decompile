@@ -94,6 +94,11 @@ namespace Sexy
 	extern Image* IMAGE_LOCK_OPEN;
 	extern Image* IMAGE_SURVIVAL_THUMBNAILS;
 
+	bool ExtractDelayLoad_AchievementResources(ResourceManager *theMgr);
+	extern Image* IMAGE_ACHIEVEMENT_TILE;
+	extern Image* IMAGE_ACHIEVEMENT_SELECTOR_TILE;
+
+
 	// DelayLoad_Credits Resources
 	bool ExtractDelayLoad_CreditsResources(ResourceManager *theMgr);
 	extern Font* FONT_BRIANNETOD32;
@@ -1380,6 +1385,8 @@ namespace Sexy
 		IMAGE_ACHIEVEMENTS_PORTRAITS_ID,
 		IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON_ID,
 		IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT_ID,
+		IMAGE_ACHIEVEMENT_TILE_ID,
+		IMAGE_ACHIEVEMENT_SELECTOR_TILE_ID,
 		RESOURCE_ID_MAX
 	};
 

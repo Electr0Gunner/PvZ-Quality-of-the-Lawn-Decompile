@@ -3174,7 +3174,7 @@ Collect all 49 plants (including plants from Crazy Dave's shop).
 Complete a daytime pool level without using pea shooters of any kind.
 
 [ROLL_SOME_HEADS_DESCRIPTION]
-Complete a daytime pool level without using pea shooters of any kind.
+Bowl over 5 zombies or more with a single Wall-nut.
 
 [GROUNDED_DESCRIPTION]
 Defeat a normal roof level without using any catapult plants.

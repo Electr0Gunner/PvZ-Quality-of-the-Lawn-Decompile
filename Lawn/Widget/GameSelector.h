@@ -82,6 +82,7 @@ public:
     int                         mAchievementTimer;
     int                         mCurrentY;
     int                         mDestinationY;
+    AchievementScreen* mAchievementWidget;
 
 public:
     GameSelector(LawnApp* theApp);

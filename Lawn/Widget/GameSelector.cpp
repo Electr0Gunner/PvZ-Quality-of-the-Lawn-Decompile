@@ -156,6 +156,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mOptionsButton->mBtnNoDraw = true;
 	mOptionsButton->mMouseVisible = false;
 	mOptionsButton->mButtonOffsetY = 15;
+	mOptionsButton->mClip = false;
 
 	mHelpButton = MakeNewButton(
 		GameSelector::GameSelector_Help, 
@@ -170,6 +171,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mHelpButton->mBtnNoDraw = true;
 	mHelpButton->mMouseVisible = false;
 	mHelpButton->mButtonOffsetY = 30;
+	mHelpButton->mClip = false;
 
 	mQuitButton = MakeNewButton(
 		GameSelector::GameSelector_Quit, 
@@ -185,6 +187,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mQuitButton->mMouseVisible = false;
 	mQuitButton->mButtonOffsetX = 5;
 	mQuitButton->mButtonOffsetY = 5;
+	mQuitButton->mClip = false;
 
 	mChangeUserButton = MakeNewButton(
 		GameSelector::GameSelector_ChangeUser, 
@@ -213,6 +216,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	);
 	mStoreButton->Resize(405, 484, Sexy::IMAGE_SELECTORSCREEN_STORE->mWidth, Sexy::IMAGE_SELECTORSCREEN_STORE->mHeight);
 	mStoreButton->mMouseVisible = false;
+	mStoreButton->mClip = false;
 	
 	mAlmanacButton = MakeNewButton(
 		GameSelector::GameSelector_Almanac, 
@@ -225,6 +229,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	);
 	mAlmanacButton->Resize(327, 428, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mWidth, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mHeight);
 	mAlmanacButton->mMouseVisible = false;
+	mAlmanacButton->mClip = false;
 
 	mAchievementButton = MakeNewButton(
 		GameSelector::GameSelector_Achievement,
@@ -549,7 +554,7 @@ void GameSelector::Draw(Graphics* g)
 		aSelectorReanim->GetAttachmentOverlayMatrix(aSignIdx, aOverlayMatrix);
 		float aStringWidth = Sexy::FONT_BRIANNETOD16->StringWidth(aWelcomeStr);
 		SexyTransform2D aOffsetMatrix;
-		aOffsetMatrix.Translate(170.5f - (int)(aStringWidth * 0.5f), 102.5f);
+		aOffsetMatrix.Translate(170.5f - (int)(aStringWidth * 0.5f) + mX, 102.5f + mY);
 		TodDrawStringMatrix(g, Sexy::FONT_BRIANNETOD16, aOverlayMatrix * aOffsetMatrix, aWelcomeStr, Color(255, 245, 200));
 
 	}
@@ -739,7 +744,12 @@ void GameSelector::Update()
 	MarkDirty();
 	UpdateTooltip();
 	mApp->mZenGarden->UpdatePlantNeeds();
-	mApp->UpdateDiscordRPC("In The Main Menu");
+	if(mSelectorState != SELECTOR_ACHIEVEMENTS)
+		mApp->UpdateDiscordRPC("In The Main Menu");
+	else
+	{
+		mApp->UpdateDiscordRPC("In The Achievement Screen");
+	}
 
 	if (mAchievementTimer > 0)
 	{
@@ -747,27 +757,28 @@ void GameSelector::Update()
 		int aPosY = CalcYPos(mCurrentY, mDestinationY);
 		mY = aPosY;
 
-		mApp->mAchievementScreen->mY = aPosY + mApp->mHeight - 1;
-		mOverlayWidget->mY += aPosY;
-		mAdventureButton->mY += aPosY;
-		mMinigameButton->mY += aPosY;
-		mPuzzleButton->mY += aPosY;
-		mOptionsButton->mY += aPosY;
-		mQuitButton->mY += aPosY;
-		mHelpButton->mY += aPosY;
-		mStoreButton->mY += aPosY;
-		mAlmanacButton->mY += aPosY;
-		mZenGardenButton->mY += aPosY;
-		mSurvivalButton->mY += aPosY;
-		mChangeUserButton->mY += aPosY;
-		mAchievementButton->mY += aPosY;
-		/*
+		if(mApp->mAchievementScreen)
+			mApp->mAchievementScreen->mY = aPosY + mApp->mHeight - 1;
+		mOverlayWidget->mY = aPosY;
+		mAdventureButton->mButtonOffsetY = aPosY;
+		mMinigameButton->mButtonOffsetY = aPosY;
+		mPuzzleButton->mButtonOffsetY = aPosY;
+		mOptionsButton->mButtonOffsetY = aPosY + 15;
+		mQuitButton->mButtonOffsetY = aPosY + 5;
+		mHelpButton->mButtonOffsetY = aPosY + 30;
+		mStoreButton->mButtonOffsetY = aPosY;
+		mAlmanacButton->mButtonOffsetY = aPosY;
+		mZenGardenButton->mButtonOffsetY = aPosY;
+		mSurvivalButton->mButtonOffsetY = aPosY;
+		mChangeUserButton->mButtonOffsetY = aPosY;
+		mAchievementButton->mButtonOffsetY = aPosY;
+		
 		mAchievementButton->MarkDirty();
 		mOptionsButton->MarkDirty();
 		mHelpButton->MarkDirty();
 		mQuitButton->MarkDirty();
 		mStoreButton->MarkDirty();
-		*/
+		
 		mAchievementTimer--;
 	}
 	else if (mAchievementTimer == 0)
@@ -935,6 +946,8 @@ void GameSelector::Update()
 		aHandReanim->Update();
 
 	if(mSelectorState != SELECTOR_ACHIEVEMENTS){
+		if(mAchievementTimer == 0)
+			mApp->KillAchievementScreen();
 		TrackButton(mAdventureButton, mShowStartButton ? "SelectorScreen_StartAdventure_button" : "SelectorScreen_Adventure_button", 0.0f, 0.0f);
 		TrackButton(mMinigameButton, "SelectorScreen_Survival_button", 0.0f, 0.0f);
 		TrackButton(mPuzzleButton, "SelectorScreen_Challenges_button", 0.0f, 0.0f);
@@ -1301,6 +1314,18 @@ void GameSelector::ButtonDepress(int theId)
 		mDestinationY = -mApp->mHeight;
 		mSelectorState = SELECTOR_ACHIEVEMENTS;
 		mApp->ShowAchievementScreen();
+		mAdventureButton->SetDisabled(true);
+		mMinigameButton->SetDisabled(true);
+		mPuzzleButton->SetDisabled(true);
+		mOptionsButton->SetDisabled(true);
+		mQuitButton->SetDisabled(true);
+		mHelpButton->SetDisabled(true);
+		mChangeUserButton->SetDisabled(true);
+		mStoreButton->SetDisabled(true);
+		mAlmanacButton->SetDisabled(true);
+		mSurvivalButton->SetDisabled(true);
+		mZenGardenButton->SetDisabled(true);
+		mAchievementButton->SetDisabled(true);
 		break;
 	case GameSelector::GameSelector_ZenGarden:
 		mApp->KillGameSelector();

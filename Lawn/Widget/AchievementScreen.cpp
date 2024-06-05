@@ -17,8 +17,10 @@
 AchievementScreen::AchievementScreen(LawnApp* theApp)
 {
 	mApp = theApp;
-	TodLoadResources("DelayLoad_AwardScreen");
-    TodLoadResources("DelayLoad_ChallengeScreen");
+	TodLoadResources("DelayLoad_Achievements");
+    TodLoadResources("DelayLoad_AwardScreen");
+    mScrollAmount = 0;
+    mScrollPosition = 0;
 
     mBackButton = MakeNewButton(0, this, _S("[BACK_TO_MENU]"), nullptr, Sexy::IMAGE_SEEDCHOOSER_BUTTON2,
         Sexy::IMAGE_SEEDCHOOSER_BUTTON2_GLOW, Sexy::IMAGE_SEEDCHOOSER_BUTTON2_GLOW);
@@ -36,19 +38,35 @@ AchievementScreen::~AchievementScreen()
 void AchievementScreen::Draw(Graphics* g)
 {
     int yPosIndex = 0;
-    g->DrawImage(Sexy::IMAGE_CHALLENGE_BACKGROUND, 0, 0);
+
+    g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_SELECTOR_TILE, 0, 0 + mScrollPosition);
+   for (int i = 1; i <= 70; i++)
+    {
+        g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_TILE, 0, Sexy::IMAGE_ACHIEVEMENT_TILE->mHeight * i + mScrollPosition);
+    }
+
+    g->SetScale(0.9f, 0.9f,0,0);
     for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++)
     {
             yPosIndex++;
             SexyString aAchievementName = StrFormat(_S("[%s]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
             SexyString aAchievementDesc = StrFormat(_S("[%s_DESCRIPTION]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
-            int yPos = 90 + (yPosIndex * 100);
-            TodDrawString(g, aAchievementName, 150, yPos + 20, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
+            int yPos = 178 + (72 * (i / 2)) + mScrollPosition;
+            int xPos = 120;
+            if (i % 2 != 0)
+            {
+                xPos = 429;
+            }
+            xPos += 120;
+            TodDrawString(g, aAchievementName, xPos - 10, yPos + 17, Sexy::FONT_DWARVENTODCRAFT15, Color(21, 175, 0) , DS_ALIGN_LEFT);
             //TodDrawString(g, aAchievementDesc, 150, yPos + 50, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 255, 255, 255), DS_ALIGN_LEFT);
-            TodDrawStringWrapped(g, aAchievementDesc, Rect(150, yPos + 30, 258, 230), Sexy::FONT_DWARVENTODCRAFT12, Color(255, 255, 255), DS_ALIGN_LEFT);
-            g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, 60, yPos, 1);
+            TodDrawStringWrapped(g, aAchievementDesc, Rect(xPos - 10, yPos + 19, 230, 260), Sexy::FONT_DWARVENTODCRAFT12, Color(255, 255, 255, 255), DS_ALIGN_LEFT);
+            g->SetColorizeImages(true);
+            g->SetColor(mApp->mPlayerInfo->mEarnedAchievements[i] ? Color(255, 255, 255) : Color(255, 255, 255, 32));
+            g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, xPos - 90, yPos, i);
+            g->SetColorizeImages(false);
     }
-
+    g->SetScale(1.0f, 1.0f, 0, 0);
 
 }
 void AchievementScreen::AddedToManager(WidgetManager* theWidgetManager)
@@ -72,7 +90,11 @@ void AchievementScreen::ButtonPress(int theId)
 
 void AchievementScreen::Update()
 {
-	mApp->UpdateDiscordRPC("In The Achievement Screen");
+    mMaxScrollPosition = 600;
+    float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
+    mScrollPosition = ClampFloat(mScrollPosition -= mScrollAmount * aScrollSpeed, -mMaxScrollPosition, 0);
+    mScrollAmount *= (1.0f - mScrollAccel);
+
 }
 
 //0x42F740
@@ -80,11 +102,29 @@ void AchievementScreen::ButtonDepress(int theId)
 {
     if (theId == 0)
     {
+        mScrollPosition = 0;
         mApp->mGameSelector->mAchievementTimer = 75;
         mApp->mGameSelector->mDestinationY = 0;
         mApp->mGameSelector->mSelectorState = SELECTOR_IDLE;
-        mApp->mWidgetManager->BringToFront(mApp->mGameSelector);
-        //mApp->KillAchievementScreen();
-        //mApp->DoBackToMain();
+        mApp->mWidgetManager->SetFocus(mApp->mGameSelector);
+
+        mApp->mGameSelector->mAdventureButton->SetDisabled(false);
+        mApp->mGameSelector->mMinigameButton->SetDisabled(false);
+        mApp->mGameSelector->mPuzzleButton->SetDisabled(false);
+        mApp->mGameSelector->mOptionsButton->SetDisabled(false);
+        mApp->mGameSelector->mQuitButton->SetDisabled(false);
+        mApp->mGameSelector->mHelpButton->SetDisabled(false);
+        mApp->mGameSelector->mChangeUserButton->SetDisabled(false);
+        mApp->mGameSelector->mStoreButton->SetDisabled(false);
+        mApp->mGameSelector->mAlmanacButton->SetDisabled(false);
+        mApp->mGameSelector->mSurvivalButton->SetDisabled(false);
+        mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
+        mApp->mGameSelector->mAchievementButton->SetDisabled(false);
     }
+}
+
+void AchievementScreen::MouseWheel(int theDelta)
+{
+    mScrollAmount -= mBaseScrollSpeed * theDelta;
+    mScrollAmount -= mScrollAmount * mScrollAccel;
 }

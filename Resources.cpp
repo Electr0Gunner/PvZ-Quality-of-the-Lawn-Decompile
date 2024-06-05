@@ -38,6 +38,7 @@ bool Sexy::ExtractResourcesByName(ResourceManager *theManager, const char *theNa
 	if (strcmp(theName,"LoadingFonts")==0) return ExtractLoadingFontsResources(theManager);
 	if (strcmp(theName,"LoadingImages")==0) return ExtractLoadingImagesResources(theManager);
 	if (strcmp(theName,"LoadingSounds")==0) return ExtractLoadingSoundsResources(theManager);
+	if (strcmp(theName, "DelayLoad_Achievements") == 0) return ExtractDelayLoad_AchievementResources(theManager);
 	return false;
 }
 
@@ -328,6 +329,26 @@ bool Sexy::ExtractDelayLoad_ChallengeScreenResources(ResourceManager *theManager
 		IMAGE_SURVIVAL_THUMBNAILS = aMgr.GetImageThrow("IMAGE_SURVIVAL_THUMBNAILS");
 	}
 	catch(ResourceManagerException&)
+	{
+		return false;
+	}
+	return true;
+}
+
+Image* Sexy::IMAGE_ACHIEVEMENT_TILE;
+Image* Sexy::IMAGE_ACHIEVEMENT_SELECTOR_TILE;
+
+bool Sexy::ExtractDelayLoad_AchievementResources(ResourceManager* theManager)
+{
+	gNeedRecalcVariableToIdMap = true;
+
+	ResourceManager& aMgr = *theManager;
+	try
+	{
+		IMAGE_ACHIEVEMENT_TILE = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_TILE");
+		IMAGE_ACHIEVEMENT_SELECTOR_TILE = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_SELECTOR_TILE");
+	}
+	catch (ResourceManagerException&)
 	{
 		return false;
 	}
@@ -2473,6 +2494,8 @@ static void* gResources[] =
 	&IMAGE_ACHIEVEMENTS_PORTRAITS,
 	&IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON,
 	&IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT,
+	&IMAGE_ACHIEVEMENT_TILE,
+	&IMAGE_ACHIEVEMENT_SELECTOR_TILE,
 	NULL
 };
 
@@ -3194,6 +3217,8 @@ const char* Sexy::GetStringIdById(int theId)
 		case IMAGE_REANIM_CREDITS_FOGMACHINE_ID: return "IMAGE_REANIM_CREDITS_FOGMACHINE";
 		case IMAGE_CREDITS_ZOMBIENOTE_ID: return "IMAGE_CREDITS_ZOMBIENOTE";
 		case IMAGE_CREDITS_PLAYBUTTON_ID: return "IMAGE_CREDITS_PLAYBUTTON";
+		case IMAGE_ACHIEVEMENT_TILE_ID: return "IMAGE_ACHIEVEMENT_TILE";
+		case IMAGE_ACHIEVEMENT_SELECTOR_TILE_ID: return "IMAGE_ACHIEVEMENT_SELECTOR_TILE";
 		default: return "";
 	}
 }

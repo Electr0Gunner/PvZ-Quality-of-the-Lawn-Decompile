@@ -16,6 +16,11 @@ class AchievementScreen : public Widget, public Sexy::ButtonListener
 public:
     LawnApp* mApp;
     NewLawnButton* mBackButton; //temp
+    float						mScrollPosition;
+    float						mScrollAmount;
+    const float					mBaseScrollSpeed = 1.0f;
+    const float					mScrollAccel = 0.1f;
+    float						mMaxScrollPosition;
 
 public:
     AchievementScreen(LawnApp* theApp);
@@ -27,5 +32,6 @@ public:
     virtual void                RemovedFromManager(WidgetManager* theWidgetManager);
     virtual void                ButtonPress(int theId);
     virtual void                ButtonDepress(int theId);
+    virtual void				MouseWheel(int theDelta);
 };
 #endif

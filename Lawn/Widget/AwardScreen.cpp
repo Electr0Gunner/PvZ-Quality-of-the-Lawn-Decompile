@@ -28,6 +28,7 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
     mShowAchievements = hasAchievement;
     LoadAchievements();
     TodLoadResources("DelayLoad_AwardScreen");
+    TodLoadResources("DelayLoad_Achievements");
 
     int aLevel = mApp->mPlayerInfo->GetLevel();
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)

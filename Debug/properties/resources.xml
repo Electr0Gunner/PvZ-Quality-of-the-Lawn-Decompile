@@ -688,6 +688,12 @@
 <Image id="LOCK_OPEN" path="lock_open" />
 </Resources>  
 
+<Resources id="DelayLoad_Achievements">
+<SetDefaults path="images" idprefix="IMAGE_" />
+<Image id="ACHIEVEMENT_TILE" path="acheesements_hole_tile" />
+<Image id="ACHIEVEMENT_SELECTOR_TILE" path="selectorscreen_achievements_bg" />
+</Resources>  
+
 <Resources id="DelayLoad_Almanac">
 <SetDefaults path="images" idprefix="IMAGE_" />
 <Image id="ALMANAC_INDEXBACK" path="Almanac_IndexBack" a8r8g8b8="" />
