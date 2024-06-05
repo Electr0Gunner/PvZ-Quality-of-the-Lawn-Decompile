@@ -612,7 +612,7 @@ void LawnApp::ShowAchievementScreen()
 	mAchievementScreen = new AchievementScreen(this);
 	mAchievementScreen->Resize(0, 0, mWidth, mHeight);
 	mWidgetManager->AddWidget(mAchievementScreen);
-	//mWidgetManager->BringToBack(mAchievementScreen);
+	mWidgetManager->BringToFront(mAchievementScreen);
 	mWidgetManager->SetFocus(mAchievementScreen);
 }
 

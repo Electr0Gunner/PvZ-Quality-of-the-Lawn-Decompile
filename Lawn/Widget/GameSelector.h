@@ -20,7 +20,8 @@ enum SelectorAnimState
     SELECTOR_OPEN,
     SELECTOR_NEW_USER,
     SELECTOR_SHOW_SIGN,
-    SELECTOR_IDLE
+    SELECTOR_ACHIEVEMENTS,
+    SELECTOR_IDLE,
 };
 
 class GameSelector : public Widget, public ButtonListener
@@ -79,6 +80,8 @@ public:
     bool                        mUnlockSelectorCheat;       //+0x12D
     bool                        mDebugText;
     int                         mAchievementTimer;
+    int                         mCurrentY;
+    int                         mDestinationY;
 
 public:
     GameSelector(LawnApp* theApp);
@@ -105,6 +108,7 @@ public:
     /*inline*/ bool             ShouldDoZenTuturialBeforeAdventure();
     void                        AddPreviewProfiles();
     void                        KeyChar();
+    int                         CalcYPos(int ogY, int newY);
 };
 
 class GameSelectorOverlay : public Widget
