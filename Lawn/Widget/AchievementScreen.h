@@ -18,7 +18,7 @@ public:
     NewLawnButton* mBackButton; //temp
     float						mScrollPosition;
     float						mScrollAmount;
-    const float					mBaseScrollSpeed = 1.0f;
+    const float					mBaseScrollSpeed = 5.0f;
     const float					mScrollAccel = 0.1f;
     float						mMaxScrollPosition;
 

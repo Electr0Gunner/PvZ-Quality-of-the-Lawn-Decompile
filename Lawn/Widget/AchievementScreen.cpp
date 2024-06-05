@@ -22,13 +22,9 @@ AchievementScreen::AchievementScreen(LawnApp* theApp)
     mScrollAmount = 0;
     mScrollPosition = 0;
 
-    mBackButton = MakeNewButton(0, this, _S("[BACK_TO_MENU]"), nullptr, Sexy::IMAGE_SEEDCHOOSER_BUTTON2,
-        Sexy::IMAGE_SEEDCHOOSER_BUTTON2_GLOW, Sexy::IMAGE_SEEDCHOOSER_BUTTON2_GLOW);
-    mBackButton->mTextDownOffsetX = 1;
-    mBackButton->mTextDownOffsetY = 1;
-    mBackButton->mColors[ButtonWidget::COLOR_LABEL] = Color(42, 42, 90);
-    mBackButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(42, 42, 90);
-    mBackButton->Resize(18, 568, 111, 26);
+    mBackButton = MakeNewButton(0, this, "", nullptr, Sexy::IMAGE_BLANK,
+        Sexy::IMAGE_ACHIEVEMENT_BACK_GLOW, Sexy::IMAGE_ACHIEVEMENT_BACK_GLOW);
+    mBackButton->Resize(18, 568 + mScrollPosition, 111, 26);
 }
 AchievementScreen::~AchievementScreen()
 {
@@ -42,7 +38,12 @@ void AchievementScreen::Draw(Graphics* g)
     g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_SELECTOR_TILE, 0, 0 + mScrollPosition);
    for (int i = 1; i <= 70; i++)
     {
-        g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_TILE, 0, Sexy::IMAGE_ACHIEVEMENT_TILE->mHeight * i + mScrollPosition);
+       if (i == 70)
+       {
+           g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_TILE_CHINA, 0, Sexy::IMAGE_ACHIEVEMENT_TILE_CHINA->mHeight * i + mScrollPosition - 30);
+       }
+       else
+            g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_TILE, 0, Sexy::IMAGE_ACHIEVEMENT_TILE->mHeight * i + mScrollPosition);
     }
 
     g->SetScale(0.9f, 0.9f,0,0);
@@ -90,11 +91,11 @@ void AchievementScreen::ButtonPress(int theId)
 
 void AchievementScreen::Update()
 {
-    mMaxScrollPosition = 600;
+    mBackButton->Resize(128, 55 + mScrollPosition, 130, 80);
+    mMaxScrollPosition = 15342;//Sexy::IMAGE_ACHIEVEMENT_TILE->mHeight * 69 + Sexy::IMAGE_ACHIEVEMENT_TILE_CHINA->mHeight;
     float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
     mScrollPosition = ClampFloat(mScrollPosition -= mScrollAmount * aScrollSpeed, -mMaxScrollPosition, 0);
     mScrollAmount *= (1.0f - mScrollAccel);
-
 }
 
 //0x42F740

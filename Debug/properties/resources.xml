@@ -691,7 +691,9 @@
 <Resources id="DelayLoad_Achievements">
 <SetDefaults path="images" idprefix="IMAGE_" />
 <Image id="ACHIEVEMENT_TILE" path="acheesements_hole_tile" />
+<Image id="ACHIEVEMENT_BACK_GLOW" path="acheesements_back_highlight" a8r8g8b8="" />
 <Image id="ACHIEVEMENT_SELECTOR_TILE" path="selectorscreen_achievements_bg" />
+<Image id="ACHIEVEMENT_TILE_CHINA" path="acheesements_china" />
 </Resources>  
 
 <Resources id="DelayLoad_Almanac">

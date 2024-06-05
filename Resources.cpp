@@ -336,7 +336,9 @@ bool Sexy::ExtractDelayLoad_ChallengeScreenResources(ResourceManager *theManager
 }
 
 Image* Sexy::IMAGE_ACHIEVEMENT_TILE;
+Image* Sexy::IMAGE_ACHIEVEMENT_TILE_CHINA;
 Image* Sexy::IMAGE_ACHIEVEMENT_SELECTOR_TILE;
+Image* Sexy::IMAGE_ACHIEVEMENT_BACK_GLOW;
 
 bool Sexy::ExtractDelayLoad_AchievementResources(ResourceManager* theManager)
 {
@@ -347,6 +349,8 @@ bool Sexy::ExtractDelayLoad_AchievementResources(ResourceManager* theManager)
 	{
 		IMAGE_ACHIEVEMENT_TILE = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_TILE");
 		IMAGE_ACHIEVEMENT_SELECTOR_TILE = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_SELECTOR_TILE");
+		IMAGE_ACHIEVEMENT_BACK_GLOW = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_BACK_GLOW");
+		IMAGE_ACHIEVEMENT_TILE_CHINA = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_TILE_CHINA");
 	}
 	catch (ResourceManagerException&)
 	{
@@ -2496,6 +2500,8 @@ static void* gResources[] =
 	&IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT,
 	&IMAGE_ACHIEVEMENT_TILE,
 	&IMAGE_ACHIEVEMENT_SELECTOR_TILE,
+	&IMAGE_ACHIEVEMENT_BACK_GLOW,
+	&IMAGE_ACHIEVEMENT_TILE_CHINA,
 	NULL
 };
 
@@ -3219,6 +3225,8 @@ const char* Sexy::GetStringIdById(int theId)
 		case IMAGE_CREDITS_PLAYBUTTON_ID: return "IMAGE_CREDITS_PLAYBUTTON";
 		case IMAGE_ACHIEVEMENT_TILE_ID: return "IMAGE_ACHIEVEMENT_TILE";
 		case IMAGE_ACHIEVEMENT_SELECTOR_TILE_ID: return "IMAGE_ACHIEVEMENT_SELECTOR_TILE";
+		case IMAGE_ACHIEVEMENT_BACK_GLOW_ID: return "IMAGE_ACHIEVEMENT_BACK_GLOW";
+		case IMAGE_ACHIEVEMENT_TILE_CHINA_ID: return "IMAGE_ACHIEVEMENT_CHINA";
 		default: return "";
 	}
 }
