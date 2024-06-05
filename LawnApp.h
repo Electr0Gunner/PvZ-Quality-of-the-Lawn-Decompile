@@ -29,6 +29,7 @@ class StoreScreen;
 class AlmanacDialog;
 class TypingCheck;
 class MiniCreditsScreen;
+class AchievementScreen;
 
 namespace Sexy
 {
@@ -64,7 +65,8 @@ public:
 	AwardScreen*					mAwardScreen;									//+0x778
 	CreditScreen*					mCreditScreen;									//+0x77C
 	ChallengeScreen*				mChallengeScreen;								//+0x780
-	MiniCreditsScreen*				mMiniCreditsScreen;								
+	MiniCreditsScreen*				mMiniCreditsScreen;	
+	AchievementScreen*				mAchievementScreen;
 	TodFoley*						mSoundSystem;									//+0x784
 	ButtonList						mControlButtonList;								//+0x788
 	ImageList						mCreatedImageList;								//+0x794
@@ -288,6 +290,8 @@ public:
 	void							KillCreditScreen();
 	void							ShowMiniCreditScreen();
 	void							KillMiniCreditScreen();
+	void							ShowAchievementScreen();
+	void							KillAchievementScreen();
 	static SexyString				Pluralize(int theCount, const SexyChar* theSingular, const SexyChar* thePlural);
 	int								GetNumTrophies(ChallengePage thePage);
 	/*inline*/ bool					EarnedGoldTrophy();

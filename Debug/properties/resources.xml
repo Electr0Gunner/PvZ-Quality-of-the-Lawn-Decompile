@@ -132,6 +132,8 @@
 <Image id="SELECTORSCREEN_STOREHIGHLIGHT" path="SelectorScreen_StoreHighlight"  />
 <Image id="SELECTORSCREEN_LEVELNUMBERS" path="SelectorScreen_LevelNumbers" cols="10" />
 <Image id="SELECTORSCREEN_ZENGARDEN" path="SelectorScreen_ZenGarden"  />
+<Image id="ACHIEVEMENT_BUTTON" path="Achievements_pedestal"  />
+<Image id="ACHIEVEMENT_HIGHLIGHT" path="Achievements_pedestal_press"  />
 <Image id="SELECTORSCREEN_ZENGARDENHIGHLIGHT" path="SelectorScreen_ZenGardenHighlight"  />
 <Image id="STORE_SPEECHBUBBLE" path="Store_SpeechBubble" />
 <Image id="STORE_SPEECHBUBBLE2" path="Store_SpeechBubble2" />

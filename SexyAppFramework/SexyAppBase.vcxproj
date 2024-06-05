@@ -125,6 +125,7 @@
     <ClCompile Include="..\Lawn\System\ReanimationLawn.cpp" />
     <ClCompile Include="..\Lawn\System\SaveGame.cpp" />
     <ClCompile Include="..\Lawn\System\TypingCheck.cpp" />
+    <ClCompile Include="..\Lawn\Widget\AchievementScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\AlmanacDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\AwardScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\ChallengeScreen.cpp" />
@@ -690,6 +691,7 @@
     <ClInclude Include="..\Lawn\System\ReanimationLawn.h" />
     <ClInclude Include="..\Lawn\System\SaveGame.h" />
     <ClInclude Include="..\Lawn\System\TypingCheck.h" />
+    <ClInclude Include="..\Lawn\Widget\AchievementScreen.h" />
     <ClInclude Include="..\Lawn\Widget\AlmanacDialog.h" />
     <ClInclude Include="..\Lawn\Widget\AwardScreen.h" />
     <ClInclude Include="..\Lawn\Widget\ChallengeScreen.h" />

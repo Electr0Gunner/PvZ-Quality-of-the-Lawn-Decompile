@@ -7,6 +7,7 @@
 
 class LawnApp;
 class ToolTipWidget;
+class AchievementScreen;
 namespace Sexy
 {
     class DialogButton;
@@ -37,7 +38,8 @@ private:
         GameSelector_Store = 107,
         GameSelector_Almanac = 108,
         GameSelector_ZenGarden = 109,
-        GameSelector_Survival = 110
+        GameSelector_Survival = 110,
+        GameSelector_Achievement = 111
     };
 
 public:
@@ -51,6 +53,7 @@ public:
     NewLawnButton*              mStoreButton;               //+0xA8
     NewLawnButton*              mAlmanacButton;             //+0xAC
     NewLawnButton*              mZenGardenButton;           //+0xB0
+    NewLawnButton*              mAchievementButton;                
     NewLawnButton*              mSurvivalButton;            //+0xB4
     NewLawnButton*              mChangeUserButton;          //+0xB8
     Widget*                     mOverlayWidget;             //+0xBC
@@ -75,6 +78,7 @@ public:
     bool                        mHasTrophy;                 //+0x12C
     bool                        mUnlockSelectorCheat;       //+0x12D
     bool                        mDebugText;
+    int                         mAchievementTimer;
 
 public:
     GameSelector(LawnApp* theApp);

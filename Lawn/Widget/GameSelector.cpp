@@ -49,6 +49,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mHasTrophy = false;
 	mToolTip = new ToolTipWidget();
 	mDebugText = false;
+	mAchievementTimer = 0;
 
 	mAdventureButton = MakeNewButton(
 		GameSelector::GameSelector_Adventure, 
@@ -222,6 +223,19 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mAlmanacButton->Resize(327, 428, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mWidth, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mHeight);
 	mAlmanacButton->mMouseVisible = false;
 
+	mAchievementButton = MakeNewButton(
+		GameSelector::GameSelector_Achievement,
+		this,
+		"",
+		nullptr,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT
+	);
+	mAchievementButton->Resize(20, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight - 35, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mWidth, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight);
+	mAchievementButton->mClip = false;
+	mAchievementButton->mMouseVisible = false;
+
 	mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 
 	mStartingGame = false;
@@ -304,6 +318,8 @@ GameSelector::~GameSelector()
 		delete mStoreButton;
 	if (mAlmanacButton)
 		delete mAlmanacButton;
+	if (mAchievementButton)
+		delete mAchievementButton;
 	if (mZenGardenButton)
 		delete mZenGardenButton;
 	if (mSurvivalButton)
@@ -722,6 +738,33 @@ void GameSelector::Update()
 	mApp->mZenGarden->UpdatePlantNeeds();
 	mApp->UpdateDiscordRPC("In The Main Menu");
 
+	if (mAchievementTimer > 0)
+	{
+		int aPosY = TodAnimateCurve(75, 0, mAchievementTimer, 0, -mApp->mHeight, TodCurves::CURVE_EASE_IN_OUT);
+		mY = aPosY;
+
+		mOverlayWidget->mY = aPosY;
+		mAdventureButton->mY = aPosY;
+		mMinigameButton->mY = aPosY;
+		mPuzzleButton->mY = aPosY;
+		mOptionsButton->mY = aPosY;
+		mQuitButton->mY = aPosY;
+		mHelpButton->mY = aPosY;
+		mStoreButton->mY = aPosY;
+		mAlmanacButton->mY = aPosY;
+		mZenGardenButton->mY = aPosY;
+		mSurvivalButton->mY = aPosY;
+		mChangeUserButton->mY = aPosY;
+		mAchievementButton->mY = aPosY;
+
+		mAchievementButton->MarkDirty();
+		mOptionsButton->MarkDirty();
+		mHelpButton->MarkDirty();
+		mQuitButton->MarkDirty();
+		mStoreButton->MarkDirty();
+		mAchievementTimer--;
+	}
+
 	TodParticleSystem* aParticle = mApp->ParticleTryToGet(mTrophyParticleID);
 	if (aParticle)
 		aParticle->Update();
@@ -798,7 +841,8 @@ void GameSelector::Update()
 			mStoreButton->mMouseVisible = true;
 			mAlmanacButton->mMouseVisible = true;
 			mChangeUserButton->mMouseVisible = true;
-			
+			mAchievementButton->mMouseVisible = true;
+
 			if (mApp->mPlayerInfo == nullptr)
 			{
 				mApp->DoCreateUserDialog();
@@ -891,6 +935,7 @@ void GameSelector::Update()
 	TrackButton(mAlmanacButton, "SelectorScreen_BG_Right", 256.0f, 387.0f);
 	TrackButton(mStoreButton, "SelectorScreen_BG_Right", 334.0f, 441.0f);
 	TrackButton(mChangeUserButton, "woodsign2", 24.0f, 10.0f);
+	TrackButton(mAchievementButton, "SelectorScreen_BG_Left", 20.f, 480.f);
 	aSelectorReanim->SetImageOverride("woodsign2", (mChangeUserButton->mIsOver || mChangeUserButton->mIsDown) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN2_PRESS : nullptr);
 }
 
@@ -923,6 +968,7 @@ void GameSelector::AddedToManager(WidgetManager* theWidgetManager)
 	theWidgetManager->AddWidget(mZenGardenButton);
 	theWidgetManager->AddWidget(mChangeUserButton);
 	theWidgetManager->AddWidget(mOverlayWidget);
+	theWidgetManager->AddWidget(mAchievementButton);
 }
 
 //0x44BCA0
@@ -942,6 +988,7 @@ void GameSelector::RemovedFromManager(WidgetManager* theWidgetManager)
 	theWidgetManager->RemoveWidget(mZenGardenButton);
 	theWidgetManager->RemoveWidget(mChangeUserButton);
 	theWidgetManager->RemoveWidget(mOverlayWidget);
+	theWidgetManager->RemoveWidget(mAchievementButton);
 }
 
 //0x44BD80
@@ -959,6 +1006,7 @@ void GameSelector::OrderInManagerChanged()
 	mWidgetManager->PutInfront(mZenGardenButton, this);
 	mWidgetManager->PutInfront(mSurvivalButton, this);
 	mWidgetManager->PutInfront(mChangeUserButton, this);
+	mWidgetManager->PutInfront(mAchievementButton, this);
 }
 
 //0x44BE60
@@ -1152,6 +1200,7 @@ void GameSelector::ClickedAdventure()
 	mAlmanacButton->SetDisabled(true);
 	mSurvivalButton->SetDisabled(true);
 	mZenGardenButton->SetDisabled(true);
+	mAchievementButton->SetDisabled(true);
 
 	Reanimation* aHandReanim = mApp->AddReanimation(-70.0f, 10.0f, 0, ReanimationType::REANIM_ZOMBIE_HAND);
 	aHandReanim->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
@@ -1234,6 +1283,10 @@ void GameSelector::ButtonDepress(int theId)
 	case GameSelector::GameSelector_Almanac:
 		mApp->DoAlmanacDialog()->WaitForResult(true);
 		mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
+		break;
+	case GameSelector::GameSelector_Achievement:
+		mAchievementTimer = 75;
+		//mApp->ShowAchievementScreen();
 		break;
 	case GameSelector::GameSelector_ZenGarden:
 		mApp->KillGameSelector();

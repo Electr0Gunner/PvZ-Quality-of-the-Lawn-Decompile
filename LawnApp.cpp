@@ -35,6 +35,7 @@
 #include "Lawn/Widget/AlmanacDialog.h"
 #include "Lawn/Widget/NewUserDialog.h"
 #include "Lawn/Widget/MiniCreditsScreen.h"
+#include "Lawn/Widget/AchievementScreen.h"
 #include "Lawn/Widget/ContinueDialog.h"
 #include "Lawn/System/ReanimationLawn.h"
 #include "Lawn/Widget/ChallengeScreen.h"
@@ -86,6 +87,7 @@ LawnApp::LawnApp()
 	mCreditScreen = nullptr;
 	mTitleScreen = nullptr;
 	mMiniCreditsScreen = nullptr;
+	mAchievementScreen = nullptr;
 	mSoundSystem = nullptr;
 	mKonamiCheck = nullptr;
 	mMustacheCheck = nullptr;
@@ -260,6 +262,11 @@ LawnApp::~LawnApp()
 	{
 		mWidgetManager->RemoveWidget(mCreditScreen);
 		delete mCreditScreen;
+	}
+	if (mAchievementScreen)
+	{
+		mWidgetManager->RemoveWidget(mAchievementScreen);
+		delete mAchievementScreen;
 	}
 
 	delete mProfileMgr;
@@ -589,7 +596,6 @@ void LawnApp::ShowMiniCreditScreen()
 	mWidgetManager->SetFocus(mMiniCreditsScreen);
 }
 
-//0x44FBF0
 void LawnApp::KillMiniCreditScreen()
 {
 	if (mMiniCreditsScreen)
@@ -597,6 +603,26 @@ void LawnApp::KillMiniCreditScreen()
 		mWidgetManager->RemoveWidget(mMiniCreditsScreen);
 		SafeDeleteWidget(mMiniCreditsScreen);
 		mMiniCreditsScreen = nullptr;
+	}
+}
+
+void LawnApp::ShowAchievementScreen()
+{
+	mGameScene = GameScenes::SCENE_MENU;
+	mAchievementScreen = new AchievementScreen(this);
+	mAchievementScreen->Resize(0, 0, mWidth, mHeight);
+	mWidgetManager->AddWidget(mAchievementScreen);
+	//mWidgetManager->BringToBack(mAchievementScreen);
+	mWidgetManager->SetFocus(mAchievementScreen);
+}
+
+void LawnApp::KillAchievementScreen()
+{
+	if (mAchievementScreen)
+	{
+		mWidgetManager->RemoveWidget(mAchievementScreen);
+		SafeDeleteWidget(mAchievementScreen);
+		mAchievementScreen = nullptr;
 	}
 }
 
