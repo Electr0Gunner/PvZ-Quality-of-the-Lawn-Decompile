@@ -52,6 +52,7 @@ void AchievementScreen::Draw(Graphics* g)
        else
             g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_TILE, 0, Sexy::IMAGE_ACHIEVEMENT_TILE->mHeight * i + mScrollPosition);
     }
+   g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_ROCK, mRockButton->mX, mRockButton->mY);
 
     g->SetScale(0.9f, 0.9f,0,0);
     for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++)
@@ -109,18 +110,7 @@ void AchievementScreen::Update()
             direction = 0;
         DoButtonMovement(mScrollPosition, direction);
     }
-    if (!mGoesDown)
-    {
-        mRockButton->mButtonImage = IMAGE_ACHIEVEMENT_TOP;
-        mRockButton->mDownImage = IMAGE_ACHIEVEMENT_TOP_HIGHLIGHT;
-        mRockButton->mOverImage = IMAGE_ACHIEVEMENT_TOP_HIGHLIGHT;
-    }
-    else
-    {
-        mRockButton->mButtonImage = IMAGE_ACHIEVEMENT_MORE;
-        mRockButton->mDownImage = IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT;
-        mRockButton->mOverImage = IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT;
-    }
+
 
     mBackButton->Resize(128, 55 + mScrollPosition, 130, 80);
     mRockButton->Resize(710, 470 + mScrollPosition, IMAGE_ACHIEVEMENT_MORE->mWidth, IMAGE_ACHIEVEMENT_MORE->mHeight);
@@ -156,8 +146,20 @@ void AchievementScreen::ButtonDepress(int theId)
     }
     if (theId == 1)
     {
-        mTweenTimer = 130;
+        mTweenTimer = 110;
         mGoesDown = !mGoesDown;
+        if (mGoesDown)
+        {
+            mRockButton->mButtonImage = IMAGE_ACHIEVEMENT_TOP;
+            mRockButton->mDownImage = IMAGE_ACHIEVEMENT_TOP_HIGHLIGHT;
+            mRockButton->mOverImage = IMAGE_ACHIEVEMENT_TOP_HIGHLIGHT;
+        }
+        else
+        {
+            mRockButton->mButtonImage = IMAGE_ACHIEVEMENT_MORE;
+            mRockButton->mDownImage = IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT;
+            mRockButton->mOverImage = IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT;
+        }
     }
 }
 

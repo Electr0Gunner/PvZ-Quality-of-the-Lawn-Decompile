@@ -608,6 +608,8 @@ void LawnApp::KillMiniCreditScreen()
 
 void LawnApp::ShowAchievementScreen()
 {
+	if (mAchievementScreen)
+		KillAchievementScreen();
 	mGameScene = GameScenes::SCENE_MENU;
 	mAchievementScreen = new AchievementScreen(this);
 	mAchievementScreen->Resize(0, 0, mWidth, mHeight);
