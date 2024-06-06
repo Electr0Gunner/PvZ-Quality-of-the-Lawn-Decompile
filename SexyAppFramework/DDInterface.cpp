@@ -217,7 +217,7 @@ bool DDInterface::Do3DTest(HWND theHWND)
 			mD3DTester->SetVidMemoryConstraints(mApp->mMinVidMemory3D, mApp->mRecommendedVidMemory3D);
 			mD3DTester->TestD3D(theHWND, mDD7);
 
-			if (mApp->mAutoEnable3D && mD3DTester->Is3DRecommended())
+			if (mApp->mAutoEnable3D /* && mD3DTester->Is3DRecommended()*/) //force 3d
 				mIs3D = true;
 
 			if (!mD3DTester->Is3DSupported())

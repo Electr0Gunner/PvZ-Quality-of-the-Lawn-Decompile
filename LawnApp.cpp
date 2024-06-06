@@ -1189,8 +1189,8 @@ bool LawnApp::KillNewOptionsDialog()
 		return false;
 
 	bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
-	bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
-	SwitchScreenMode(wantWindowed, want3D, false);
+	//bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
+	SwitchScreenMode(wantWindowed, true, false);
 	ToggleDebugMode();
 
 	KillDialog(Dialogs::DIALOG_NEWOPTIONS);
@@ -3594,7 +3594,7 @@ void LawnApp::PlaySample(int theSoundNum)
 //0x4560E0
 void LawnApp::SwitchScreenMode(bool wantWindowed, bool is3d, bool force)
 {
-	SexyAppBase::SwitchScreenMode(wantWindowed, is3d, force);
+	SexyAppBase::SwitchScreenMode(wantWindowed, true, force);
 
 	NewOptionsDialog* aNewOptionsDialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS);
 	if (aNewOptionsDialog)
