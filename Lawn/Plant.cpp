@@ -2491,6 +2491,7 @@ void Plant::UpdateBowling()
             {
                 mApp->PlayFoley(FoleyType::FOLEY_SPAWN_SUN);
                 mBoard->AddCoin(aPosX, aPosY, CoinType::COIN_GOLD, CoinMotion::COIN_MOTION_COIN);
+                mApp->GetAchievement(ROLL_SOME_HEADS);
             }
         }
 
@@ -4354,8 +4355,7 @@ void Plant::DoSpecial()
         mApp->PlayFoley(FoleyType::FOLEY_JUICY);
 
         mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1, true, aDamageRangeFlags);
-        int aZombiesAround = mBoard->GetAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1);
-        if (aZombiesAround >= 10)
+        if (mBoard->GetAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1, aDamageRangeFlags) >= 10)
         {
             mApp->GetAchievement(EXPLODONATOR);
         }

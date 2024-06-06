@@ -80,6 +80,7 @@ public:
     void                    PlayImpactSound(Zombie* theZombie);
     bool                    IsZombieHitBySplash(Zombie* theZombie);
     bool                    PeaAboutToHitTorchwood();
+    bool                    GetGargantuars(int theRow, int theX, int theY, int theRadius, int theRowRange);
 
 };
 

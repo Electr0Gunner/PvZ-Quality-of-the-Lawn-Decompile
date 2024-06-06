@@ -1512,6 +1512,19 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 		{
 			mPlayerInfo->mNeedsMagicTacoReward = 1;
 		}
+
+		if (mBoard->mBackground == BACKGROUND_3_POOL && !mBoard->mPeashootersUsed) {
+			GetAchievement(DONT_PEA_IN_THE_POOL);
+		}
+		if (mBoard->StageHasRoof() && !mBoard->HasConveyorBeltSeedBank() && !mBoard->mCatapultsUsed) {
+			GetAchievement(GROUNDED);
+		}
+		if (mBoard->StageIsNight() && !mBoard->mMushroomsUsed) {
+			GetAchievement(NO_FUNGUS_AMONG_US);
+		}
+		if (mBoard->mBackground == BACKGROUND_1_DAY && mBoard->mMushroomsNCoffeeUsed) {
+			GetAchievement(GOOD_MORNING);
+		}
 	}
 	else if (IsSurvivalMode())
 	{

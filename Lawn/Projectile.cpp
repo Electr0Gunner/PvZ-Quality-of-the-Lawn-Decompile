@@ -604,6 +604,11 @@ void Projectile::UpdateLobMotion()
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_COBBIG)
 	{
+		if (GetGargantuars(mRow, mPosX + 80, mPosY + 40, 115, 1)){
+			mBoard->mGargantuarsKilled++;
+			if (mBoard->mGargantuarsKilled >= 2)
+				mApp->GetAchievement(POPCORN_PARTY);
+		}
 		mBoard->KillAllZombiesInRadius(mRow, mPosX + 80, mPosY + 40, 115, 1, true, mDamageRangeFlags);
 		DoImpact(nullptr);
 	}
@@ -1231,4 +1236,21 @@ ProjectileDefinition& Projectile::GetProjectileDef()
 	TOD_ASSERT(aProjectileDef.mProjectileType == mProjectileType);
 
 	return aProjectileDef;
+}
+
+bool Projectile::GetGargantuars(int theRow, int theX, int theY, int theRadius, int theRowRange)
+{
+	Zombie* aZombie = nullptr;
+	while (mBoard->IterateZombies(aZombie))
+	{
+		if (!aZombie->IsDeadOrDying() && !aZombie->mMindControlled && (aZombie->mZombieType == ZombieType::ZOMBIE_GARGANTUAR || aZombie->mZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR))
+		{
+			Rect aZombieRect = aZombie->GetZombieRect();
+			int aRowDist = aZombie->mRow - theRow;
+
+			if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
+				return true;
+		}
+	}
+	return false;
 }

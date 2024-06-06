@@ -694,6 +694,11 @@
 <Image id="ACHIEVEMENT_BACK_GLOW" path="acheesements_back_highlight" a8r8g8b8="" />
 <Image id="ACHIEVEMENT_SELECTOR_TILE" path="selectorscreen_achievements_bg" />
 <Image id="ACHIEVEMENT_TILE_CHINA" path="acheesements_china" />
+<Image id="ACHIEVEMENT_MORE" path="acheesements_more_button" />
+<Image id="ACHIEVEMENT_MORE_HIGHLIGHT" path="acheesements_more_button_highlight" a8r8g8b8="" />
+<Image id="ACHIEVEMENT_TOP" path="acheesements_top_button" />
+<Image id="ACHIEVEMENT_TOP_HIGHLIGHT" path="acheesements_top_button_highlight" />
+<Image id="ACHIEVEMENT_ROCK" path="acheesements_more_rock" />
 </Resources>  
 
 <Resources id="DelayLoad_Almanac">

@@ -21,14 +21,21 @@ AchievementScreen::AchievementScreen(LawnApp* theApp)
     TodLoadResources("DelayLoad_AwardScreen");
     mScrollAmount = 0;
     mScrollPosition = 0;
+    mTweenTimer = 0;
+    mGoesDown = false;
 
     mBackButton = MakeNewButton(0, this, "", nullptr, Sexy::IMAGE_BLANK,
         Sexy::IMAGE_ACHIEVEMENT_BACK_GLOW, Sexy::IMAGE_ACHIEVEMENT_BACK_GLOW);
     mBackButton->Resize(18, 568 + mScrollPosition, 111, 26);
+
+    mRockButton = MakeNewButton(1, this, "", nullptr, Sexy::IMAGE_ACHIEVEMENT_MORE,
+        Sexy::IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT, Sexy::IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT);
+    mRockButton->Resize(710, 470 + mScrollPosition, IMAGE_ACHIEVEMENT_MORE->mWidth, IMAGE_ACHIEVEMENT_MORE->mHeight);
 }
 AchievementScreen::~AchievementScreen()
 {
     delete mBackButton;
+    delete mRockButton;
 }
 
 void AchievementScreen::Draw(Graphics* g)
@@ -74,6 +81,7 @@ void AchievementScreen::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
     AddWidget(mBackButton);
+    AddWidget(mRockButton);
 }
 
 //0x42F6B0
@@ -81,6 +89,7 @@ void AchievementScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	Widget::RemovedFromManager(theWidgetManager);
     RemoveWidget(mBackButton);
+    RemoveWidget(mRockButton);
 }
 
 //0x42F720
@@ -91,7 +100,30 @@ void AchievementScreen::ButtonPress(int theId)
 
 void AchievementScreen::Update()
 {
+    if (mTweenTimer > 0)
+    {
+        int direction;
+        if (mGoesDown)
+            direction = -234;
+        else
+            direction = 0;
+        DoButtonMovement(mScrollPosition, direction);
+    }
+    if (!mGoesDown)
+    {
+        mRockButton->mButtonImage = IMAGE_ACHIEVEMENT_TOP;
+        mRockButton->mDownImage = IMAGE_ACHIEVEMENT_TOP_HIGHLIGHT;
+        mRockButton->mOverImage = IMAGE_ACHIEVEMENT_TOP_HIGHLIGHT;
+    }
+    else
+    {
+        mRockButton->mButtonImage = IMAGE_ACHIEVEMENT_MORE;
+        mRockButton->mDownImage = IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT;
+        mRockButton->mOverImage = IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT;
+    }
+
     mBackButton->Resize(128, 55 + mScrollPosition, 130, 80);
+    mRockButton->Resize(710, 470 + mScrollPosition, IMAGE_ACHIEVEMENT_MORE->mWidth, IMAGE_ACHIEVEMENT_MORE->mHeight);
     mMaxScrollPosition = 15342;//Sexy::IMAGE_ACHIEVEMENT_TILE->mHeight * 69 + Sexy::IMAGE_ACHIEVEMENT_TILE_CHINA->mHeight;
     float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
     mScrollPosition = ClampFloat(mScrollPosition -= mScrollAmount * aScrollSpeed, -mMaxScrollPosition, 0);
@@ -122,6 +154,17 @@ void AchievementScreen::ButtonDepress(int theId)
         mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
         mApp->mGameSelector->mAchievementButton->SetDisabled(false);
     }
+    if (theId == 1)
+    {
+        mTweenTimer = 130;
+        mGoesDown = !mGoesDown;
+    }
+}
+
+void AchievementScreen::DoButtonMovement(int StartX, int FinalX)
+{
+    mScrollPosition = TodAnimateCurve(200, 0, mTweenTimer, StartX, FinalX, TodCurves::CURVE_EASE_IN_OUT);
+    mTweenTimer--;
 }
 
 void AchievementScreen::MouseWheel(int theDelta)

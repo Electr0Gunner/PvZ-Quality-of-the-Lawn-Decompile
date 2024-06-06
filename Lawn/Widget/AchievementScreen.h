@@ -15,17 +15,21 @@ class AchievementScreen : public Widget, public Sexy::ButtonListener
 {
 public:
     LawnApp* mApp;
-    NewLawnButton* mBackButton; //temp
+    NewLawnButton* mBackButton;
+    NewLawnButton* mRockButton;
     float						mScrollPosition;
     float						mScrollAmount;
     const float					mBaseScrollSpeed = 5.0f;
     const float					mScrollAccel = 0.1f;
     float						mMaxScrollPosition;
+    int						    mTweenTimer;
+    bool						mGoesDown;
 
 public:
     AchievementScreen(LawnApp* theApp);
     virtual ~AchievementScreen();
     void                        DrawButton(Graphics* g);
+    void				        DoButtonMovement(int StartX, int FinalX);
     virtual void                Draw(Graphics* g);
     virtual void                Update();
     virtual void                AddedToManager(WidgetManager* theWidgetManager);

@@ -169,6 +169,13 @@ Board::Board(LawnApp* theApp)
 	mFastButton->mDownImage = IMAGE_FASTBUTTON_HIGHLIGHT;
 	mStoreButton = nullptr;
 	mIgnoreMouseUp = false;
+	mPeashootersUsed = false;
+	mMushroomsUsed = false;
+	mMushroomsNCoffeeUsed = true;
+	mCatapultsUsed = false;
+	mCoinFaded = false;
+	mAchievementCoinCount = 0;
+	mGargantuarsKilled = 0;
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
 	{
@@ -2160,6 +2167,32 @@ Plant* Board::AddPlant(int theGridX, int theGridY, SeedType theSeedType, SeedTyp
 		mMaxSunPlants = aSunPlantsCount;  //mMaxSunPlants = max(aSunPlantsCount, mMaxSunPlants);
 	}
 
+	if (theSeedType == SeedType::SEED_PEASHOOTER ||
+		theSeedType == SeedType::SEED_SNOWPEA ||
+		theSeedType == SeedType::SEED_REPEATER ||
+		theSeedType == SeedType::SEED_THREEPEATER ||
+		theSeedType == SeedType::SEED_SPLITPEA ||
+		theSeedType == SeedType::SEED_GATLINGPEA)
+	{
+		mPeashootersUsed = true;
+	}
+
+	if (theSeedType == SeedType::SEED_CABBAGEPULT ||
+		theSeedType == SeedType::SEED_KERNELPULT ||
+		theSeedType == SeedType::SEED_MELONPULT ||
+		theSeedType == SeedType::SEED_WINTERMELON)
+	{
+		mCatapultsUsed = true;
+	}
+
+	bool aIsFungi = Plant::IsNocturnal(theSeedType);
+	if (!Plant::IsFlying(theSeedType) && !aIsFungi) {
+		mMushroomsNCoffeeUsed = false;
+	}
+	if (aIsFungi) {
+		mMushroomsUsed = true;
+	}
+
 	return aPlant;
 }
 
@@ -2696,7 +2729,8 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 		TodTrace("Too many zombies!!");
 		return nullptr;
 	}
-
+	if (theZombieType == ZombieType::ZOMBIE_YETI)
+		mApp->GetAchievement(ZOMBOLOGIST);
 	bool aVariant = !Rand(5);
 	Zombie* aZombie = mZombies.DataArrayAlloc();
 	aZombie->ZombieInitialize(theRow, theZombieType, aVariant, nullptr, theFromWave);
@@ -5908,6 +5942,9 @@ void Board::Update()
 		const char* StateConst = State.c_str();
 		mApp->UpdateDiscordRPC(DetailsChar, StateConst);
 	}
+
+	if(SUN_COUNTDOWN >= 8000)
+		mApp->GetAchievement(SUNNY_DAYS);
 
 	mCutScene->Update();
 	UpdateMousePosition();
@@ -9917,22 +9954,25 @@ void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius
 	}
 }
 
-int Board::GetAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange)
+int Board::GetAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, int theDamageRangeFlags)
 {
 	Zombie* aZombie = nullptr;
 	int TotalZombies = 0;
 	while (IterateZombies(aZombie))
 	{
-		Rect aZombieRect = aZombie->GetZombieRect();
-		int aRowDist = aZombie->mRow - theRow;
-		if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
+		if (aZombie->EffectedByDamage(theDamageRangeFlags))
 		{
-			aRowDist = 0;
-		}
+			Rect aZombieRect = aZombie->GetZombieRect();
+			int aRowDist = aZombie->mRow - theRow;
+			if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
+			{
+				aRowDist = 0;
+			}
 
-		if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
-		{
-			TotalZombies++;
+			if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
+			{
+				TotalZombies++;
+			}
 		}
 	}
 
