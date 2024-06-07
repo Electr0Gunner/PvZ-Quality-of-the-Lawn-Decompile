@@ -489,8 +489,7 @@ enum GameScenes
     SCENE_ZOMBIES_WON = 4,
     SCENE_AWARD = 5,
     SCENE_CREDIT = 6,
-    SCENE_CHALLENGE = 7,
-    SCENE_ACHIEVEMENT = 8
+    SCENE_CHALLENGE = 7
 };
 enum GardenType
 {
