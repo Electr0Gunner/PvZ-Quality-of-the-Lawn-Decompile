@@ -169,6 +169,13 @@ Board::Board(LawnApp* theApp)
 	mFastButton->mDownImage = IMAGE_FASTBUTTON_HIGHLIGHT;
 	mStoreButton = nullptr;
 	mIgnoreMouseUp = false;
+	mPeashootersUsed = false;
+	mMushroomsUsed = false;
+	mMushroomsNCoffeeUsed = true;
+	mCatapultsUsed = false;
+	mCoinFaded = false;
+	mAchievementCoinCount = 0;
+	mGargantuarsKilled = 0;
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
 	{
@@ -1702,6 +1709,11 @@ void Board::StartLevel()
 	mApp->mLastLevelStats->Reset();
 	mChallenge->StartLevel();
 
+	if (mApp->IsSurvivalEndless(mApp->mGameMode) && GetSurvivalFlagsCompleted() >= 20)
+	{
+		mApp->GetAchievement(AchievementType::IMMORTAL);
+	}
+
 	if (mApp->IsSurvivalMode() && mChallenge->mSurvivalStage > 0)
 	{
 		mApp->EraseFile(GetSavedGameName(mApp->mGameMode, mApp->mPlayerInfo->mId));
@@ -2153,6 +2165,32 @@ Plant* Board::AddPlant(int theGridX, int theGridY, SeedType theSeedType, SeedTyp
 	if (aSunPlantsCount > mMaxSunPlants)
 	{
 		mMaxSunPlants = aSunPlantsCount;  //mMaxSunPlants = max(aSunPlantsCount, mMaxSunPlants);
+	}
+
+	if (theSeedType == SeedType::SEED_PEASHOOTER ||
+		theSeedType == SeedType::SEED_SNOWPEA ||
+		theSeedType == SeedType::SEED_REPEATER ||
+		theSeedType == SeedType::SEED_THREEPEATER ||
+		theSeedType == SeedType::SEED_SPLITPEA ||
+		theSeedType == SeedType::SEED_GATLINGPEA)
+	{
+		mPeashootersUsed = true;
+	}
+
+	if (theSeedType == SeedType::SEED_CABBAGEPULT ||
+		theSeedType == SeedType::SEED_KERNELPULT ||
+		theSeedType == SeedType::SEED_MELONPULT ||
+		theSeedType == SeedType::SEED_WINTERMELON)
+	{
+		mCatapultsUsed = true;
+	}
+
+	bool aIsFungi = Plant::IsNocturnal(theSeedType);
+	if (!Plant::IsFlying(theSeedType) && !aIsFungi) {
+		mMushroomsNCoffeeUsed = false;
+	}
+	if (aIsFungi) {
+		mMushroomsUsed = true;
 	}
 
 	return aPlant;
@@ -2691,7 +2729,8 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 		TodTrace("Too many zombies!!");
 		return nullptr;
 	}
-
+	if (theZombieType == ZombieType::ZOMBIE_YETI)
+		mApp->GetAchievement(ZOMBOLOGIST);
 	bool aVariant = !Rand(5);
 	Zombie* aZombie = mZombies.DataArrayAlloc();
 	aZombie->ZombieInitialize(theRow, theZombieType, aVariant, nullptr, theFromWave);
@@ -3331,7 +3370,7 @@ void Board::UpdateToolTip()
 
 		SexyString aZombieName = StrFormat(_S("[%s]"), GetZombieDefinition(aZombie->mZombieType).mZombieName);
 		mToolTip->SetTitle(aZombieName);
-		if (mApp->CanShowAlmanac() && aZombie->mZombieType != ZombieType::ZOMBIE_GARGANTUAR)
+		if (mApp->CanShowAlmanac() && aZombie->mZombieType != ZombieType::ZOMBIE_REDEYE_GARGANTUAR)
 		{
 			mToolTip->SetLabel(_S("[CLICK_TO_VIEW]"));
 		}
@@ -5904,6 +5943,9 @@ void Board::Update()
 		mApp->UpdateDiscordRPC(DetailsChar, StateConst);
 	}
 
+	if(SUN_COUNTDOWN >= 8000)
+		mApp->GetAchievement(SUNNY_DAYS);
+
 	mCutScene->Update();
 	UpdateMousePosition();
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
@@ -7756,6 +7798,11 @@ void Board::SetMustacheMode(bool theEnableMustache)
 	mMustacheMode = theEnableMustache;
 	mApp->mMustacheMode = theEnableMustache;
 
+	if (mMustacheMode)
+	{
+		mApp->GetAchievement(MUSTACHE_MODE);
+	}
+
 	Zombie* aZombie = nullptr;
 	while (IterateZombies(aZombie))
 	{
@@ -7963,6 +8010,89 @@ void Board::KeyChar(SexyChar theChar)
 		return;
 
 	TodTraceAndLog("Board cheat key '%c'", theChar);
+
+
+
+	if (theChar == _S('u'))
+	{
+		mApp->GetAchievement(HOME_LAWN_SECURITY);
+	}
+	if (theChar == _S('i'))
+	{
+		mApp->GetAchievement(BETTER_OFF_DEAD);
+	}
+	if (theChar == _S('o'))
+	{
+		mApp->GetAchievement(BETTER_OFF_DEAD);
+	}
+	if (theChar == _S('p'))
+	{
+		mApp->GetAchievement(CHINA_SHOP);
+	}/*
+	if (theChar == _S('a4'))
+	{
+		mApp->GetAchievement(SPUDOW);
+	}
+	if (theChar == _S('a5'))
+	{
+		mApp->GetAchievement(EXPLODONATOR);
+	}
+	if (theChar == _S('a6'))
+	{
+		mApp->GetAchievement(MORTICULTURALIST);
+	}
+	if (theChar == _S('a7'))
+	{
+		mApp->GetAchievement(DONT_PEA_IN_THE_POOL);
+	}
+	if (theChar == _S('a8'))
+	{
+		mApp->GetAchievement(ROLL_SOME_HEADS);
+	}
+	if (theChar == _S('a9'))
+	{
+		mApp->GetAchievement(GROUNDED);
+	}
+	if (theChar == _S('a10'))
+	{
+		mApp->GetAchievement(ZOMBOLOGIST);
+	}
+	if (theChar == _S('a11'))
+	{
+		mApp->GetAchievement(PENNY_PINCHER);
+	}
+	if (theChar == _S('a12'))
+	{
+		mApp->GetAchievement(SUNNY_DAYS);
+	}
+	if (theChar == _S('a13'))
+	{
+		mApp->GetAchievement(POPCORN_PARTY);
+	}
+	if (theChar == _S('a14'))
+	{
+		mApp->GetAchievement(GOOD_MORNING);
+	}
+	if (theChar == _S('a15'))
+	{
+		mApp->GetAchievement(NO_FUNGUS_AMONG_US);
+	}
+	if (theChar == _S('a16'))
+	{
+		mApp->GetAchievement(BEYOND_THE_GRAVE);
+	}
+	if (theChar == _S('a17'))
+	{
+		mApp->GetAchievement(IMMORTAL);
+	}
+	if (theChar == _S('a18'))
+	{
+		mApp->GetAchievement(TOWERING_WISDOM);
+	}
+	if (theChar == _S('a19'))
+	{
+		mApp->GetAchievement(MUSTACHE_MODE);
+	}*/
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
 	{
@@ -9822,6 +9952,31 @@ void Board::KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius
 			}
 		}
 	}
+}
+
+int Board::GetAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, int theDamageRangeFlags)
+{
+	Zombie* aZombie = nullptr;
+	int TotalZombies = 0;
+	while (IterateZombies(aZombie))
+	{
+		if (aZombie->EffectedByDamage(theDamageRangeFlags))
+		{
+			Rect aZombieRect = aZombie->GetZombieRect();
+			int aRowDist = aZombie->mRow - theRow;
+			if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
+			{
+				aRowDist = 0;
+			}
+
+			if (aRowDist <= theRowRange && aRowDist >= -theRowRange && GetCircleRectOverlap(theX, theY, theRadius, aZombieRect))
+			{
+				TotalZombies++;
+			}
+		}
+	}
+
+	return TotalZombies;
 }
 
 //0x41DA10

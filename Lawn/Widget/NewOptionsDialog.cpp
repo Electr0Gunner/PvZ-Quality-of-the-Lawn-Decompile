@@ -1,4 +1,4 @@
-#include "../Board.h"
+ï»¿#include "../Board.h"
 #include "GameButton.h"
 #include "../Cutscene.h"
 #include "AlmanacDialog.h"
@@ -108,7 +108,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     }
 }
 
-//0x45C760¡¢0x45C780
+//0x45C760Ë‡Ë˜0x45C780
 NewOptionsDialog::~NewOptionsDialog()
 {
     delete mMusicVolumeSlider;
@@ -274,10 +274,21 @@ void NewOptionsDialog::CheckboxChecked(int theId, bool checked)
             mFullscreenCheckbox->SetChecked(true, false);
         }
         break;
-
+        
     case NewOptionsDialog::NewOptionsDialog_HardwareAcceleration:
-        if (checked)
+        if (!checked)
         {
+            mApp->DoDialog(
+                Dialogs::DIALOG_INFO,
+                true,
+                _S("Warning"),
+                _S("Some visual bugs could occur with 3D Acceleration OFF.\n\n"
+                    "At the moment they are still being investigated.\n"),
+                _S("OK"),
+                Dialog::BUTTONS_FOOTER
+            );
+        }
+        else {
             if (!mApp->Is3DAccelerationRecommended())
             {
                 mApp->DoDialog(

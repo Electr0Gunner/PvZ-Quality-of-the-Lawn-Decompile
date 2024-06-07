@@ -109,6 +109,7 @@
     <ClCompile Include="..\DiscordRPC\dllmain.cpp" />
     <ClCompile Include="..\DiscordRPC\rpc_connection.cpp" />
     <ClCompile Include="..\DiscordRPC\serialization.cpp" />
+    <ClCompile Include="..\Lawn\Achievements.cpp" />
     <ClCompile Include="..\Lawn\Board.cpp" />
     <ClCompile Include="..\Lawn\Challenge.cpp" />
     <ClCompile Include="..\Lawn\Coin.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="..\Lawn\System\ReanimationLawn.cpp" />
     <ClCompile Include="..\Lawn\System\SaveGame.cpp" />
     <ClCompile Include="..\Lawn\System\TypingCheck.cpp" />
+    <ClCompile Include="..\Lawn\Widget\AchievementScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\AlmanacDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\AwardScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\ChallengeScreen.cpp" />
@@ -681,6 +683,7 @@
     <ClInclude Include="..\DiscordRPC\rapidjson\writer.h" />
     <ClInclude Include="..\DiscordRPC\rpc_connection.h" />
     <ClInclude Include="..\DiscordRPC\serialization.h" />
+    <ClInclude Include="..\Lawn\Achievements.h" />
     <ClInclude Include="..\Lawn\System\DataSync.h" />
     <ClInclude Include="..\Lawn\System\discord_register.h" />
     <ClInclude Include="..\Lawn\System\discord_rpc.h" />
@@ -688,6 +691,7 @@
     <ClInclude Include="..\Lawn\System\ReanimationLawn.h" />
     <ClInclude Include="..\Lawn\System\SaveGame.h" />
     <ClInclude Include="..\Lawn\System\TypingCheck.h" />
+    <ClInclude Include="..\Lawn\Widget\AchievementScreen.h" />
     <ClInclude Include="..\Lawn\Widget\AlmanacDialog.h" />
     <ClInclude Include="..\Lawn\Widget\AwardScreen.h" />
     <ClInclude Include="..\Lawn\Widget\ChallengeScreen.h" />

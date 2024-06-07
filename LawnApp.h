@@ -10,6 +10,7 @@ class ChallengeDefinition;
 class SeedChooserScreen;
 class AwardScreen;
 class CreditScreen;
+class Achievements;
 class TodFoley;
 class PoolEffect;
 class ZenGarden;
@@ -28,6 +29,7 @@ class StoreScreen;
 class AlmanacDialog;
 class TypingCheck;
 class MiniCreditsScreen;
+class AchievementScreen;
 
 namespace Sexy
 {
@@ -63,7 +65,8 @@ public:
 	AwardScreen*					mAwardScreen;									//+0x778
 	CreditScreen*					mCreditScreen;									//+0x77C
 	ChallengeScreen*				mChallengeScreen;								//+0x780
-	MiniCreditsScreen*				mMiniCreditsScreen;								
+	MiniCreditsScreen*				mMiniCreditsScreen;	
+	AchievementScreen*				mAchievementScreen;
 	TodFoley*						mSoundSystem;									//+0x784
 	ButtonList						mControlButtonList;								//+0x788
 	ImageList						mCreatedImageList;								//+0x794
@@ -125,6 +128,7 @@ public:
 	TrialType						mTrialType;										//+0x8C0
 	bool							mDebugTrialLocked;								//+0x8C4
 	bool							mMuteSoundsForCutscene;							//+0x8C5
+	Achievements*						mAchievement;
 	bool							isFastMode;
 	int								SpeedValue;
 	SexyString						mReconVersion;
@@ -174,7 +178,7 @@ public:
 	void							PreNewGame(GameMode theGameMode, bool theLookForSavedGame);
 	void							ShowGameSelector();
 	void							KillGameSelector();
-	void							ShowAwardScreen(AwardType theAwardType);
+	void							ShowAwardScreen(AwardType theAwardType, bool theShowAchievements);
 	void							KillAwardScreen();
 	void							ShowSeedChooserScreen();
 	void							KillSeedChooserScreen();
@@ -246,6 +250,7 @@ public:
 	void							KillStoreScreen();
 	bool							HasSeedType(SeedType theSeedType);
 	/*inline*/ bool					SeedTypeAvailable(SeedType theSeedType);
+	bool							HasAllUpgrades();
 	/*inline*/ void					EndLevel();
 	inline bool						IsIceDemo() { return false; }
 	/*inline*/ bool					IsShovelLevel();
@@ -285,6 +290,8 @@ public:
 	void							KillCreditScreen();
 	void							ShowMiniCreditScreen();
 	void							KillMiniCreditScreen();
+	void							ShowAchievementScreen();
+	void							KillAchievementScreen();
 	static SexyString				Pluralize(int theCount, const SexyChar* theSingular, const SexyChar* thePlural);
 	int								GetNumTrophies(ChallengePage thePage);
 	/*inline*/ bool					EarnedGoldTrophy();
@@ -324,6 +331,7 @@ public:
 	virtual void					SwitchScreenMode(bool wantWindowed, bool is3d, bool force = false);
 	virtual void					ToggleDebugMode();
 	static /*inline*/ void			CenterDialog(Dialog* theDialog, int theWidth, int theHeight);
+	void							GetAchievement(AchievementType theAchievementType);
 };
 
 SexyString							LawnGetCurrentLevelName();

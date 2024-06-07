@@ -1524,6 +1524,17 @@ Hey neighbor! Got some new items for sale!
 [CRAZY_DAVE_3400]
 {NO_CLICK}To use Wall-nut First Aid, simply plant a fresh new Wall-nut over the damaged one!
 
+[CRAZY_DAVE_4000]
+{NO_CLICK}{MOUTH_BIG_OH}You just bought the final plant!
+[CRAZY_DAVE_4001]
+{NO_CLICK}{SCREAM}You're an all-plant haver, by gum!
+[CRAZY_DAVE_4002]
+{NO_CLICK}Why isn't there a word for that kind of achievement?
+[CRAZY_DAVE_4003]
+{NO_CLICK}I've got it... 
+[CRAZY_DAVE_4004]
+{NO_CLICK}{SHAKE}Morticulturalist!!!{MOUTH_BIG_SMILE}
+
 [MENU_BUTTON]
 Menu
 
@@ -3075,5 +3086,125 @@ Replay level?
 [REPLAY_LEVEL_BODY]
 Do you wish to replay level 3-4?
 
-[DISCORD_ADVENTURE]
-Adventure
+[ACHIEVEMENT_GET]
+{ACHIEVEMENT} Achievement!
+
+[HOME_LAWN_SECURITY]
+Home Lawn Security
+
+[NOBEL_PEAS_PRIZE]
+Nobel Peas Prize
+
+[BETTER_OFF_DEAD]
+Better Off Dead
+
+[CHINA_SHOP]
+China Shop
+
+[SPUDOW]
+SPUDOW!
+
+[EXPLODONATOR]
+Explodanator
+
+[MORTICULTURALIST]
+Morticulturalist
+
+[DONT_PEA_IN_THE_POOL]
+Don't Pea In The Pool
+
+[ROLL_SOME_HEADS]
+Roll Some Heads
+
+[GROUNDED]
+Grounded
+
+[ZOMBOLOGIST]
+Zombologist
+
+[PENNY_PINCHER]
+Penny Pincher
+
+[SUNNY_DAYS]
+Sunny Days
+
+[POPCORN_PARTY]
+Popcorn Party
+
+[GOOD_MORNING]
+Good Morning
+
+[NO_FUNGUS_AMONG_US]
+No Fungus Among Us
+
+[BEYOND_THE_GRAVE]
+Beyond The Grave
+
+[IMMORTAL]
+Immortal
+
+[TOWERING_WISDOM]
+Towering Wisdom
+
+[MUSTACHE_MODE]
+Mustache Mode
+
+[HOME_LAWN_SECURITY_DESCRIPTION]
+Complete Adventure Mode.
+
+[NOBEL_PEAS_PRIZE_DESCRIPTION]
+Get the golden sunflower trophy.
+
+[BETTER_OFF_DEAD_DESCRIPTION]
+Get to a streak of 10 in I, Zombie Endless
+
+[CHINA_SHOP_DESCRIPTION]
+Get to a streak of 15 in Vasebreaker Endless
+
+[SPUDOW_DESCRIPTION]
+Blow up a zombie using a Potato Mine.
+
+[EXPLODONATOR_DESCRIPTION]
+Take out 10 full-sized zombies with a single Cherry Bomb.
+
+[MORTICULTURALIST_DESCRIPTION]
+Collect all 49 plants (including plants from Crazy Dave's shop).
+
+[DONT_PEA_IN_THE_POOL_DESCRIPTION]
+Complete a daytime pool level without using pea shooters of any kind.
+
+[ROLL_SOME_HEADS_DESCRIPTION]
+Bowl over 5 zombies or more with a single Wall-nut.
+
+[GROUNDED_DESCRIPTION]
+Defeat a normal roof level without using any catapult plants.
+
+[ZOMBOLOGIST_DESCRIPTION]
+Discover the Yeti zombie.
+
+[PENNY_PINCHER_DESCRIPTION]
+Pick up 30 coins in a row on a single level without letting any disappear.
+
+[SUNNY_DAYS_DESCRIPTION]
+Get 8000 sun during a single level.
+
+[POPCORN_PARTY_DESCRIPTION]
+Defeat 2 Gargantuars with Corn Cob missiles in a single level.
+
+[GOOD_MORNING_DESCRIPTION]
+Complete a daytime level by planting only Mushrooms and Coffee Beans.
+
+[NO_FUNGUS_AMONG_US_DESCRIPTION]
+Complete a nighttime level without planting any Mushrooms.
+
+[BEYOND_THE_GRAVE_DESCRIPTION]
+Beat all 20 mini games.
+
+[IMMORTAL_DESCRIPTION]
+Survive 20 waves of pure zombie ferocity.
+
+[TOWERING_WISDOM_DESCRIPTION]
+Grow the Tree of Wisdom to 100 feet.
+
+[MUSTACHE_MODE_DESCRIPTION]
+Enable Mustache Mode

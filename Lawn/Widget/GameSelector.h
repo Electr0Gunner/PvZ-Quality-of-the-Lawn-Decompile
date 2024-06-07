@@ -7,6 +7,7 @@
 
 class LawnApp;
 class ToolTipWidget;
+class AchievementScreen;
 namespace Sexy
 {
     class DialogButton;
@@ -19,7 +20,8 @@ enum SelectorAnimState
     SELECTOR_OPEN,
     SELECTOR_NEW_USER,
     SELECTOR_SHOW_SIGN,
-    SELECTOR_IDLE
+    SELECTOR_ACHIEVEMENTS,
+    SELECTOR_IDLE,
 };
 
 class GameSelector : public Widget, public ButtonListener
@@ -37,7 +39,8 @@ private:
         GameSelector_Store = 107,
         GameSelector_Almanac = 108,
         GameSelector_ZenGarden = 109,
-        GameSelector_Survival = 110
+        GameSelector_Survival = 110,
+        GameSelector_Achievement = 111
     };
 
 public:
@@ -51,6 +54,7 @@ public:
     NewLawnButton*              mStoreButton;               //+0xA8
     NewLawnButton*              mAlmanacButton;             //+0xAC
     NewLawnButton*              mZenGardenButton;           //+0xB0
+    NewLawnButton*              mAchievementButton;                
     NewLawnButton*              mSurvivalButton;            //+0xB4
     NewLawnButton*              mChangeUserButton;          //+0xB8
     Widget*                     mOverlayWidget;             //+0xBC
@@ -74,6 +78,11 @@ public:
     ToolTipWidget*              mToolTip;                   //+0x128
     bool                        mHasTrophy;                 //+0x12C
     bool                        mUnlockSelectorCheat;       //+0x12D
+    bool                        mDebugText;
+    int                         mAchievementTimer;
+    int                         mCurrentY;
+    int                         mDestinationY;
+    AchievementScreen* mAchievementWidget;
 
 public:
     GameSelector(LawnApp* theApp);
@@ -99,6 +108,8 @@ public:
     void                        UpdateTooltip();
     /*inline*/ bool             ShouldDoZenTuturialBeforeAdventure();
     void                        AddPreviewProfiles();
+    void                        KeyChar();
+    int                         CalcYPos(int ogY, int newY);
 };
 
 class GameSelectorOverlay : public Widget

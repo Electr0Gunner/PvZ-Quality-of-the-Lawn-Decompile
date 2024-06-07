@@ -132,6 +132,8 @@
 <Image id="SELECTORSCREEN_STOREHIGHLIGHT" path="SelectorScreen_StoreHighlight"  />
 <Image id="SELECTORSCREEN_LEVELNUMBERS" path="SelectorScreen_LevelNumbers" cols="10" />
 <Image id="SELECTORSCREEN_ZENGARDEN" path="SelectorScreen_ZenGarden"  />
+<Image id="ACHIEVEMENT_BUTTON" path="Achievements_pedestal"  />
+<Image id="ACHIEVEMENT_HIGHLIGHT" path="Achievements_pedestal_press"  />
 <Image id="SELECTORSCREEN_ZENGARDENHIGHLIGHT" path="SelectorScreen_ZenGardenHighlight"  />
 <Image id="STORE_SPEECHBUBBLE" path="Store_SpeechBubble" />
 <Image id="STORE_SPEECHBUBBLE2" path="Store_SpeechBubble2" />
@@ -424,6 +426,7 @@
 <Resources id="LoadingSounds">
   
 <SetDefaults path="sounds" idprefix="SOUND_" />
+<Sound id="ACHIEVEMENT" path="achievement" /> 
 <Sound id="AWOOGA" path="awooga" /> 
 <Sound id="BLEEP" path="bleep" /> 
 <Sound id="BUZZER" path="buzzer" />
@@ -669,6 +672,7 @@
 <Resources id="DelayLoad_AwardScreen">
 <SetDefaults path="images" idprefix="IMAGE_" />
 <Image id="AWARDSCREEN_BACK" path="AwardScreen_Back" a8r8g8b8="" />
+<Image id="ACHIEVEMENTS_PORTRAITS" path="acheesements_icons" cols="20" />
 </Resources>  
 
 <Resources id="DelayLoad_ChallengeScreen">
@@ -682,6 +686,25 @@
 <Image id="SURVIVAL_THUMBNAILS" path="Survival_Thumbnails" cols="11" />
 <Image id="LOCK" path="lock" />
 <Image id="LOCK_OPEN" path="lock_open" />
+</Resources>  
+
+<Resources id="DelayLoad_Achievements">
+<SetDefaults path="images" idprefix="IMAGE_" />
+<Image id="ACHIEVEMENT_TILE" path="acheesements_hole_tile" />
+<Image id="ACHIEVEMENT_BACK_GLOW" path="acheesements_back_highlight" a8r8g8b8="" />
+<Image id="ACHIEVEMENT_SELECTOR_TILE" path="selectorscreen_achievements_bg" />
+<Image id="ACHIEVEMENT_TILE_CHINA" path="acheesements_china" />
+<Image id="ACHIEVEMENT_MORE" path="acheesements_more_button" />
+<Image id="ACHIEVEMENT_MORE_HIGHLIGHT" path="acheesements_more_button_highlight" a8r8g8b8="" />
+<Image id="ACHIEVEMENT_TOP" path="acheesements_top_button" />
+<Image id="ACHIEVEMENT_TOP_HIGHLIGHT" path="acheesements_top_button_highlight" />
+<Image id="ACHIEVEMENT_ROCK" path="acheesements_more_rock" />
+<Image id="ACHIEVEMENT_BOOKWORM" path="achievementEasterEggs/acheesements_bookworm" />
+<Image id="ACHIEVEMENT_BEJEWELED" path="achievementEasterEggs/acheesements_bejeweled" />
+<Image id="ACHIEVEMENT_CHUZZLE" path="achievementEasterEggs/acheesements_chuzzle" />
+<Image id="ACHIEVEMENT_PEGGLE" path="achievementEasterEggs/acheesements_peggle" />
+<Image id="ACHIEVEMENT_PIPE" path="achievementEasterEggs/acheesements_pipe" />
+<Image id="ACHIEVEMENT_ZUMA" path="achievementEasterEggs/acheesements_zuma" />
 </Resources>  
 
 <Resources id="DelayLoad_Almanac">

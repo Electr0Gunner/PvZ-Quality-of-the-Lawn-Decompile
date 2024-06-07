@@ -35,6 +35,7 @@
 #include "Lawn/Widget/AlmanacDialog.h"
 #include "Lawn/Widget/NewUserDialog.h"
 #include "Lawn/Widget/MiniCreditsScreen.h"
+#include "Lawn/Widget/AchievementScreen.h"
 #include "Lawn/Widget/ContinueDialog.h"
 #include "Lawn/System/ReanimationLawn.h"
 #include "Lawn/Widget/ChallengeScreen.h"
@@ -42,6 +43,7 @@
 #include "Lawn/Widget/SeedChooserScreen.h"
 #include "SexyAppFramework/WidgetManager.h"
 #include "SexyAppFramework/ResourceManager.h"
+#include "Lawn/Achievements.h"
 
 #include "Lawn/System/discord_rpc.h"
 #include "SexyAppFramework/Checkbox.h"
@@ -85,6 +87,7 @@ LawnApp::LawnApp()
 	mCreditScreen = nullptr;
 	mTitleScreen = nullptr;
 	mMiniCreditsScreen = nullptr;
+	mAchievementScreen = nullptr;
 	mSoundSystem = nullptr;
 	mKonamiCheck = nullptr;
 	mMustacheCheck = nullptr;
@@ -109,6 +112,7 @@ LawnApp::LawnApp()
 	mEffectSystem = nullptr;
 	mReanimatorCache = nullptr;
 	mCloseRequest = false;
+	mAchievement = nullptr;
 	mWidth = BOARD_WIDTH;
 	mHeight = BOARD_HEIGHT;
 	mFullscreenBits = 32;
@@ -124,11 +128,11 @@ LawnApp::LawnApp()
 	isFastMode = false;
 	SpeedValue = 2;
 	mProdName = "PlantsVsZombies";
-	mReconVersion = "PvZ QoTL v1.2.0";
+	mReconVersion = "PvZ QoTL v1.3.0";
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
 	aTitleName += " BETA ";
-	aTitleName += "QoTL v1.2.0";
+	aTitleName += "QoTL v1.3.0";
 	//aTitleName += mProductVersion; tbh i dont get how this works. sooooooooo, commenting it. just do "aTitleName += "some random version string";   "
 #endif
 
@@ -186,6 +190,7 @@ LawnApp::~LawnApp()
 
 	delete mSoundSystem;
 	delete mMusic;
+
 
 	if (mKonamiCheck)
 	{
@@ -257,6 +262,11 @@ LawnApp::~LawnApp()
 	{
 		mWidgetManager->RemoveWidget(mCreditScreen);
 		delete mCreditScreen;
+	}
+	if (mAchievementScreen)
+	{
+		mWidgetManager->RemoveWidget(mAchievementScreen);
+		delete mAchievementScreen;
 	}
 
 	delete mProfileMgr;
@@ -533,10 +543,10 @@ void LawnApp::KillGameSelector()
 }
 
 //0x44FA20
-void LawnApp::ShowAwardScreen(AwardType theAwardType)
+void LawnApp::ShowAwardScreen(AwardType theAwardType, bool theShowAchievements)
 {
 	mGameScene = GameScenes::SCENE_AWARD;
-	mAwardScreen = new AwardScreen(this, theAwardType);
+	mAwardScreen = new AwardScreen(this, theAwardType, theShowAchievements);
 	mAwardScreen->Resize(0, 0, mWidth, mHeight);
 	mWidgetManager->AddWidget(mAwardScreen);
 	mWidgetManager->BringToBack(mAwardScreen);
@@ -586,7 +596,6 @@ void LawnApp::ShowMiniCreditScreen()
 	mWidgetManager->SetFocus(mMiniCreditsScreen);
 }
 
-//0x44FBF0
 void LawnApp::KillMiniCreditScreen()
 {
 	if (mMiniCreditsScreen)
@@ -594,6 +603,28 @@ void LawnApp::KillMiniCreditScreen()
 		mWidgetManager->RemoveWidget(mMiniCreditsScreen);
 		SafeDeleteWidget(mMiniCreditsScreen);
 		mMiniCreditsScreen = nullptr;
+	}
+}
+
+void LawnApp::ShowAchievementScreen()
+{
+	if (mAchievementScreen)
+		KillAchievementScreen();
+	mGameScene = GameScenes::SCENE_MENU;
+	mAchievementScreen = new AchievementScreen(this);
+	mAchievementScreen->Resize(0, 0, mWidth, mHeight);
+	mWidgetManager->AddWidget(mAchievementScreen);
+	mWidgetManager->BringToFront(mAchievementScreen);
+	mWidgetManager->SetFocus(mAchievementScreen);
+}
+
+void LawnApp::KillAchievementScreen()
+{
+	if (mAchievementScreen)
+	{
+		mWidgetManager->RemoveWidget(mAchievementScreen);
+		SafeDeleteWidget(mAchievementScreen);
+		mAchievementScreen = nullptr;
 	}
 }
 
@@ -1325,8 +1356,8 @@ void LawnApp::Init()
 	mTitleScreen->Resize(0, 0, mWidth, mHeight);
 	mWidgetManager->AddWidget(mTitleScreen);
 	mWidgetManager->SetFocus(mTitleScreen);
-
-
+	mAchievement = new Achievements(this);
+	mAchievement->InitAchievement();
 
 #ifdef _DEBUG
 	int aDuration = mTimer.GetDuration();
@@ -1483,6 +1514,19 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 		{
 			mPlayerInfo->mNeedsMagicTacoReward = 1;
 		}
+
+		if (mBoard->mBackground == BACKGROUND_3_POOL && !mBoard->mPeashootersUsed) {
+			GetAchievement(DONT_PEA_IN_THE_POOL);
+		}
+		if (mBoard->StageHasRoof() && !mBoard->HasConveyorBeltSeedBank() && !mBoard->mCatapultsUsed) {
+			GetAchievement(GROUNDED);
+		}
+		if (mBoard->StageIsNight() && !mBoard->mMushroomsUsed) {
+			GetAchievement(NO_FUNGUS_AMONG_US);
+		}
+		if (mBoard->mBackground == BACKGROUND_1_DAY && mBoard->mMushroomsNCoffeeUsed) {
+			GetAchievement(GOOD_MORNING);
+		}
 	}
 	else if (IsSurvivalMode())
 	{
@@ -1558,22 +1602,23 @@ void LawnApp::CheckForGameEnd()
 
 		if (IsFirstTimeAdventureMode() && aLevel < 50)
 		{
-			ShowAwardScreen(AwardType::AWARD_FORLEVEL);
+			ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);
 		}
 		else if (aLevel == FINAL_LEVEL)
 		{
+			GetAchievement(HOME_LAWN_SECURITY);
 			if (mPlayerInfo->mFinishedAdventure == 1)
 			{
-				ShowAwardScreen(AwardType::AWARD_FORLEVEL);
+				ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);
 			}
 			else
 			{
-				ShowAwardScreen(AwardType::AWARD_CREDITS_ZOMBIENOTE);
+				ShowAwardScreen(AwardType::AWARD_CREDITS_ZOMBIENOTE, true);
 			}
 		}
 		else if (aLevel == 9 || aLevel == 19 || aLevel == 29 || aLevel == 39 || aLevel == 49)
 		{
-			ShowAwardScreen(AwardType::AWARD_FORLEVEL);
+			ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);
 		}
 		else
 		{
@@ -1588,7 +1633,7 @@ void LawnApp::CheckForGameEnd()
 
 			if (aUnlockedNewChallenge && HasFinishedAdventure())
 			{
-				ShowAwardScreen(AwardType::AWARD_FORLEVEL);
+				ShowAwardScreen(AwardType::AWARD_FORLEVEL,true);
 			}
 			else
 			{
@@ -1608,7 +1653,7 @@ void LawnApp::CheckForGameEnd()
 
 		if (aUnlockedNewChallenge)
 		{
-			ShowAwardScreen(AwardType::AWARD_FORLEVEL);
+			ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);
 		}
 		else
 		{
@@ -1621,7 +1666,7 @@ void LawnApp::CheckForGameEnd()
 
 		if (aUnlockedNewChallenge && HasFinishedAdventure())
 		{
-			ShowAwardScreen(AwardType::AWARD_FORLEVEL);
+			ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);
 		}
 		else
 		{
@@ -2500,6 +2545,17 @@ bool LawnApp::HasSeedType(SeedType theSeedType)
 bool LawnApp::SeedTypeAvailable(SeedType theSeedType)
 {
 	return (theSeedType == SeedType::SEED_GATLINGPEA && mPlayerInfo->mPurchases[StoreItem::STORE_ITEM_PLANT_GATLINGPEA]) || HasSeedType(theSeedType);
+}
+
+bool LawnApp::HasAllUpgrades()
+{
+	int availablePlants = 0;
+	for (int seed = SEED_GATLINGPEA; seed <= SEED_IMITATER; seed++) {
+		if (SeedTypeAvailable(SeedType(seed))) {
+			availablePlants++;
+		}
+	}
+	return availablePlants == 9;
 }
 
 //0x453C30
@@ -3505,6 +3561,13 @@ SexyString LawnGetCurrentLevelName()
 	}
 
 	return gLawnApp->GetCurrentChallengeDef().mChallengeName;
+}
+
+void LawnApp::GetAchievement(AchievementType theAchievementType)
+{
+	if (mPlayerInfo == nullptr || gLawnApp == nullptr || mAchievement == nullptr)
+		return;
+	mAchievement->GiveAchievement(this, theAchievementType);
 }
 
 //0x456060

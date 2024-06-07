@@ -1,10 +1,12 @@
 #include "../Board.h"
 #include "GameButton.h"
 #include "StoreScreen.h"
+#include "AchievementScreen.h"
 #include "../ZenGarden.h"
 #include "GameSelector.h"
 #include "../../LawnApp.h"
 #include "AlmanacDialog.h"
+#include "../Achievements.h"
 #include "../../Resources.h"
 #include "../System/Music.h"
 #include "../ToolTipWidget.h"
@@ -20,6 +22,7 @@
 #include "../../Sexy.TodLib/TodParticle.h"
 #include "../../SexyAppFramework/Dialog.h"
 #include "../../SexyAppFramework/WidgetManager.h"
+#include "../../SexyAppFramework/SysFont.h"
 
 static float gFlowerCenter[3][2] = { { 765.0f, 483.0f }, { 663.0f, 455.0f }, { 701.0f, 439.0f } };  //0x665430
 
@@ -46,6 +49,10 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mLoading = false;
 	mHasTrophy = false;
 	mToolTip = new ToolTipWidget();
+	mDebugText = false;
+	mAchievementTimer = 0;
+	mCurrentY = mY;
+	mDestinationY = mCurrentY;
 
 	mAdventureButton = MakeNewButton(
 		GameSelector::GameSelector_Adventure, 
@@ -149,6 +156,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mOptionsButton->mBtnNoDraw = true;
 	mOptionsButton->mMouseVisible = false;
 	mOptionsButton->mButtonOffsetY = 15;
+	mOptionsButton->mClip = false;
 
 	mHelpButton = MakeNewButton(
 		GameSelector::GameSelector_Help, 
@@ -163,6 +171,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mHelpButton->mBtnNoDraw = true;
 	mHelpButton->mMouseVisible = false;
 	mHelpButton->mButtonOffsetY = 30;
+	mHelpButton->mClip = false;
 
 	mQuitButton = MakeNewButton(
 		GameSelector::GameSelector_Quit, 
@@ -178,6 +187,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mQuitButton->mMouseVisible = false;
 	mQuitButton->mButtonOffsetX = 5;
 	mQuitButton->mButtonOffsetY = 5;
+	mQuitButton->mClip = false;
 
 	mChangeUserButton = MakeNewButton(
 		GameSelector::GameSelector_ChangeUser, 
@@ -206,6 +216,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	);
 	mStoreButton->Resize(405, 484, Sexy::IMAGE_SELECTORSCREEN_STORE->mWidth, Sexy::IMAGE_SELECTORSCREEN_STORE->mHeight);
 	mStoreButton->mMouseVisible = false;
+	mStoreButton->mClip = false;
 	
 	mAlmanacButton = MakeNewButton(
 		GameSelector::GameSelector_Almanac, 
@@ -218,6 +229,20 @@ GameSelector::GameSelector(LawnApp* theApp)
 	);
 	mAlmanacButton->Resize(327, 428, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mWidth, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mHeight);
 	mAlmanacButton->mMouseVisible = false;
+	mAlmanacButton->mClip = false;
+
+	mAchievementButton = MakeNewButton(
+		GameSelector::GameSelector_Achievement,
+		this,
+		"",
+		nullptr,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT
+	);
+	mAchievementButton->Resize(20, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight - 35, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mWidth, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight);
+	mAchievementButton->mClip = false;
+	mAchievementButton->mMouseVisible = false;
 
 	mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 
@@ -301,6 +326,8 @@ GameSelector::~GameSelector()
 		delete mStoreButton;
 	if (mAlmanacButton)
 		delete mAlmanacButton;
+	if (mAchievementButton)
+		delete mAchievementButton;
 	if (mZenGardenButton)
 		delete mZenGardenButton;
 	if (mSurvivalButton)
@@ -310,6 +337,7 @@ GameSelector::~GameSelector()
 
 	delete mToolTip;
 }
+
 
 //0x449E60
 void GameSelector::SyncButtons()
@@ -526,24 +554,37 @@ void GameSelector::Draw(Graphics* g)
 		aSelectorReanim->GetAttachmentOverlayMatrix(aSignIdx, aOverlayMatrix);
 		float aStringWidth = Sexy::FONT_BRIANNETOD16->StringWidth(aWelcomeStr);
 		SexyTransform2D aOffsetMatrix;
-		aOffsetMatrix.Translate(170.5f - (int)(aStringWidth * 0.5f), 102.5f);
+		aOffsetMatrix.Translate(170.5f - (int)(aStringWidth * 0.5f) + mX, 102.5f + mY);
 		TodDrawStringMatrix(g, Sexy::FONT_BRIANNETOD16, aOverlayMatrix * aOffsetMatrix, aWelcomeStr, Color(255, 245, 200));
 
 	}
 
-	int aLeftIdx = aSelectorReanim->FindTrackIndex("SelectorScreen_BG_Left");
-	ReanimatorTransform aTransformLeft;
-	aSelectorReanim->GetCurrentTransform(aLeftIdx, &aTransformLeft);
-	if (mHasTrophy)
+	if(mDebugText)
 	{
-		if (mApp->EarnedGoldTrophy())
-			TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 10.0f, aTransformLeft.mTransY + 390.0f, 1, 0);
-		else
-			TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 10.0f, aTransformLeft.mTransY + 390.0f, 0, 0);
-		
-		TodParticleSystem* aTrophyParticle = mApp->ParticleTryToGet(mTrophyParticleID);
-		if (aTrophyParticle)
-			aTrophyParticle->Draw(g);
+		Font* mDebugFont;
+		mDebugFont = new SysFont("Arial Unicode MS", 10, true, false, false);
+		SexyString aText;
+		aText += StrFormat(_S("ACHIEVEMENTS DEBUG\n"));
+		for (int i = 0; i <= AchievementType::TOTAL_ACHIEVEMENTS - 1; i++){
+			aText += StrFormat(_S("ACHIEVEMENT %d: "), i);
+			if (mApp->mPlayerInfo->mEarnedAchievements[i])
+			{
+				aText += StrFormat(_S("TRUE\n"));
+			}
+			else
+			{
+				aText += StrFormat(_S("FALSE\n"));
+			}
+		}
+
+		g->SetFont(mDebugFont);
+		g->SetColor(Color::Black);
+		g->DrawStringWordWrapped(aText, 10, 89);
+		g->DrawStringWordWrapped(aText, 11, 91);
+		g->DrawStringWordWrapped(aText, 9, 90);
+		g->DrawStringWordWrapped(aText, 11, 90);
+		g->SetColor(Color(255, 255, 255));
+		g->DrawStringWordWrapped(aText, 10, 90);
 	}
 }
 
@@ -602,18 +643,35 @@ void GameSelector::DrawOverlay(Graphics* g)
 
 		g->SetColorizeImages(true);
 		g->SetColor(mAdventureButton->mColors[ButtonWidget::COLOR_BKG]);
-		TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransAreaX + 486.0f, aTransAreaY + 125.0f, aStage, 0);  // »æÖÆ´ó¹ØÊý
+		TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransAreaX + 486.0f, aTransAreaY + 47.0f, aStage, 0);  // »æÖÆ´ó¹ØÊý
 		if (aSub < 10)
 		{
-			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 504.0f, aTransSubY + 128.0f, aSub, 0);
+			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 509.0f, aTransSubY + 50.0f, aSub, 0);
 		}
 		else if (aSub == 10)
 		{
-			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 504.0f, aTransSubY + 128.0f, 1, 0);
-			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 513.0f, aTransSubY + 129.0f, 0, 0);
+			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 509.0f, aTransSubY + 50.0f, 1, 0);
+			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 518.0f, aTransSubY + 51.0f, 0, 0);
 		}
 		g->SetColorizeImages(false);
+
+
+		int aLeftIdx = aSelectorReanim->FindTrackIndex("SelectorScreen_BG_Left");
+		ReanimatorTransform aTransformLeft;
+		aSelectorReanim->GetCurrentTransform(aLeftIdx, &aTransformLeft);
+		if (mHasTrophy)
+		{
+			if (mApp->EarnedGoldTrophy())
+				TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 12.0f, aTransformLeft.mTransY + 345.0f, 1, 0);
+			else
+				TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 12.0f, aTransformLeft.mTransY + 345.0f, 0, 0);
+
+			TodParticleSystem* aTrophyParticle = mApp->ParticleTryToGet(mTrophyParticleID);
+			if (aTrophyParticle)
+				aTrophyParticle->Draw(g);
+		}
 	}
+
 
 	if (mZenGardenButton->mVisible && mApp->mZenGarden->PlantsNeedWater())
 	{
@@ -688,7 +746,47 @@ void GameSelector::Update()
 	MarkDirty();
 	UpdateTooltip();
 	mApp->mZenGarden->UpdatePlantNeeds();
-	mApp->UpdateDiscordRPC("In The Main Menu");
+	if(mSelectorState != SELECTOR_ACHIEVEMENTS)
+		mApp->UpdateDiscordRPC("In The Main Menu");
+	else
+	{
+		mApp->UpdateDiscordRPC("In The Achievement Screen");
+	}
+
+	if (mAchievementTimer > 0)
+	{
+		//int aPosY = TodAnimateCurve(75, 0, mAchievementTimer, 0, -mApp->mHeight, TodCurves::CURVE_EASE_IN_OUT);
+		int aPosY = CalcYPos(mCurrentY, mDestinationY);
+		mY = aPosY;
+
+		if(mApp->mAchievementScreen)
+			mApp->mAchievementScreen->mY = aPosY + mApp->mHeight - 1;
+		mOverlayWidget->mY = aPosY;
+		mAdventureButton->mButtonOffsetY = aPosY;
+		mMinigameButton->mButtonOffsetY = aPosY;
+		mPuzzleButton->mButtonOffsetY = aPosY;
+		mOptionsButton->mButtonOffsetY = aPosY + 15;
+		mQuitButton->mButtonOffsetY = aPosY + 5;
+		mHelpButton->mButtonOffsetY = aPosY + 30;
+		mStoreButton->mButtonOffsetY = aPosY;
+		mAlmanacButton->mButtonOffsetY = aPosY;
+		mZenGardenButton->mButtonOffsetY = aPosY;
+		mSurvivalButton->mButtonOffsetY = aPosY;
+		mChangeUserButton->mButtonOffsetY = aPosY;
+		mAchievementButton->mButtonOffsetY = aPosY;
+		
+		mAchievementButton->MarkDirty();
+		mOptionsButton->MarkDirty();
+		mHelpButton->MarkDirty();
+		mQuitButton->MarkDirty();
+		mStoreButton->MarkDirty();
+		
+		mAchievementTimer--;
+	}
+	else if (mAchievementTimer == 0)
+	{
+		mCurrentY = mY;
+	}
 
 	TodParticleSystem* aParticle = mApp->ParticleTryToGet(mTrophyParticleID);
 	if (aParticle)
@@ -766,7 +864,8 @@ void GameSelector::Update()
 			mStoreButton->mMouseVisible = true;
 			mAlmanacButton->mMouseVisible = true;
 			mChangeUserButton->mMouseVisible = true;
-			
+			mAchievementButton->mMouseVisible = true;
+
 			if (mApp->mPlayerInfo == nullptr)
 			{
 				mApp->DoCreateUserDialog();
@@ -848,18 +947,23 @@ void GameSelector::Update()
 	if (aHandReanim)
 		aHandReanim->Update();
 
-	TrackButton(mAdventureButton, mShowStartButton ? "SelectorScreen_StartAdventure_button" : "SelectorScreen_Adventure_button", 0.0f, 0.0f);
-	TrackButton(mMinigameButton, "SelectorScreen_Survival_button", 0.0f, 0.0f);
-	TrackButton(mPuzzleButton, "SelectorScreen_Challenges_button", 0.0f, 0.0f);
-	TrackButton(mSurvivalButton, "SelectorScreen_ZenGarden_button", 0.0f, 0.0f);
-	TrackButton(mZenGardenButton, "SelectorScreen_BG_Right", 100.0f, 360.0f);
-	TrackButton(mOptionsButton, "SelectorScreen_BG_Right", 494.0f, 434.0f);
-	TrackButton(mQuitButton, "SelectorScreen_BG_Right", 644.0f, 469.0f);
-	TrackButton(mHelpButton, "SelectorScreen_BG_Right", 576.0f, 458.0f);
-	TrackButton(mAlmanacButton, "SelectorScreen_BG_Right", 256.0f, 387.0f);
-	TrackButton(mStoreButton, "SelectorScreen_BG_Right", 334.0f, 441.0f);
-	TrackButton(mChangeUserButton, "woodsign2", 24.0f, 10.0f);
-	aSelectorReanim->SetImageOverride("woodsign2", (mChangeUserButton->mIsOver || mChangeUserButton->mIsDown) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN2_PRESS : nullptr);
+	if(mSelectorState != SELECTOR_ACHIEVEMENTS){
+		if(mAchievementTimer == 0)
+			mApp->KillAchievementScreen();
+		TrackButton(mAdventureButton, mShowStartButton ? "SelectorScreen_StartAdventure_button" : "SelectorScreen_Adventure_button", 0.0f, 0.0f);
+		TrackButton(mMinigameButton, "SelectorScreen_Survival_button", 0.0f, 0.0f);
+		TrackButton(mPuzzleButton, "SelectorScreen_Challenges_button", 0.0f, 0.0f);
+		TrackButton(mSurvivalButton, "SelectorScreen_ZenGarden_button", 0.0f, 0.0f);
+		TrackButton(mZenGardenButton, "SelectorScreen_BG_Right", 100.0f, 360.0f);
+		TrackButton(mOptionsButton, "SelectorScreen_BG_Right", 494.0f, 434.0f);
+		TrackButton(mQuitButton, "SelectorScreen_BG_Right", 644.0f, 469.0f);
+		TrackButton(mHelpButton, "SelectorScreen_BG_Right", 576.0f, 458.0f);
+		TrackButton(mAlmanacButton, "SelectorScreen_BG_Right", 256.0f, 387.0f);
+		TrackButton(mStoreButton, "SelectorScreen_BG_Right", 334.0f, 441.0f);
+		TrackButton(mChangeUserButton, "woodsign2", 24.0f, 10.0f);
+		TrackButton(mAchievementButton, "SelectorScreen_BG_Left", 20.f, 480.f);
+		aSelectorReanim->SetImageOverride("woodsign2", (mChangeUserButton->mIsOver || mChangeUserButton->mIsDown) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN2_PRESS : nullptr);
+	}
 }
 
 //0x44BB20
@@ -891,6 +995,7 @@ void GameSelector::AddedToManager(WidgetManager* theWidgetManager)
 	theWidgetManager->AddWidget(mZenGardenButton);
 	theWidgetManager->AddWidget(mChangeUserButton);
 	theWidgetManager->AddWidget(mOverlayWidget);
+	theWidgetManager->AddWidget(mAchievementButton);
 }
 
 //0x44BCA0
@@ -910,6 +1015,7 @@ void GameSelector::RemovedFromManager(WidgetManager* theWidgetManager)
 	theWidgetManager->RemoveWidget(mZenGardenButton);
 	theWidgetManager->RemoveWidget(mChangeUserButton);
 	theWidgetManager->RemoveWidget(mOverlayWidget);
+	theWidgetManager->RemoveWidget(mAchievementButton);
 }
 
 //0x44BD80
@@ -927,6 +1033,7 @@ void GameSelector::OrderInManagerChanged()
 	mWidgetManager->PutInfront(mZenGardenButton, this);
 	mWidgetManager->PutInfront(mSurvivalButton, this);
 	mWidgetManager->PutInfront(mChangeUserButton, this);
+	mWidgetManager->PutInfront(mAchievementButton, this);
 }
 
 //0x44BE60
@@ -1041,6 +1148,11 @@ void GameSelector::KeyChar(char theChar)
 			mSurvivalLocked = false;
 			SyncButtons();
 		}
+		if (theChar == _S('a'))
+		{
+			mDebugText = !mDebugText;
+			return;
+		}
 	}
 }
 
@@ -1115,6 +1227,7 @@ void GameSelector::ClickedAdventure()
 	mAlmanacButton->SetDisabled(true);
 	mSurvivalButton->SetDisabled(true);
 	mZenGardenButton->SetDisabled(true);
+	mAchievementButton->SetDisabled(true);
 
 	Reanimation* aHandReanim = mApp->AddReanimation(-70.0f, 10.0f, 0, ReanimationType::REANIM_ZOMBIE_HAND);
 	aHandReanim->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
@@ -1172,7 +1285,7 @@ void GameSelector::ButtonDepress(int theId)
 		break;
 	case GameSelector::GameSelector_Help:
 		mApp->KillGameSelector();
-		mApp->ShowAwardScreen(AwardType::AWARD_HELP_ZOMBIENOTE);
+		mApp->ShowAwardScreen(AwardType::AWARD_HELP_ZOMBIENOTE, false);
 		break;
 	case GameSelector::GameSelector_Options:
 		mApp->DoNewOptions(true);
@@ -1198,6 +1311,24 @@ void GameSelector::ButtonDepress(int theId)
 		mApp->DoAlmanacDialog()->WaitForResult(true);
 		mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 		break;
+	case GameSelector::GameSelector_Achievement:
+		mAchievementTimer = 75;
+		mDestinationY = -mApp->mHeight;
+		mSelectorState = SELECTOR_ACHIEVEMENTS;
+		mApp->ShowAchievementScreen();
+		mAdventureButton->SetDisabled(true);
+		mMinigameButton->SetDisabled(true);
+		mPuzzleButton->SetDisabled(true);
+		mOptionsButton->SetDisabled(true);
+		mQuitButton->SetDisabled(true);
+		mHelpButton->SetDisabled(true);
+		mChangeUserButton->SetDisabled(true);
+		mStoreButton->SetDisabled(true);
+		mAlmanacButton->SetDisabled(true);
+		mSurvivalButton->SetDisabled(true);
+		mZenGardenButton->SetDisabled(true);
+		mAchievementButton->SetDisabled(true);
+		break;
 	case GameSelector::GameSelector_ZenGarden:
 		mApp->KillGameSelector();
 		mApp->PreNewGame(GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN, false);
@@ -1205,6 +1336,12 @@ void GameSelector::ButtonDepress(int theId)
 			mApp->mZenGarden->SetupForZenTutorial();
 		break;
 	}
+}
+
+int GameSelector::CalcYPos(int ogY, int theY)
+{
+	mDestinationY = theY;
+	return TodAnimateCurve(75, 0, mAchievementTimer, mCurrentY, mDestinationY, TodCurves::CURVE_EASE_IN_OUT);
 }
 
 //0x44CB00
@@ -1308,4 +1445,6 @@ void GameSelector::AddPreviewProfiles()
 
 		aProfile->SaveDetails();
 	}
+
+
 }

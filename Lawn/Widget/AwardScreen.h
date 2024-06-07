@@ -21,13 +21,16 @@ public:
 	GameButton*			mMenuButton;		//+0x8C
 	LawnApp*			mApp;				//+0x90
 	int					mFadeInCounter;		//+0x94
+	int					mAchievementCounter;
 	AwardType			mAwardType;			//+0x98
+	bool				mShowAchievements;
 
 public:
-	AwardScreen(LawnApp* theApp, AwardType theAwardType);
+	AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchievement);
 	virtual ~AwardScreen();
 
 	/*inline*/ bool		IsPaperNote();
+	void				LoadAchievements();
 	virtual void		Resize(int theX, int theY, int theWidth, int theHeight) { Widget::Resize(theX, theY, theWidth, theHeight); }
 	static void			DrawBottom(Graphics* g, const SexyString& theTitle, const SexyString& theAward, const SexyString& theMessage);
 	void				DrawAwardSeed(Graphics* g);

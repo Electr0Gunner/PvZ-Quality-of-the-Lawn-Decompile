@@ -219,6 +219,13 @@ public:
 	int								mDiamondsCollected;										//+0x57A4
 	int								mPottedPlantsCollected;									//+0x57A8
 	int								mChocolateCollected;									//+0x57AC
+	bool							mPeashootersUsed;
+	bool							mCatapultsUsed;
+	bool							mMushroomsUsed;
+	bool							mMushroomsNCoffeeUsed;
+	bool							mCoinFaded;
+	int								mAchievementCoinCount;
+	int								mGargantuarsKilled;
 
 public:
 	Board(LawnApp* theApp);
@@ -392,6 +399,7 @@ public:
 	bool							IsValidCobCannonSpotHelper(int theGridX, int theGridY);
 	void							MouseDownCobcannonFire(int x, int y, int theClickCount);
 	void							KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags);
+	int								GetAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, int theDamageRangeFlags);
 	/*inline*/ int					GetSeedBankExtraWidth();
 	bool							IsFlagWave(int theWaveNumber);
 	void							DrawHouseDoorTop(Graphics* g);

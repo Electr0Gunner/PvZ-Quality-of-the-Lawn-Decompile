@@ -2491,6 +2491,7 @@ void Plant::UpdateBowling()
             {
                 mApp->PlayFoley(FoleyType::FOLEY_SPAWN_SUN);
                 mBoard->AddCoin(aPosX, aPosY, CoinType::COIN_GOLD, CoinMotion::COIN_MOTION_COIN);
+                mApp->GetAchievement(ROLL_SOME_HEADS);
             }
         }
 
@@ -4353,7 +4354,12 @@ void Plant::DoSpecial()
         mApp->PlayFoley(FoleyType::FOLEY_CHERRYBOMB);
         mApp->PlayFoley(FoleyType::FOLEY_JUICY);
 
+        if (mBoard->GetAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1, aDamageRangeFlags) >= 10)
+        {
+            mApp->GetAchievement(EXPLODONATOR);
+        }
         mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 115, 1, true, aDamageRangeFlags);
+
 
         mApp->AddTodParticle(aPosX, aPosY, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_POWIE);
         mBoard->ShakeBoard(3, -4);
@@ -4417,6 +4423,7 @@ void Plant::DoSpecial()
 
         mApp->PlaySample(SOUND_POTATO_MINE);
         mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, 60, 0, false, aDamageRangeFlags);
+        mApp->GetAchievement(AchievementType::SPUDOW);
 
         int aRenderPosition = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_PARTICLE, mRow, 0);
         mApp->AddTodParticle(aPosX + 20.0f, aPosY, aRenderPosition, ParticleEffect::PARTICLE_POTATO_MINE);

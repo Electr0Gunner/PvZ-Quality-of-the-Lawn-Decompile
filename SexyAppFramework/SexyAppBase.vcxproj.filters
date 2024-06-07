@@ -938,6 +938,12 @@
     <ClCompile Include="..\DiscordRPC\serialization.cpp">
       <Filter>DiscordRPC</Filter>
     </ClCompile>
+    <ClCompile Include="..\Lawn\Achievements.cpp">
+      <Filter>Lawn\Board\Board Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lawn\Widget\AchievementScreen.cpp">
+      <Filter>Lawn\Widget\Widget Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -1610,6 +1616,12 @@
     </ClInclude>
     <ClInclude Include="..\DiscordRPC\rapidjson\error\error.h">
       <Filter>DiscordRPC\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lawn\Achievements.h">
+      <Filter>Lawn\Board\Board Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lawn\Widget\AchievementScreen.h">
+      <Filter>Lawn\Widget\Widget Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

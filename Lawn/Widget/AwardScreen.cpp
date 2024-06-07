@@ -5,6 +5,7 @@
 #include "AwardScreen.h"
 #include "../ZenGarden.h"
 #include "../SeedPacket.h"
+#include "../Achievements.h"
 #include "../../LawnApp.h"
 #include "AlmanacDialog.h"
 #include "../System/Music.h"
@@ -16,13 +17,18 @@
 #include "../../Sexy.TodLib/TodStringFile.h"
 
 //0x405780
-AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType)
+AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchievement)
 {
     mApp = theApp;
     mClip = false;
     mFadeInCounter = 180;
+    mAchievementCounter = 360;
+
     mAwardType = theAwardType;
+    mShowAchievements = hasAchievement;
+    LoadAchievements();
     TodLoadResources("DelayLoad_AwardScreen");
+    TodLoadResources("DelayLoad_Achievements");
 
     int aLevel = mApp->mPlayerInfo->GetLevel();
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
@@ -143,8 +149,18 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType)
     else
         mStartButton->SetLabel("[NEXT_LEVEL_BUTTON]");
 
+    if (mApp->IsAdventureMode() && mApp->EarnedGoldTrophy()) {
+        mApp->GetAchievement(NOBEL_PEAS_PRIZE);
+    }
+
     if (mApp->IsFirstTimeAdventureMode() && aLevel == 25 && mApp->IsTrialStageLocked() && !mApp->mPlayerInfo->mHasSeenUpsell)
     {
+        mMenuButton->mBtnNoDraw = true;
+        mMenuButton->mDisabled = true;
+    }
+    else if (mApp->HasFinishedAdventure())
+    {
+        mStartButton->SetLabel("[CONTINUE_BUTTON]");
         mMenuButton->mBtnNoDraw = true;
         mMenuButton->mDisabled = true;
     }
@@ -164,6 +180,24 @@ AwardScreen::~AwardScreen()
 {
     if (mStartButton) delete mStartButton;
     if (mMenuButton) delete mMenuButton;
+}
+
+void AwardScreen::LoadAchievements()
+{
+    TodLoadResources("DelayLoad_ChallengeScreen");
+    if (mShowAchievements) {
+        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
+                mShowAchievements = true;
+                break;
+            }
+            else if(mApp->mPlayerInfo->mEarnedAchievements[i] && mApp->mPlayerInfo->mShownedAchievements[i])
+            {
+                mShowAchievements = false;
+            }
+        }
+        mApp->WriteCurrentUserConfig();
+    }
 }
 
 bool AwardScreen::IsPaperNote()
@@ -325,9 +359,61 @@ void AwardScreen::Draw(Graphics* g)
             DrawAwardSeed(g);
         }
     }
+    if (mShowAchievements)
+    {
+        g->DrawImage(Sexy::IMAGE_CHALLENGE_BACKGROUND, 0, 0);
+        mStartButton->SetLabel("[CONTINUE_BUTTON]");
+        SexyString aTitleString = _S("ACHIEVEMENTS");
+        TodDrawString(g, aTitleString, 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
+        mMenuButton->mBtnNoDraw = true;
+        int yPosIndex = 0;
+        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) 
+        {
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievement->ReturnShowInAwards(i)) 
+            {
+                yPosIndex++;
+                SexyString aAchievementName = StrFormat(_S("[%s]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
+                SexyString aAchievementDesc = StrFormat(_S("[%s_DESCRIPTION]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
+                int yPos = TodAnimateCurve(200, 0, mAchievementCounter, BOARD_HEIGHT + 50, 90 + (yPosIndex * 100), TodCurves::CURVE_EASE_IN_OUT);
 
-    mStartButton->Draw(g);
+                TodDrawString(g, aAchievementName, 150, yPos + 20, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
+                //TodDrawString(g, aAchievementDesc, 150, yPos + 50, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 255, 255, 255), DS_ALIGN_LEFT);
+                TodDrawStringWrapped(g, aAchievementDesc, Rect(150, yPos + 30, 258, 230), Sexy::FONT_DWARVENTODCRAFT12, Color(255, 255, 255), DS_ALIGN_LEFT);
+                g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, 60, yPos, i);
+            }
+        }
+
+    }
+    else
+    {
+        if (mAwardType == AWARD_HELP_ZOMBIENOTE)
+        {
+            mStartButton->SetLabel("[MAIN_MENU_BUTTON]");
+        }
+        else if (!mApp->IsAdventureMode())
+        {
+            mStartButton->SetLabel("[MAIN_MENU_BUTTON]");
+        }
+        else if (aLevel == 1)
+        {
+            mStartButton->SetLabel("[CONTINUE_BUTTON]");
+        }
+        else if (aLevel == 15)
+            mStartButton->SetLabel("[VIEW_ALMANAC_BUTTON]");
+        else if (aLevel == 25 || aLevel == 35 || aLevel == 45)
+            mStartButton->SetLabel("[CONTINUE_BUTTON]");
+        else
+            mStartButton->SetLabel("[NEXT_LEVEL_BUTTON]");
+
+        if (mApp->HasFinishedAdventure())
+        {
+            mStartButton->SetLabel("[CONTINUE_BUTTON]");
+        }
+        mMenuButton->mBtnNoDraw = false;
+    }
     mMenuButton->Draw(g);
+    mStartButton->Draw(g);
+
 
     int aFadeInAlpha = TodAnimateCurve(180, 0, mFadeInCounter, 255, 0, CURVE_LINEAR);
     g->SetColor(IsPaperNote() ? Color(0, 0, 0, aFadeInAlpha) : Color(255, 255, 255, aFadeInAlpha));
@@ -345,6 +431,7 @@ void AwardScreen::Update()
     mApp->SetCursor(mStartButton->IsMouseOver() || mMenuButton->IsMouseOver() ? CURSOR_HAND : CURSOR_POINTER);
     MarkDirty();
     if (mFadeInCounter > 0) mFadeInCounter--;
+    if (mAchievementCounter > 0) mAchievementCounter--;
 }
 
 //0x407760
@@ -359,6 +446,17 @@ void AwardScreen::StartButtonPressed()
 {
     if (mApp->GetDialog(DIALOG_STORE))
         return;
+    if (mShowAchievements)
+    {
+        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
+                mApp->mPlayerInfo->mShownedAchievements[i] = true;
+            }
+        }
+        mShowAchievements = false;
+        mFadeInCounter = 180;
+        return;
+    }
     
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
     {
@@ -393,7 +491,7 @@ void AwardScreen::StartButtonPressed()
             mApp->KillAwardScreen();
             if (mApp->HasFinishedAdventure())
             {
-                mApp->ShowAwardScreen(AWARD_CREDITS_ZOMBIENOTE);
+                mApp->ShowAwardScreen(AWARD_CREDITS_ZOMBIENOTE, true);
             }
             else
             {
@@ -472,8 +570,14 @@ void AwardScreen::MouseUp(int x, int y, int theClickCount)
             StartButtonPressed();
         if (mMenuButton->IsMouseOver())
         {
+            for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
+                if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
+                    mApp->mPlayerInfo->mShownedAchievements[i] = true;
+                }
+            }
             mApp->KillAwardScreen();
             mApp->ShowGameSelector();
+            
         }
     }
 }
