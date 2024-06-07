@@ -223,6 +223,7 @@ public:
 	bool							mCatapultsUsed;
 	bool							mMushroomsUsed;
 	bool							mMushroomsNCoffeeUsed;
+	bool							mUsedNonMushrooms;
 	bool							mCoinFaded;
 	int								mAchievementCoinCount;
 	int								mGargantuarsKilled;
@@ -351,6 +352,7 @@ public:
 	void							KillAllPlantsInRadius(int theX, int theY, int theRadius);
 	Plant*							GetPumpkinAt(int theGridX, int theGridY);
 	Plant*							GetFlowerPotAt(int theGridX, int theGridY);
+	bool							LawnHasNocturnal();
 	static bool						CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel);
 	bool							IsZombieWaveDistributionOk();
 	void							PickBackground();

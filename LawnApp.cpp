@@ -1524,7 +1524,7 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 		if (mBoard->StageIsNight() && !mBoard->mMushroomsUsed) {
 			GetAchievement(NO_FUNGUS_AMONG_US);
 		}
-		if (mBoard->mBackground == BACKGROUND_1_DAY && mBoard->mMushroomsNCoffeeUsed) {
+		if (mBoard->mBackground == BACKGROUND_1_DAY && mBoard->mMushroomsNCoffeeUsed && !mBoard->mUsedNonMushrooms) {
 			GetAchievement(GOOD_MORNING);
 		}
 	}

@@ -173,6 +173,8 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
     }
     else
         mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_ZEN_GARDEN);
+
+    mWasDrawn = mMenuButton->mBtnNoDraw;
 }
 
 //0x406420 & 0x406440
@@ -359,6 +361,7 @@ void AwardScreen::Draw(Graphics* g)
             DrawAwardSeed(g);
         }
     }
+
     if (mShowAchievements)
     {
         g->DrawImage(Sexy::IMAGE_CHALLENGE_BACKGROUND, 0, 0);
@@ -409,7 +412,7 @@ void AwardScreen::Draw(Graphics* g)
         {
             mStartButton->SetLabel("[CONTINUE_BUTTON]");
         }
-        mMenuButton->mBtnNoDraw = false;
+        mMenuButton->mBtnNoDraw = mWasDrawn;
     }
     mMenuButton->Draw(g);
     mStartButton->Draw(g);

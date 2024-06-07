@@ -24,6 +24,7 @@ public:
 	int					mAchievementCounter;
 	AwardType			mAwardType;			//+0x98
 	bool				mShowAchievements;
+	bool				mWasDrawn;
 
 public:
 	AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchievement);

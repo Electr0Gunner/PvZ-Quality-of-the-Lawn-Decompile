@@ -171,7 +171,8 @@ Board::Board(LawnApp* theApp)
 	mIgnoreMouseUp = false;
 	mPeashootersUsed = false;
 	mMushroomsUsed = false;
-	mMushroomsNCoffeeUsed = true;
+	mMushroomsNCoffeeUsed = false;
+	mUsedNonMushrooms = false;
 	mCatapultsUsed = false;
 	mCoinFaded = false;
 	mAchievementCoinCount = 0;
@@ -2186,11 +2187,16 @@ Plant* Board::AddPlant(int theGridX, int theGridY, SeedType theSeedType, SeedTyp
 	}
 
 	bool aIsFungi = Plant::IsNocturnal(theSeedType);
-	if (!Plant::IsFlying(theSeedType) && !aIsFungi) {
-		mMushroomsNCoffeeUsed = false;
+
+	if (Plant::IsFlying(theSeedType) && LawnHasNocturnal()) {
+		mMushroomsNCoffeeUsed = true;
 	}
 	if (aIsFungi) {
 		mMushroomsUsed = true;
+	}
+	if(!aIsFungi && theSeedType != SeedType::SEED_INSTANT_COFFEE)
+	{
+		mUsedNonMushrooms = true;
 	}
 
 	return aPlant;
@@ -2222,6 +2228,17 @@ Plant* Board::GetFlowerPotAt(int theGridX, int theGridY)
 		}
 	}
 	return nullptr;
+}
+
+bool Board::LawnHasNocturnal()
+{
+	Plant* aPlant = nullptr;
+	while (IteratePlants(aPlant))
+	{
+		if (aPlant->IsNocturnal(aPlant->mSeedType))
+			return true;
+	}
+	return false;
 }
 
 //0x40D2A0
