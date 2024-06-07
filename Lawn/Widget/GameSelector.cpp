@@ -559,21 +559,6 @@ void GameSelector::Draw(Graphics* g)
 
 	}
 
-	int aLeftIdx = aSelectorReanim->FindTrackIndex("SelectorScreen_BG_Left");
-	ReanimatorTransform aTransformLeft;
-	aSelectorReanim->GetCurrentTransform(aLeftIdx, &aTransformLeft);
-	if (mHasTrophy)
-	{
-		if (mApp->EarnedGoldTrophy())
-			TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 10.0f, aTransformLeft.mTransY + 390.0f, 1, 0);
-		else
-			TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 10.0f, aTransformLeft.mTransY + 390.0f, 0, 0);
-		
-		TodParticleSystem* aTrophyParticle = mApp->ParticleTryToGet(mTrophyParticleID);
-		if (aTrophyParticle)
-			aTrophyParticle->Draw(g);
-	}
-
 	if(mDebugText)
 	{
 		Font* mDebugFont;
@@ -658,18 +643,35 @@ void GameSelector::DrawOverlay(Graphics* g)
 
 		g->SetColorizeImages(true);
 		g->SetColor(mAdventureButton->mColors[ButtonWidget::COLOR_BKG]);
-		TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransAreaX + 486.0f, aTransAreaY + 125.0f, aStage, 0);  // »æÖÆ´ó¹ØÊý
+		TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransAreaX + 486.0f, aTransAreaY + 47.0f, aStage, 0);  // »æÖÆ´ó¹ØÊý
 		if (aSub < 10)
 		{
-			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 504.0f, aTransSubY + 128.0f, aSub, 0);
+			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 509.0f, aTransSubY + 50.0f, aSub, 0);
 		}
 		else if (aSub == 10)
 		{
-			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 504.0f, aTransSubY + 128.0f, 1, 0);
-			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 513.0f, aTransSubY + 129.0f, 0, 0);
+			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 509.0f, aTransSubY + 50.0f, 1, 0);
+			TodDrawImageCelF(g, Sexy::IMAGE_SELECTORSCREEN_LEVELNUMBERS, aTransSubX + 518.0f, aTransSubY + 51.0f, 0, 0);
 		}
 		g->SetColorizeImages(false);
+
+
+		int aLeftIdx = aSelectorReanim->FindTrackIndex("SelectorScreen_BG_Left");
+		ReanimatorTransform aTransformLeft;
+		aSelectorReanim->GetCurrentTransform(aLeftIdx, &aTransformLeft);
+		if (mHasTrophy)
+		{
+			if (mApp->EarnedGoldTrophy())
+				TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 12.0f, aTransformLeft.mTransY + 345.0f, 1, 0);
+			else
+				TodDrawImageCelF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, aTransformLeft.mTransX + 12.0f, aTransformLeft.mTransY + 345.0f, 0, 0);
+
+			TodParticleSystem* aTrophyParticle = mApp->ParticleTryToGet(mTrophyParticleID);
+			if (aTrophyParticle)
+				aTrophyParticle->Draw(g);
+		}
 	}
+
 
 	if (mZenGardenButton->mVisible && mApp->mZenGarden->PlantsNeedWater())
 	{
