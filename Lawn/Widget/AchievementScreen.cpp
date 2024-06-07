@@ -54,6 +54,14 @@ void AchievementScreen::Draw(Graphics* g)
     }
    g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_ROCK, mRockButton->mX, mRockButton->mY);
 
+   //positions from re-plants-vs-zombies (by @Patoke)
+   g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_BOOKWORM, 0, 1125 + mScrollPosition);
+   g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_BEJEWELED, 0, 2250 + mScrollPosition);
+   g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_CHUZZLE, 0, 4500 + mScrollPosition);
+   g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_PEGGLE, 0, 6750 + mScrollPosition);
+   g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_PIPE, 0, 9000 + mScrollPosition);
+   g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_ZUMA, 0, 11250 + mScrollPosition);
+
     g->SetScale(0.9f, 0.9f,0,0);
     for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++)
     {
@@ -78,6 +86,16 @@ void AchievementScreen::Draw(Graphics* g)
     g->SetScale(1.0f, 1.0f, 0, 0);
 
 }
+
+void AchievementScreen::KeyDown(KeyCode theKey) {
+    if (theKey == KEYCODE_UP) {
+        mScrollPosition += 15;
+    }
+    else if (theKey == KEYCODE_DOWN) {
+        mScrollPosition -= 15;
+    }
+}
+
 void AchievementScreen::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);

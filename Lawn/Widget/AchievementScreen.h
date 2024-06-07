@@ -30,6 +30,7 @@ public:
     virtual ~AchievementScreen();
     void                        DrawButton(Graphics* g);
     void				        UpdateRock();
+    void                        KeyDown(KeyCode theKey);
     void				        DoButtonMovement(int StartX, int FinalX);
     virtual void                Draw(Graphics* g);
     virtual void                Update();

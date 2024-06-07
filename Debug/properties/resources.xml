@@ -699,6 +699,12 @@
 <Image id="ACHIEVEMENT_TOP" path="acheesements_top_button" />
 <Image id="ACHIEVEMENT_TOP_HIGHLIGHT" path="acheesements_top_button_highlight" />
 <Image id="ACHIEVEMENT_ROCK" path="acheesements_more_rock" />
+<Image id="ACHIEVEMENT_BOOKWORM" path="achievementEasterEggs/acheesements_bookworm" />
+<Image id="ACHIEVEMENT_BEJEWELED" path="achievementEasterEggs/acheesements_bejeweled" />
+<Image id="ACHIEVEMENT_CHUZZLE" path="achievementEasterEggs/acheesements_chuzzle" />
+<Image id="ACHIEVEMENT_PEGGLE" path="achievementEasterEggs/acheesements_peggle" />
+<Image id="ACHIEVEMENT_PIPE" path="achievementEasterEggs/acheesements_pipe" />
+<Image id="ACHIEVEMENT_ZUMA" path="achievementEasterEggs/acheesements_zuma" />
 </Resources>  
 
 <Resources id="DelayLoad_Almanac">
