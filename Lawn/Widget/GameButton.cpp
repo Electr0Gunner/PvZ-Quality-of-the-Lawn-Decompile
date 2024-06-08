@@ -265,6 +265,12 @@ void NewLawnButton::SetLabel(const SexyString& theLabel)
 	mLabel = TodStringTranslate(theLabel);
 }
 
+void NewLawnButton::SetButtonOffset(int theNewX, int theNewY)
+{
+	mButtonOffsetX = theNewX;
+	mButtonOffsetY = theNewY;
+}
+
 //0x448550
 void LawnStoneButton::SetLabel(const SexyString& theLabel)
 {

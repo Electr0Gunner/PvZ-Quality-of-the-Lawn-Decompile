@@ -7004,7 +7004,7 @@ void SexyAppBase::Remove3DData(MemoryImage* theMemoryImage)
 
 bool SexyAppBase::Is3DAccelerated()
 {
-	return mDDInterface->mIs3D;
+	return true; //mDDInterface->mIs3D;
 }
 
 bool SexyAppBase::Is3DAccelerationSupported()

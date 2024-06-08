@@ -46,8 +46,6 @@ void Achievements::GiveAchievement(LawnApp* theApp, AchievementType theAchivemen
 
 	theApp->mPlayerInfo->mEarnedAchievements[theAchivementType] = true;
 
-	if (theApp->mPlayerInfo->mShownedAchievements[theAchivementType] == MORTICULTURALIST);
-
 	SexyString aAchivementText = StrFormat(_S("[%s]"), ReturnAchievementName(theAchivementType).c_str());
 	SexyString aMessage = TodReplaceString(_S("[ACHIEVEMENT_GET]"), _S("{ACHIEVEMENT}"), aAchivementText);
 
@@ -77,10 +75,6 @@ void Achievements::InitAchievement()
 	int aTreeSize = mApp->mPlayerInfo->mChallengeRecords[GAMEMODE_TREE_OF_WISDOM - GAMEMODE_SURVIVAL_NORMAL_STAGE_1];
 	if (aTreeSize >= 100) {
 		GiveAchievement(mApp, AchievementType::TOWERING_WISDOM);
-	}
-	for (int i = SEED_PEASHOOTER; i <= SEED_IMITATER; i++) {
-		if (mApp->SeedTypeAvailable(SeedType(i)))
-			GiveAchievement(mApp, AchievementType::MORTICULTURALIST);
 	}
 }
 

@@ -1383,7 +1383,7 @@ void Board::GetZenButtonRect(GameObjectType theObjectType, Rect& theRect)
 }
 
 //0x40AF90
-void Board::InitLevel()
+void Board::InitLevel(bool isQuickPlay)
 {
 	mMainCounter = 0;
 	mEnableGraveStones = false;
@@ -1397,6 +1397,10 @@ void Board::InitLevel()
 	}
 	// 赋值当前关卡
 	mLevel = mApp->IsAdventureMode() ? mApp->mPlayerInfo->mLevel : 0;
+	if (isQuickPlay)
+	{
+		mLevel = mApp->mQuickLevel;
+	}
 	// 设定关卡背景
 	PickBackground();
 	// 设定关卡出怪

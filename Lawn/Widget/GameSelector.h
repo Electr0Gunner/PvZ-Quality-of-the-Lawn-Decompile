@@ -20,7 +20,7 @@ enum SelectorAnimState
     SELECTOR_OPEN,
     SELECTOR_NEW_USER,
     SELECTOR_SHOW_SIGN,
-    SELECTOR_ACHIEVEMENTS,
+    SELECTOR_SUB_MENU,
     SELECTOR_IDLE,
 };
 
@@ -40,7 +40,9 @@ private:
         GameSelector_Almanac = 108,
         GameSelector_ZenGarden = 109,
         GameSelector_Survival = 110,
-        GameSelector_Achievement = 111
+        GameSelector_Achievement = 111,
+        GameSelector_QuickPlay = 112,
+        GameSelector_Credits = 113
     };
 
 public:
@@ -55,6 +57,8 @@ public:
     NewLawnButton*              mAlmanacButton;             //+0xAC
     NewLawnButton*              mZenGardenButton;           //+0xB0
     NewLawnButton*              mAchievementButton;                
+    NewLawnButton*              mQuickPlayButton;
+    NewLawnButton*              mCreditsButton;
     NewLawnButton*              mSurvivalButton;            //+0xB4
     NewLawnButton*              mChangeUserButton;          //+0xB8
     Widget*                     mOverlayWidget;             //+0xBC
@@ -79,10 +83,11 @@ public:
     bool                        mHasTrophy;                 //+0x12C
     bool                        mUnlockSelectorCheat;       //+0x12D
     bool                        mDebugText;
-    int                         mAchievementTimer;
+    int                         mMovementTimer;
     int                         mCurrentY;
     int                         mDestinationY;
-    AchievementScreen* mAchievementWidget;
+    int                         mCurrentX;
+    int                         mDestinationX;
 
 public:
     GameSelector(LawnApp* theApp);
@@ -110,6 +115,7 @@ public:
     void                        AddPreviewProfiles();
     void                        KeyChar();
     int                         CalcYPos(int ogY, int newY);
+    int                         CalcXPos(int ogX, int newX);
 };
 
 class GameSelectorOverlay : public Widget

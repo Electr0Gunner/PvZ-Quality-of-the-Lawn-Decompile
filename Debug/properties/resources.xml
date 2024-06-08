@@ -134,6 +134,8 @@
 <Image id="SELECTORSCREEN_ZENGARDEN" path="SelectorScreen_ZenGarden"  />
 <Image id="ACHIEVEMENT_BUTTON" path="Achievements_pedestal"  />
 <Image id="ACHIEVEMENT_HIGHLIGHT" path="Achievements_pedestal_press"  />
+<Image id="QUICKPLAY_BUTTON" path="quickplay/quickplay_sign"  />
+<Image id="QUICKPLAY_BUTTON_HIGHLIGHT" path="quickplay/quickplay_sign_highlight"  />
 <Image id="SELECTORSCREEN_ZENGARDENHIGHLIGHT" path="SelectorScreen_ZenGardenHighlight"  />
 <Image id="STORE_SPEECHBUBBLE" path="Store_SpeechBubble" />
 <Image id="STORE_SPEECHBUBBLE2" path="Store_SpeechBubble2" />
@@ -407,6 +409,7 @@
 <Image id="SELECTORSCREEN_VASEBREAKER_BUTTON" path="SelectorScreen_Vasebreaker_button" />
 <Image id="SELECTORSCREEN_VASEBREAKER_HIGHLIGHT" path="SelectorScreen_Vasebreaker_Highlight" />
 <Image id="SELECTORSCREEN_WOODSIGN2_PRESS" path="SelectorScreen_WoodSign2_press" />
+<Image id="SELECTORSCREEN_WOODSIGN3_PRESS" path="SelectorScreen_WoodSign3_press" />
 <Image id="SELECTORSCREEN_BG" path="SelectorScreen_BG" a8r8g8b8="" />
 <Image id="SELECTORSCREEN_ALMANAC_SHADOW" path="Selectorscreen_almanac_shadow" />
 <Image id="SELECTORSCREEN_KEY_SHADOW" path="Selectorscreen_key_shadow" />
@@ -707,6 +710,18 @@
 <Image id="ACHIEVEMENT_ZUMA" path="achievementEasterEggs/acheesements_zuma" />
 </Resources>  
 
+
+<Resources id="DelayLoad_QuickPlay">
+<SetDefaults path="images" idprefix="IMAGE_" />
+<Image id="QUICKPLAY_BACKGROUND" path="quickplay/quickplay_main_bg" />
+<Image id="QUICKPLAY_LEFT_BUTTON" path="quickplay/leftButton" />
+<Image id="QUICKPLAY_LEFT_BUTTON_HIGHLIGHT" path="quickplay/leftButton_Highlight" />
+<Image id="QUICKPLAY_RIGHT_BUTTON" path="quickplay/rightButton" />
+<Image id="QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT" path="quickplay/rightButton_Highlight" />
+<Image id="QUICKPLAY_BACK_HIGHLIGHT" path="quickplay/quickplay_mainmenuback_highlight" />
+<Image id="QUICKPLAY_WIDGET" path="quickplay/level_widget" />
+</Resources>  
+
 <Resources id="DelayLoad_Almanac">
 <SetDefaults path="images" idprefix="IMAGE_" />
 <Image id="ALMANAC_INDEXBACK" path="Almanac_IndexBack" a8r8g8b8="" />
@@ -813,6 +828,7 @@
   <SetDefaults path="images" idprefix="IMAGE_" />
   <Image id="CREDITS_ZOMBIENOTE" path="Credits_ZombieNoteBlack" alphagrid="Credits_ZombieNote" />
   <Image id="CREDITS_PLAYBUTTON" path="Credits_PlayButton" />
+  <Image id="CREDITS_BG" path="CreditsBG" />
 </Resources>
 
 </ResourceManifest>
