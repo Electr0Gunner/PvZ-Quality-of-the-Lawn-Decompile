@@ -32,6 +32,7 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
 
     mBackground = BackgroundType::BACKGROUND_1_DAY;
     mZombieType = ZombieType::ZOMBIE_NORMAL;
+    mSeedType = SeedType::SEED_PEASHOOTER;
     mLevel = 1;
 
     mBackButton = MakeNewButton(0, this, "", nullptr, Sexy::IMAGE_BLANK,
@@ -54,6 +55,14 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
     mDisplayZombie = new Zombie();
     mDisplayZombie->mBoard = nullptr;
     mDisplayZombie->ZombieInitialize(0, mZombieType, false, nullptr, Zombie::ZOMBIE_WAVE_UI);
+
+    mDisplayPlant = new Plant();
+    mDisplayPlant->mIsOnBoard = false;
+    mDisplayPlant->PlantInitialize(0, 0, mSeedType, SEED_NONE);
+
+    mFlowerPot = new Plant();
+    mFlowerPot->mIsOnBoard = false;
+    mFlowerPot->PlantInitialize(0, 0, SEED_FLOWERPOT, SEED_NONE);
 }
 QuickPlayScreen::~QuickPlayScreen()
 {
@@ -62,6 +71,8 @@ QuickPlayScreen::~QuickPlayScreen()
     delete mBackButton;
     delete mPlayButton;
     delete mDisplayZombie;
+    delete mDisplayPlant;
+    delete mFlowerPot;
 }
 
 void QuickPlayScreen::Draw(Graphics* g)
@@ -93,8 +104,39 @@ void QuickPlayScreen::Draw(Graphics* g)
         mDisplayZombie->DrawShadow(&aZombieGraphics);
         mDisplayZombie->mPosX = 340;
         mDisplayZombie->mPosY = 240;
+        if (mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG)
+        {
+            mDisplayZombie->mPosY -= 120;
+        }
     }
-
+    if (mFlowerPot)
+    {
+        if (mBackground == BACKGROUND_5_ROOF || mBackground == BACKGROUND_6_BOSS)
+        {
+            Graphics aPotGraphics = Graphics(*g);
+            mFlowerPot->BeginDraw(&aPotGraphics);
+            mFlowerPot->Draw(&aPotGraphics);
+            mFlowerPot->mX = 280;
+            mFlowerPot->mY = 280;
+        }
+    }
+    if (mDisplayPlant)
+    {
+        Graphics aPlantGraphics = Graphics(*g);
+        mDisplayPlant->BeginDraw(&aPlantGraphics);
+        //mDisplayPlant->DrawShadow(&aPlantGraphics, 0, 0);
+        mDisplayPlant->Draw(&aPlantGraphics);
+        mDisplayPlant->mX = 280;
+        mDisplayPlant->mY = 280;
+        if ((mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG) && !mDisplayPlant->IsAquatic(mDisplayPlant->mSeedType))
+        {
+            mDisplayPlant->mY -= 120;
+        }
+        if(mBackground == BACKGROUND_5_ROOF || mBackground == BACKGROUND_6_BOSS)
+        {
+            mDisplayPlant->mY -= 10;
+        }
+    }
     g->DrawImage(Sexy::IMAGE_QUICKPLAY_WIDGET, 100, 0);
     int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, ADVENTURE_AREAS);
     int aSub = mLevel - (aStage - 1) * 10;
@@ -107,6 +149,19 @@ void QuickPlayScreen::Draw(Graphics* g)
 
 void QuickPlayScreen::KeyDown(KeyCode theKey) {
     if (theKey == KEYCODE_LEFT) {
+        mLevel--;
+        mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
+        ChooseBackground();
+        ResetZombie();
+        ResetPlant(true);
+    }
+    if (theKey == KEYCODE_RIGHT)
+    {
+        mLevel++;
+        mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
+        ChooseBackground();
+        ResetZombie();
+        ResetPlant(false);
     }
 
 }
@@ -192,6 +247,8 @@ void QuickPlayScreen::Update()
     mApp->mPoolEffect->PoolEffectUpdate();
     TOD_ASSERT(mLevel < 51);
     if (mDisplayZombie) mDisplayZombie->Update();
+    if (mDisplayPlant) mDisplayPlant->Update();
+    if (mFlowerPot) mFlowerPot->Update();
 }
 
 //0x42F740
@@ -216,6 +273,7 @@ void QuickPlayScreen::ButtonDepress(int theId)
         mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
         mApp->mGameSelector->mAchievementButton->SetDisabled(false);
         mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
+        mApp->mGameSelector->mCreditsButton->SetDisabled(false);
     }
     if (theId == 1)
     {
@@ -223,6 +281,7 @@ void QuickPlayScreen::ButtonDepress(int theId)
         mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
         ChooseBackground();
         ResetZombie();
+        ResetPlant(true);
     }
     if (theId == 2)
     {
@@ -230,6 +289,7 @@ void QuickPlayScreen::ButtonDepress(int theId)
         mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
         ChooseBackground();
         ResetZombie();
+        ResetPlant(false);
     }
 }
 
@@ -256,4 +316,22 @@ void QuickPlayScreen::ResetZombie()
     mDisplayZombie = new Zombie();
     mDisplayZombie->mBoard = nullptr;
     mDisplayZombie->ZombieInitialize(0, mZombieType, false, nullptr, Zombie::ZOMBIE_WAVE_UI);
+}
+
+void QuickPlayScreen::ResetPlant(bool decrease)
+{
+    if (mLevel % 10 == 0)
+        return;
+    if (mApp->GetAwardSeedForLevel(mLevel - 1) == SEED_FLOWERPOT)
+        return;
+    SeedType aSeedType = mDisplayPlant->mSeedType;
+    mDisplayPlant = nullptr;
+    mDisplayPlant = new Plant();
+    mDisplayPlant->mIsOnBoard = false;
+    if(decrease)
+        mDisplayPlant->PlantInitialize(0, 0, mApp->GetAwardSeedForLevel(mLevel - 1), SEED_NONE);
+    else
+    {
+        mDisplayPlant->PlantInitialize(0, 0, mApp->GetAwardSeedForLevel(mLevel -1 ), SEED_NONE);
+    }
 }

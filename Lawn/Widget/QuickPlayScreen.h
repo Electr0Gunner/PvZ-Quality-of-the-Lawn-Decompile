@@ -23,9 +23,11 @@ public:
     GameButton*                 mPlayButton;
     BackgroundType              mBackground;
     ZombieType                  mZombieType;
+    SeedType                    mSeedType;
     int                         mLevel;
     Zombie*                     mDisplayZombie;
     Plant*                      mDisplayPlant;
+    Plant*                      mFlowerPot;
 
 public:
     QuickPlayScreen(LawnApp* theApp);
@@ -34,8 +36,9 @@ public:
     void                        KeyDown(KeyCode theKey);
     void                        DrawPool(Graphics* g, bool isNight);
     void                        ChooseBackground();
-    void                  ChooseZombieType();
+    void                        ChooseZombieType();
     void                        ResetZombie();
+    void                        ResetPlant(bool decrease);
     virtual void                Draw(Graphics* g);
     virtual void                Update();
     virtual void                AddedToManager(WidgetManager* theWidgetManager);

@@ -41,7 +41,8 @@ private:
         GameSelector_ZenGarden = 109,
         GameSelector_Survival = 110,
         GameSelector_Achievement = 111,
-        GameSelector_QuickPlay = 112
+        GameSelector_QuickPlay = 112,
+        GameSelector_Credits = 113
     };
 
 public:
@@ -57,6 +58,7 @@ public:
     NewLawnButton*              mZenGardenButton;           //+0xB0
     NewLawnButton*              mAchievementButton;                
     NewLawnButton*              mQuickPlayButton;
+    NewLawnButton*              mCreditsButton;
     NewLawnButton*              mSurvivalButton;            //+0xB4
     NewLawnButton*              mChangeUserButton;          //+0xB8
     Widget*                     mOverlayWidget;             //+0xBC

@@ -2426,7 +2426,7 @@ bool LawnApp::IsFinalBossLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_FINAL_BOSS)
 		return true;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 50;
+	return IsAdventureMode() && mPlayerInfo->mLevel == 50 || (mPlayedQuickplay && mQuickLevel == 50);
 }
 
 //0x453A00

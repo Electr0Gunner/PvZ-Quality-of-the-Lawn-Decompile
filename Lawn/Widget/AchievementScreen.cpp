@@ -162,6 +162,7 @@ void AchievementScreen::ButtonDepress(int theId)
         mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
         mApp->mGameSelector->mAchievementButton->SetDisabled(false);
         mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
+        mApp->mGameSelector->mCreditsButton->SetDisabled(false);
     }
     if (theId == 1)
     {

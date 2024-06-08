@@ -407,6 +407,7 @@
 <Image id="SELECTORSCREEN_VASEBREAKER_BUTTON" path="SelectorScreen_Vasebreaker_button" />
 <Image id="SELECTORSCREEN_VASEBREAKER_HIGHLIGHT" path="SelectorScreen_Vasebreaker_Highlight" />
 <Image id="SELECTORSCREEN_WOODSIGN2_PRESS" path="SelectorScreen_WoodSign2_press" />
+<Image id="SELECTORSCREEN_WOODSIGN3_PRESS" path="SelectorScreen_WoodSign3_press" />
 <Image id="SELECTORSCREEN_BG" path="SelectorScreen_BG" a8r8g8b8="" />
 <Image id="SELECTORSCREEN_ALMANAC_SHADOW" path="Selectorscreen_almanac_shadow" />
 <Image id="SELECTORSCREEN_KEY_SHADOW" path="Selectorscreen_key_shadow" />

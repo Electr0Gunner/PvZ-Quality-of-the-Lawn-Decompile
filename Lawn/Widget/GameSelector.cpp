@@ -260,6 +260,19 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mQuickPlayButton->mClip = false;
 	mQuickPlayButton->mMouseVisible = false;
 
+	mCreditsButton = MakeNewButton(
+		GameSelector::GameSelector_Credits,
+		this,
+		"",
+		nullptr,
+		Sexy::IMAGE_BLANK,
+		Sexy::IMAGE_BLANK,
+		Sexy::IMAGE_BLANK
+	);
+	mCreditsButton->Resize(0, 0, 250, 30);
+	mCreditsButton->mBtnNoDraw = true;
+	mCreditsButton->mMouseVisible = false;
+
 	mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 
 	mStartingGame = false;
@@ -350,6 +363,8 @@ GameSelector::~GameSelector()
 		delete mSurvivalButton;
 	if (mChangeUserButton)
 		delete mChangeUserButton;
+	if (mCreditsButton)
+		delete mCreditsButton;
 	if (mQuickPlayButton)
 		delete mQuickPlayButton;
 
@@ -796,6 +811,7 @@ void GameSelector::Update()
 		mZenGardenButton->SetButtonOffset(aPosX, aPosY);;
 		mSurvivalButton->SetButtonOffset(aPosX, aPosY);
 		mChangeUserButton->SetButtonOffset(aPosX, aPosY);
+		mCreditsButton->SetButtonOffset(aPosX, aPosY);
 		mAchievementButton->SetButtonOffset(aPosX, aPosY);
 		mQuickPlayButton->SetButtonOffset(aPosX, aPosY);
 
@@ -892,6 +908,7 @@ void GameSelector::Update()
 			mStoreButton->mMouseVisible = true;
 			mAlmanacButton->mMouseVisible = true;
 			mChangeUserButton->mMouseVisible = true;
+			mCreditsButton->mMouseVisible = true;
 			mAchievementButton->mMouseVisible = true;
 			mQuickPlayButton->mMouseVisible = true;
 
@@ -992,8 +1009,10 @@ void GameSelector::Update()
 		TrackButton(mAlmanacButton, "SelectorScreen_BG_Right", 256.0f, 387.0f);
 		TrackButton(mStoreButton, "SelectorScreen_BG_Right", 334.0f, 441.0f);
 		TrackButton(mChangeUserButton, "woodsign2", 24.0f, 10.0f);
+		TrackButton(mCreditsButton, "woodsign3", 0.0f, 0.0f);
 		TrackButton(mAchievementButton, "SelectorScreen_BG_Left", 20.f, 480.f);
 		aSelectorReanim->SetImageOverride("woodsign2", (mChangeUserButton->mIsOver || mChangeUserButton->mIsDown) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN2_PRESS : nullptr);
+		aSelectorReanim->SetImageOverride("woodsign3", (mCreditsButton->mIsOver || mCreditsButton->mIsDown) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS : nullptr);
 	}
 }
 
@@ -1025,6 +1044,7 @@ void GameSelector::AddedToManager(WidgetManager* theWidgetManager)
 	theWidgetManager->AddWidget(mSurvivalButton);
 	theWidgetManager->AddWidget(mZenGardenButton);
 	theWidgetManager->AddWidget(mChangeUserButton);
+	theWidgetManager->AddWidget(mCreditsButton);
 	theWidgetManager->AddWidget(mOverlayWidget);
 	theWidgetManager->AddWidget(mAchievementButton);
 	theWidgetManager->AddWidget(mQuickPlayButton);
@@ -1046,6 +1066,7 @@ void GameSelector::RemovedFromManager(WidgetManager* theWidgetManager)
 	theWidgetManager->RemoveWidget(mSurvivalButton);
 	theWidgetManager->RemoveWidget(mZenGardenButton);
 	theWidgetManager->RemoveWidget(mChangeUserButton);
+	theWidgetManager->RemoveWidget(mCreditsButton);
 	theWidgetManager->RemoveWidget(mOverlayWidget);
 	theWidgetManager->RemoveWidget(mAchievementButton);
 	theWidgetManager->RemoveWidget(mQuickPlayButton);
@@ -1066,6 +1087,7 @@ void GameSelector::OrderInManagerChanged()
 	mWidgetManager->PutInfront(mZenGardenButton, this);
 	mWidgetManager->PutInfront(mSurvivalButton, this);
 	mWidgetManager->PutInfront(mChangeUserButton, this);
+	mWidgetManager->PutInfront(mCreditsButton, this);
 	mWidgetManager->PutInfront(mAchievementButton, this);
 	mWidgetManager->PutInfront(mQuickPlayButton, this);
 }
@@ -1257,6 +1279,7 @@ void GameSelector::ClickedAdventure()
 	mQuitButton->SetDisabled(true);
 	mHelpButton->SetDisabled(true);
 	mChangeUserButton->SetDisabled(true);
+	mCreditsButton->SetDisabled(true);
 	mStoreButton->SetDisabled(true);
 	mAlmanacButton->SetDisabled(true);
 	mSurvivalButton->SetDisabled(true);
@@ -1358,6 +1381,7 @@ void GameSelector::ButtonDepress(int theId)
 		mQuitButton->SetDisabled(true);
 		mHelpButton->SetDisabled(true);
 		mChangeUserButton->SetDisabled(true);
+		mCreditsButton->SetDisabled(true);
 		mStoreButton->SetDisabled(true);
 		mAlmanacButton->SetDisabled(true);
 		mSurvivalButton->SetDisabled(true);
@@ -1377,6 +1401,7 @@ void GameSelector::ButtonDepress(int theId)
 		mQuitButton->SetDisabled(true);
 		mHelpButton->SetDisabled(true);
 		mChangeUserButton->SetDisabled(true);
+		mCreditsButton->SetDisabled(true);
 		mStoreButton->SetDisabled(true);
 		mAlmanacButton->SetDisabled(true);
 		mSurvivalButton->SetDisabled(true);
@@ -1389,6 +1414,10 @@ void GameSelector::ButtonDepress(int theId)
 		mApp->PreNewGame(GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN, false);
 		if (ShouldDoZenTuturialBeforeAdventure())
 			mApp->mZenGarden->SetupForZenTutorial();
+		break;
+	case GameSelector::GameSelector_Credits:
+		mApp->KillGameSelector();
+		mApp->ShowMiniCreditScreen();
 		break;
 	}
 }
