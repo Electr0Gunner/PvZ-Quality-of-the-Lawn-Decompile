@@ -137,6 +137,7 @@
     <ClCompile Include="..\Lawn\Widget\MiniCreditsScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\NewOptionsDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\NewUserDialog.cpp" />
+    <ClCompile Include="..\Lawn\Widget\QuickPlayScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\TitleScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\UserDialog.cpp" />
     <ClCompile Include="..\Lawn\ZenGarden.cpp" />
@@ -703,6 +704,7 @@
     <ClInclude Include="..\Lawn\Widget\MiniCreditsScreen.h" />
     <ClInclude Include="..\Lawn\Widget\NewOptionsDialog.h" />
     <ClInclude Include="..\Lawn\Widget\NewUserDialog.h" />
+    <ClInclude Include="..\Lawn\Widget\QuickPlayScreen.h" />
     <ClInclude Include="..\Lawn\Widget\TitleScreen.h" />
     <ClInclude Include="..\Lawn\Widget\UserDialog.h" />
     <ClInclude Include="..\Sexy.TodLib\Attachment.h" />

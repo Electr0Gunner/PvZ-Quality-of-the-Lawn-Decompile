@@ -39,6 +39,7 @@ bool Sexy::ExtractResourcesByName(ResourceManager *theManager, const char *theNa
 	if (strcmp(theName,"LoadingImages")==0) return ExtractLoadingImagesResources(theManager);
 	if (strcmp(theName,"LoadingSounds")==0) return ExtractLoadingSoundsResources(theManager);
 	if (strcmp(theName, "DelayLoad_Achievements") == 0) return ExtractDelayLoad_AchievementResources(theManager);
+	if (strcmp(theName, "DelayLoad_QuickPlay") == 0) return ExtractDelayLoad_QuickPlayResources(theManager);
 	return false;
 }
 
@@ -374,6 +375,38 @@ bool Sexy::ExtractDelayLoad_AchievementResources(ResourceManager* theManager)
 		IMAGE_ACHIEVEMENT_PEGGLE = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_PEGGLE");
 		IMAGE_ACHIEVEMENT_PIPE = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_PIPE");
 		IMAGE_ACHIEVEMENT_ZUMA = aMgr.GetImageThrow("IMAGE_ACHIEVEMENT_ZUMA");
+	}
+	catch (ResourceManagerException&)
+	{
+		return false;
+	}
+	return true;
+}
+
+Image* Sexy::IMAGE_QUICKPLAY_BACKGROUND;
+Image* Sexy::IMAGE_QUICKPLAY_BACK_HIGHLIGHT;
+Image* Sexy::IMAGE_QUICKPLAY_WIDGET;
+
+Image* Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON;
+Image* Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT;
+
+Image* Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON;
+Image* Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT;
+
+bool Sexy::ExtractDelayLoad_QuickPlayResources(ResourceManager* theManager)
+{
+	gNeedRecalcVariableToIdMap = true;
+
+	ResourceManager& aMgr = *theManager;
+	try
+	{
+		IMAGE_QUICKPLAY_BACKGROUND = aMgr.GetImageThrow("IMAGE_QUICKPLAY_BACKGROUND");
+		IMAGE_QUICKPLAY_BACK_HIGHLIGHT = aMgr.GetImageThrow("IMAGE_QUICKPLAY_BACK_HIGHLIGHT");
+		IMAGE_QUICKPLAY_WIDGET = aMgr.GetImageThrow("IMAGE_QUICKPLAY_WIDGET");
+		IMAGE_QUICKPLAY_LEFT_BUTTON = aMgr.GetImageThrow("IMAGE_QUICKPLAY_LEFT_BUTTON");
+		IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT = aMgr.GetImageThrow("IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT");
+		IMAGE_QUICKPLAY_RIGHT_BUTTON = aMgr.GetImageThrow("IMAGE_QUICKPLAY_RIGHT_BUTTON");
+		IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT = aMgr.GetImageThrow("IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT");
 	}
 	catch (ResourceManagerException&)
 	{
@@ -2536,6 +2569,13 @@ static void* gResources[] =
 	&IMAGE_ACHIEVEMENT_PEGGLE,
 	&IMAGE_ACHIEVEMENT_PIPE,
 	&IMAGE_ACHIEVEMENT_ZUMA,
+	&IMAGE_QUICKPLAY_BACKGROUND,
+	&IMAGE_QUICKPLAY_BACK_HIGHLIGHT,
+	&IMAGE_QUICKPLAY_WIDGET,
+	&IMAGE_QUICKPLAY_LEFT_BUTTON,
+	&IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT,
+	&IMAGE_QUICKPLAY_RIGHT_BUTTON,
+	&IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT,
 	NULL
 };
 
@@ -3272,6 +3312,13 @@ const char* Sexy::GetStringIdById(int theId)
 		case IMAGE_ACHIEVEMENT_PEGGLE_ID: return "IMAGE_ACHIEVEMENT_PEGGLE";
 		case IMAGE_ACHIEVEMENT_PIPE_ID: return "IMAGE_ACHIEVEMENT_PIPE";
 		case IMAGE_ACHIEVEMENT_ZUMA_ID: return "IMAGE_ACHIEVEMENT_ZUMA";
+		case IMAGE_QUICKPLAY_BACKGROUND_ID: return "IMAGE_QUICKPLAY_BACKGROUND";
+		case IMAGE_QUICKPLAY_BACK_HIGHLIGHT_ID: return "IMAGE_QUICKPLAY_BACK_HIGHLIGHT";
+		case IMAGE_QUICKPLAY_WIDGET_ID: return "IMAGE_QUICKPLAY_WIDGET";
+		case IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT_ID: return "IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT";
+		case IMAGE_QUICKPLAY_LEFT_BUTTON_ID: return "IMAGE_QUICKPLAY_LEFT_BUTTON";
+		case IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT_ID: return "IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT";
+		case IMAGE_QUICKPLAY_RIGHT_BUTTON_ID: return "IMAGE_QUICKPLAY_RIGHT_BUTTON";
 		default: return "";
 	}
 }

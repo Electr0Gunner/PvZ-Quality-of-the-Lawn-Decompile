@@ -36,6 +36,7 @@
 #include "Lawn/Widget/NewUserDialog.h"
 #include "Lawn/Widget/MiniCreditsScreen.h"
 #include "Lawn/Widget/AchievementScreen.h"
+#include "Lawn/Widget/QuickPlayScreen.h"
 #include "Lawn/Widget/ContinueDialog.h"
 #include "Lawn/System/ReanimationLawn.h"
 #include "Lawn/Widget/ChallengeScreen.h"
@@ -86,6 +87,7 @@ LawnApp::LawnApp()
 	mAwardScreen = nullptr;
 	mCreditScreen = nullptr;
 	mTitleScreen = nullptr;
+	mQuickPlayScreen = nullptr;
 	mMiniCreditsScreen = nullptr;
 	mAchievementScreen = nullptr;
 	mSoundSystem = nullptr;
@@ -161,6 +163,8 @@ LawnApp::LawnApp()
 	mCrazyDaveMessageIndex = -1;
 	mBigArrowCursor = LoadCursor(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDC_CURSOR1));
 	mDRM = nullptr;
+	mQuickLevel = 1;
+	mPlayedQuickplay = false;
 	StartDiscord();
 }
 
@@ -267,6 +271,11 @@ LawnApp::~LawnApp()
 	{
 		mWidgetManager->RemoveWidget(mAchievementScreen);
 		delete mAchievementScreen;
+	}
+	if (mQuickPlayScreen)
+	{
+		mWidgetManager->RemoveWidget(mQuickPlayScreen);
+		delete mQuickPlayScreen;
 	}
 
 	delete mProfileMgr;
@@ -445,6 +454,15 @@ void LawnApp::PreNewGame(GameMode theGameMode, bool theLookForSavedGame)
 	NewGame();
 }
 
+void LawnApp::StartQuickPlay(GameMode theGameMode, bool theLookForSavedGame)
+{
+	mGameMode = theGameMode;
+	//if (theLookForSavedGame && TryLoadGame())
+		//return;
+
+	NewGame(true);
+}
+
 //0x44F5F0
 void LawnApp::MakeNewBoard()
 {
@@ -494,12 +512,12 @@ bool LawnApp::TryLoadGame()
 }
 
 //0x44F890
-void LawnApp::NewGame()
+void LawnApp::NewGame(bool isQuickPlay)
 {
 	mFirstTimeGameSelector = false;
 
 	MakeNewBoard();
-	mBoard->InitLevel();
+	mBoard->InitLevel(isQuickPlay);
 	mBoardResult = BoardResult::BOARDRESULT_NONE;
 	mGameScene = GameScenes::SCENE_LEVEL_INTRO;
 
@@ -625,6 +643,28 @@ void LawnApp::KillAchievementScreen()
 		mWidgetManager->RemoveWidget(mAchievementScreen);
 		SafeDeleteWidget(mAchievementScreen);
 		mAchievementScreen = nullptr;
+	}
+}
+
+void LawnApp::ShowQuickPlayScreen()
+{
+	if (mQuickPlayScreen)
+		KillQuickPlayScreen();
+	mGameScene = GameScenes::SCENE_MENU;
+	mQuickPlayScreen = new QuickPlayScreen(this);
+	mQuickPlayScreen->Resize(0, 0, mWidth, mHeight);
+	mWidgetManager->AddWidget(mQuickPlayScreen);
+	mWidgetManager->BringToFront(mQuickPlayScreen);
+	mWidgetManager->SetFocus(mQuickPlayScreen);
+}
+
+void LawnApp::KillQuickPlayScreen()
+{
+	if (mQuickPlayScreen)
+	{
+		mWidgetManager->RemoveWidget(mQuickPlayScreen);
+		SafeDeleteWidget(mQuickPlayScreen);
+		mQuickPlayScreen = nullptr;
 	}
 }
 
@@ -1595,8 +1635,16 @@ void LawnApp::CheckForGameEnd()
 
 	bool aUnlockedNewChallenge = UpdatePlayerProfileForFinishingLevel();
 
+	if (mPlayedQuickplay)
+	{
+		ShowGameSelector();
+		mPlayedQuickplay = false;
+		return;
+	}
+
 	if (IsAdventureMode())
 	{
+
 		int aLevel = mBoard->mLevel;
 		KillBoard();
 
@@ -2286,7 +2334,7 @@ bool LawnApp::IsWallnutBowlingLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_WALLNUT_BOWLING || mGameMode == GameMode::GAMEMODE_CHALLENGE_WALLNUT_BOWLING_2)
 		return true;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 5;
+	return (mQuickLevel == 5 && mPlayedQuickplay) || (IsAdventureMode() && mPlayerInfo->mLevel == 5);
 }
 
 //0x453870
@@ -2304,13 +2352,19 @@ bool LawnApp::IsWhackAZombieLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_WHACK_A_ZOMBIE)
 		return true;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 15;
+	return IsAdventureMode() && mPlayerInfo->mLevel == 15 || (mQuickLevel == 15 && mPlayedQuickplay);
 }
 
 //0x4538C0
 bool LawnApp::IsLittleTroubleLevel()
 {
-	return (mBoard && (mGameMode == GameMode::GAMEMODE_CHALLENGE_LITTLE_TROUBLE || (mGameMode == GameMode::GAMEMODE_ADVENTURE && mPlayerInfo->mLevel == 25)));
+	if (mBoard == nullptr)
+		return false;
+
+	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_LITTLE_TROUBLE)
+		return true;
+	
+	return (mGameMode == GameMode::GAMEMODE_ADVENTURE && mPlayerInfo->mLevel == 25) || (mQuickLevel == 25 && mPlayedQuickplay);
 }
 
 //0x4538F0
@@ -2319,7 +2373,7 @@ bool LawnApp::IsScaryPotterLevel()
 	if (mGameMode >= GameMode::GAMEMODE_SCARY_POTTER_1 && mGameMode <= GameMode::GAMEMODE_SCARY_POTTER_ENDLESS)
 		return true;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 35;
+	return IsAdventureMode() && mPlayerInfo->mLevel == 35 || (mQuickLevel == 35 && mPlayedQuickplay);
 }
 
 //0x453920
@@ -2331,7 +2385,7 @@ bool LawnApp::IsStormyNightLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_STORMY_NIGHT)
 		return true;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 40;
+	return IsAdventureMode() && mPlayerInfo->mLevel == 40 || (mQuickLevel == 40 && mPlayedQuickplay);
 }
 
 //0x453950
@@ -2343,7 +2397,7 @@ bool LawnApp::IsBungeeBlitzLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_BUNGEE_BLITZ)
 		return true;
 
-	return IsAdventureMode() && mPlayerInfo->mLevel == 45;
+	return IsAdventureMode() && mPlayerInfo->mLevel == 45 || (mQuickLevel == 45 && mPlayedQuickplay);
 }
 
 //0x453980
@@ -2351,6 +2405,11 @@ bool LawnApp::IsMiniBossLevel()
 {
 	if (mBoard == nullptr)
 		return false;
+
+	if (mPlayedQuickplay)
+	{
+		return (mQuickLevel == 10 || mQuickLevel == 20 || mQuickLevel == 30) && mPlayedQuickplay;
+	}
 
 	return
 		(IsAdventureMode() && mPlayerInfo->mLevel == 10) ||

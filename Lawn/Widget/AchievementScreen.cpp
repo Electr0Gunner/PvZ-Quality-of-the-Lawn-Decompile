@@ -144,7 +144,7 @@ void AchievementScreen::ButtonDepress(int theId)
     if (theId == 0)
     {
         mScrollPosition = 0;
-        mApp->mGameSelector->mAchievementTimer = 75;
+        mApp->mGameSelector->mMovementTimer = 75;
         mApp->mGameSelector->mDestinationY = 0;
         mApp->mGameSelector->mSelectorState = SELECTOR_IDLE;
         mApp->mWidgetManager->SetFocus(mApp->mGameSelector);
@@ -161,6 +161,7 @@ void AchievementScreen::ButtonDepress(int theId)
         mApp->mGameSelector->mSurvivalButton->SetDisabled(false);
         mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
         mApp->mGameSelector->mAchievementButton->SetDisabled(false);
+        mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
     }
     if (theId == 1)
     {

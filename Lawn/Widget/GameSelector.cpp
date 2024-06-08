@@ -2,6 +2,7 @@
 #include "GameButton.h"
 #include "StoreScreen.h"
 #include "AchievementScreen.h"
+#include "QuickPlayScreen.h"
 #include "../ZenGarden.h"
 #include "GameSelector.h"
 #include "../../LawnApp.h"
@@ -50,9 +51,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mHasTrophy = false;
 	mToolTip = new ToolTipWidget();
 	mDebugText = false;
-	mAchievementTimer = 0;
+	mMovementTimer = 0;
 	mCurrentY = mY;
 	mDestinationY = mCurrentY;
+	mCurrentX = mX;
+	mDestinationX = mCurrentX;
 
 	mAdventureButton = MakeNewButton(
 		GameSelector::GameSelector_Adventure, 
@@ -244,6 +247,19 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mAchievementButton->mClip = false;
 	mAchievementButton->mMouseVisible = false;
 
+	mQuickPlayButton = MakeNewButton(
+		GameSelector::GameSelector_QuickPlay,
+		this,
+		"",
+		nullptr,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT,
+		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT
+	);
+	mQuickPlayButton->Resize(90, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight - 35, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mWidth, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight);
+	mQuickPlayButton->mClip = false;
+	mQuickPlayButton->mMouseVisible = false;
+
 	mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 
 	mStartingGame = false;
@@ -334,6 +350,8 @@ GameSelector::~GameSelector()
 		delete mSurvivalButton;
 	if (mChangeUserButton)
 		delete mChangeUserButton;
+	if (mQuickPlayButton)
+		delete mQuickPlayButton;
 
 	delete mToolTip;
 }
@@ -746,46 +764,55 @@ void GameSelector::Update()
 	MarkDirty();
 	UpdateTooltip();
 	mApp->mZenGarden->UpdatePlantNeeds();
-	if(mSelectorState != SELECTOR_ACHIEVEMENTS)
+	if(mSelectorState != SELECTOR_SUB_MENU)
 		mApp->UpdateDiscordRPC("In The Main Menu");
 	else
 	{
 		mApp->UpdateDiscordRPC("In The Achievement Screen");
 	}
 
-	if (mAchievementTimer > 0)
+	if (mMovementTimer > 0)
 	{
 		//int aPosY = TodAnimateCurve(75, 0, mAchievementTimer, 0, -mApp->mHeight, TodCurves::CURVE_EASE_IN_OUT);
 		int aPosY = CalcYPos(mCurrentY, mDestinationY);
+		int aPosX = CalcXPos(mCurrentX, mDestinationX);
 		mY = aPosY;
+		mX = aPosX;
 
 		if(mApp->mAchievementScreen)
 			mApp->mAchievementScreen->mY = aPosY + mApp->mHeight - 1;
+		if (mApp->mQuickPlayScreen)
+			mApp->mQuickPlayScreen->mX = aPosX + mApp->mWidth - 1;
+		mOverlayWidget->mX = aPosX;
 		mOverlayWidget->mY = aPosY;
-		mAdventureButton->mButtonOffsetY = aPosY;
-		mMinigameButton->mButtonOffsetY = aPosY;
-		mPuzzleButton->mButtonOffsetY = aPosY;
-		mOptionsButton->mButtonOffsetY = aPosY + 15;
-		mQuitButton->mButtonOffsetY = aPosY + 5;
-		mHelpButton->mButtonOffsetY = aPosY + 30;
-		mStoreButton->mButtonOffsetY = aPosY;
-		mAlmanacButton->mButtonOffsetY = aPosY;
-		mZenGardenButton->mButtonOffsetY = aPosY;
-		mSurvivalButton->mButtonOffsetY = aPosY;
-		mChangeUserButton->mButtonOffsetY = aPosY;
-		mAchievementButton->mButtonOffsetY = aPosY;
+		mAdventureButton->SetButtonOffset(aPosX,aPosY);
+		mMinigameButton->SetButtonOffset(aPosX, aPosY);
+		mPuzzleButton->SetButtonOffset(aPosX, aPosY);
+		mOptionsButton->SetButtonOffset(aPosX, aPosY + 15);
+		mQuitButton->SetButtonOffset(aPosX, aPosY + 5);
+		mHelpButton->SetButtonOffset(aPosX, aPosY + 30);
+		mStoreButton->SetButtonOffset(aPosX, aPosY);
+		mAlmanacButton->SetButtonOffset(aPosX, aPosY);
+		mZenGardenButton->SetButtonOffset(aPosX, aPosY);;
+		mSurvivalButton->SetButtonOffset(aPosX, aPosY);
+		mChangeUserButton->SetButtonOffset(aPosX, aPosY);
+		mAchievementButton->SetButtonOffset(aPosX, aPosY);
+		mQuickPlayButton->SetButtonOffset(aPosX, aPosY);
+
 		
 		mAchievementButton->MarkDirty();
+		mQuickPlayButton->MarkDirty();
 		mOptionsButton->MarkDirty();
 		mHelpButton->MarkDirty();
 		mQuitButton->MarkDirty();
 		mStoreButton->MarkDirty();
 		
-		mAchievementTimer--;
+		mMovementTimer--;
 	}
-	else if (mAchievementTimer == 0)
+	else if (mMovementTimer == 0)
 	{
 		mCurrentY = mY;
+		mCurrentX = mX;
 	}
 
 	TodParticleSystem* aParticle = mApp->ParticleTryToGet(mTrophyParticleID);
@@ -853,6 +880,7 @@ void GameSelector::Update()
 			mHelpButton->mBtnNoDraw = false;
 			mOptionsButton->mBtnNoDraw = false;
 			mQuitButton->mBtnNoDraw = false;
+			mQuickPlayButton->mBtnNoDraw = false;
 			mAdventureButton->mMouseVisible = true;
 			mMinigameButton->mMouseVisible = true;
 			mPuzzleButton->mMouseVisible = true;
@@ -865,6 +893,7 @@ void GameSelector::Update()
 			mAlmanacButton->mMouseVisible = true;
 			mChangeUserButton->mMouseVisible = true;
 			mAchievementButton->mMouseVisible = true;
+			mQuickPlayButton->mMouseVisible = true;
 
 			if (mApp->mPlayerInfo == nullptr)
 			{
@@ -947,9 +976,11 @@ void GameSelector::Update()
 	if (aHandReanim)
 		aHandReanim->Update();
 
-	if(mSelectorState != SELECTOR_ACHIEVEMENTS){
-		if(mAchievementTimer == 0)
+	if(mSelectorState != SELECTOR_SUB_MENU){
+		if(mMovementTimer == 0){
 			mApp->KillAchievementScreen();
+			mApp->KillQuickPlayScreen();
+		}
 		TrackButton(mAdventureButton, mShowStartButton ? "SelectorScreen_StartAdventure_button" : "SelectorScreen_Adventure_button", 0.0f, 0.0f);
 		TrackButton(mMinigameButton, "SelectorScreen_Survival_button", 0.0f, 0.0f);
 		TrackButton(mPuzzleButton, "SelectorScreen_Challenges_button", 0.0f, 0.0f);
@@ -996,6 +1027,7 @@ void GameSelector::AddedToManager(WidgetManager* theWidgetManager)
 	theWidgetManager->AddWidget(mChangeUserButton);
 	theWidgetManager->AddWidget(mOverlayWidget);
 	theWidgetManager->AddWidget(mAchievementButton);
+	theWidgetManager->AddWidget(mQuickPlayButton);
 }
 
 //0x44BCA0
@@ -1016,6 +1048,7 @@ void GameSelector::RemovedFromManager(WidgetManager* theWidgetManager)
 	theWidgetManager->RemoveWidget(mChangeUserButton);
 	theWidgetManager->RemoveWidget(mOverlayWidget);
 	theWidgetManager->RemoveWidget(mAchievementButton);
+	theWidgetManager->RemoveWidget(mQuickPlayButton);
 }
 
 //0x44BD80
@@ -1034,6 +1067,7 @@ void GameSelector::OrderInManagerChanged()
 	mWidgetManager->PutInfront(mSurvivalButton, this);
 	mWidgetManager->PutInfront(mChangeUserButton, this);
 	mWidgetManager->PutInfront(mAchievementButton, this);
+	mWidgetManager->PutInfront(mQuickPlayButton, this);
 }
 
 //0x44BE60
@@ -1228,6 +1262,7 @@ void GameSelector::ClickedAdventure()
 	mSurvivalButton->SetDisabled(true);
 	mZenGardenButton->SetDisabled(true);
 	mAchievementButton->SetDisabled(true);
+	mQuickPlayButton->SetDisabled(true);
 
 	Reanimation* aHandReanim = mApp->AddReanimation(-70.0f, 10.0f, 0, ReanimationType::REANIM_ZOMBIE_HAND);
 	aHandReanim->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
@@ -1312,9 +1347,9 @@ void GameSelector::ButtonDepress(int theId)
 		mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 		break;
 	case GameSelector::GameSelector_Achievement:
-		mAchievementTimer = 75;
+		mMovementTimer = 75;
 		mDestinationY = -mApp->mHeight;
-		mSelectorState = SELECTOR_ACHIEVEMENTS;
+		mSelectorState = SELECTOR_SUB_MENU;
 		mApp->ShowAchievementScreen();
 		mAdventureButton->SetDisabled(true);
 		mMinigameButton->SetDisabled(true);
@@ -1328,6 +1363,26 @@ void GameSelector::ButtonDepress(int theId)
 		mSurvivalButton->SetDisabled(true);
 		mZenGardenButton->SetDisabled(true);
 		mAchievementButton->SetDisabled(true);
+		mQuickPlayButton->SetDisabled(true);
+		break;
+	case GameSelector::GameSelector_QuickPlay:
+		mMovementTimer = 75;
+		mDestinationX = -mApp->mWidth;
+		mSelectorState = SELECTOR_SUB_MENU;
+		mApp->ShowQuickPlayScreen();
+		mAdventureButton->SetDisabled(true);
+		mMinigameButton->SetDisabled(true);
+		mPuzzleButton->SetDisabled(true);
+		mOptionsButton->SetDisabled(true);
+		mQuitButton->SetDisabled(true);
+		mHelpButton->SetDisabled(true);
+		mChangeUserButton->SetDisabled(true);
+		mStoreButton->SetDisabled(true);
+		mAlmanacButton->SetDisabled(true);
+		mSurvivalButton->SetDisabled(true);
+		mZenGardenButton->SetDisabled(true);
+		mAchievementButton->SetDisabled(true);
+		mQuickPlayButton->SetDisabled(true);
 		break;
 	case GameSelector::GameSelector_ZenGarden:
 		mApp->KillGameSelector();
@@ -1341,7 +1396,12 @@ void GameSelector::ButtonDepress(int theId)
 int GameSelector::CalcYPos(int ogY, int theY)
 {
 	mDestinationY = theY;
-	return TodAnimateCurve(75, 0, mAchievementTimer, mCurrentY, mDestinationY, TodCurves::CURVE_EASE_IN_OUT);
+	return TodAnimateCurve(75, 0, mMovementTimer, mCurrentY, mDestinationY, TodCurves::CURVE_EASE_IN_OUT);
+}
+int GameSelector::CalcXPos(int ogX, int theX)
+{
+	mDestinationX = theX;
+	return TodAnimateCurve(75, 0, mMovementTimer, mCurrentX, mDestinationX, TodCurves::CURVE_EASE_IN_OUT);
 }
 
 //0x44CB00

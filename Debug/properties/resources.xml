@@ -707,6 +707,18 @@
 <Image id="ACHIEVEMENT_ZUMA" path="achievementEasterEggs/acheesements_zuma" />
 </Resources>  
 
+
+<Resources id="DelayLoad_QuickPlay">
+<SetDefaults path="images" idprefix="IMAGE_" />
+<Image id="QUICKPLAY_BACKGROUND" path="quickplay/quickplay_main_bg" />
+<Image id="QUICKPLAY_LEFT_BUTTON" path="quickplay/leftButton" />
+<Image id="QUICKPLAY_LEFT_BUTTON_HIGHLIGHT" path="quickplay/leftButton_Highlight" />
+<Image id="QUICKPLAY_RIGHT_BUTTON" path="quickplay/rightButton" />
+<Image id="QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT" path="quickplay/rightButton_Highlight" />
+<Image id="QUICKPLAY_BACK_HIGHLIGHT" path="quickplay/quickplay_mainmenuback_highlight" />
+<Image id="QUICKPLAY_WIDGET" path="quickplay/level_widget" />
+</Resources>  
+
 <Resources id="DelayLoad_Almanac">
 <SetDefaults path="images" idprefix="IMAGE_" />
 <Image id="ALMANAC_INDEXBACK" path="Almanac_IndexBack" a8r8g8b8="" />

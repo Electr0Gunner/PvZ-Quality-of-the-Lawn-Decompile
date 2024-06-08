@@ -30,6 +30,7 @@ class AlmanacDialog;
 class TypingCheck;
 class MiniCreditsScreen;
 class AchievementScreen;
+class QuickPlayScreen;
 
 namespace Sexy
 {
@@ -67,6 +68,7 @@ public:
 	ChallengeScreen*				mChallengeScreen;								//+0x780
 	MiniCreditsScreen*				mMiniCreditsScreen;	
 	AchievementScreen*				mAchievementScreen;
+	QuickPlayScreen*				mQuickPlayScreen;
 	TodFoley*						mSoundSystem;									//+0x784
 	ButtonList						mControlButtonList;								//+0x788
 	ImageList						mCreatedImageList;								//+0x794
@@ -132,6 +134,8 @@ public:
 	bool							isFastMode;
 	int								SpeedValue;
 	SexyString						mReconVersion;
+	int								mQuickLevel;
+	bool							mPlayedQuickplay;
 
 public:
 	LawnApp();
@@ -174,8 +178,9 @@ public:
 	void							MakeNewBoard();
 	void							StartPlaying();
 	bool							TryLoadGame();
-	void							NewGame();
+	void							NewGame(bool isQuickPlay = false);
 	void							PreNewGame(GameMode theGameMode, bool theLookForSavedGame);
+	void							StartQuickPlay(GameMode theGameMode, bool theLookForSavedGame);
 	void							ShowGameSelector();
 	void							KillGameSelector();
 	void							ShowAwardScreen(AwardType theAwardType, bool theShowAchievements);
@@ -292,6 +297,8 @@ public:
 	void							KillMiniCreditScreen();
 	void							ShowAchievementScreen();
 	void							KillAchievementScreen();
+	void							ShowQuickPlayScreen();
+	void							KillQuickPlayScreen();
 	static SexyString				Pluralize(int theCount, const SexyChar* theSingular, const SexyChar* thePlural);
 	int								GetNumTrophies(ChallengePage thePage);
 	/*inline*/ bool					EarnedGoldTrophy();
