@@ -252,13 +252,16 @@ GameSelector::GameSelector(LawnApp* theApp)
 		this,
 		"",
 		nullptr,
-		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON,
-		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT,
-		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT
+		Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON,
+		Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON_HIGHLIGHT,
+		Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON_HIGHLIGHT
 	);
-	mQuickPlayButton->Resize(90, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight - 35, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mWidth, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight);
+	mQuickPlayButton->Resize(300, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON->mHeight - 100, Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON->mWidth, Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON->mHeight);
 	mQuickPlayButton->mClip = false;
 	mQuickPlayButton->mMouseVisible = false;
+	mQuickPlayButton->SetDisabled(false);
+	mQuickPlayButton->mVisible = true;
+
 
 	mCreditsButton = MakeNewButton(
 		GameSelector::GameSelector_Credits,
@@ -269,7 +272,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_BLANK,
 		Sexy::IMAGE_BLANK
 	);
-	mCreditsButton->Resize(0, 0, 250, 30);
+	mCreditsButton->Resize(0, 0, IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS->mWidth, IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS->mHeight);
 	mCreditsButton->mBtnNoDraw = true;
 	mCreditsButton->mMouseVisible = false;
 
@@ -381,6 +384,8 @@ void GameSelector::SyncButtons()
 
 	mAlmanacButton->mDisabled = !aAlmanacAvailable;
 	mAlmanacButton->mVisible = aAlmanacAvailable;
+	mQuickPlayButton->mDisabled = !mApp->HasFinishedAdventure();
+	mQuickPlayButton->mVisible = mApp->HasFinishedAdventure();
 	mStoreButton->mDisabled = !aStoreOpen;
 	mStoreButton->mVisible = aStoreOpen;
 
@@ -1011,9 +1016,11 @@ void GameSelector::Update()
 		TrackButton(mChangeUserButton, "woodsign2", 24.0f, 10.0f);
 		TrackButton(mCreditsButton, "woodsign3", 0.0f, 0.0f);
 		TrackButton(mAchievementButton, "SelectorScreen_BG_Left", 20.f, 480.f);
+		TrackButton(mQuickPlayButton, "SelectorScreen_BG_Right", 80.f, 230.f);
 		aSelectorReanim->SetImageOverride("woodsign2", (mChangeUserButton->mIsOver || mChangeUserButton->mIsDown) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN2_PRESS : nullptr);
 		aSelectorReanim->SetImageOverride("woodsign3", (mCreditsButton->mIsOver || mCreditsButton->mIsDown) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS : nullptr);
 	}
+
 }
 
 //0x44BB20
@@ -1208,6 +1215,10 @@ void GameSelector::KeyChar(char theChar)
 		{
 			mDebugText = !mDebugText;
 			return;
+		}
+		if (theChar == _S('p'))
+		{
+			AddPreviewProfiles();
 		}
 	}
 }

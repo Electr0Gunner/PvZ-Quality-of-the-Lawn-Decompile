@@ -17,7 +17,7 @@ using namespace Sexy;
 
 //0x45C050
 NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bool theAdvanced) :
-	Dialog(nullptr, nullptr, Dialogs::DIALOG_NEWOPTIONS, true, _S("Options"), _S(""), _S(""), Dialog::BUTTONS_NONE)
+    Dialog(nullptr, nullptr, Dialogs::DIALOG_NEWOPTIONS, true, _S("Options"), _S(""), _S(""), Dialog::BUTTONS_NONE)
 {
     mApp = theApp;
     mFromGameSelector = theFromGameSelector;
@@ -29,12 +29,12 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mAdvancedButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Advanced, this, _S("[ADVANCED_OPTIONS]"));
 
     mBackToGameButton = MakeNewButton(
-        Dialog::ID_OK, 
-        this, 
-        _S("[BACK_TO_GAME]"), 
-        nullptr, 
-        IMAGE_OPTIONS_BACKTOGAMEBUTTON0, 
-        IMAGE_OPTIONS_BACKTOGAMEBUTTON0, 
+        Dialog::ID_OK,
+        this,
+        _S("[BACK_TO_GAME]"),
+        nullptr,
+        IMAGE_OPTIONS_BACKTOGAMEBUTTON0,
+        IMAGE_OPTIONS_BACKTOGAMEBUTTON0,
         IMAGE_OPTIONS_BACKTOGAMEBUTTON2
     );
     mBackToGameButton->mTranslateX = 0;
@@ -47,7 +47,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mBackToGameButton->SetColor(ButtonWidget::COLOR_LABEL, Color::White);
     mBackToGameButton->SetColor(ButtonWidget::COLOR_LABEL_HILITE, Color::White);
     mBackToGameButton->mHiliteFont = FONT_DWARVENTODCRAFT36BRIGHTGREENINSET;
-    
+
     mMusicVolumeSlider = new Sexy::Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, NewOptionsDialog::NewOptionsDialog_MusicVolume, this);
     double aMusicVolume = theApp->GetMusicVolume();
     aMusicVolume = max(0.0, min(1.0, aMusicVolume));
@@ -57,7 +57,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mSfxVolumeSlider->SetValue(theApp->GetSfxVolume() / 0.65);
 
     mFullscreenCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Fullscreen, this, !theApp->mIsWindowed);
-    mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->Is3DAccelerated());
+    //mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->Is3DAccelerated());
     mDebugModeBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_DebugMode, this, mApp->mTodCheatKeys);
     mDebugModeBox->SetVisible(false);
 
@@ -88,8 +88,8 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
         mAdvancedButton->SetVisible(false);
     }
 
-    if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE || 
-        mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || 
+    if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE ||
+        mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
         mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
     {
         mRestartButton->SetVisible(false);
@@ -98,23 +98,23 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     {
         mRestartButton->SetVisible(false);
     }
-    if (!mApp->CanShowAlmanac() || 
-        mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO || 
+    if (!mApp->CanShowAlmanac() ||
+        mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO ||
         mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
-        mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM || 
+        mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM ||
         mFromGameSelector)
     {
         mAlmanacButton->SetVisible(false);
     }
 }
 
-//0x45C760ˇ˘0x45C780
+//0x45C760��0x45C780
 NewOptionsDialog::~NewOptionsDialog()
 {
     delete mMusicVolumeSlider;
     delete mSfxVolumeSlider;
     delete mFullscreenCheckbox;
-    delete mHardwareAccelerationCheckbox;
+    //delete mHardwareAccelerationCheckbox;
     delete mDebugModeBox;
     delete mAlmanacButton;
     delete mRestartButton;
@@ -139,7 +139,7 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mAdvancedButton);
     AddWidget(mMusicVolumeSlider);
     AddWidget(mSfxVolumeSlider);
-    AddWidget(mHardwareAccelerationCheckbox);
+    //AddWidget(mHardwareAccelerationCheckbox);
     AddWidget(mDebugModeBox);
     AddWidget(mFullscreenCheckbox);
     AddWidget(mBackToGameButton);
@@ -153,7 +153,7 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mMusicVolumeSlider);
     RemoveWidget(mSfxVolumeSlider);
     RemoveWidget(mFullscreenCheckbox);
-    RemoveWidget(mHardwareAccelerationCheckbox);
+    //RemoveWidget(mHardwareAccelerationCheckbox);
     RemoveWidget(mDebugModeBox);
     RemoveWidget(mBackToMainButton);
     RemoveWidget(mAdvancedButton);
@@ -167,9 +167,9 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     Dialog::Resize(theX, theY, theWidth, theHeight);
     mMusicVolumeSlider->Resize(199, 116, 135, 40);
     mSfxVolumeSlider->Resize(199, 143, 135, 40);
-    mHardwareAccelerationCheckbox->Resize(283, 175, 46, 45);
+    //mHardwareAccelerationCheckbox->Resize(283, 175, 46, 45);
     mDebugModeBox->Resize(270, 148, 46, 45);
-    mFullscreenCheckbox->Resize(284, 206, 46, 45);
+    mFullscreenCheckbox->Resize(284, 175, 46, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
@@ -180,14 +180,14 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     {
         mMusicVolumeSlider->mY += 5;
         mSfxVolumeSlider->mY += 10;
-        mHardwareAccelerationCheckbox->mY += 15;
+        //mHardwareAccelerationCheckbox->mY += 15;
         mFullscreenCheckbox->mY += 20;
     }
     if (mAdvancedMode)
     {
         mMusicVolumeSlider->SetVisible(false);
         mSfxVolumeSlider->SetVisible(false);
-        mHardwareAccelerationCheckbox->SetVisible(false);
+        //mHardwareAccelerationCheckbox->SetVisible(false);
         mFullscreenCheckbox->SetVisible(false);
         mDebugModeBox->SetVisible(true);
     }
@@ -205,13 +205,13 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
 
     int aMusicOffset = 0;
     int aSfxOffset = 0;
-    int a3DAccelOffset = 0;
+    //int a3DAccelOffset = 0;
     int aFullScreenOffset = 0;
     if (mFromGameSelector)
     {
         aMusicOffset = 5;
         aSfxOffset = 10;
-        a3DAccelOffset = 15;
+        //a3DAccelOffset = 15;
         aFullScreenOffset = 20;
     }
     Sexy::Color aTextColor(107, 109, 145);
@@ -220,8 +220,7 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
     {
         TodDrawString(g, _S("Music"), 186, 140 + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
         TodDrawString(g, _S("Sound FX"), 186, 167 + aSfxOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, _S("3D Acceleration"), 274, 197 + a3DAccelOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, _S("Full Screen"), 274, 229 + aFullScreenOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, _S("Full Screen"), 274, 197 + aFullScreenOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
     }
     else
     {
@@ -261,34 +260,23 @@ void NewOptionsDialog::CheckboxChecked(int theId, bool checked)
         if (!checked && mApp->mForceFullscreen)
         {
             mApp->DoDialog(
-                Dialogs::DIALOG_COLORDEPTH_EXP, 
-                true, 
-                _S("No Windowed Mode"), 
-                _S( "Windowed mode is only available if your desktop was running in either\n"
+                Dialogs::DIALOG_COLORDEPTH_EXP,
+                true,
+                _S("No Windowed Mode"),
+                _S("Windowed mode is only available if your desktop was running in either\n"
                     "16 bit or 32 bit color mode when you started the game.\n\n"
-                    "If you'd like to run in Windowed mode then you need to quit the game and switch your desktop to 16 or 32 bit color mode."), 
-                _S("OK"), 
+                    "If you'd like to run in Windowed mode then you need to quit the game and switch your desktop to 16 or 32 bit color mode."),
+                _S("OK"),
                 Dialog::BUTTONS_FOOTER
             );
 
             mFullscreenCheckbox->SetChecked(true, false);
         }
         break;
-        
+        /*
     case NewOptionsDialog::NewOptionsDialog_HardwareAcceleration:
-        if (!checked)
+        if (checked)
         {
-            mApp->DoDialog(
-                Dialogs::DIALOG_INFO,
-                true,
-                _S("Warning"),
-                _S("Some visual bugs could occur with 3D Acceleration OFF.\n\n"
-                    "At the moment they are still being investigated.\n"),
-                _S("OK"),
-                Dialog::BUTTONS_FOOTER
-            );
-        }
-        else {
             if (!mApp->Is3DAccelerationRecommended())
             {
                 mApp->DoDialog(
@@ -302,7 +290,7 @@ void NewOptionsDialog::CheckboxChecked(int theId, bool checked)
                 );
             }
         }
-        break;
+        break;*/
     }
 }
 
@@ -403,7 +391,7 @@ void NewOptionsDialog::ButtonDepress(int theId)
             LawnDialog* aDialog = (LawnDialog*)mApp->DoDialog(Dialogs::DIALOG_CONFIRM_RESTART, true, aDialogTitle, aDialogMessage, _S(""), Dialog::BUTTONS_YES_NO);
             aDialog->mLawnYesButton->mLabel = TodStringTranslate(_S("RESTART"/*[RESTART_LABEL]*/));
             aDialog->mLawnNoButton->mLabel = TodStringTranslate(_S("[DIALOG_BUTTON_CANCEL]"));
-            
+
             if (aDialog->WaitForResult(true) == Dialog::ID_YES)
             {
                 mApp->mMusic->StopAllMusic();

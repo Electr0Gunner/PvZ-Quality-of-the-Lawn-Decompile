@@ -135,6 +135,7 @@ namespace Sexy
 	extern Image* IMAGE_REANIM_SUNFLOWER_HEAD_SING4;
 	extern Image* IMAGE_REANIM_SUNFLOWER_HEAD_SING5;
 	extern Image* IMAGE_REANIM_SUNFLOWER_HEAD_WINK;
+	extern Image* IMAGE_CREDITS_BG;
 
 	// DelayLoad_GreenHouseGarden Resources
 	bool ExtractDelayLoad_GreenHouseGardenResources(ResourceManager *theMgr);
@@ -597,6 +598,8 @@ namespace Sexy
 	extern Image* IMAGE_ZOMBIE_SEAWEED;
 	extern Image* IMAGE_ZOMBOSS_PARTICLES;
 	extern Image* IMAGE_SQUIRREL;
+	extern Image* IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON;
+	extern Image* IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON_HIGHLIGHT;
 
 	// LoadingSounds Resources
 	bool ExtractLoadingSoundsResources(ResourceManager *theMgr);
@@ -1431,6 +1434,9 @@ namespace Sexy
 		IMAGE_QUICKPLAY_RIGHT_BUTTON_ID,
 		IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT_ID,
 		IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS_ID,
+		IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON_ID,
+		IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON_HIGHLIGHT_ID,
+		IMAGE_CREDITS_BG_ID,
 		RESOURCE_ID_MAX
 	};
 

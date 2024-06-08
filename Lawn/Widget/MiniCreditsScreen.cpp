@@ -39,13 +39,14 @@ MiniCreditsScreen::MiniCreditsScreen(LawnApp* theApp)
 MiniCreditsScreen::~MiniCreditsScreen()
 {
 	delete mBackButton;
-	delete mMusicButton;
+	if(mMusicButton)
+		delete mMusicButton;
 }
 
 void MiniCreditsScreen::Draw(Graphics* g)
 {
 	//g->SetLinearBlend(true);
-	g->DrawImage(Sexy::IMAGE_CHALLENGE_BACKGROUND, 0, 0);
+	g->DrawImage(Sexy::IMAGE_CREDITS_BG, 0, 0);
 	TodDrawString(g, "CREDITS", 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
 
 	Color TextColor = Color(255, 255, 255);
@@ -61,6 +62,7 @@ void MiniCreditsScreen::Draw(Graphics* g)
 	TodDrawString(g, "Rich Werner\n", 120, 460, Sexy::FONT_HOUSEOFTERROR16, TextColor, DS_ALIGN_CENTER);
 	TodDrawString(g, "Stephen Notley\n", 120, 480, Sexy::FONT_HOUSEOFTERROR16, TextColor, DS_ALIGN_CENTER);
 	TodDrawString(g, "Laura Shigihara", 120, 500, Sexy::FONT_HOUSEOFTERROR16, TextColor, DS_ALIGN_CENTER);
+	TodDrawString(g, "Tod Semple", 120, 520, Sexy::FONT_HOUSEOFTERROR16, TextColor, DS_ALIGN_CENTER);
 
 	TodDrawString(g, "Quality of The Lawn Team \n", 400, 380, Sexy::FONT_HOUSEOFTERROR16, TextColor, DS_ALIGN_CENTER);
 	TodDrawString(g, "Electr0Gunner\n", 400, 400, Sexy::FONT_HOUSEOFTERROR16, TextColor, DS_ALIGN_CENTER);
@@ -74,7 +76,8 @@ void MiniCreditsScreen::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
 	AddWidget(mBackButton);
-	AddWidget(mMusicButton);
+	if(mApp->HasFinishedAdventure())
+		AddWidget(mMusicButton);
 }
 
 //0x42F6B0
@@ -82,7 +85,8 @@ void MiniCreditsScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	Widget::RemovedFromManager(theWidgetManager);
 	RemoveWidget(mBackButton);
-	RemoveWidget(mMusicButton);
+	if (mApp->HasFinishedAdventure())
+		RemoveWidget(mMusicButton);
 }
 
 //0x42F720
@@ -95,7 +99,8 @@ void MiniCreditsScreen::Update()
 {
 	mApp->UpdateDiscordRPC("In The Credits");
 	mBackButton->Update();
-	mMusicButton->Update();
+	if (mApp->HasFinishedAdventure())
+		mMusicButton->Update();
 }
 
 //0x42F740

@@ -134,6 +134,8 @@
 <Image id="SELECTORSCREEN_ZENGARDEN" path="SelectorScreen_ZenGarden"  />
 <Image id="ACHIEVEMENT_BUTTON" path="Achievements_pedestal"  />
 <Image id="ACHIEVEMENT_HIGHLIGHT" path="Achievements_pedestal_press"  />
+<Image id="QUICKPLAY_BUTTON" path="quickplay/quickplay_sign"  />
+<Image id="QUICKPLAY_BUTTON_HIGHLIGHT" path="quickplay/quickplay_sign_highlight"  />
 <Image id="SELECTORSCREEN_ZENGARDENHIGHLIGHT" path="SelectorScreen_ZenGardenHighlight"  />
 <Image id="STORE_SPEECHBUBBLE" path="Store_SpeechBubble" />
 <Image id="STORE_SPEECHBUBBLE2" path="Store_SpeechBubble2" />
@@ -826,6 +828,7 @@
   <SetDefaults path="images" idprefix="IMAGE_" />
   <Image id="CREDITS_ZOMBIENOTE" path="Credits_ZombieNoteBlack" alphagrid="Credits_ZombieNote" />
   <Image id="CREDITS_PLAYBUTTON" path="Credits_PlayButton" />
+  <Image id="CREDITS_BG" path="CreditsBG" />
 </Resources>
 
 </ResourceManifest>
