@@ -309,7 +309,7 @@ void QuickPlayScreen::Update()
         aHammerReanim->Update();
     }
     mApp->mPoolEffect->PoolEffectUpdate();
-    TOD_ASSERT(mLevel < 51);
+    TOD_ASSERT(mLevel < NUM_LEVELS + 1);
     if (mDisplayZombie) mDisplayZombie->Update();
     if (mDisplayPlant) mDisplayPlant->Update();
     if (mFlowerPot) mFlowerPot->Update();

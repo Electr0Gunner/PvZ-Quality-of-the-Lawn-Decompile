@@ -2724,7 +2724,7 @@ ZombieID Zombie::SummonBackupDancer(int theRow, int thePosX)
     aZombie->SetAnimRate(0.0f);
     aZombie->mMindControlled = mMindControlled;
 
-    int aParticleX = (int)aZombie->mPosX + 60;
+    int aParticleX = (int)aZombie->mPosX + 64;
     int aParticleY = (int)aZombie->mPosY + 110;
     if (aZombie->IsOnHighGround())
     {
