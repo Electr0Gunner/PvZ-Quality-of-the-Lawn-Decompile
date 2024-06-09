@@ -16,6 +16,7 @@
 #include "../../GameConstants.h"
 #include "../Zombie.h"
 #include "../Plant.h"
+#include "../../Sexy.TodLib/Reanimator.h"
 
 QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
 {
@@ -63,6 +64,14 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
     mFlowerPot = new Plant();
     mFlowerPot->mIsOnBoard = false;
     mFlowerPot->PlantInitialize(0, 0, SEED_FLOWERPOT, SEED_NONE);
+
+    ReanimatorEnsureDefinitionLoaded(ReanimationType::REANIM_HAMMER, true);
+    Reanimation* aHammerReanim = mApp->AddReanimation(250.0f, 280.0f, 0, ReanimationType::REANIM_HAMMER);
+    aHammerReanim->mIsAttachment = true;
+    aHammerReanim->PlayReanim("anim_whack_zombie", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 0, 24.0f);
+    aHammerReanim->mAnimTime = 1.0f;
+    mHammerID = mApp->ReanimationGetID(aHammerReanim);
+
 }
 QuickPlayScreen::~QuickPlayScreen()
 {
@@ -95,18 +104,28 @@ void QuickPlayScreen::Draw(Graphics* g)
     case BackgroundType::BACKGROUND_6_BOSS:				g->DrawImage(Sexy::IMAGE_BACKGROUND6BOSS, -130, 0);					break;
     default:											TOD_ASSERT();											break;
     }
-    g->ClearClipRect();
     if (mDisplayZombie)
     {
-        Graphics aZombieGraphics = Graphics(*g);
-        mDisplayZombie->BeginDraw(&aZombieGraphics);
-        mDisplayZombie->Draw(&aZombieGraphics);
-        mDisplayZombie->DrawShadow(&aZombieGraphics);
-        mDisplayZombie->mPosX = 340;
-        mDisplayZombie->mPosY = 240;
-        if (mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG)
-        {
-            mDisplayZombie->mPosY -= 120;
+        if (mLevel != 35){
+            Graphics aZombieGraphics = Graphics(*g);
+            if(mLevel == 25){
+                mDisplayZombie->mScaleZombie = 0.5f;
+            }
+
+            mDisplayZombie->BeginDraw(&aZombieGraphics);
+            mDisplayZombie->Draw(&aZombieGraphics);
+            if(mZombieType != ZOMBIE_BOSS)
+                mDisplayZombie->DrawShadow(&aZombieGraphics);
+            mDisplayZombie->mPosX = 340;
+            mDisplayZombie->mPosY = 240;
+            if (mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG)
+            {
+                mDisplayZombie->mPosY -= 120;
+            }
+            if (mZombieType == ZOMBIE_BOSS) {
+                mDisplayZombie->mPosX = -100;
+                mDisplayZombie->mPosY = -20;
+            }
         }
     }
     if (mFlowerPot)
@@ -122,21 +141,37 @@ void QuickPlayScreen::Draw(Graphics* g)
     }
     if (mDisplayPlant)
     {
-        Graphics aPlantGraphics = Graphics(*g);
-        mDisplayPlant->BeginDraw(&aPlantGraphics);
-        //mDisplayPlant->DrawShadow(&aPlantGraphics, 0, 0);
-        mDisplayPlant->Draw(&aPlantGraphics);
-        mDisplayPlant->mX = 280;
-        mDisplayPlant->mY = 280;
-        if ((mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG) && !mDisplayPlant->IsAquatic(mDisplayPlant->mSeedType))
-        {
-            mDisplayPlant->mY -= 120;
-        }
-        if(mBackground == BACKGROUND_5_ROOF || mBackground == BACKGROUND_6_BOSS)
-        {
-            mDisplayPlant->mY -= 10;
+        if (mLevel != 35 && mLevel != 15) {
+            Graphics aPlantGraphics = Graphics(*g);
+
+            mDisplayPlant->BeginDraw(&aPlantGraphics);
+            mDisplayPlant->Draw(&aPlantGraphics);
+            mDisplayPlant->mX = 280;
+            mDisplayPlant->mY = 280;
+            if ((mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG) && !mDisplayPlant->IsAquatic(mDisplayPlant->mSeedType))
+            {
+                mDisplayPlant->mY -= 120;
+            }
+            if (mBackground == BACKGROUND_5_ROOF || mBackground == BACKGROUND_6_BOSS)
+            {
+                mDisplayPlant->mY -= 10;
+            }
         }
     }
+    if (mLevel == 5)
+    {
+        g->DrawImage(Sexy::IMAGE_WALLNUT_BOWLINGSTRIPE, 268, 77);
+    }
+    if (mLevel == 15)
+    {
+        mApp->ReanimationGet(mHammerID)->Draw(g);
+    }
+    if (mLevel == 35)
+    {
+        g->DrawImageCel(IMAGE_SCARY_POT, 370, 270, 0, 1);
+        g->DrawImageCel(IMAGE_SCARY_POT, 290, 270, 1, 1);
+    }
+    g->ClearClipRect();
     g->DrawImage(Sexy::IMAGE_QUICKPLAY_WIDGET, 100, 0);
     int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, ADVENTURE_AREAS);
     int aSub = mLevel - (aStage - 1) * 10;
@@ -204,18 +239,42 @@ void QuickPlayScreen::ChooseBackground()
         mBackground = BackgroundType::BACKGROUND_1_DAY;
     }
 
+    if (mLevel == 35)
+    {
+        mBackground = BackgroundType::BACKGROUND_2_NIGHT;
+    }
 }
 
 void QuickPlayScreen::ChooseZombieType()
 {
-    if (mLevel == 3)
-        mZombieType = ZOMBIE_TRAFFIC_CONE;
-    else if (mLevel == 6)
-        mZombieType = ZOMBIE_POLEVAULTER;
-    else if (mLevel == 8)
-        mZombieType = ZOMBIE_PAIL;
-    else if (mLevel == 11)
-        mZombieType = ZOMBIE_NEWSPAPER;
+    if (mLevel == 45)
+    {
+        mZombieType = ZOMBIE_BUNGEE;
+        return;
+    }
+    for (int i = 0; i < NUM_ZOMBIE_TYPES; i++)
+    {
+        ZombieType aZombieType = GetZombieType(i);
+        ZombieDefinition aZombieDefinition = GetZombieDefinition(aZombieType);
+        if (aZombieType != ZOMBIE_INVALID)
+        {
+            if (mLevel == aZombieDefinition.mStartingLevel)
+            {
+                mZombieType = aZombieDefinition.mZombieType;
+                break;
+            }
+            else
+            {
+                mZombieType = ZOMBIE_NORMAL;
+            }
+        }
+    }
+
+}
+
+ZombieType QuickPlayScreen::GetZombieType(int ID)
+{
+    return ID < NUM_ZOMBIE_TYPES ? (ZombieType)ID : ZOMBIE_INVALID;
 }
 
 void QuickPlayScreen::AddedToManager(WidgetManager* theWidgetManager)
@@ -244,6 +303,11 @@ void QuickPlayScreen::ButtonPress(int theId)
 void QuickPlayScreen::Update()
 {
     mPlayButton->Update();
+    Reanimation* aHammerReanim = mApp->ReanimationTryToGet(mHammerID);
+    if (aHammerReanim)
+    {
+        aHammerReanim->Update();
+    }
     mApp->mPoolEffect->PoolEffectUpdate();
     TOD_ASSERT(mLevel < 51);
     if (mDisplayZombie) mDisplayZombie->Update();
@@ -310,8 +374,6 @@ void QuickPlayScreen::ResetZombie()
 {
     ZombieType aPrevType = mZombieType;
     ChooseZombieType();
-    if (aPrevType == mZombieType)
-        return;
     mDisplayZombie = nullptr;
     mDisplayZombie = new Zombie();
     mDisplayZombie->mBoard = nullptr;
@@ -320,18 +382,30 @@ void QuickPlayScreen::ResetZombie()
 
 void QuickPlayScreen::ResetPlant(bool decrease)
 {
+    int mSeedLevel = mLevel - 1;
     if (mLevel % 10 == 0)
-        return;
+        mSeedLevel -= 1;
     if (mApp->GetAwardSeedForLevel(mLevel - 1) == SEED_FLOWERPOT)
         return;
-    SeedType aSeedType = mDisplayPlant->mSeedType;
+    SeedType aSpecialSeed;
+    bool aSpecialLevel = mLevel == 5 || mLevel == 25 || mLevel == 45;
+    switch (mLevel)
+    {
+    case 5:
+        aSpecialSeed = SEED_EXPLODE_O_NUT;
+        break;
+    case 25:
+        aSpecialSeed = SEED_PEASHOOTER;
+        break;
+    case 45:
+        aSpecialSeed = SEED_CHOMPER;
+        break;
+    default:
+        aSpecialSeed = SEED_PEASHOOTER;
+        break;
+    }
     mDisplayPlant = nullptr;
     mDisplayPlant = new Plant();
     mDisplayPlant->mIsOnBoard = false;
-    if(decrease)
-        mDisplayPlant->PlantInitialize(0, 0, mApp->GetAwardSeedForLevel(mLevel - 1), SEED_NONE);
-    else
-    {
-        mDisplayPlant->PlantInitialize(0, 0, mApp->GetAwardSeedForLevel(mLevel -1 ), SEED_NONE);
-    }
+    mDisplayPlant->PlantInitialize(0, 0, !aSpecialLevel ? mApp->GetAwardSeedForLevel(mSeedLevel) : aSpecialSeed, SEED_NONE);
 }

@@ -13,6 +13,7 @@ class NewLawnButton;
 class Zombie;
 class Plant;
 
+
 class QuickPlayScreen : public Widget, public Sexy::ButtonListener
 {
 public:
@@ -28,6 +29,7 @@ public:
     Zombie*                     mDisplayZombie;
     Plant*                      mDisplayPlant;
     Plant*                      mFlowerPot;
+    ReanimationID			    mHammerID;
 
 public:
     QuickPlayScreen(LawnApp* theApp);
@@ -39,6 +41,7 @@ public:
     void                        ChooseZombieType();
     void                        ResetZombie();
     void                        ResetPlant(bool decrease);
+    ZombieType                  GetZombieType(int ID);
     virtual void                Draw(Graphics* g);
     virtual void                Update();
     virtual void                AddedToManager(WidgetManager* theWidgetManager);
