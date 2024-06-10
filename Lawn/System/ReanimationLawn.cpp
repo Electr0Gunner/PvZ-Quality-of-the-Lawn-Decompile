@@ -5,7 +5,9 @@
 #include "../../Sexy.TodLib/TodDebug.h"
 #include "../../SexyAppFramework/Color.h"
 #include "../../Sexy.TodLib/Reanimator.h"
+#include "../../Sexy.TodLib/Attachment.h"
 #include "../../SexyAppFramework/MemoryImage.h"
+#include "../../Resources.h"
 
 //0x46EF00
 void ReanimatorCache::UpdateReanimationForVariation(Reanimation* theReanim, DrawVariation theDrawVariation)
@@ -273,7 +275,20 @@ MemoryImage* ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 			aReanimFlag.ReanimationInitializeType(aPosX, aPosY, ReanimationType::REANIM_FLAG);
 			aReanimFlag.SetFramesForLayer("Zombie_flag");
 			aReanimFlag.Draw(&aMemoryGraphics);
-		}
+		}/*
+		else if (theZombieType == ZombieType::ZOMBIE_PEA_HEAD)
+		{
+			aReanim.AssignRenderGroupToTrack("anim_head1", RENDER_GROUP_HIDDEN);
+			aReanim.AssignRenderGroupToTrack("anim_hair", RENDER_GROUP_HIDDEN);
+
+			ReanimatorTrackInstance* aTrackInstance = aReanim.GetTrackInstanceByName("anim_head2");
+			aTrackInstance->mImageOverride = IMAGE_BLANK;
+			Reanimation* aHeadReanim = mApp->AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_PEASHOOTER);
+			aHeadReanim->PlayReanim("anim_head_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
+			AttachEffect* aAttachEffect = AttachReanim(aTrackInstance->mAttachmentID, aHeadReanim, 0.0f, 0.0f);
+			aReanim.mFrameBasePose = 0;
+			TodScaleRotateTransformMatrix(aAttachEffect->mOffset, 65.0f, -5.0f, 0.2f, 1.0f, 1.0f);
+		}*/ //! COMMENTED UNTIL ROTATION IS FIXED
 		aReanim.Draw(&aMemoryGraphics);
 	}
 	else if (aZombieDef.mReanimationType == ReanimationType::REANIM_BOSS)
@@ -292,6 +307,18 @@ MemoryImage* ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 		aReanim.AssignRenderGroupToTrack("boss_head2", RENDER_GROUP_HIDDEN);
 		aReanim.Draw(&aMemoryGraphics);
 	}
+	else if (aZombieDef.mReanimationType == ReanimationType::REANIM_GARGANTUAR && theZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR)
+	{
+		Reanimation aReanim;
+		aReanim.ReanimationInitializeType(aPosX, aPosY, aZombieDef.mReanimationType);
+		aReanim.SetFramesForLayer("anim_idle");
+		Zombie::SetupReanimLayers(&aReanim, aUseZombieType);
+
+		aReanim.Draw(&aMemoryGraphics);
+		aReanim.SetImageOverride("anim_head1", IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD_REDEYE);
+		aReanim.Draw(&aMemoryGraphics);
+	}
+
 	else
 	{
 		const char* aTrackName = "anim_idle";

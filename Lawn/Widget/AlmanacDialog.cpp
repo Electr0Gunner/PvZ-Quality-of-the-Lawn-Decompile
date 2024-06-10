@@ -250,18 +250,20 @@ void AlmanacDialog::Update()
 
 	if (mOpenPage == ALMANAC_PAGE_PLANTS)
 	{
-		mMaxScrollPosition = SeedType::NUM_SEED_TYPES / 8 * 36.5 - 128;
+		mMaxScrollPosition = 0; //SeedType::NUM_SEED_TYPES / 8 * 36.5 - 128; //this is a calculation that gets the maximum scroll also used in the seed chooser
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
+		mSlider->mVisible = false; //by default is invisible, set it based on plant count
 	}
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
-		mMaxScrollPosition = ZombieType::NUM_ZOMBIE_TYPES / 5 * 36.5 - 128;
+		mMaxScrollPosition = 0;//ZombieType::NUM_ZOMBIE_TYPES / 5 * 36.5 - 128; //also for zombies
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition += mScrollAmount * aScrollSpeed;
 		mScrollPosition = ClampFloat(mScrollPosition, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
+		mSlider->mVisible = false; //by default is invisible, set it based on zombie count
 	}
 	else
 	{

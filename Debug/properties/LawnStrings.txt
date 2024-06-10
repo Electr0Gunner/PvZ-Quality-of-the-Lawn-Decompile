@@ -1096,6 +1096,13 @@ Dr. Zomboss rules them all.
 {FLAVOR}Edgar George Zomboss achieved his Doctorate in Thanatology in only two years. Quickly mastering 
 thanatological technology, he built his fearsome Zombot and set about establishing absolute dominance of his local subdivision.
 
+[REDEYED_GARGANTUAR_DESCRIPTION]
+Giga-Gargantuar is the most feared zombie of them all.
+{SHORTLINE}
+{KEYWORD}Toughness:{STAT} extremely high {6000}
+{SHORTLINE}
+{FLAVOR}Giga-Gargantuar is the overlord in the zombie base camp, and even his own people will avoid him and make a detour.
+
 [DOG_WALKING_ZOMBIE_DESCRIPTION]
 Dog Walking Zombie description
 
