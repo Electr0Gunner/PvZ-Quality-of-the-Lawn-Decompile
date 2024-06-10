@@ -189,11 +189,11 @@ void AwardScreen::LoadAchievements()
     TodLoadResources("DelayLoad_ChallengeScreen");
     if (mShowAchievements) {
         for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
-            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievement->ReturnShowInAwards(i)) {
                 mShowAchievements = true;
                 break;
             }
-            else if(mApp->mPlayerInfo->mEarnedAchievements[i] && mApp->mPlayerInfo->mShownedAchievements[i])
+            else
             {
                 mShowAchievements = false;
             }
@@ -444,23 +444,8 @@ void AwardScreen::KeyChar(char theChar)
         StartButtonPressed();
 }
 
-//0x407780
-void AwardScreen::StartButtonPressed()
+void AwardScreen::ExitScreen()
 {
-    if (mApp->GetDialog(DIALOG_STORE))
-        return;
-    if (mShowAchievements)
-    {
-        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
-            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
-                mApp->mPlayerInfo->mShownedAchievements[i] = true;
-            }
-        }
-        mShowAchievements = false;
-        mFadeInCounter = 180;
-        return;
-    }
-    
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
     {
         mApp->KillAwardScreen();
@@ -555,6 +540,30 @@ void AwardScreen::StartButtonPressed()
             mApp->PreNewGame(GAMEMODE_ADVENTURE, false);
         }
     }
+}
+
+//0x407780
+void AwardScreen::StartButtonPressed()
+{
+    if (mApp->GetDialog(DIALOG_STORE))
+        return;
+
+    if (mShowAchievements)
+    {
+        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
+                mApp->mPlayerInfo->mShownedAchievements[i] = true;
+            }
+        }
+        mShowAchievements = false;
+        mFadeInCounter = 180;
+        if (mAwardType == AWARD_ACHIEVEMENTONLY)
+        {
+            ExitScreen();
+        }
+        return;
+    }
+    ExitScreen();
 }
 
 //0x4079F0

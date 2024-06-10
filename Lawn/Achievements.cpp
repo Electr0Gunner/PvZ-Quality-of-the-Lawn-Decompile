@@ -13,7 +13,7 @@ AchievementDefinition gAchievementDefs[NUM_ACHIEVEMENTS] = {
 	{ AchievementType::HOME_LAWN_SECURITY,				0,   _S("HOME_LAWN_SECURITY"), true },
 	{ AchievementType::NOBEL_PEAS_PRIZE,					1,   _S("NOBEL_PEAS_PRIZE"), true },
 	{ AchievementType::BETTER_OFF_DEAD,					2,   _S("BETTER_OFF_DEAD"), false},
-	{ AchievementType::CHINA_SHOP,						3,   _S("CHINA_SHOP"), true},
+	{ AchievementType::CHINA_SHOP,						3,   _S("CHINA_SHOP"), false},
 	{ AchievementType::SPUDOW,							4,   _S("SPUDOW"), true },
 	{ AchievementType::EXPLODONATOR,						5,   _S("EXPLODONATOR"), true },
 	{ AchievementType::MORTICULTURALIST,					6,   _S("MORTICULTURALIST") , false},

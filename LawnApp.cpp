@@ -1634,10 +1634,22 @@ void LawnApp::CheckForGameEnd()
 		return;
 
 	bool aUnlockedNewChallenge = UpdatePlayerProfileForFinishingLevel();
+	bool forceAchievements = false;
+
+	for (int aAchivement = 0; aAchivement < TOTAL_ACHIEVEMENTS; aAchivement++)
+	{
+		if (mPlayerInfo->mEarnedAchievements[aAchivement] && !mPlayerInfo->mShownedAchievements[aAchivement] && mAchievement->ReturnShowInAwards(aAchivement))
+		{
+			forceAchievements = true;
+		}
+	}
 
 	if (mPlayedQuickplay)
 	{
-		ShowGameSelector();
+		if(!forceAchievements)
+			ShowGameSelector();
+		else
+			ShowAwardScreen(AwardType::AWARD_ACHIEVEMENTONLY, true);
 		mPlayedQuickplay = false;
 		return;
 	}
@@ -1685,7 +1697,10 @@ void LawnApp::CheckForGameEnd()
 			}
 			else
 			{
-				ShowChallengeScreen(ChallengePage::CHALLENGE_PAGE_SURVIVAL);
+				if (!forceAchievements)
+					ShowChallengeScreen(ChallengePage::CHALLENGE_PAGE_SURVIVAL);
+				else
+					ShowAwardScreen(AwardType::AWARD_ACHIEVEMENTONLY, true);
 			}
 		}
 		else
@@ -1705,7 +1720,10 @@ void LawnApp::CheckForGameEnd()
 		}
 		else
 		{
-			ShowChallengeScreen(ChallengePage::CHALLENGE_PAGE_PUZZLE);
+			if (!forceAchievements)
+				ShowChallengeScreen(ChallengePage::CHALLENGE_PAGE_PUZZLE);
+			else
+				ShowAwardScreen(AwardType::AWARD_ACHIEVEMENTONLY, true);
 		}
 	}
 	else
@@ -1718,7 +1736,10 @@ void LawnApp::CheckForGameEnd()
 		}
 		else
 		{
-			ShowChallengeScreen(ChallengePage::CHALLENGE_PAGE_CHALLENGE);
+			if (!forceAchievements)
+				ShowChallengeScreen(ChallengePage::CHALLENGE_PAGE_CHALLENGE);
+			else
+				ShowAwardScreen(AwardType::AWARD_ACHIEVEMENTONLY, true);
 		}
 	}
 }

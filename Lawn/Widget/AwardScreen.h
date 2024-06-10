@@ -41,6 +41,7 @@ public:
 	virtual void		RemovedFromManager(WidgetManager* theWidgetManager) { Widget::RemovedFromManager(theWidgetManager); }
 	virtual void		KeyChar(char theChar);
 	void				StartButtonPressed();
+	void				ExitScreen();
 	virtual void		MouseDown(int x, int y, int theClickCount);
 	virtual void		MouseUp(int x, int y, int theClickCount);
 };
