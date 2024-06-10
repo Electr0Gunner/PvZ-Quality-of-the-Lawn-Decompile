@@ -132,7 +132,7 @@ public:
 	bool							mMuteSoundsForCutscene;							//+0x8C5
 	Achievements*						mAchievement;
 	bool							isFastMode;
-	float								mSpeedValue;
+	int								mSpeedValue;
 	SexyString						mReconVersion;
 	int								mQuickLevel;
 	bool							mPlayedQuickplay;
