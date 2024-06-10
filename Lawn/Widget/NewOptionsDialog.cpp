@@ -75,6 +75,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
         mBackToGameButton->SetLabel(_S("[DIALOG_BUTTON_OK]"));
         if (mApp->HasFinishedAdventure() && !mApp->IsTrialStageLocked())
         {
+            mBackToMainButton->SetVisible(false);
             mBackToMainButton->SetLabel(_S("[CREDITS]"));
         }
         else
@@ -173,7 +174,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
-    mAdvancedButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
+    mAdvancedButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
     mBackToGameButton->Resize(30, 381, mBackToGameButton->mWidth, mBackToGameButton->mHeight);
 
     if (mFromGameSelector)
