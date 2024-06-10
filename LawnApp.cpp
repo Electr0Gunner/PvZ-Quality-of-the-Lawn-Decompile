@@ -128,7 +128,7 @@ LawnApp::LawnApp()
 	mAutoStartLoadingThread = false;
 	mDebugKeysEnabled = false;
 	isFastMode = false;
-	SpeedValue = 2;
+	mSpeedValue = 2.0f;
 	mProdName = "PlantsVsZombies";
 	mReconVersion = "PvZ QoTL v1.3.1";
 	std::string aTitleName = "Plants vs. Zombies";
@@ -914,9 +914,9 @@ void LawnApp::DoUserDialog()
 	mWidgetManager->SetFocus(aDialog);
 }
 
-int LawnApp::GetSpeedVal()
+float LawnApp::GetSpeedVal()
 {
-	return SpeedValue;
+	return mSpeedValue;
 }
 
 //0x450930
@@ -1828,7 +1828,7 @@ void LawnApp::UpdateFrames()
 	}
 	else if (isFastMode)
 	{
-		aUpdateCount = SpeedValue;
+		aUpdateCount = mSpeedValue;
 	}
 
 	for (int i = 0; i < aUpdateCount; i++)

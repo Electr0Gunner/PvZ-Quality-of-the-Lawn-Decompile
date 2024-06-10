@@ -132,7 +132,7 @@ public:
 	bool							mMuteSoundsForCutscene;							//+0x8C5
 	Achievements*						mAchievement;
 	bool							isFastMode;
-	int								SpeedValue;
+	float								mSpeedValue;
 	SexyString						mReconVersion;
 	int								mQuickLevel;
 	bool							mPlayedQuickplay;
@@ -141,7 +141,7 @@ public:
 	LawnApp();
 	virtual ~LawnApp();
 
-	int								GetSpeedVal();
+	float							GetSpeedVal();
 	bool							KillNewOptionsDialog();
 	virtual void					GotFocus();
 	virtual void					LostFocus();
