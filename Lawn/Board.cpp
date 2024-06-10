@@ -5964,7 +5964,7 @@ void Board::Update()
 		mApp->UpdateDiscordRPC(DetailsChar, StateConst);
 	}
 
-	if(SUN_COUNTDOWN >= 8000)
+	if(mSunMoney >= 8000)
 		mApp->GetAchievement(SUNNY_DAYS);
 
 	mCutScene->Update();
