@@ -1232,6 +1232,7 @@ bool LawnApp::KillNewOptionsDialog()
 		return false;
 
 	bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
+	mDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
 	//bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
 	SwitchScreenMode(wantWindowed, true, false);
 	ToggleDebugMode();
@@ -1493,17 +1494,23 @@ void LawnApp::UpdateDiscordRPC(const char* Details, const char* State, const cha
 {
 	static time_t lastUpdateTime = time(NULL);
 	time_t now = time(NULL);
-
 	if (difftime(now, lastUpdateTime) >= 1) {
-		DiscordRichPresence discordPresence;
-		memset(&discordPresence, 0, sizeof(discordPresence));
-		discordPresence.state = State;
-		discordPresence.details = Details;
-		discordPresence.largeImageKey = ImageLarge;
-		discordPresence.smallImageKey = ImageSmall;
-		Discord_UpdatePresence(&discordPresence);
-		lastUpdateTime = now;
 
+		if (!mDiscordPresence)
+		{
+			Discord_ClearPresence();
+		}
+		else
+		{
+			DiscordRichPresence discordPresence;
+			memset(&discordPresence, 0, sizeof(discordPresence));
+			discordPresence.state = State;
+			discordPresence.details = Details;
+			discordPresence.largeImageKey = ImageLarge;
+			discordPresence.smallImageKey = ImageSmall;
+			Discord_UpdatePresence(&discordPresence);
+		}
+		lastUpdateTime = now;
 		Discord_RunCallbacks();
 	}
 }

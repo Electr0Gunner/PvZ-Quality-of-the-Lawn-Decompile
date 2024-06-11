@@ -30,6 +30,7 @@ protected:
 		NewOptionsDialog_DebugMode,
 		NewOptionsDialog_Advanced,
 		NewOptionsDialog_Speed,
+		NewOptionsDialog_Discord
 	};
 
 public:
@@ -39,6 +40,7 @@ public:
 	Sexy::Checkbox*			mFullscreenCheckbox;				//+0x164
 	Sexy::Checkbox*			mHardwareAccelerationCheckbox;		//+0x168
 	Sexy::Checkbox*			mDebugModeBox;
+	Sexy::Checkbox*			mDiscordBox;
 	LawnStoneButton*		mAlmanacButton;						//+0x16C
 	LawnStoneButton*		mBackToMainButton;					//+0x170
 	LawnStoneButton*		mRestartButton;						//+0x174

@@ -61,6 +61,9 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mDebugModeBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_DebugMode, this, mApp->mTodCheatKeys);
     mDebugModeBox->SetVisible(false);
 
+    mDiscordBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Discord, this, mApp->mDiscordPresence);
+    mDiscordBox->SetVisible(false);
+
     if (mAdvancedMode)
     {
         mRestartButton->SetVisible(false);
@@ -81,7 +84,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
         else
         {
             mBackToMainButton->SetVisible(false);
-            mAdvancedButton->SetVisible(false);
+            mDiscordBox->SetVisible(false);
         }
     }
     else
@@ -117,6 +120,7 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mFullscreenCheckbox;
     //delete mHardwareAccelerationCheckbox;
     delete mDebugModeBox;
+    delete mDiscordBox;
     delete mAlmanacButton;
     delete mRestartButton;
     delete mBackToMainButton;
@@ -142,6 +146,7 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mSfxVolumeSlider);
     //AddWidget(mHardwareAccelerationCheckbox);
     AddWidget(mDebugModeBox);
+    AddWidget(mDiscordBox);
     AddWidget(mFullscreenCheckbox);
     AddWidget(mBackToGameButton);
 }
@@ -156,6 +161,7 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mFullscreenCheckbox);
     //RemoveWidget(mHardwareAccelerationCheckbox);
     RemoveWidget(mDebugModeBox);
+    RemoveWidget(mDiscordBox);
     RemoveWidget(mBackToMainButton);
     RemoveWidget(mAdvancedButton);
     RemoveWidget(mBackToGameButton);
@@ -171,6 +177,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     //mHardwareAccelerationCheckbox->Resize(283, 175, 46, 45);
     mDebugModeBox->Resize(270, 148, 46, 45);
     mFullscreenCheckbox->Resize(284, 175, 46, 45);
+    mDiscordBox->Resize(mDebugModeBox->mX, mDebugModeBox->mY + 40, 46, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
@@ -191,6 +198,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         //mHardwareAccelerationCheckbox->SetVisible(false);
         mFullscreenCheckbox->SetVisible(false);
         mDebugModeBox->SetVisible(true);
+        mDiscordBox->SetVisible(true);
     }
 
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
@@ -227,6 +235,7 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
     {
         TodDrawString(g, mApp->mReconVersion, 210, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
         TodDrawString(g, _S("Debug Mode"), 260, 167, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, _S("Discord Presence"), 260, 207, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
     }
 
 }

@@ -136,6 +136,7 @@ public:
 	SexyString						mReconVersion;
 	int								mQuickLevel;
 	bool							mPlayedQuickplay;
+	bool							mDiscordPresence;
 
 public:
 	LawnApp();
