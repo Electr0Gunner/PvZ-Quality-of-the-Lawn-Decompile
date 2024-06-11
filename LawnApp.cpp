@@ -760,6 +760,7 @@ void LawnApp::DoBackToMain()
 	WriteCurrentUserConfig();
 	KillNewOptionsDialog();
 	KillBoard();
+	mPlayedQuickplay = false;
 	ShowGameSelector();
 }
 
