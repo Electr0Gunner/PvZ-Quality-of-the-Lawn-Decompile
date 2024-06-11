@@ -1233,7 +1233,8 @@ bool LawnApp::KillNewOptionsDialog()
 		return false;
 
 	bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
-	mDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
+	mPlayerInfo->mShowDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
+	mDiscordPresence = mPlayerInfo->mShowDiscordPresence;
 	//bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
 	SwitchScreenMode(wantWindowed, true, false);
 	ToggleDebugMode();
@@ -1390,6 +1391,7 @@ void LawnApp::Init()
 	{
 		mPlayerInfo = mProfileMgr->GetAnyProfile();
 	}
+	mDiscordPresence = mPlayerInfo->mShowDiscordPresence;
 
 	mMaxExecutions = GetInteger("MaxExecutions", 0);
 	mMaxPlays = GetInteger("MaxPlays", 0);
