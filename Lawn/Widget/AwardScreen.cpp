@@ -446,6 +446,13 @@ void AwardScreen::KeyChar(char theChar)
 
 void AwardScreen::ExitScreen()
 {
+    if (mApp->mPlayedQuickplay)
+    {
+        mApp->KillAwardScreen();
+        mApp->KillGameSelector();
+        mApp->ShowGameSelector();
+        return;
+    }
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
     {
         mApp->KillAwardScreen();
