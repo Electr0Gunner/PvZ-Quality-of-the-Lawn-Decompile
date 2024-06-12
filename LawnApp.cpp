@@ -130,11 +130,11 @@ LawnApp::LawnApp()
 	isFastMode = false;
 	mSpeedValue = 2;
 	mProdName = "PlantsVsZombies";
-	mReconVersion = "PvZ QoTL v1.3.2.2";
+	mReconVersion = "PvZ QoTL v1.3.2.3";
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
-	aTitleName += " BETA ";
-	aTitleName += "QoTL v1.3.2.2";
+	aTitleName += "QoTL v1.3.2.3";
+	aTitleName += " DEBUG ";
 	//aTitleName += mProductVersion; tbh i dont get how this works. sooooooooo, commenting it. just do "aTitleName += "some random version string";   "
 #endif
 
@@ -1233,8 +1233,7 @@ bool LawnApp::KillNewOptionsDialog()
 		return false;
 
 	bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
-	mPlayerInfo->mShowDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
-	mDiscordPresence = mPlayerInfo->mShowDiscordPresence;
+	mDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
 	//bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
 	SwitchScreenMode(wantWindowed, true, false);
 	ToggleDebugMode();
@@ -1391,7 +1390,6 @@ void LawnApp::Init()
 	{
 		mPlayerInfo = mProfileMgr->GetAnyProfile();
 	}
-	mDiscordPresence = mPlayerInfo->mShowDiscordPresence;
 
 	mMaxExecutions = GetInteger("MaxExecutions", 0);
 	mMaxPlays = GetInteger("MaxPlays", 0);

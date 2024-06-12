@@ -302,6 +302,7 @@ public:
 	DWORD					mVSyncBrokenTestStartTick;
 	DWORD					mVSyncBrokenTestUpdates;
 	bool					mWaitForVSync;
+	bool					mDiscordPresence;
 	bool					mSoftVSyncWait;
 	bool					mUserChanged3DSetting;
 	bool					mAutoEnable3D;

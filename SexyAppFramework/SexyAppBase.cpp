@@ -286,6 +286,7 @@ SexyAppBase::SexyAppBase()
 	mIsWideWindow = false;
 	mAspectCorrect = true;
 	mAspectNoStretch = false;
+	mDiscordPresence = true;
 
 	int i;
 
@@ -1566,6 +1567,7 @@ void SexyAppBase::WriteToRegistry()
 	RegistryWriteInteger("CustomCursors", mCustomCursorsEnabled ? 1 : 0);		
 	RegistryWriteInteger("InProgress", 0);
 	RegistryWriteBoolean("WaitForVSync", mWaitForVSync);	
+	RegistryWriteBoolean("DiscordPresence", mDiscordPresence);
 	RegistryWriteInteger("MouseSensitivity", (int) (mMouseSensitivity * 100));
 }
 
@@ -1912,6 +1914,7 @@ void SexyAppBase::ReadFromRegistry()
 		EnableCustomCursors(anInt != 0);	
 			
 	RegistryReadBoolean("WaitForVSync", &mWaitForVSync);	
+	RegistryReadBoolean("DiscordPresence", &mDiscordPresence);
 
 	if (RegistryReadInteger("InProgress", &anInt))
 		mLastShutdownWasGraceful = anInt == 0;

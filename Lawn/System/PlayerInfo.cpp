@@ -70,7 +70,6 @@ void PlayerInfo::SyncDetails(DataSync& theSync)
 	theSync.SyncLong(mHasSeenUpsell);
 	theSync.SyncLong(mPlaceHolderPlayerStats);
 	theSync.SyncLong(mNumPottedPlants);
-	theSync.SyncBool(mShowDiscordPresence);
 	
 	TOD_ASSERT(mNumPottedPlants <= MAX_POTTED_PLANTS);
 	for (int i = 0; i < mNumPottedPlants; i++)
@@ -167,7 +166,6 @@ void PlayerInfo::Reset()
 	mPlaceHolderPlayerStats = 0;
 	memset(mPottedPlant, 0, sizeof(mPottedPlant));
 	mNumPottedPlants = 0;
-	mShowDiscordPresence = true;
 	memset(mEarnedAchievements, 0, sizeof(mEarnedAchievements));
 	memset(mShownedAchievements, 0, sizeof(mShownedAchievements));
 }
