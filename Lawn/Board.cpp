@@ -342,12 +342,13 @@ void Board::TryToSaveGame()
 //0x408DA0
 bool Board::NeedSaveGame()
 {
-	return 
-		mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ICE && 
-		mApp->mGameMode != GameMode::GAMEMODE_UPSELL && 
-		mApp->mGameMode != GameMode::GAMEMODE_INTRO && 
-		mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN && 
-		mApp->mGameMode != GameMode::GAMEMODE_TREE_OF_WISDOM && 
+	return
+		!mApp->mPlayedQuickplay &&
+		mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ICE &&
+		mApp->mGameMode != GameMode::GAMEMODE_UPSELL &&
+		mApp->mGameMode != GameMode::GAMEMODE_INTRO &&
+		mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN &&
+		mApp->mGameMode != GameMode::GAMEMODE_TREE_OF_WISDOM &&
 		mApp->mGameScene == GameScenes::SCENE_PLAYING;
 }
 
