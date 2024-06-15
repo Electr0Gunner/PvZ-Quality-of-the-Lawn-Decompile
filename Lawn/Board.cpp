@@ -6937,7 +6937,7 @@ void Board::DrawLevel(Graphics* g)
 	SexyString aLevelStr;
 	if (mApp->IsAdventureMode())
 	{
-		aLevelStr = TodStringTranslate(_S("[LEVEL]")) + _S("") + mApp->GetStageString(mLevel);
+		aLevelStr = (mApp->mPlayedQuickplay ? "Quick Play" : TodStringTranslate(_S("[LEVEL]"))) + mApp->GetStageString(mLevel);
 	}
 	else
 	{
@@ -6966,7 +6966,7 @@ void Board::DrawLevel(Graphics* g)
 			}
 		}
 	}
-	
+
 	// ====================================================================================================
 	// ▲ 正式开始绘制关卡名称字符串
 	// ====================================================================================================
