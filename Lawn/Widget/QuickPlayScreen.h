@@ -1,3 +1,5 @@
+//changed the mPlayButton type
+//removed useless methods and added new methods
 #ifndef __QUICKPLAYSCREEN_H__
 #define __QUICKPLAYSCREEN_H__
 
@@ -17,30 +19,33 @@ class Plant;
 class QuickPlayScreen : public Widget, public Sexy::ButtonListener
 {
 public:
-    LawnApp*                    mApp;
-    NewLawnButton*              mBackButton;
-    NewLawnButton*              mLeftButton;
-    NewLawnButton*              mRightButton;
-    GameButton*                 mPlayButton;
+    LawnApp* mApp;
+    NewLawnButton* mBackButton;
+    NewLawnButton* mLeftButton;
+    NewLawnButton* mRightButton;
+    LawnStoneButton* mPlayButton;
     BackgroundType              mBackground;
     ZombieType                  mZombieType;
     SeedType                    mSeedType;
     int                         mLevel;
-    Zombie*                     mDisplayZombie;
-    Plant*                      mDisplayPlant;
-    Plant*                      mFlowerPot;
+    Zombie* mDisplayZombie;
+    Plant* mDisplayPlant;
+    Plant* mFlowerPot;
     ReanimationID			    mHammerID;
 
 public:
     QuickPlayScreen(LawnApp* theApp);
     virtual ~QuickPlayScreen();
-    void                        DrawButton(Graphics* g);
     void                        KeyDown(KeyCode theKey);
     void                        DrawPool(Graphics* g, bool isNight);
     void                        ChooseBackground();
     void                        ChooseZombieType();
     void                        ResetZombie();
     void                        ResetPlant(bool decrease);
+    void                        StartLevel();
+    void                        ExitScreen();
+    void                        PreviousLevel();
+    void                        NextLevel();
     ZombieType                  GetZombieType(int ID);
     virtual void                Draw(Graphics* g);
     virtual void                Update();
@@ -48,6 +53,5 @@ public:
     virtual void                RemovedFromManager(WidgetManager* theWidgetManager);
     virtual void                ButtonPress(int theId);
     virtual void                ButtonDepress(int theId);
-    virtual void			    MouseUp(int x, int y, int theClickCount);
 };
 #endif

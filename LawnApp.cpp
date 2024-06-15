@@ -1637,14 +1637,15 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 }
 
 //0x4524F0
+//fixed crash and removed level saving for quick play
+//fixed bypassing the fast mode
 void LawnApp::CheckForGameEnd()
 {
 	if (mBoard == nullptr || !mBoard->mLevelComplete)
 		return;
+	isFastMode = false;
 
-	bool aUnlockedNewChallenge = UpdatePlayerProfileForFinishingLevel();
 	bool forceAchievements = false;
-
 	for (int aAchivement = 0; aAchivement < TOTAL_ACHIEVEMENTS; aAchivement++)
 	{
 		if (mPlayerInfo->mEarnedAchievements[aAchivement] && !mPlayerInfo->mShownedAchievements[aAchivement] && mAchievement->ReturnShowInAwards(aAchivement))
@@ -1662,11 +1663,11 @@ void LawnApp::CheckForGameEnd()
 		else {
 			ShowAwardScreen(AwardType::AWARD_ACHIEVEMENTONLY, true);
 		}
-		mBoard->mLevelComplete = false;
 		KillBoard();
 		return;
 	}
 
+	bool aUnlockedNewChallenge = UpdatePlayerProfileForFinishingLevel();
 	if (IsAdventureMode())
 	{
 
@@ -1706,7 +1707,7 @@ void LawnApp::CheckForGameEnd()
 
 			if (aUnlockedNewChallenge && HasFinishedAdventure())
 			{
-				ShowAwardScreen(AwardType::AWARD_FORLEVEL,true);
+				ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);
 			}
 			else
 			{

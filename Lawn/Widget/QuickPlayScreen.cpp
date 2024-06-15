@@ -1,4 +1,10 @@
-﻿#include "GameButton.h"
+﻿
+//made the play button to match the button behaviours with the others but visually didn't change anything
+//fixed zombie shadow problem
+//fixed the initial plant drawing problems now it should draw the plants flawlessly
+//now you can press ESCAPE to exit faster from the screen and you can press ENTER to enter the level
+//added a check in the KeyDown where it checks if this screen is focused, if its not then return
+#include "GameButton.h"
 #include "../Achievements.h"
 #include "../../LawnApp.h"
 #include "../System/Music.h"
@@ -48,10 +54,8 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
         Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT, Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT);
     mRightButton->Resize(510, 380, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
 
-    mPlayButton = new GameButton(3);
-    mPlayButton->mDrawStoneButton = true;
+    mPlayButton = MakeButton(3, this, "PLAY");
     mPlayButton->Resize(310, 380, 163, 46);
-    mPlayButton->SetLabel("PLAY");
 
     mDisplayZombie = new Zombie();
     mDisplayZombie->mBoard = nullptr;
@@ -92,11 +96,11 @@ void QuickPlayScreen::Draw(Graphics* g)
     {
     case BackgroundType::BACKGROUND_1_DAY:				g->DrawImage(Sexy::IMAGE_BACKGROUND1, -130, 0);                       break;
     case BackgroundType::BACKGROUND_2_NIGHT:			g->DrawImage(Sexy::IMAGE_BACKGROUND2, -130, 0);						break;
-    case BackgroundType::BACKGROUND_3_POOL:				
+    case BackgroundType::BACKGROUND_3_POOL:
         g->DrawImage(Sexy::IMAGE_BACKGROUND3, -130, 0);
         DrawPool(g, false);
         break;
-    case BackgroundType::BACKGROUND_4_FOG:				        
+    case BackgroundType::BACKGROUND_4_FOG:
         g->DrawImage(Sexy::IMAGE_BACKGROUND4, -130, 0);
         DrawPool(g, true);
         break;
@@ -106,16 +110,11 @@ void QuickPlayScreen::Draw(Graphics* g)
     }
     if (mDisplayZombie)
     {
-        if (mLevel != 35){
+        if (mLevel != 35) {
             Graphics aZombieGraphics = Graphics(*g);
-            if(mLevel == 25){
+            if (mLevel == 25) {
                 mDisplayZombie->mScaleZombie = 0.5f;
             }
-
-            mDisplayZombie->BeginDraw(&aZombieGraphics);
-            mDisplayZombie->Draw(&aZombieGraphics);
-            if(mZombieType != ZOMBIE_BOSS)
-                mDisplayZombie->DrawShadow(&aZombieGraphics);
             mDisplayZombie->mPosX = 340;
             mDisplayZombie->mPosY = 240;
             if (mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG)
@@ -126,6 +125,11 @@ void QuickPlayScreen::Draw(Graphics* g)
                 mDisplayZombie->mPosX = -100;
                 mDisplayZombie->mPosY = -20;
             }
+            mDisplayZombie->BeginDraw(&aZombieGraphics);
+            if (mZombieType != ZombieType::ZOMBIE_BUNGEE && mZombieType != ZombieType::ZOMBIE_BOSS &&
+                mZombieType != ZombieType::ZOMBIE_ZAMBONI && mZombieType != ZombieType::ZOMBIE_CATAPULT)
+                mDisplayZombie->DrawShadow(&aZombieGraphics);
+            mDisplayZombie->Draw(&aZombieGraphics);
         }
     }
     if (mFlowerPot)
@@ -133,10 +137,10 @@ void QuickPlayScreen::Draw(Graphics* g)
         if (mBackground == BACKGROUND_5_ROOF || mBackground == BACKGROUND_6_BOSS)
         {
             Graphics aPotGraphics = Graphics(*g);
-            mFlowerPot->BeginDraw(&aPotGraphics);
-            mFlowerPot->Draw(&aPotGraphics);
             mFlowerPot->mX = 280;
             mFlowerPot->mY = 280;
+            mFlowerPot->BeginDraw(&aPotGraphics);
+            mFlowerPot->Draw(&aPotGraphics);
         }
     }
     if (mDisplayPlant)
@@ -144,8 +148,6 @@ void QuickPlayScreen::Draw(Graphics* g)
         if (mLevel != 35 && mLevel != 15) {
             Graphics aPlantGraphics = Graphics(*g);
 
-            mDisplayPlant->BeginDraw(&aPlantGraphics);
-            mDisplayPlant->Draw(&aPlantGraphics);
             mDisplayPlant->mX = 280;
             mDisplayPlant->mY = 280;
             if ((mBackground == BACKGROUND_3_POOL || mBackground == BACKGROUND_4_FOG) && !mDisplayPlant->IsAquatic(mDisplayPlant->mSeedType))
@@ -156,6 +158,8 @@ void QuickPlayScreen::Draw(Graphics* g)
             {
                 mDisplayPlant->mY -= 10;
             }
+            mDisplayPlant->BeginDraw(&aPlantGraphics);
+            mDisplayPlant->Draw(&aPlantGraphics);
         }
     }
     if (mLevel == 5)
@@ -179,26 +183,26 @@ void QuickPlayScreen::Draw(Graphics* g)
     curLevel += "-";
     curLevel += to_string(aSub);
     TodDrawString(g, curLevel, 380, 30, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color(0, 255, 0), DS_ALIGN_CENTER);
-    mPlayButton->Draw(g);
 }
 
 void QuickPlayScreen::KeyDown(KeyCode theKey) {
-    if (theKey == KEYCODE_LEFT) {
-        mLevel--;
-        mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
-        ChooseBackground();
-        ResetZombie();
-        ResetPlant(true);
-    }
-    if (theKey == KEYCODE_RIGHT)
+    if (mApp->mWidgetManager->mFocusWidget != this)
+        return;
+    switch (theKey)
     {
-        mLevel++;
-        mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
-        ChooseBackground();
-        ResetZombie();
-        ResetPlant(false);
+    case KEYCODE_ESCAPE:
+        ExitScreen();
+        break;
+    case KEYCODE_LEFT:
+        PreviousLevel();
+        break;
+    case KEYCODE_RIGHT:
+        NextLevel();
+        break;
+    case KEYCODE_RETURN:
+        StartLevel();
+        break;
     }
-
 }
 
 void QuickPlayScreen::DrawPool(Graphics* g, bool isNight)
@@ -283,6 +287,7 @@ void QuickPlayScreen::AddedToManager(WidgetManager* theWidgetManager)
     AddWidget(mBackButton);
     AddWidget(mLeftButton);
     AddWidget(mRightButton);
+    AddWidget(mPlayButton);
 }
 
 //0x42F6B0
@@ -292,6 +297,7 @@ void QuickPlayScreen::RemovedFromManager(WidgetManager* theWidgetManager)
     RemoveWidget(mBackButton);
     RemoveWidget(mLeftButton);
     RemoveWidget(mRightButton);
+    RemoveWidget(mPlayButton);
 }
 
 //0x42F720
@@ -302,7 +308,6 @@ void QuickPlayScreen::ButtonPress(int theId)
 
 void QuickPlayScreen::Update()
 {
-    mPlayButton->Update();
     Reanimation* aHammerReanim = mApp->ReanimationTryToGet(mHammerID);
     if (aHammerReanim)
     {
@@ -318,61 +323,25 @@ void QuickPlayScreen::Update()
 //0x42F740
 void QuickPlayScreen::ButtonDepress(int theId)
 {
-    if (theId == 0)
+    switch (theId)
     {
-        mApp->mGameSelector->mMovementTimer = 75;
-        mApp->mGameSelector->mSelectorState = SELECTOR_IDLE;
-        mApp->mGameSelector->mDestinationX = 0;
-        mApp->mWidgetManager->SetFocus(mApp->mGameSelector);
-        mApp->mGameSelector->mAdventureButton->SetDisabled(false);
-        mApp->mGameSelector->mMinigameButton->SetDisabled(false);
-        mApp->mGameSelector->mPuzzleButton->SetDisabled(false);
-        mApp->mGameSelector->mOptionsButton->SetDisabled(false);
-        mApp->mGameSelector->mQuitButton->SetDisabled(false);
-        mApp->mGameSelector->mHelpButton->SetDisabled(false);
-        mApp->mGameSelector->mChangeUserButton->SetDisabled(false);
-        mApp->mGameSelector->mStoreButton->SetDisabled(false);
-        mApp->mGameSelector->mAlmanacButton->SetDisabled(false);
-        mApp->mGameSelector->mSurvivalButton->SetDisabled(false);
-        mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
-        mApp->mGameSelector->mAchievementButton->SetDisabled(false);
-        mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
-        mApp->mGameSelector->mCreditsButton->SetDisabled(false);
-    }
-    if (theId == 1)
-    {
-        mLevel--;
-        mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
-        ChooseBackground();
-        ResetZombie();
-        ResetPlant(true);
-    }
-    if (theId == 2)
-    {
-        mLevel++;
-        mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
-        ChooseBackground();
-        ResetZombie();
-        ResetPlant(false);
-    }
-}
-
-void QuickPlayScreen::MouseUp(int x, int y, int theClickCount)
-{
-    if (mPlayButton->IsMouseOver())
-    {
-        mApp->mQuickLevel = mLevel;
-        mApp->mPlayedQuickplay = true;
-        mApp->KillGameSelector();
-        mApp->KillQuickPlayScreen();
-        mApp->StartQuickPlay(GameMode::GAMEMODE_ADVENTURE, true);
-        return;
+    case 0:
+        ExitScreen();
+        break;
+    case 1:
+        PreviousLevel();
+        break;
+    case 2:
+        NextLevel();
+        break;
+    case 3:
+        StartLevel();
+        break;
     }
 }
 
 void QuickPlayScreen::ResetZombie()
 {
-    ZombieType aPrevType = mZombieType;
     ChooseZombieType();
     mDisplayZombie = nullptr;
     mDisplayZombie = new Zombie();
@@ -408,4 +377,57 @@ void QuickPlayScreen::ResetPlant(bool decrease)
     mDisplayPlant = new Plant();
     mDisplayPlant->mIsOnBoard = false;
     mDisplayPlant->PlantInitialize(0, 0, !aSpecialLevel ? mApp->GetAwardSeedForLevel(mSeedLevel) : aSpecialSeed, SEED_NONE);
+}
+
+void QuickPlayScreen::StartLevel()
+{
+    mApp->mQuickLevel = mLevel;
+    mApp->mPlayedQuickplay = true;
+    mApp->KillGameSelector();
+    mApp->KillQuickPlayScreen();
+    mApp->StartQuickPlay(GameMode::GAMEMODE_ADVENTURE, true);
+}
+
+void QuickPlayScreen::ExitScreen()
+{
+    mApp->mGameSelector->mMovementTimer = 75;
+    mApp->mGameSelector->mSelectorState = SELECTOR_IDLE;
+    mApp->mGameSelector->mDestinationX = 0;
+    mApp->mWidgetManager->SetFocus(mApp->mGameSelector);
+    mApp->mGameSelector->mAdventureButton->SetDisabled(false);
+    mApp->mGameSelector->mMinigameButton->SetDisabled(false);
+    mApp->mGameSelector->mPuzzleButton->SetDisabled(false);
+    mApp->mGameSelector->mOptionsButton->SetDisabled(false);
+    mApp->mGameSelector->mQuitButton->SetDisabled(false);
+    mApp->mGameSelector->mHelpButton->SetDisabled(false);
+    mApp->mGameSelector->mChangeUserButton->SetDisabled(false);
+    mApp->mGameSelector->mStoreButton->SetDisabled(false);
+    mApp->mGameSelector->mAlmanacButton->SetDisabled(false);
+    mApp->mGameSelector->mSurvivalButton->SetDisabled(false);
+    mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
+    mApp->mGameSelector->mAchievementButton->SetDisabled(false);
+    mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
+    mApp->mGameSelector->mCreditsButton->SetDisabled(false);
+    mBackButton->SetDisabled(true);
+    mLeftButton->SetDisabled(true);
+    mRightButton->SetDisabled(true);
+    mPlayButton->SetDisabled(true);
+}
+
+void QuickPlayScreen::PreviousLevel()
+{
+    mLevel--;
+    mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
+    ChooseBackground();
+    ResetZombie();
+    ResetPlant(true);
+}
+
+void QuickPlayScreen::NextLevel()
+{
+    mLevel++;
+    mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
+    ChooseBackground();
+    ResetZombie();
+    ResetPlant(false);
 }

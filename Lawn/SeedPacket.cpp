@@ -562,7 +562,7 @@ void DrawSeedPacket(Graphics* g, float x, float y, SeedType theSeedType, SeedTyp
 
 		Font* aTextFont = Sexy::FONT_BRIANNETOD12;
 		int aTextOffsetX = 32 - aTextFont->StringWidth(aCostStr);
-		int aTextOffsetY = aTextFont->GetAscent() + 54;
+		int aTextOffsetY = aTextFont->GetAscent() + 52;
 		if (g->mScaleX == 1.0f && g->mScaleY == 1.0f)
 		{
 			TodDrawString(g, aCostStr, x + aTextOffsetX, y + aTextOffsetY, aTextFont, Color::Black, DS_ALIGN_LEFT);
