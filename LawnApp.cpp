@@ -1360,7 +1360,11 @@ void LawnApp::Init()
 #ifdef _DEBUG
 	TodAssertInitForApp();
 	gBetaSubmitFunc = BetaSubmitFunc;
+	bool is3dRecomended = SexyAppBase::Is3DAccelerationRecommended();
+	bool is3dSupported = SexyAppBase::Is3DAccelerationSupported();
 	TodLog("session id: %u", mSessionID);
+	TodLog("3d recommended: %u", is3dRecomended);
+	TodLog("3d supported: %u", is3dSupported);
 #endif
 
 	UpdateDiscordRPC("Starting Game");

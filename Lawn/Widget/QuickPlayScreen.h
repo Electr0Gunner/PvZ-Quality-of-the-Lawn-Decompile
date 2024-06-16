@@ -1,5 +1,3 @@
-//changed the mPlayButton type
-//removed useless methods and added new methods
 #ifndef __QUICKPLAYSCREEN_H__
 #define __QUICKPLAYSCREEN_H__
 
