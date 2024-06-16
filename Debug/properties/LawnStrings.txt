@@ -3051,7 +3051,7 @@ CREDITS PAUSED
 Click to resume the credits. 
 
 You can also view the credits later 
-from the options on the main menu.
+on the main menu.
 
 [CREDITS_RESUME_BUTTON]
 Resume Credits
