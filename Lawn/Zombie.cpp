@@ -7166,7 +7166,7 @@ void Zombie::DropLoot()
     Rect aZombieRect = GetZombieRect();
     int aCenterX = aZombieRect.mX + aZombieRect.mWidth / 2;
     int aCenterY = aZombieRect.mY + aZombieRect.mHeight / 4;
-    if (mZombieType == ZombieType::ZOMBIE_YETI)
+    if (mZombieType == ZombieType::ZOMBIE_YETI && !mApp->mPlayedQuickplay)
     {
         mApp->PlayFoley(FoleyType::FOLEY_SPAWN_SUN);
         mBoard->AddCoin(aCenterX - 20, aCenterY, CoinType::COIN_DIAMOND, CoinMotion::COIN_MOTION_COIN);
@@ -7179,6 +7179,7 @@ void Zombie::DropLoot()
         mBoard->DropLootPiece(aCenterX, aCenterY, aZombieValue);
     }
 }
+
 
 //0x5302F0
 void Zombie::DieWithLoot()

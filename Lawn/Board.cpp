@@ -9717,6 +9717,9 @@ void Board::DropLootPiece(int thePosX, int thePosY, int theDropFactor)
 		}
 	}
 
+	if (mApp->mPlayedQuickplay)
+		return;
+
 	if (mTotalSpawnedWaves > 70)
 		return;
 
@@ -9796,7 +9799,7 @@ void Board::DropLootPiece(int thePosX, int thePosY, int theDropFactor)
 //0x41D2C0
 bool Board::CanDropLoot()
 {
-	return !mApp->mPlayedQuickplay && !mCutScene->ShouldRunUpsellBoard() && (!mApp->IsFirstTimeAdventureMode() || mLevel >= 11);
+	return !mCutScene->ShouldRunUpsellBoard() && (!mApp->IsFirstTimeAdventureMode() || mLevel >= 11);
 }
 
 //0x41D320
