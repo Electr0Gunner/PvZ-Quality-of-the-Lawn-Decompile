@@ -284,17 +284,28 @@ void NewOptionsDialog::CheckboxChecked(int theId, bool checked)
             mFullscreenCheckbox->SetChecked(true, false);
         }
         break;
-        
+
     case NewOptionsDialog::NewOptionsDialog_HardwareAcceleration:
-        if (checked)
+        if (!checked)
         {
+            mApp->DoDialog(
+                Dialogs::DIALOG_INFO,
+                true,
+                _S("Warning"),
+                _S("Some visual bugs could occur with 3D Acceleration OFF.\n\n"
+                    "At the moment they are still being investigated.\n"),
+                _S("OK"),
+                Dialog::BUTTONS_FOOTER
+            );
+        }
+        else {
             if (!mApp->Is3DAccelerationRecommended())
             {
                 mApp->DoDialog(
                     Dialogs::DIALOG_INFO,
                     true,
                     _S("Warning"),
-                    _S( "Your video card may not fully support this feature.\n\n"
+                    _S("Your video card may not fully support this feature.\n\n"
                         "If you experience slower performance, please disable Hardware Acceleration.\n"),
                     _S("OK"),
                     Dialog::BUTTONS_FOOTER

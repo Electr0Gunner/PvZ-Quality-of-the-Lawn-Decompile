@@ -478,10 +478,6 @@ void Music::MusicResyncChannel(MusicFile theMusicFileToMatch, MusicFile theMusic
 
 void Music::MusicResync()
 {
-	if (mCurMusicTune == MUSIC_TUNE_GRASS_THE_MOON) {
-		return;
-	}
-
 	if (mCurMusicFileMain != MusicFile::MUSIC_FILE_NONE)
 	{
 		if (mCurMusicFileDrums != MusicFile::MUSIC_FILE_NONE)
@@ -520,8 +516,7 @@ void Music::UpdateMusicBurst()
 
 	int aBurstScheme;
 	if (mCurMusicTune == MusicTune::MUSIC_TUNE_DAY_GRASSWALK || mCurMusicTune == MusicTune::MUSIC_TUNE_POOL_WATERYGRAVES ||
-		mCurMusicTune == MusicTune::MUSIC_TUNE_FOG_RIGORMORMIST || mCurMusicTune == MusicTune::MUSIC_TUNE_ROOF_GRAZETHEROOF
-		|| mCurMusicTune == MusicTune::MUSIC_TUNE_GRASS_THE_MOON)
+		mCurMusicTune == MusicTune::MUSIC_TUNE_FOG_RIGORMORMIST || mCurMusicTune == MusicTune::MUSIC_TUNE_ROOF_GRAZETHEROOF)
 		aBurstScheme = 1;
 	else if (mCurMusicTune == MusicTune::MUSIC_TUNE_NIGHT_MOONGRAINS)
 		aBurstScheme = 2;
@@ -607,8 +602,6 @@ void Music::UpdateMusicBurst()
 		else
 			aMainTrackVolume = TodAnimateCurveFloat(400, 0, mBurstStateCounter, 0.0f, 1.0f, TodCurves::CURVE_LINEAR);
 		if (mBurstStateCounter == 0 && mMusicDrumsState == MusicDrumsState::MUSIC_DRUMS_OFF)
-			mMusicBurstState = MusicBurstState::MUSIC_BURST_OFF;
-		if (mBurstStateCounter == 0 && mCurMusicTune == MUSIC_TUNE_GRASS_THE_MOON)
 			mMusicBurstState = MusicBurstState::MUSIC_BURST_OFF;
 		break;
 	}
@@ -757,11 +750,6 @@ void Music::GameMusicPause(bool thePause)
 			{
 				mPauseOffset = gBass->BASS_ChannelGetPosition(aMusicInfo->mHStream, BASS_POS_BYTE);
 				mMusicInterface->StopMusic(mCurMusicFileMain);
-
-				if (mCurMusicTune == MUSIC_TUNE_GRASS_THE_MOON)
-				{
-					mMusicInterface->StopMusic(mCurMusicFileHihats);
-				}
 			}
 			else
 			{
