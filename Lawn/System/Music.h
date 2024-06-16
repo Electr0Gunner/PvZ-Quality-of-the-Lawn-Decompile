@@ -26,6 +26,10 @@ enum MusicTune
 	MUSIC_TUNE_CONVEYER,						// 传送带关卡
 	MUSIC_TUNE_FINAL_BOSS_BRAINIAC_MANIAC,		// 僵王博士关卡
 	MUSIC_TUNE_CREDITS_ZOMBIES_ON_YOUR_LAWN,	// MV
+	MUSIC_TUNE_GRASS_THE_MOON,
+	MUSIC_TUNE_BRAIN_STORM,
+	MUSIC_TUNE_FALLING_CRYSTALS,
+	MUSIC_TUNE_RAINY_RIGOR_MORMIST,
 	NUM_MUSIC_TUNES
 };
 
@@ -36,6 +40,11 @@ enum MusicFile
 	MUSIC_FILE_DRUMS,
 	MUSIC_FILE_HIHATS,
 	MUSIC_FILE_CREDITS_ZOMBIES_ON_YOUR_LAWN,
+	MUSIC_FILE_GRASS_THE_MOON,
+	MUSIC_FILE_GRASS_THE_MOON_BASS,
+	MUSIC_FILE_BRAIN_STORM,
+	MUSIC_FILE_FALLING_CRYSTALS,
+	MUSIC_FILE_RAINY_RIGOR_MORMIST,
 	NUM_MUSIC_FILES
 };
 
@@ -59,22 +68,22 @@ enum MusicDrumsState
 class MusicFileData
 {
 public:
-	unsigned int*				mFileData;
+	unsigned int* mFileData;
 };
 extern MusicFileData gMusicFileData[MusicFile::NUM_MUSIC_FILES];  //0x6A9ED0
 
 class Music
 {
 public:
-	LawnApp*					mApp;								//+0x0
-	Sexy::MusicInterface*		mMusicInterface;					//+0x4
+	LawnApp* mApp;								//+0x0
+	Sexy::MusicInterface* mMusicInterface;					//+0x4
 	MusicTune					mCurMusicTune;						//+0x8
 	MusicFile					mCurMusicFileMain;					//+0xC
 	MusicFile					mCurMusicFileDrums;					//+0x10
 	MusicFile					mCurMusicFileHihats;				//+0x14
 	int							mBurstOverride;						//+0x18
-	int							mBaseBPM;							//+0x1C
-	int							mBaseModSpeed;						//+0x20
+	float						mBaseBPM;							//+0x1C
+	float						mBaseModSpeed;						//+0x20
 	MusicBurstState				mMusicBurstState;					//+0x24
 	int							mBurstStateCounter;					//+0x28
 	MusicDrumsState				mMusicDrumsState;					//+0x2C
@@ -110,7 +119,7 @@ public:
 	/*inline*/ void				FadeOut(int theFadeOutDuration);
 	void						SetupMusicFileForTune(MusicFile theMusicFile, MusicTune theMusicTune);
 	unsigned long				GetMusicOrder(MusicFile theMusicFile);
-	void						MusicLoadCreditsSong();
+	void						MusicCreditScreenInit();
 	int							GetNumLoadingTasks();
 };
 
