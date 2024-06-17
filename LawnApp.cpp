@@ -165,6 +165,7 @@ LawnApp::LawnApp()
 	mDRM = nullptr;
 	mQuickLevel = 1;
 	mPlayedQuickplay = false;
+	mRandomCrazySeeds = false;
 	StartDiscord();
 }
 
@@ -2373,7 +2374,10 @@ bool LawnApp::IsWallnutBowlingLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_WALLNUT_BOWLING || mGameMode == GameMode::GAMEMODE_CHALLENGE_WALLNUT_BOWLING_2)
 		return true;
 
-	return IsAdventureMode() && (mQuickLevel == 5 || mPlayerInfo->mLevel == 5);
+	if (mPlayedQuickplay)
+		return mQuickLevel == 5;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 5;
 }
 
 //0x453870
@@ -2391,7 +2395,10 @@ bool LawnApp::IsWhackAZombieLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_WHACK_A_ZOMBIE)
 		return true;
 
-	return IsAdventureMode() && (mQuickLevel == 15 || mPlayerInfo->mLevel == 15);
+	if (mPlayedQuickplay)
+		return mQuickLevel == 15;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 15;
 }
 
 //0x4538C0
@@ -2403,7 +2410,10 @@ bool LawnApp::IsLittleTroubleLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_LITTLE_TROUBLE)
 		return true;
 
-	return IsAdventureMode() && (mQuickLevel == 25 || mPlayerInfo->mLevel == 25);
+	if (mPlayedQuickplay)
+		return mQuickLevel == 25;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 25;
 }
 
 //0x4538F0
@@ -2412,7 +2422,10 @@ bool LawnApp::IsScaryPotterLevel()
 	if (mGameMode >= GameMode::GAMEMODE_SCARY_POTTER_1 && mGameMode <= GameMode::GAMEMODE_SCARY_POTTER_ENDLESS)
 		return true;
 
-	return IsAdventureMode() && (mQuickLevel == 35 || mPlayerInfo->mLevel == 35);
+	if (mPlayedQuickplay)
+		return mQuickLevel == 35;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 35;
 }
 
 //0x453920
@@ -2424,7 +2437,10 @@ bool LawnApp::IsStormyNightLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_STORMY_NIGHT)
 		return true;
 
-	return IsAdventureMode() && (mQuickLevel == 40 || mPlayerInfo->mLevel == 40);
+	if (mPlayedQuickplay)
+		return mQuickLevel == 40;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 40;
 }
 
 //0x453950
@@ -2436,7 +2452,10 @@ bool LawnApp::IsBungeeBlitzLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_BUNGEE_BLITZ)
 		return true;
 
-	return IsAdventureMode() && (mQuickLevel == 45 || mPlayerInfo->mLevel == 45);
+	if (mPlayedQuickplay)
+		return mQuickLevel == 45;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 45;
 }
 
 //0x453980
@@ -2467,7 +2486,10 @@ bool LawnApp::IsFinalBossLevel()
 	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_FINAL_BOSS)
 		return true;
 
-	return IsAdventureMode() && (mQuickLevel == 50 || mPlayerInfo->mLevel == 50);
+	if (mPlayedQuickplay)
+		return mQuickLevel == 50;
+
+	return IsAdventureMode() && mPlayerInfo->mLevel == 50;
 }
 
 //0x453A00
