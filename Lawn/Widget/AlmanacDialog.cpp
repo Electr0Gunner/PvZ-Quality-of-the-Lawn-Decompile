@@ -258,12 +258,12 @@ void AlmanacDialog::Update()
 	}
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
-		mMaxScrollPosition = 0;//ZombieType::NUM_ZOMBIE_TYPES / 5 * 36.5 - 128; //also for zombies
+		mMaxScrollPosition = ZombieType::NUM_ZOMBIE_TYPES / 5 * 36.5 - 128; //also for zombies
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition += mScrollAmount * aScrollSpeed;
 		mScrollPosition = ClampFloat(mScrollPosition, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
-		mSlider->mVisible = false; //by default is invisible, set it based on zombie count
+		mSlider->mVisible = mMaxScrollPosition != 0;
 	}
 	else
 	{
