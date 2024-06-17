@@ -8031,40 +8031,10 @@ static void TodCrash()
 //0x41B950（原版中废弃）
 void Board::KeyChar(SexyChar theChar)
 {
-	if (isdigit(theChar)) // by BULLETBOT
-	{
-		if (mPaused || mApp->mGameScene != GameScenes::SCENE_PLAYING)
-			return;
-		for (int i = 0; i < SEEDBANK_MAX; i++)
-		{
-			if (theChar == '0' + i && mSeedBank->mNumPackets > i)
-			{
-				SeedPacket* aPacket = &mSeedBank->mSeedPackets[i];
-				if (aPacket->mPacketType == SeedType::SEED_NONE)
-					return;
-
-				if (mCursorObject->mSeedBankIndex == i)
-				{
-					RefreshSeedPacketFromCursor();
-					mApp->PlayFoley(FoleyType::FOLEY_DROP);
-				}
-				else
-				{
-					if (mCursorObject->mSeedBankIndex != i)
-						RefreshSeedPacketFromCursor();
-					aPacket->MouseDown(0, 0, 0);
-				}
-				return;
-			}
-		}
-	}
-
 	if (!mApp->mDebugKeysEnabled && !mApp->mCtrlDown)
 		return;
 
 	TodTraceAndLog("Board cheat key '%c'", theChar);
-
-
 
 	if (theChar == _S('u'))
 	{

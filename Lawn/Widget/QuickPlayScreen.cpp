@@ -56,7 +56,7 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
     mPlayButton->Resize(310, 380, 163, 46);
 
     mCrazySeedsCheck = MakeNewCheckbox(QuickPlayScreen::QuickPlayScreen_CrazyDaveSeeds, this, theApp->mRandomCrazySeeds);
-    mCrazySeedsCheck->Resize(0, 0, mCrazySeedsCheck->mWidth, mCrazySeedsCheck->mHeight);
+    mCrazySeedsCheck->Resize(mPlayButton->mX - 200, mPlayButton->mY, 50, 50);
     mCrazySeedsCheck->mVisible = true;
 
     mDisplayZombie = new Zombie();
@@ -186,6 +186,7 @@ void QuickPlayScreen::Draw(Graphics* g)
     curLevel += "-";
     curLevel += to_string(aSub);
     TodDrawString(g, curLevel, 380, 30, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color(0, 255, 0), DS_ALIGN_CENTER);
+    TodDrawString(g, "Random Seeds", mCrazySeedsCheck->mX + 37, mCrazySeedsCheck->mY + 20, Sexy::FONT_DWARVENTODCRAFT12, Color(0, 255, 0), DS_ALIGN_LEFT);
 }
 
 void QuickPlayScreen::KeyDown(KeyCode theKey) {
