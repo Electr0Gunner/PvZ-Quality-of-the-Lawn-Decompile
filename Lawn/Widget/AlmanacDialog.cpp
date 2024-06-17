@@ -250,11 +250,11 @@ void AlmanacDialog::Update()
 
 	if (mOpenPage == ALMANAC_PAGE_PLANTS)
 	{
-		mMaxScrollPosition = 0; //SeedType::NUM_SEED_TYPES / 8 * 36.5 - 128; //this is a calculation that gets the maximum scroll also used in the seed chooser
+		mMaxScrollPosition = SeedType::NUM_SEED_TYPES / 8 * 36.5 - 128; //this is a calculation that gets the maximum scroll also used in the seed chooser
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
-		mSlider->mVisible = false; //by default is invisible, set it based on plant count
+		mSlider->mVisible = mMaxScrollPosition != 0;
 	}
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
@@ -333,7 +333,7 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 	for (SeedType aSeedType = SeedType::SEED_PEASHOOTER; aSeedType < NUM_ALMANAC_SEEDS; aSeedType = (SeedType)(aSeedType + 1))
 	{
 		int aPosX, aPosY;
-		GetSeedPosition(aSeedType, aPosX, aPosY);
+		GetSeedPosition(aSeedType, aPosX, aPosY, aSeedType == SeedType::SEED_IMITATER ? true : false);
 		PlantDefinition& aPlantDef = GetPlantDefinition(aSeedType);
 		if (!mApp->SeedTypeAvailable(aSeedType))
 		{
@@ -587,15 +587,19 @@ void AlmanacDialog::Draw(Graphics* g)
 	mZombieButton->Draw(g);
 }
 
-void AlmanacDialog::GetSeedPosition(SeedType theSeedType, int& x, int& y)
+void AlmanacDialog::GetSeedPosition(SeedType theSeedType, int& x, int& y, bool specialSpot)
 {
-	if (theSeedType == SeedType::SEED_IMITATER)
+	SeedType aPlantIndex = theSeedType;
+	if (aPlantIndex > SeedType::SEED_IMITATER)
+		aPlantIndex = (SeedType)(aPlantIndex - 1);
+
+	if (aPlantIndex == SeedType::SEED_IMITATER && specialSpot)
 		x = 20, y = 23;
-	else if (theSeedType == SeedType::NUM_SEED_TYPES)
+	else if (aPlantIndex == SeedType::NUM_SEED_TYPES)
 		x = 26, y = 482;
 	else
 	{
-		int aFinalSeedType = theSeedType;
+		int aFinalSeedType = aPlantIndex;
 		x = aFinalSeedType % 8 * 52 + 26;
 		y = aFinalSeedType / 8 * 78 + 92 - mScrollPosition;
 	}
@@ -612,7 +616,7 @@ SeedType AlmanacDialog::SeedHitTest(int x, int y)
 			if (mApp->SeedTypeAvailable(aSeedType))
 			{
 				int aSeedX, aSeedY;
-				GetSeedPosition(aSeedType, aSeedX, aSeedY);
+				GetSeedPosition(aSeedType, aSeedX, aSeedY, aSeedType == SeedType::SEED_IMITATER ? true : false);
 				Rect aSeedRect = aSeedType != SeedType::SEED_IMITATER ? Rect(aSeedX, aSeedY + -mScrollPosition, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT) : Rect(aSeedX, aSeedY, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT);
 				if (aSeedType != SeedType::SEED_IMITATER) {
 					if (cSeedClipRect.Contains(x, y) && aSeedRect.Contains(x, y))
