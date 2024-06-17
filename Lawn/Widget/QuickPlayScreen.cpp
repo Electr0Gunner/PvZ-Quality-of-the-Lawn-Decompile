@@ -180,12 +180,7 @@ void QuickPlayScreen::Draw(Graphics* g)
     }
     g->ClearClipRect();
     g->DrawImage(Sexy::IMAGE_QUICKPLAY_WIDGET, 100, 0);
-    int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, ADVENTURE_AREAS);
-    int aSub = mLevel - (aStage - 1) * 10;
-    SexyString curLevel = to_string(aStage);
-    curLevel += "-";
-    curLevel += to_string(aSub);
-    TodDrawString(g, curLevel, 380, 30, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color(0, 255, 0), DS_ALIGN_CENTER);
+    TodDrawString(g, mApp->GetStageString(mLevel).erase(0, 1), 380, 30, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color(0, 255, 0), DS_ALIGN_CENTER);
     TodDrawString(g, "Random Seeds", mCrazySeedsCheck->mX + 37, mCrazySeedsCheck->mY + 20, Sexy::FONT_DWARVENTODCRAFT12, Color(0, 255, 0), DS_ALIGN_LEFT);
 }
 

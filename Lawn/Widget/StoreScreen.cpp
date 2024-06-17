@@ -626,7 +626,6 @@ void StoreScreen::Update()
 {
     mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
     mApp->UpdateCrazyDave();
-    mApp->UpdateDiscordRPC("In The Store");
 
     // 更新 DataArray<Coin> 中的所有 Coin
     Coin* aCoin = nullptr;

@@ -9,6 +9,7 @@
 #include "System/PopDRMComm.h"
 #include "System/TypingCheck.h"
 #include "Widget/StoreScreen.h"
+#include "Widget/AlmanacDialog.h"
 #include "Widget/AwardScreen.h"
 #include "../Sexy.TodLib/Trail.h"
 #include "Widget/ChallengeScreen.h"
@@ -5941,32 +5942,38 @@ void Board::Update()
 	Widget::Update();
 	MarkDirty();
 
+	std::string Details;
+	if (mApp->mGameMode != GameMode::GAMEMODE_ADVENTURE)
+		Details = TodStringTranslate(mApp->GetCurrentChallengeDef().mChallengeName);
+	else
+	{
+		Details = (mApp->mPlayedQuickplay ? "Quick Play" : "Adventure") + mApp->GetStageString(mLevel);
+	}
+	mApp->mDetails = Details;
 	std::string State;
-	if (!mPaused)
-	{
-		State = "Playing";
-	}
+	if (mApp->GetDialog(Dialogs::DIALOG_GAME_OVER))
+		State = "Game Over";
+	else if (AlmanacDialog* dialog = (AlmanacDialog*)mApp->GetDialog(Dialogs::DIALOG_ALMANAC))
+		switch (dialog->mOpenPage)
+		{
+		case AlmanacPage::ALMANAC_PAGE_ZOMBIES:
+			State = "Almanac (Zombies)";
+			break;
+		case AlmanacPage::ALMANAC_PAGE_PLANTS:
+			State = "Almanac (Plants)";
+			break;
+		case AlmanacPage::ALMANAC_PAGE_INDEX:
+			State = "Almanac (Index)";
+			break;
+		default:
+			TOD_ASSERT();
+			break;
+		}
+	else if (mApp->GetDialog(Dialogs::DIALOG_STORE))
+		State = "Store";
 	else
-	{
-		State = "Paused";
-	}
-
-	if(mApp->mGameMode != GameMode::GAMEMODE_ADVENTURE){
-		const char* Details;
-		std::string Challenge = TodStringTranslate(mApp->GetCurrentChallengeDef().mChallengeName);
-		Details = Challenge.c_str();
-		const char* StateConst = State.c_str();
-		mApp->UpdateDiscordRPC(Details, StateConst);
-	}
-	else
-	{
-		int aStage = ClampInt((mLevel - 1) / 10 + 1, 1, 6);
-		int aSub = mLevel - (aStage - 1) * 10;
-		std::string Details = "Adventure " + std::to_string(aStage) + "-" + std::to_string(aSub);
-		const char* DetailsChar = Details.c_str();
-		const char* StateConst = State.c_str();
-		mApp->UpdateDiscordRPC(DetailsChar, StateConst);
-	}
+		State = mPaused ? "Paused" : "Playing";
+	mApp->mState = State;
 
 	if(mSunMoney >= 8000)
 		mApp->GetAchievement(SUNNY_DAYS);

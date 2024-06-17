@@ -702,6 +702,8 @@ StoreScreen* LawnApp::ShowStoreScreen()
 	AddDialog(aStoreScreen);
 	mWidgetManager->SetFocus(aStoreScreen);
 
+	mState = "Store";
+
 	return aStoreScreen;
 }
 
@@ -1368,7 +1370,8 @@ void LawnApp::Init()
 	TodLog("3d supported: %u", is3dSupported);
 #endif
 
-	UpdateDiscordRPC("Starting Game");
+	mDetails = "Starting the Game";
+	mState = "";
 
 	if (!mResourceManager->ParseResourcesFile("properties\\resources.xml"))
 	{
@@ -1494,31 +1497,6 @@ void LawnApp::StartDiscord()
 	};
 
 	Discord_Initialize(CLIENT_ID, &handlers, 1, NULL);
-}
-
-void LawnApp::UpdateDiscordRPC(const char* Details, const char* State, const char* ImageLarge, const char* ImageSmall)
-{
-	static time_t lastUpdateTime = time(NULL);
-	time_t now = time(NULL);
-	if (difftime(now, lastUpdateTime) >= 1) {
-
-		if (!mDiscordPresence)
-		{
-			Discord_ClearPresence();
-		}
-		else
-		{
-			DiscordRichPresence discordPresence;
-			memset(&discordPresence, 0, sizeof(discordPresence));
-			discordPresence.state = State;
-			discordPresence.details = Details;
-			discordPresence.largeImageKey = ImageLarge;
-			discordPresence.smallImageKey = ImageSmall;
-			Discord_UpdatePresence(&discordPresence);
-		}
-		lastUpdateTime = now;
-		Discord_RunCallbacks();
-	}
 }
 
 //0x4522C0
@@ -1868,6 +1846,28 @@ void LawnApp::UpdateFrames()
 		}
 
 		CheckForGameEnd();
+	}
+
+	static time_t lastUpdateTime = time(NULL);
+	time_t now = time(NULL);
+	if (difftime(now, lastUpdateTime) >= 1) {
+
+		if (!mDiscordPresence)
+		{
+			Discord_ClearPresence();
+		}
+		else
+		{
+			DiscordRichPresence discordPresence;
+			memset(&discordPresence, 0, sizeof(discordPresence));
+			discordPresence.state = mState.c_str();
+			discordPresence.details = mDetails.c_str();
+			discordPresence.largeImageKey = "logo";
+			discordPresence.smallImageKey = "None";
+			Discord_UpdatePresence(&discordPresence);
+		}
+		lastUpdateTime = now;
+		Discord_RunCallbacks();
 	}
 }
 

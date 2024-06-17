@@ -639,16 +639,16 @@ void ChallengeScreen::Update()
 	case CHALLENGE_PAGE_CHALLENGE:
 		//mSlider->mVisible = true; !CHANGE THESE TO ACTIVATE THE SLIDER
 		//mMaxScrollPosition = 119 * 4 * 2;
-		mApp->UpdateDiscordRPC("In The Minigames Page");
+		mApp->mDetails = "In The Minigames Page";
 		break;
 	case CHALLENGE_PAGE_LIMBO:
-		mApp->UpdateDiscordRPC("In The Limbo Page");
+		mApp->mDetails = "In The Limbo Page";
 		break;
 	case CHALLENGE_PAGE_SURVIVAL:
-		mApp->UpdateDiscordRPC("In The Survival Page");
+		mApp->mDetails = "In The Survival Page";
 		break;
 	case CHALLENGE_PAGE_PUZZLE:
-		mApp->UpdateDiscordRPC("In The Puzzle Page");
+		mApp->mDetails = "In The Puzzle Page";
 		break;
 	}
 	mSlider->mVisible = false;

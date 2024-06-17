@@ -94,8 +94,6 @@ AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANA
 	SetPage(ALMANAC_PAGE_INDEX);
 	if (!mApp->mBoard || !mApp->mBoard->mPaused)
 		mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_CHOOSE_YOUR_SEEDS);
-
-	mApp->UpdateDiscordRPC("In The Almanac");
 }
 
 //0x401880 & 0x4018A0
@@ -245,8 +243,6 @@ void AlmanacDialog::Update()
 	if (mPlant) mPlant->Update();
 	if (mZombie) mZombie->Update();
 	mSlider->mVisible = true;
-
-	mApp->UpdateDiscordRPC("In The Almanac");
 
 	if (mOpenPage == ALMANAC_PAGE_PLANTS)
 	{

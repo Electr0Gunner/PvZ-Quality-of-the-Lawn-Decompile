@@ -137,6 +137,8 @@ public:
 	int								mQuickLevel;
 	bool							mPlayedQuickplay;
 	bool							mRandomCrazySeeds;
+	SexyString                      mDetails;
+	SexyString                      mState;
 
 public:
 	LawnApp();
@@ -219,7 +221,6 @@ public:
 	virtual void					ButtonDepress(int theId);
 	virtual void					UpdateFrames();
 	virtual bool					UpdateApp();
-	virtual void					UpdateDiscordRPC(const char* Details, const char* State = "Playing", const char* ImageLarge = "logo", const char* ImageSmall = "logo_small");
 	/*inline*/ bool					IsAdventureMode();
 	/*inline*/ bool					IsSurvivalMode();
 	bool							IsContinuousChallenge();

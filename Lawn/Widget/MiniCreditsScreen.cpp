@@ -35,6 +35,8 @@ MiniCreditsScreen::MiniCreditsScreen(LawnApp* theApp)
 	mMusicButton->mTextOffsetX = -30;
 	mMusicButton->mTextOffsetY = -2;
 	mMusicButton->mButtonOffsetY = 8;
+
+	mApp->mDetails = "In the Credits Screen";
 }
 MiniCreditsScreen::~MiniCreditsScreen()
 {
@@ -98,7 +100,6 @@ void MiniCreditsScreen::ButtonPress(int theId)
 
 void MiniCreditsScreen::Update()
 {
-	mApp->UpdateDiscordRPC("In The Credits");
 	mBackButton->Update();
 	if (mApp->HasFinishedAdventure())
 		mMusicButton->Update();

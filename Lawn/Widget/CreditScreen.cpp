@@ -344,6 +344,8 @@ CreditScreen::CreditScreen(LawnApp* theApp)
 	{
 		mApp->SetMusicVolume(0.85);
 	}
+
+    mApp->mDetails = "Watching the Credits";
 }
 
 //0x433E20、0x433E40
@@ -353,6 +355,7 @@ CreditScreen::~CreditScreen()
 	delete mReplayButton;
 	delete mMainMenuButton;
 	delete mOverlayWidget;
+    mApp->mState = "";
 }
 
 //0x433EE0
@@ -1053,7 +1056,9 @@ void CreditScreen::UpdateBlink()
 void CreditScreen::Update()
 {
     Widget::Update();
-    mApp->UpdateDiscordRPC("In The Credits");
+
+    mApp->mState = mCreditsPaused ? "Paused" : "Playing";
+
     if (!mCreditsPaused && !mMainMenuButton->mIsOver && !mReplayButton->mIsOver)
     {
         mApp->SetCursor(CURSOR_POINTER);

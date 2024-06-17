@@ -174,6 +174,8 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
     else
         mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_ZEN_GARDEN);
 
+    mApp->mDetails = mAwardType == AWARD_HELP_ZOMBIENOTE ? "In the Help Screen" : "In the Award Screen";
+
     mWasDrawn = mMenuButton->mBtnNoDraw;
 }
 
@@ -427,7 +429,6 @@ void AwardScreen::Draw(Graphics* g)
 void AwardScreen::Update()
 {
     Widget::Update();
-    mApp->UpdateDiscordRPC("In The Award Screen");
     if (mApp->GetDialogCount() > 0) return;
     mStartButton->Update();
     mMenuButton->Update();
