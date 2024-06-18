@@ -355,7 +355,7 @@ CreditScreen::~CreditScreen()
 	delete mReplayButton;
 	delete mMainMenuButton;
 	delete mOverlayWidget;
-    mApp->mState = "";
+    mApp->UpdateDiscordState();
 }
 
 //0x433EE0
@@ -1057,7 +1057,7 @@ void CreditScreen::Update()
 {
     Widget::Update();
 
-    mApp->mState = mCreditsPaused ? "Paused" : "Playing";
+    mApp->UpdateDiscordState(mCreditsPaused ? "Paused" : "Playing");
 
     if (!mCreditsPaused && !mMainMenuButton->mIsOver && !mReplayButton->mIsOver)
     {

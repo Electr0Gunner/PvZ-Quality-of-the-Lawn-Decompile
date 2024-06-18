@@ -341,6 +341,7 @@ public:
 	virtual void					ToggleDebugMode();
 	static /*inline*/ void			CenterDialog(Dialog* theDialog, int theWidth, int theHeight);
 	void							GetAchievement(AchievementType theAchievementType);
+	void							UpdateDiscordState(SexyString def = "");
 };
 
 SexyString							LawnGetCurrentLevelName();
