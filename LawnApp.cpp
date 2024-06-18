@@ -1369,7 +1369,7 @@ void LawnApp::Init()
 #endif
 
 	mDetails = "Starting the Game";
-	mState = "";
+	UpdateDiscordState();
 
 	if (!mResourceManager->ParseResourcesFile("properties\\resources.xml"))
 	{
@@ -3695,6 +3695,40 @@ void LawnApp::GetAchievement(AchievementType theAchievementType)
 	if (mPlayerInfo == nullptr || gLawnApp == nullptr || mAchievement == nullptr)
 		return;
 	mAchievement->GiveAchievement(this, theAchievementType);
+}
+
+void LawnApp::UpdateDiscordState(SexyString def)
+{
+	SexyString State;
+	if (GetDialog(Dialogs::DIALOG_GAME_OVER))
+		State = "Game Over";
+	else if (AlmanacDialog* dialog = (AlmanacDialog*)GetDialog(Dialogs::DIALOG_ALMANAC))
+		switch (dialog->mOpenPage)
+		{
+		case AlmanacPage::ALMANAC_PAGE_ZOMBIES:
+			State = "Almanac (Zombies)";
+			break;
+		case AlmanacPage::ALMANAC_PAGE_PLANTS:
+			State = "Almanac (Plants)";
+			break;
+		case AlmanacPage::ALMANAC_PAGE_INDEX:
+			State = "Almanac (Index)";
+			break;
+		default:
+			TOD_ASSERT();
+			break;
+		}
+	else if (GetDialog(Dialogs::DIALOG_STORE))
+		State = "Store";
+	else if (NewOptionsDialog* dialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS))
+		State = dialog->mAdvancedMode ? "Advanced Options" : "Options";
+	else if (GetDialog(Dialogs::DIALOG_ADVANCEDOPTIONS))
+		State = "Advanced Options";
+	else if (GetDialog(Dialogs::DIALOG_USERDIALOG))
+		State = "Profiles";
+	else
+		State = def;
+	mState = State;
 }
 
 //0x456060

@@ -5942,7 +5942,7 @@ void Board::Update()
 	Widget::Update();
 	MarkDirty();
 
-	std::string Details;
+	SexyString Details;
 	if (mApp->mGameMode != GameMode::GAMEMODE_ADVENTURE)
 		Details = TodStringTranslate(mApp->GetCurrentChallengeDef().mChallengeName);
 	else
@@ -5950,30 +5950,7 @@ void Board::Update()
 		Details = (mApp->mPlayedQuickplay ? "Quick Play" : "Adventure") + mApp->GetStageString(mLevel);
 	}
 	mApp->mDetails = Details;
-	std::string State;
-	if (mApp->GetDialog(Dialogs::DIALOG_GAME_OVER))
-		State = "Game Over";
-	else if (AlmanacDialog* dialog = (AlmanacDialog*)mApp->GetDialog(Dialogs::DIALOG_ALMANAC))
-		switch (dialog->mOpenPage)
-		{
-		case AlmanacPage::ALMANAC_PAGE_ZOMBIES:
-			State = "Almanac (Zombies)";
-			break;
-		case AlmanacPage::ALMANAC_PAGE_PLANTS:
-			State = "Almanac (Plants)";
-			break;
-		case AlmanacPage::ALMANAC_PAGE_INDEX:
-			State = "Almanac (Index)";
-			break;
-		default:
-			TOD_ASSERT();
-			break;
-		}
-	else if (mApp->GetDialog(Dialogs::DIALOG_STORE))
-		State = "Store";
-	else
-		State = mPaused ? "Paused" : "Playing";
-	mApp->mState = State;
+	mApp->UpdateDiscordState(mPaused ? "Paused" : "Playing");
 
 	if(mSunMoney >= 8000)
 		mApp->GetAchievement(SUNNY_DAYS);

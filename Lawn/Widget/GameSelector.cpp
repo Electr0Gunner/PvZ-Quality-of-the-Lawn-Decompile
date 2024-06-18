@@ -377,7 +377,7 @@ GameSelector::~GameSelector()
 
 	delete mToolTip;
 
-	mApp->mState = "";
+	mApp->UpdateDiscordState();
 }
 
 
@@ -789,42 +789,17 @@ void GameSelector::Update()
 	UpdateTooltip();
 	mApp->mZenGarden->UpdatePlantNeeds();
 
-	if (AlmanacDialog* dialog = (AlmanacDialog*)mApp->GetDialog(Dialogs::DIALOG_ALMANAC))
-		switch (dialog->mOpenPage)
-		{
-		case AlmanacPage::ALMANAC_PAGE_ZOMBIES:
-			mApp->mState = "Almanac (Zombies)";
-			break;
-		case AlmanacPage::ALMANAC_PAGE_PLANTS:
-			mApp->mState = "Almanac (Plants)";
-			break;
-		case AlmanacPage::ALMANAC_PAGE_INDEX:
-			mApp->mState = "Almanac (Index)";
-			break;
-		default:
-			TOD_ASSERT();
-			break;
-		}
-
-	else if (mApp->GetDialog(Dialogs::DIALOG_STORE))
-		mApp->mState = "Store";
-	else if (NewOptionsDialog* dialog = (NewOptionsDialog*)mApp->GetDialog(Dialogs::DIALOG_NEWOPTIONS))
-		mApp->mState = dialog->mAdvancedMode ? "Advanced Options" : "Options";
-	else if (mApp->GetDialog(Dialogs::DIALOG_ADVANCEDOPTIONS))
-		mApp->mState = "Advanced Options";
-	else if (mApp->GetDialog(Dialogs::DIALOG_USERDIALOG))
-		mApp->mState = "Profiles";
-	else if (mSelectorState == SELECTOR_SUB_MENU)
+	SexyString State;
+	if (mSelectorState == SELECTOR_SUB_MENU)
 	{
-		const char* text = "Achievements";
-		if (mApp->mQuickPlayScreen)
-			text = "Quick Play";
-		mApp->mState = text;
+		if (mApp->mAchievementScreen)
+			State = "Achievements";
+		else if(mApp->mQuickPlayScreen)
+			State = "Quick Play";
 	}
 	else
-	{
-		mApp->mState = "Game Selector";
-	}
+		State = "Game Selector";
+	mApp->UpdateDiscordState(State);
 
 	if (mMovementTimer > 0)
 	{
