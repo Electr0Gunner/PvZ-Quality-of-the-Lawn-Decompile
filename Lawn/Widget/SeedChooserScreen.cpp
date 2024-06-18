@@ -428,7 +428,10 @@ void SeedChooserScreen::Draw(Graphics* g)
 				aPosX = aChosenSeed.mX;
 				aPosY = aChosenSeed.mY;
 			}
-			DrawSeedPacket(g, aPosX, aPosY, aChosenSeed.mSeedType, aChosenSeed.mImitaterType, 0, aGrayed ? 115 : 255, true, false);
+			if (mChooseState != CHOOSE_VIEW_LAWN || (mChooseState == CHOOSE_VIEW_LAWN && aSeedState == SEED_IN_CHOOSER))
+			{
+				DrawSeedPacket(g, aPosX, aPosY, aChosenSeed.mSeedType, aChosenSeed.mImitaterType, 0, aGrayed ? 115 : 255, true, false);
+			}
 		}
 		g->ClearClipRect();
 	}
@@ -476,6 +479,15 @@ void SeedChooserScreen::UpdateViewLawn()
 	if (mViewLawnTime == 100) mBoard->DisplayAdviceAgain("[CLICK_TO_CONTINUE]", MESSAGE_STYLE_HINT_STAY, ADVICE_CLICK_TO_CONTINUE);
 	else if (mViewLawnTime == 251) mViewLawnTime = 250;
 
+	for (int anIndex = 0; anIndex < mBoard->mSeedBank->mNumPackets; anIndex++)
+	{
+		SeedType aSeedType = FindSeedInBank(anIndex);
+		if (aSeedType == SEED_NONE) break;
+		ChosenSeed& aChosenSeed = mChosenSeeds[aSeedType];
+		SeedPacket& aSeedPacket = mBoard->mSeedBank->mSeedPackets[anIndex];
+		aSeedPacket.SetPacketType(aSeedType, aChosenSeed.mImitaterType);
+	}
+
 	int aBoardX = BOARD_IMAGE_WIDTH_OFFSET - mApp->mWidth;
 	int aSeedChooserY = SEED_CHOOSER_OFFSET_Y - Sexy::IMAGE_SEEDCHOOSER_BACKGROUND->mHeight;
 	if (mViewLawnTime <= 100)
@@ -499,6 +511,12 @@ void SeedChooserScreen::UpdateViewLawn()
 		mChooseState = CHOOSE_NORMAL;
 		mViewLawnTime = 0;
 		mMenuButton->mDisabled = false;
+
+		for (int anIndex = 0; anIndex < mBoard->mSeedBank->mNumPackets; anIndex++)
+		{
+			SeedPacket& aSeedPacket = mBoard->mSeedBank->mSeedPackets[anIndex];
+			aSeedPacket.SetPacketType(SEED_NONE, SEED_NONE);
+		}
 	}
 }
 
