@@ -130,10 +130,10 @@ LawnApp::LawnApp()
 	isFastMode = false;
 	mSpeedValue = 2;
 	mProdName = "PlantsVsZombies";
-	mReconVersion = "PvZ QoTL v1.3.3";
+	mReconVersion = "PvZ QoTL v1.3.4";
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
-	aTitleName += " QoTL v1.3.3";
+	aTitleName += " QoTL v1.3.4";
 	aTitleName += " DEBUG ";
 	//aTitleName += mProductVersion; tbh i dont get how this works. sooooooooo, commenting it. just do "aTitleName += "some random version string";   "
 #endif
