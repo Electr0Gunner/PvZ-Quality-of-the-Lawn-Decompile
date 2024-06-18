@@ -1235,6 +1235,8 @@ bool LawnApp::KillNewOptionsDialog()
 
 	bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
 	mDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
+	mBankKeybinds = aNewOptionsDialog->mBankKeybindsBox->IsChecked();
+	mZeroNineBankFormat = aNewOptionsDialog->m09FormatBox->IsChecked();
 	bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
 	SwitchScreenMode(wantWindowed, want3D, false);
 	ToggleDebugMode();

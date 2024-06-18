@@ -8015,6 +8015,76 @@ static void TodCrash()
 //0x41B950（原版中废弃）
 void Board::KeyChar(SexyChar theChar)
 {
+	if (isdigit(theChar))
+	{
+		if (mPaused || mApp->mGameScene != GameScenes::SCENE_PLAYING || !mApp->mBankKeybinds)
+			return;
+
+		for (int i = 0; i < SEEDBANK_MAX; i++)
+		{
+			int aSeedIndex = i;
+			if (theChar == '0' + aSeedIndex && mSeedBank->mNumPackets > aSeedIndex)
+			{
+				switch (theChar)
+				{
+				case '0':
+					aSeedIndex = 9;
+					break;
+				case '1':
+					aSeedIndex = 0;
+					break;
+				case '2':
+					aSeedIndex = 1;
+					break;
+				case '3':
+					aSeedIndex = 2;
+					break;
+				case '4':
+					aSeedIndex = 3;
+					break;
+				case '5':
+					aSeedIndex = 4;
+					break;
+				case '6':
+					aSeedIndex = 5;
+					break;
+				case '7':
+					aSeedIndex = 6;
+					break;
+				case '8':
+					aSeedIndex = 7;
+					break;
+				case '9':
+					aSeedIndex = 8;
+					break;
+				default:
+					TOD_ASSERT(isdigit(theChar));
+				}
+				SeedPacket* aPacket = &mSeedBank->mSeedPackets[aSeedIndex];
+				if (aPacket->mPacketType == SeedType::SEED_NONE)
+					break;
+
+				if (mCursorObject->mSeedBankIndex == aSeedIndex)
+				{
+					RefreshSeedPacketFromCursor();
+					mApp->PlayFoley(FoleyType::FOLEY_DROP);
+				}
+				else
+				{
+					if (mCursorObject->mSeedBankIndex != aSeedIndex)
+						RefreshSeedPacketFromCursor();
+					aPacket->MouseDown(0, 0, 0);
+				}
+				break;
+			}
+		}
+	}
+	if (theChar == _S('q'))
+	{
+		mShowShovel = true;
+		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_SHOVEL;
+	}
+
 	if (!mApp->mDebugKeysEnabled && !mApp->mCtrlDown)
 		return;
 

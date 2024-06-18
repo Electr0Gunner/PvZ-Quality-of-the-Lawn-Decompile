@@ -287,6 +287,8 @@ SexyAppBase::SexyAppBase()
 	mAspectCorrect = true;
 	mAspectNoStretch = false;
 	mDiscordPresence = true;
+	mBankKeybinds = false;
+	mZeroNineBankFormat = false;
 
 	int i;
 
@@ -1568,6 +1570,8 @@ void SexyAppBase::WriteToRegistry()
 	RegistryWriteInteger("InProgress", 0);
 	RegistryWriteBoolean("WaitForVSync", mWaitForVSync);	
 	RegistryWriteBoolean("DiscordPresence", mDiscordPresence);
+	RegistryWriteBoolean("BankKeybinds", mBankKeybinds);
+	RegistryWriteBoolean("ZeroNineBankFormat", mZeroNineBankFormat);
 	RegistryWriteInteger("MouseSensitivity", (int) (mMouseSensitivity * 100));
 }
 
@@ -1915,6 +1919,8 @@ void SexyAppBase::ReadFromRegistry()
 			
 	RegistryReadBoolean("WaitForVSync", &mWaitForVSync);	
 	RegistryReadBoolean("DiscordPresence", &mDiscordPresence);
+	RegistryReadBoolean("BankKeybinds", &mBankKeybinds);
+	RegistryReadBoolean("ZeroNineBankFormat", &mZeroNineBankFormat);
 
 	if (RegistryReadInteger("InProgress", &anInt))
 		mLastShutdownWasGraceful = anInt == 0;

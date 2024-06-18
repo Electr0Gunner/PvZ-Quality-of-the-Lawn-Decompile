@@ -64,12 +64,19 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mDiscordBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Discord, this, mApp->mDiscordPresence);
     mDiscordBox->SetVisible(false);
 
+    mBankKeybindsBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_BankKeybinds, this, mApp->mBankKeybinds);
+    mBankKeybindsBox->SetVisible(false);
+
+    m09FormatBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_0_9_Format, this, mApp->mZeroNineBankFormat);
+    m09FormatBox->SetVisible(false);
+
     if (mAdvancedMode)
     {
         mRestartButton->SetVisible(false);
         mAlmanacButton->SetVisible(false);
         mBackToMainButton->SetVisible(false);
         mAdvancedButton->SetVisible(false);
+        mBackToGameButton->SetLabel(_S("[DIALOG_BUTTON_OK]"));
     }
 
     if (mFromGameSelector)
@@ -85,6 +92,8 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
         {
             mBackToMainButton->SetVisible(false);
             mDiscordBox->SetVisible(false);
+            m09FormatBox->SetVisible(false);
+            mBankKeybindsBox->SetVisible(false);
         }
     }
     else
@@ -121,6 +130,8 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mHardwareAccelerationCheckbox;
     delete mDebugModeBox;
     delete mDiscordBox;
+    delete m09FormatBox;
+    delete mBankKeybindsBox;
     delete mAlmanacButton;
     delete mRestartButton;
     delete mBackToMainButton;
@@ -147,6 +158,8 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mHardwareAccelerationCheckbox);
     AddWidget(mDebugModeBox);
     AddWidget(mDiscordBox);
+    AddWidget(mBankKeybindsBox);
+    AddWidget(m09FormatBox);
     AddWidget(mFullscreenCheckbox);
     AddWidget(mBackToGameButton);
 }
@@ -162,6 +175,8 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mHardwareAccelerationCheckbox);
     RemoveWidget(mDebugModeBox);
     RemoveWidget(mDiscordBox);
+    RemoveWidget(mBankKeybindsBox);
+    RemoveWidget(m09FormatBox);
     RemoveWidget(mBackToMainButton);
     RemoveWidget(mAdvancedButton);
     RemoveWidget(mBackToGameButton);
@@ -178,6 +193,8 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mDebugModeBox->Resize(270, 148, 46, 45);
     mFullscreenCheckbox->Resize(284, 206, 46, 45);
     mDiscordBox->Resize(mDebugModeBox->mX, mDebugModeBox->mY + 40, 46, 45);
+    mBankKeybindsBox->Resize(mDiscordBox->mX, mDiscordBox->mY + 40, 46, 45);
+    m09FormatBox->Resize(mBankKeybindsBox->mX, mBankKeybindsBox->mY + 40, 46, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
@@ -199,6 +216,8 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         mFullscreenCheckbox->SetVisible(false);
         mDebugModeBox->SetVisible(true);
         mDiscordBox->SetVisible(true);
+        mBankKeybindsBox->SetVisible(true);
+        m09FormatBox->SetVisible(true);
     }
 
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
@@ -237,6 +256,8 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
         TodDrawString(g, mApp->mReconVersion, 210, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
         TodDrawString(g, _S("Debug Mode"), 260, 167, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
         TodDrawString(g, _S("Discord Presence"), 260, 207, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, _S("Seedbank Keybinds"), 260, 250, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, _S("0-9 Keyboard"), 260, 283, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
     }
 
 }

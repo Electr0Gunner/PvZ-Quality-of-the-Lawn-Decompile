@@ -29,8 +29,9 @@ protected:
 		NewOptionsDialog_HardwareAcceleration,
 		NewOptionsDialog_DebugMode,
 		NewOptionsDialog_Advanced,
-		NewOptionsDialog_Speed,
-		NewOptionsDialog_Discord
+		NewOptionsDialog_Discord,
+		NewOptionsDialog_BankKeybinds,
+		NewOptionsDialog_0_9_Format
 	};
 
 public:
@@ -41,6 +42,8 @@ public:
 	Sexy::Checkbox*			mHardwareAccelerationCheckbox;		//+0x168
 	Sexy::Checkbox*			mDebugModeBox;
 	Sexy::Checkbox*			mDiscordBox;
+	Sexy::Checkbox*			mBankKeybindsBox;
+	Sexy::Checkbox*			m09FormatBox;
 	LawnStoneButton*		mAlmanacButton;						//+0x16C
 	LawnStoneButton*		mBackToMainButton;					//+0x170
 	LawnStoneButton*		mRestartButton;						//+0x174
