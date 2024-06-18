@@ -702,8 +702,6 @@ StoreScreen* LawnApp::ShowStoreScreen()
 	AddDialog(aStoreScreen);
 	mWidgetManager->SetFocus(aStoreScreen);
 
-	mState = "Store";
-
 	return aStoreScreen;
 }
 
