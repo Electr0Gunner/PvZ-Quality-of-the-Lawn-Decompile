@@ -32,6 +32,7 @@ public:
     void				        UpdateRock();
     void                        KeyDown(KeyCode theKey);
     void				        DoButtonMovement(int StartX, int FinalX);
+    void                        ExitScreen();
     virtual void                Draw(Graphics* g);
     virtual void                Update();
     virtual void                AddedToManager(WidgetManager* theWidgetManager);
