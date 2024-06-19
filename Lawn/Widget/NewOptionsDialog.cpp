@@ -81,11 +81,9 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
 
     mSpeedEditWidget = CreateEditWidget(NewOptionsDialog_SpeedInput, this, this);
     mSpeedEditWidget->mMaxChars = 1;
-    mSpeedEditWidget->SetFont(FONT_DWARVENTODCRAFT18);
-    mSpeedEditWidget->AddWidthCheckFont(FONT_DWARVENTODCRAFT18, 50);
-    SexyString aSpeedStr;
-    aSpeedStr = StrFormat(_S("%d"), (int)mApp->mSpeedModifier);
-    mSpeedEditWidget->SetText(aSpeedStr, true);
+    mSpeedEditWidget->SetFont(FONT_DWARVENTODCRAFT18BRIGHTGREENINSET);
+    mSpeedEditWidget->AddWidthCheckFont(FONT_DWARVENTODCRAFT18BRIGHTGREENINSET, IMAGE_OPTIONS_CHECKBOX0->mWidth);
+    mSpeedEditWidget->SetText(StrFormat(_S("%d"), mApp->mSpeedModifier), true);
     mSpeedEditWidget->SetVisible(false);
 
     mGameAdvancedButton = MakeNewButton(NewOptionsDialog::NewOptionsDialog_Advanced, this, "A", nullptr, Sexy::IMAGE_BUTTON_SMALL,
@@ -244,7 +242,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mBackToGameButton->Resize(30, 381, mBackToGameButton->mWidth, mBackToGameButton->mHeight);
     mLeftPageButton->Resize(100, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_LEFT_BUTTON->mWidth, IMAGE_QUICKPLAY_LEFT_BUTTON->mHeight);
     mRightPageButton->Resize(280, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
-    mSpeedEditWidget->Resize(284, 148, 50, 28);
+    mSpeedEditWidget->Resize(ADVANCED_SPEED_X + 8, ADVANCED_SPEED_Y - 3, IMAGE_OPTIONS_CHECKBOX0->mWidth, IMAGE_OPTIONS_CHECKBOX0->mHeight);
     mGameAdvancedButton->Resize(mWidth - Sexy::IMAGE_BUTTON_SMALL->mWidth - 9, mRestartButton->mY, 
         Sexy::IMAGE_BUTTON_SMALL->mWidth, Sexy::IMAGE_BUTTON_SMALL->mHeight);
 
@@ -313,7 +311,8 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
             #ifdef _DEBUG
             TodDrawString(g, StrFormat(_S("Git Commit: %s"), mApp->mGitCommit.c_str()), mWidth / 2, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
             #endif
-            TodDrawString(g, _S("Speed Multiplier:"), mSpeedEditWidget->mX - 6, mSpeedEditWidget->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Speed Multiplier:"), ADVANCED_SPEED_X - 6, ADVANCED_SPEED_Y + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            g->DrawImage(Sexy::IMAGE_OPTIONS_CHECKBOX0, ADVANCED_SPEED_X, ADVANCED_SPEED_Y);
         }
         TodDrawString(g, StrFormat(_S("Page %d"), mAdvancedPage), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
     }
