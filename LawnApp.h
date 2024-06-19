@@ -194,7 +194,7 @@ public:
 	void							DoBackToMain();
 	void							DoConfirmBackToMain();
 	void							DoNewOptions(bool theFromGameSelector);
-	void							DoAdvanced();
+	void							DoAdvanced(int x, int y);
 	void							DoRegister();
 	void							DoRegisterError();
 	bool							CanDoRegisterDialog();

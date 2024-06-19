@@ -794,12 +794,13 @@ void LawnApp::DoNewOptions(bool theFromGameSelector)
 	mWidgetManager->SetFocus(aDialog);
 }
 
-void LawnApp::DoAdvanced()
+void LawnApp::DoAdvanced(int x, int y)
 {
 	//FinishModelessDialogs();
 
 	NewOptionsDialog* aDialog = new NewOptionsDialog(this, false, true);
 	CenterDialog(aDialog, IMAGE_OPTIONS_MENUBACK->mWidth, IMAGE_OPTIONS_MENUBACK->mHeight);
+	aDialog->Resize(x, y, aDialog->mWidth, aDialog->mHeight);
 	AddDialog(Dialogs::DIALOG_NEWOPTIONS, aDialog);
 	mWidgetManager->SetFocus(aDialog);
 }
@@ -1620,8 +1621,6 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 }
 
 //0x4524F0
-//fixed crash and removed level saving for quick play
-//fixed bypassing the fast mode
 void LawnApp::CheckForGameEnd()
 {
 	if (mBoard == nullptr || !mBoard->mLevelComplete)
@@ -3702,7 +3701,7 @@ void LawnApp::GetAchievement(AchievementType theAchievementType)
 void LawnApp::UpdateDiscordState(SexyString def)
 {
 	SexyString State;
-	if (GetDialog(Dialogs::DIALOG_GAME_OVER))
+	if (mGameScene == GameScenes::SCENE_ZOMBIES_WON || GetDialog(Dialogs::DIALOG_GAME_OVER))
 		State = "Game Over";
 	else if (AlmanacDialog* dialog = (AlmanacDialog*)GetDialog(Dialogs::DIALOG_ALMANAC))
 		switch (dialog->mOpenPage)
@@ -3724,8 +3723,6 @@ void LawnApp::UpdateDiscordState(SexyString def)
 		State = "Store";
 	else if (NewOptionsDialog* dialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS))
 		State = dialog->mAdvancedMode ? "Advanced Options" : "Options";
-	else if (GetDialog(Dialogs::DIALOG_ADVANCEDOPTIONS))
-		State = "Advanced Options";
 	else if (GetDialog(Dialogs::DIALOG_USERDIALOG))
 		State = "Profiles";
 	else

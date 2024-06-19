@@ -1758,8 +1758,6 @@ LawnMower* Board::GetBottomLawnMower()
 }
 
 //0x40BF60
-
-//removed collecting coins from lawn mowers in quick play
 void Board::UpdateLevelEndSequence()
 {
 	if (mNextSurvivalStageCounter > 0)
@@ -4814,15 +4812,12 @@ void Board::MouseUp(int x, int y, int theClickCount)
 				mApp->DoBackToMain();
 			}
 		}
-		if (mFastButton->IsMouseOver() && !mApp->GetDialog(Dialogs::DIALOG_GAME_OVER) && !mApp->GetDialog(Dialogs::DIALOG_LEVEL_COMPLETE))
+		if (mFastButton->IsMouseOver() && !mApp->GetDialog(Dialogs::DIALOG_GAME_OVER) && !mApp->GetDialog(Dialogs::DIALOG_LEVEL_COMPLETE) && mBoardFadeOutCounter < 0)
 		{
 			mFastButton->mIsOver = false;
 			mFastButton->mIsDown = false;
 			UpdateCursor();
-			if (mApp->isFastMode)
-				mApp->isFastMode = false;
-			else
-				mApp->isFastMode = true;
+			mApp->isFastMode = !mApp->isFastMode;
 		}
 		else if(mStoreButton && mStoreButton->IsMouseOver())
 		{
@@ -5942,6 +5937,9 @@ void Board::Update()
 	Widget::Update();
 	MarkDirty();
 
+	if (mPaused && mApp->isFastMode)
+		mApp->isFastMode = false;
+
 	SexyString Details;
 	if (mApp->mGameMode != GameMode::GAMEMODE_ADVENTURE)
 		Details = TodStringTranslate(mApp->GetCurrentChallengeDef().mChallengeName);
@@ -5950,7 +5948,7 @@ void Board::Update()
 		Details = (mApp->mPlayedQuickplay ? "Quick Play" : "Adventure") + mApp->GetStageString(mLevel);
 	}
 	mApp->mDetails = Details;
-	mApp->UpdateDiscordState(mPaused ? "Paused" : "Playing");
+	mApp->UpdateDiscordState(mBoardFadeOutCounter >= 0 ? "Finishing" : "Playing");
 
 	if(mSunMoney >= 8000)
 		mApp->GetAchievement(SUNNY_DAYS);
@@ -8015,53 +8013,26 @@ static void TodCrash()
 //0x41B950（原版中废弃）
 void Board::KeyChar(SexyChar theChar)
 {
+	bool ignoreKeybinds = mPaused || mApp->mGameScene != GameScenes::SCENE_PLAYING ||
+		mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || !mApp->mBankKeybinds;
 	if (isdigit(theChar))
 	{
-		if (mPaused || mApp->mGameScene != GameScenes::SCENE_PLAYING || !mApp->mBankKeybinds)
+		if (!ignoreKeybinds || mSeedBank->mY < 0)
 			return;
-
-		for (int i = 0; i < SEEDBANK_MAX; i++)
+		for (int i = 0; i < mSeedBank->mNumPackets; i++)
 		{
 			int aSeedIndex = i;
 			if (theChar == '0' + aSeedIndex && mSeedBank->mNumPackets > aSeedIndex)
 			{
-				switch (theChar)
+				if (mApp->mZeroNineBankFormat)
 				{
-				case '0':
-					aSeedIndex = 9;
-					break;
-				case '1':
-					aSeedIndex = 0;
-					break;
-				case '2':
-					aSeedIndex = 1;
-					break;
-				case '3':
-					aSeedIndex = 2;
-					break;
-				case '4':
-					aSeedIndex = 3;
-					break;
-				case '5':
-					aSeedIndex = 4;
-					break;
-				case '6':
-					aSeedIndex = 5;
-					break;
-				case '7':
-					aSeedIndex = 6;
-					break;
-				case '8':
-					aSeedIndex = 7;
-					break;
-				case '9':
-					aSeedIndex = 8;
-					break;
-				default:
-					TOD_ASSERT(isdigit(theChar));
+					if (aSeedIndex == 0)
+						aSeedIndex = 9;
+					else
+						aSeedIndex--;
 				}
 				SeedPacket* aPacket = &mSeedBank->mSeedPackets[aSeedIndex];
-				if (aPacket->mPacketType == SeedType::SEED_NONE)
+				if (aPacket->mPacketType == SeedType::SEED_NONE)	
 					break;
 
 				if (mCursorObject->mSeedBankIndex == aSeedIndex)
@@ -8071,18 +8042,37 @@ void Board::KeyChar(SexyChar theChar)
 				}
 				else
 				{
-					if (mCursorObject->mSeedBankIndex != aSeedIndex)
-						RefreshSeedPacketFromCursor();
+					if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_PLANT_FROM_BANK || mCursorObject->mSeedBankIndex != aSeedIndex)
+					{
+						if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK)
+							RefreshSeedPacketFromCursor();
+						else
+							ClearCursor();
+					}
 					aPacket->MouseDown(0, 0, 0);
 				}
 				break;
 			}
 		}
+		return;
 	}
-	if (theChar == _S('q'))
+	else if (theChar == _S('s'))
 	{
-		mShowShovel = true;
-		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_SHOVEL;
+		if (!ignoreKeybinds || !mShowShovel)
+			return;
+		if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_SHOVEL)
+		{
+			if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK)
+				RefreshSeedPacketFromCursor();
+			mCursorObject->mCursorType = CursorType::CURSOR_TYPE_SHOVEL;
+			mApp->PlayFoley(FoleyType::FOLEY_SHOVEL);
+		}
+		else
+		{
+			ClearCursor();
+			mApp->PlayFoley(FoleyType::FOLEY_DROP);
+		}
+		return;
 	}
 
 	if (!mApp->mDebugKeysEnabled && !mApp->mCtrlDown)
