@@ -1249,13 +1249,13 @@ bool LawnApp::KillNewOptionsDialog()
 		mBankKeybinds = aNewOptionsDialog->mBankKeybindsBox->IsChecked();
 		mZeroNineBankFormat = aNewOptionsDialog->m09FormatBox->IsChecked();
 		mSpeedModifier = stoi(aNewOptionsDialog->mSpeedEditWidget->mString.c_str());
+		ToggleDebugMode();
 	}
 	else
 	{
 		bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
 		bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
 		SwitchScreenMode(wantWindowed, want3D, false);
-		ToggleDebugMode();
 	}
 
 	KillDialog(Dialogs::DIALOG_NEWOPTIONS);
