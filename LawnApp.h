@@ -193,8 +193,8 @@ public:
 	void							DoHighScoreDialog();
 	void							DoBackToMain();
 	void							DoConfirmBackToMain();
-	void							DoNewOptions(bool theFromGameSelector);
-	void							DoAdvanced(int x, int y);
+	void							DoNewOptions(bool theFromGameSelector, int x = -1, int y = -1);
+	void							DoAdvancedOptions(bool theFromGameSelector, int x, int y);
 	void							DoRegister();
 	void							DoRegisterError();
 	bool							CanDoRegisterDialog();

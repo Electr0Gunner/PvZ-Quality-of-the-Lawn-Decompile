@@ -40,7 +40,8 @@ protected:
 		NewOptionsDialog_ZeroNineBankFormat,
 		NewOptionsDialog_LeftPage,
 		NewOptionsDialog_RightPage,
-		NewOptionsDialog_SpeedInput
+		NewOptionsDialog_SpeedInput,
+		NewOptionsDialog_Back
 	};
 
 public:
@@ -58,6 +59,7 @@ public:
 	LawnStoneButton*		mRestartButton;						//+0x174
 	NewLawnButton*			mBackToGameButton;					//+0x178
 	LawnStoneButton*		mAdvancedButton;
+	NewLawnButton*			mGameAdvancedButton;
 	NewLawnButton*			mLeftPageButton;
 	NewLawnButton*			mRightPageButton;
 	bool					mFromGameSelector;					//+0x17C

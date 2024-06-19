@@ -612,7 +612,7 @@ SeedType AlmanacDialog::SeedHitTest(int x, int y)
 			if (mApp->SeedTypeAvailable(aSeedType))
 			{
 				int aSeedX, aSeedY;
-				GetSeedPosition(aSeedType, aSeedX, aSeedY, aSeedType == SeedType::SEED_IMITATER ? true : false);
+				GetSeedPosition(aSeedType, aSeedX, aSeedY, aSeedType == SeedType::SEED_IMITATER);
 				Rect aSeedRect = aSeedType != SeedType::SEED_IMITATER ? Rect(aSeedX, aSeedY + -mScrollPosition, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT) : Rect(aSeedX, aSeedY, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT);
 				if (aSeedType != SeedType::SEED_IMITATER) {
 					if (cSeedClipRect.Contains(x, y) && aSeedRect.Contains(x, y))
