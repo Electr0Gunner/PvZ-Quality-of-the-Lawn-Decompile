@@ -6988,8 +6988,6 @@ void Zombie::EatZombie(Zombie* theZombie)
 }
 
 //0x52FE50
-
-//removed the award and fades the level out soon as the last zombie dies in quick play
 bool Zombie::TrySpawnLevelAward()
 {
     if (!IsOnBoard() || mBoard->HasLevelAwardDropped() || mBoard->mLevelComplete || mDroppedLoot)

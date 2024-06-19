@@ -5,6 +5,9 @@
 #include "../../SexyAppFramework/SliderListener.h"
 #include "../../SexyAppFramework/CheckboxListener.h"
 
+const int ADVANCED_PAGE_Y = 355;
+const int ADVANCED_MAX_PAGES = 3;
+
 class LawnApp;
 class LawnStoneButton;
 class NewLawnButton;
@@ -31,7 +34,9 @@ protected:
 		NewOptionsDialog_Advanced,
 		NewOptionsDialog_Discord,
 		NewOptionsDialog_BankKeybinds,
-		NewOptionsDialog_0_9_Format
+		NewOptionsDialog_ZeroNineBankFormat,
+		NewOptionsDialog_LeftPage,
+		NewOptionsDialog_RightPage
 	};
 
 public:
@@ -48,9 +53,12 @@ public:
 	LawnStoneButton*		mBackToMainButton;					//+0x170
 	LawnStoneButton*		mRestartButton;						//+0x174
 	NewLawnButton*			mBackToGameButton;					//+0x178
-	LawnStoneButton*		mAdvancedButton;					
+	LawnStoneButton*		mAdvancedButton;
+	NewLawnButton*			mLeftPageButton;
+	NewLawnButton*			mRightPageButton;
 	bool					mFromGameSelector;					//+0x17C
-	bool					mAdvancedMode;	
+	bool					mAdvancedMode;
+	int						mAdvancedPage;
 
 public:
 	NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bool theAdvanced);
@@ -66,6 +74,7 @@ public:
 	void					ButtonPress(int theId);
 	void					ButtonDepress(int theId);
 	void					KeyDown(Sexy::KeyCode theKey);
+	void					UpdateAdvancedPage();
 };
 
 #endif

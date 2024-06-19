@@ -88,11 +88,17 @@ void AchievementScreen::Draw(Graphics* g)
 }
 
 void AchievementScreen::KeyDown(KeyCode theKey) {
+    if (mApp->mWidgetManager->mFocusWidget != this)
+        return;
     if (theKey == KEYCODE_UP) {
         mScrollPosition += 15;
     }
     else if (theKey == KEYCODE_DOWN) {
         mScrollPosition -= 15;
+    }
+    else if (theKey == KEYCODE_ESCAPE)
+    {
+        ExitScreen();
     }
 }
 
@@ -143,26 +149,7 @@ void AchievementScreen::ButtonDepress(int theId)
 {
     if (theId == 0)
     {
-        mScrollPosition = 0;
-        mApp->mGameSelector->mMovementTimer = 75;
-        mApp->mGameSelector->mDestinationY = 0;
-        mApp->mGameSelector->mSelectorState = SELECTOR_IDLE;
-        mApp->mWidgetManager->SetFocus(mApp->mGameSelector);
-
-        mApp->mGameSelector->mAdventureButton->SetDisabled(false);
-        mApp->mGameSelector->mMinigameButton->SetDisabled(false);
-        mApp->mGameSelector->mPuzzleButton->SetDisabled(false);
-        mApp->mGameSelector->mOptionsButton->SetDisabled(false);
-        mApp->mGameSelector->mQuitButton->SetDisabled(false);
-        mApp->mGameSelector->mHelpButton->SetDisabled(false);
-        mApp->mGameSelector->mChangeUserButton->SetDisabled(false);
-        mApp->mGameSelector->mStoreButton->SetDisabled(false);
-        mApp->mGameSelector->mAlmanacButton->SetDisabled(false);
-        mApp->mGameSelector->mSurvivalButton->SetDisabled(false);
-        mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
-        mApp->mGameSelector->mAchievementButton->SetDisabled(false);
-        mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
-        mApp->mGameSelector->mCreditsButton->SetDisabled(false);
+        ExitScreen();
     }
     if (theId == 1)
     {
@@ -189,8 +176,34 @@ void AchievementScreen::DoButtonMovement(int StartX, int FinalX)
     mTweenTimer--;
 }
 
+void AchievementScreen::ExitScreen()
+{
+    mScrollPosition = 0;
+    mApp->mGameSelector->mMovementTimer = 75;
+    mApp->mGameSelector->mDestinationY = 0;
+    mApp->mGameSelector->mSelectorState = SELECTOR_IDLE;
+    mApp->mWidgetManager->SetFocus(mApp->mGameSelector);
+
+    mApp->mGameSelector->mAdventureButton->SetDisabled(false);
+    mApp->mGameSelector->mMinigameButton->SetDisabled(false);
+    mApp->mGameSelector->mPuzzleButton->SetDisabled(false);
+    mApp->mGameSelector->mOptionsButton->SetDisabled(false);
+    mApp->mGameSelector->mQuitButton->SetDisabled(false);
+    mApp->mGameSelector->mHelpButton->SetDisabled(false);
+    mApp->mGameSelector->mChangeUserButton->SetDisabled(false);
+    mApp->mGameSelector->mStoreButton->SetDisabled(false);
+    mApp->mGameSelector->mAlmanacButton->SetDisabled(false);
+    mApp->mGameSelector->mSurvivalButton->SetDisabled(false);
+    mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
+    mApp->mGameSelector->mAchievementButton->SetDisabled(false);
+    mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
+    mApp->mGameSelector->mCreditsButton->SetDisabled(false);
+}
+
 void AchievementScreen::MouseWheel(int theDelta)
 {
+    if (mApp->mGameSelector->mMovementTimer > 0)
+        return;
     mScrollAmount -= mBaseScrollSpeed * theDelta;
     mScrollAmount -= mScrollAmount * mScrollAccel;
 }

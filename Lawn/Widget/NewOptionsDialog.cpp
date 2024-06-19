@@ -19,6 +19,7 @@ using namespace Sexy;
 NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bool theAdvanced) :
     Dialog(nullptr, nullptr, Dialogs::DIALOG_NEWOPTIONS, true, _S("Options"), _S(""), _S(""), Dialog::BUTTONS_NONE)
 {
+    TodLoadResources("DelayLoad_QuickPlay");
     mApp = theApp;
     mFromGameSelector = theFromGameSelector;
     mAdvancedMode = theAdvanced;
@@ -67,8 +68,16 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mBankKeybindsBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_BankKeybinds, this, mApp->mBankKeybinds);
     mBankKeybindsBox->SetVisible(false);
 
-    m09FormatBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_0_9_Format, this, mApp->mZeroNineBankFormat);
+    m09FormatBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_ZeroNineBankFormat, this, mApp->mZeroNineBankFormat);
     m09FormatBox->SetVisible(false);
+
+    mLeftPageButton = MakeNewButton(NewOptionsDialog::NewOptionsDialog_LeftPage, this, "", nullptr, Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON,
+        Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT, Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT);
+    mLeftPageButton->SetVisible(false);
+
+    mRightPageButton = MakeNewButton(NewOptionsDialog::NewOptionsDialog_RightPage, this, "", nullptr, Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON,
+        Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT, Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT);
+    mRightPageButton->SetVisible(false);
 
     if (mAdvancedMode)
     {
@@ -77,6 +86,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
         mBackToMainButton->SetVisible(false);
         mAdvancedButton->SetVisible(false);
         mBackToGameButton->SetLabel(_S("[DIALOG_BUTTON_OK]"));
+        mAdvancedPage = 1;
     }
 
     if (mFromGameSelector)
@@ -137,6 +147,8 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mBackToMainButton;
     delete mAdvancedButton;
     delete mBackToGameButton;
+    delete mLeftPageButton;
+    delete mRightPageButton;
 }
 
 //0x45C880
@@ -162,6 +174,8 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(m09FormatBox);
     AddWidget(mFullscreenCheckbox);
     AddWidget(mBackToGameButton);
+    AddWidget(mLeftPageButton);
+    AddWidget(mRightPageButton);
 }
 
 //0x45C930
@@ -181,6 +195,8 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mAdvancedButton);
     RemoveWidget(mBackToGameButton);
     RemoveWidget(mRestartButton);
+    RemoveWidget(mLeftPageButton);
+    RemoveWidget(mRightPageButton);
 }
 
 //0x45C9D0
@@ -189,8 +205,8 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     Dialog::Resize(theX, theY, theWidth, theHeight);
     mMusicVolumeSlider->Resize(199, 116, 135, 40);
     mSfxVolumeSlider->Resize(199, 143, 135, 40);
-    mHardwareAccelerationCheckbox->Resize(283, 175, 46, 45);
-    mDebugModeBox->Resize(270, 148, 46, 45);
+    mHardwareAccelerationCheckbox->Resize(284, 175, 46, 45);
+    mDebugModeBox->Resize(284, 148, 46, 45);
     mFullscreenCheckbox->Resize(284, 206, 46, 45);
     mDiscordBox->Resize(mDebugModeBox->mX, mDebugModeBox->mY + 40, 46, 45);
     mBankKeybindsBox->Resize(mDiscordBox->mX, mDiscordBox->mY + 40, 46, 45);
@@ -200,6 +216,8 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
     mAdvancedButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
     mBackToGameButton->Resize(30, 381, mBackToGameButton->mWidth, mBackToGameButton->mHeight);
+    mLeftPageButton->Resize(100, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_LEFT_BUTTON->mWidth, IMAGE_QUICKPLAY_LEFT_BUTTON->mHeight);
+    mRightPageButton->Resize(280, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
 
     if (mFromGameSelector)
     {
@@ -214,10 +232,9 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         mSfxVolumeSlider->SetVisible(false);
         mHardwareAccelerationCheckbox->SetVisible(false);
         mFullscreenCheckbox->SetVisible(false);
-        mDebugModeBox->SetVisible(true);
-        mDiscordBox->SetVisible(true);
-        mBankKeybindsBox->SetVisible(true);
-        m09FormatBox->SetVisible(true);
+        mLeftPageButton->SetVisible(true);
+        mRightPageButton->SetVisible(true);
+        UpdateAdvancedPage();
     }
 
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
@@ -253,13 +270,21 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
     }
     else
     {
-        TodDrawString(g, mApp->mReconVersion, 210, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
-        TodDrawString(g, _S("Debug Mode"), 260, 167, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, _S("Discord Presence"), 260, 207, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, _S("Seedbank Keybinds"), 260, 250, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, _S("0-9 Keyboard"), 260, 283, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        TodDrawString(g, mApp->mReconVersion, mWidth / 2, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
+        if (mAdvancedPage == 1)
+        {
+            TodDrawString(g, _S("Debug Mode"), mDebugModeBox->mX - 6, mDebugModeBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Discord Presence"), mDiscordBox->mX - 6, mDiscordBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Seed Bank Keybinds"), mBankKeybindsBox->mX - 6, mBankKeybindsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S(!m09FormatBox->mChecked ? "Keybind: 0-9" : "Keybind: 1-0"), m09FormatBox->mX - 6, m09FormatBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Shovel Keybind: S"), mWidth / 2, m09FormatBox->mY + 55, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
+        }
+        else
+        {
+            TodDrawString(g, _S(StrFormat("%d", mAdvancedPage)), mWidth / 2, mHeight / 2, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
+        }
+        TodDrawString(g, _S(StrFormat("Page %d", mAdvancedPage)), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
     }
-
 }
 
 //0x45CF50
@@ -355,6 +380,33 @@ void NewOptionsDialog::KeyDown(Sexy::KeyCode theKey)
     }
 }
 
+void NewOptionsDialog::UpdateAdvancedPage()
+{
+    if (mAdvancedPage == 1)
+        mLeftPageButton->SetVisible(false);
+    else
+        mLeftPageButton->SetVisible(true);
+    if (mAdvancedPage == ADVANCED_MAX_PAGES)
+        mRightPageButton->SetVisible(false);
+    else
+        mRightPageButton->SetVisible(true);
+
+    mDebugModeBox->SetVisible(false);
+    mDiscordBox->SetVisible(false);
+    mBankKeybindsBox->SetVisible(false);
+    m09FormatBox->SetVisible(false);
+
+    switch (mAdvancedPage)
+    {
+        case 1:
+            mDebugModeBox->SetVisible(true);
+            mDiscordBox->SetVisible(true);
+            mBankKeybindsBox->SetVisible(true);
+            m09FormatBox->SetVisible(true);
+        break;
+    }
+}
+
 //0x45D2F0
 void NewOptionsDialog::ButtonPress(int theId)
 {
@@ -365,7 +417,6 @@ void NewOptionsDialog::ButtonPress(int theId)
 void NewOptionsDialog::ButtonDepress(int theId)
 {
     Dialog::ButtonDepress(theId);
-    mApp->isFastMode = false;
 
     switch (theId)
     {
@@ -377,7 +428,7 @@ void NewOptionsDialog::ButtonDepress(int theId)
     }
     case NewOptionsDialog::NewOptionsDialog_Advanced:
     {
-        mApp->DoAdvanced();
+        mApp->DoAdvanced(mX, mY);
         break;
     }
     case NewOptionsDialog::NewOptionsDialog_MainMenu:
@@ -453,6 +504,16 @@ void NewOptionsDialog::ButtonDepress(int theId)
 
     case NewOptionsDialog::NewOptionsDialog_Update:
         mApp->CheckForUpdates();
+        break;
+
+    case NewOptionsDialog::NewOptionsDialog_LeftPage:
+        mAdvancedPage--;
+        UpdateAdvancedPage();
+        break;
+
+    case NewOptionsDialog::NewOptionsDialog_RightPage:
+        mAdvancedPage++;
+        UpdateAdvancedPage();
         break;
     }
 }
