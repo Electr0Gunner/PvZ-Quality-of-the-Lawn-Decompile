@@ -21,12 +21,6 @@ class Plant;
 
 class QuickPlayScreen : public Widget, public Sexy::ButtonListener, public Sexy::CheckboxListener
 {
-protected:
-    enum
-    {
-        QuickPlayScreen_CrazyDaveSeeds
-    };
-
 public:
     LawnApp* mApp;
     NewLawnButton* mBackButton;
