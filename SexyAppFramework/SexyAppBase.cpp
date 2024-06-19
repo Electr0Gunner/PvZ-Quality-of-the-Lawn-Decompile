@@ -397,7 +397,7 @@ SexyAppBase::~SexyAppBase()
 									 GetString("HARDWARE_ACCEL_CONFIRMATION", _S("Hardware Acceleration Confirmation"))).c_str(),
 									MB_YESNO | MB_ICONQUESTION);
 
-					mDDInterface->mIs3D = aResult == IDYES ? true : false;
+					mDDInterface->mIs3D = aResult == IDYES;
 					if (aResult!=IDYES)
 						writeToRegistry = false;
 				}

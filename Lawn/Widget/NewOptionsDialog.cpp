@@ -88,15 +88,13 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mSpeedEditWidget->SetText(aSpeedStr, true);
     mSpeedEditWidget->SetVisible(false);
 
-    if (mAdvancedMode)
-    {
-        mRestartButton->SetVisible(false);
-        mAlmanacButton->SetVisible(false);
-        mBackToMainButton->SetVisible(false);
-        mAdvancedButton->SetVisible(false);
-        mBackToGameButton->SetLabel(_S("[DIALOG_BUTTON_OK]"));
-        mAdvancedPage = 1;
-    }
+    mGameAdvancedButton = MakeNewButton(NewOptionsDialog::NewOptionsDialog_Advanced, this, "A", nullptr, Sexy::IMAGE_BUTTON_SMALL,
+        Sexy::IMAGE_BUTTON_SMALL, Sexy::IMAGE_BUTTON_DOWN_SMALL);
+    mGameAdvancedButton->SetFont(FONT_DWARVENTODCRAFT18GREENINSET);
+    mGameAdvancedButton->SetColor(ButtonWidget::COLOR_LABEL, Color::White);
+    mGameAdvancedButton->SetColor(ButtonWidget::COLOR_LABEL_HILITE, Color::White);
+    mGameAdvancedButton->mHiliteFont = FONT_DWARVENTODCRAFT18BRIGHTGREENINSET;
+    mGameAdvancedButton->SetVisible(false);
 
     if (mFromGameSelector)
     {
@@ -118,6 +116,19 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     else
     {
         mAdvancedButton->SetVisible(false);
+        mGameAdvancedButton->SetVisible(true);
+    }
+
+    if (mAdvancedMode)
+    {
+        mAdvancedPage = 1;
+        mRestartButton->SetVisible(false);
+        mAlmanacButton->SetVisible(false);
+        mBackToMainButton->SetVisible(false);
+        mAdvancedButton->SetVisible(false);
+        mGameAdvancedButton->SetVisible(false);
+        mBackToGameButton->SetLabel(_S("BACK"));
+        mBackToGameButton->mId = NewOptionsDialog::NewOptionsDialog_Back;
     }
 
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE ||
@@ -159,6 +170,7 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mLeftPageButton;
     delete mRightPageButton;
     delete mSpeedEditWidget;
+    delete mGameAdvancedButton;
 }
 
 //0x45C880
@@ -187,6 +199,7 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mLeftPageButton);
     AddWidget(mRightPageButton);
     AddWidget(mSpeedEditWidget);
+    AddWidget(mGameAdvancedButton);
 }
 
 //0x45C930
@@ -209,6 +222,7 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mLeftPageButton);
     RemoveWidget(mRightPageButton);
     RemoveWidget(mSpeedEditWidget);
+    RemoveWidget(mGameAdvancedButton);
 }
 
 //0x45C9D0
@@ -231,6 +245,8 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mLeftPageButton->Resize(100, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_LEFT_BUTTON->mWidth, IMAGE_QUICKPLAY_LEFT_BUTTON->mHeight);
     mRightPageButton->Resize(280, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
     mSpeedEditWidget->Resize(284, 148, 50, 28);
+    mGameAdvancedButton->Resize(mWidth - Sexy::IMAGE_BUTTON_SMALL->mWidth - 9, mRestartButton->mY, 
+        Sexy::IMAGE_BUTTON_SMALL->mWidth, Sexy::IMAGE_BUTTON_SMALL->mHeight);
 
     if (mFromGameSelector)
     {
@@ -297,7 +313,7 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
             #ifdef _DEBUG
             TodDrawString(g, StrFormat(_S("Git Commit: %s"), mApp->mGitCommit.c_str()), mWidth / 2, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
             #endif
-            TodDrawString(g, _S("Speed Multiplier"), mSpeedEditWidget->mX - 6, mSpeedEditWidget->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Speed Multiplier:"), mSpeedEditWidget->mX - 6, mSpeedEditWidget->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
         }
         TodDrawString(g, StrFormat(_S("Page %d"), mAdvancedPage), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
     }
@@ -473,18 +489,12 @@ void NewOptionsDialog::ButtonDepress(int theId)
     }
     case NewOptionsDialog::NewOptionsDialog_Advanced:
     {
-        mApp->DoAdvanced(mX, mY);
+        mApp->DoAdvancedOptions(mFromGameSelector, mX, mY);
         break;
     }
     case NewOptionsDialog::NewOptionsDialog_MainMenu:
     {
-        if (mFromGameSelector)
-        {
-            mApp->KillNewOptionsDialog();
-            mApp->KillGameSelector();
-            mApp->ShowMiniCreditScreen();
-        }
-        else if (mApp->mBoard && mApp->mBoard->NeedSaveGame())
+        if (mApp->mBoard && mApp->mBoard->NeedSaveGame())
         {
             mApp->DoConfirmBackToMain();
         }
@@ -559,6 +569,11 @@ void NewOptionsDialog::ButtonDepress(int theId)
     case NewOptionsDialog::NewOptionsDialog_RightPage:
         mAdvancedPage++;
         UpdateAdvancedPage();
+        break;
+
+    case NewOptionsDialog::NewOptionsDialog_Back:
+        mApp->KillNewOptionsDialog();
+        mApp->DoNewOptions(mFromGameSelector, mX, mY);
         break;
     }
 }
