@@ -289,7 +289,7 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
             TodDrawString(g, _S("Debug Mode"), mDebugModeBox->mX - 6, mDebugModeBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Discord Presence"), mDiscordBox->mX - 6, mDiscordBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Seed Bank Keybinds"), mBankKeybindsBox->mX - 6, mBankKeybindsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-            TodDrawString(g, StrFormat(_S("Keybind: %s"), m09FormatBox->mChecked ? "0-9" : "1-0"), m09FormatBox->mX - 6, m09FormatBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, StrFormat(_S("Keybind: %s"), m09FormatBox->mChecked ? "1-0" : "9-0"), m09FormatBox->mX - 6, m09FormatBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Shovel Keybind: S"), mWidth / 2, m09FormatBox->mY + 55, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
         }
         else if (mAdvancedPage == 2)
