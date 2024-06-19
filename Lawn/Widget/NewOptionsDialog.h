@@ -8,8 +8,10 @@
 
 const int ADVANCED_PAGE_Y = 355;
 const int ADVANCED_MAX_PAGES = 2;
-const int ADVANCED_SPEED_MAX = 4;
 const int ADVANCED_SPEED_MIN = 2;
+const int ADVANCED_SPEED_MAX = 4;
+const int ADVANCED_SPEED_X = 284;
+const int ADVANCED_SPEED_Y = 148;
 
 class LawnApp;
 class LawnStoneButton;
