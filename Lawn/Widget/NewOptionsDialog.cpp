@@ -82,7 +82,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mSpeedEditWidget = CreateEditWidget(NewOptionsDialog_SpeedInput, this, this);
     mSpeedEditWidget->mMaxChars = 1;
     mSpeedEditWidget->SetFont(FONT_DWARVENTODCRAFT18);
-    mSpeedEditWidget->AddWidthCheckFont(FONT_DWARVENTODCRAFT18, 220);
+    mSpeedEditWidget->AddWidthCheckFont(FONT_DWARVENTODCRAFT18, 50);
     SexyString aSpeedStr;
     aSpeedStr = StrFormat(_S("%d"), (int)mApp->mSpeedModifier);
     mSpeedEditWidget->SetText(aSpeedStr, true);
@@ -138,18 +138,6 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     {
         mAlmanacButton->SetVisible(false);
     }
-}
-
-void NewOptionsDialog::EditWidgetText(int theId, const SexyString& theString)
-{
-    if (mSpeedEditWidget->mString == "")
-        return;
-    mApp->mSpeedModifier = stoi(mSpeedEditWidget->mString.c_str());
-}
-
-bool NewOptionsDialog::AllowChar(int theId, SexyChar theChar)
-{
-    return isdigit(theChar) && theChar != '0';
 }
 
 //0x45C760��0x45C780
@@ -242,7 +230,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mBackToGameButton->Resize(30, 381, mBackToGameButton->mWidth, mBackToGameButton->mHeight);
     mLeftPageButton->Resize(100, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_LEFT_BUTTON->mWidth, IMAGE_QUICKPLAY_LEFT_BUTTON->mHeight);
     mRightPageButton->Resize(280, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
-    mSpeedEditWidget->Resize(284, 148, mWidth - mContentInsets.mLeft - mContentInsets.mRight - 24, 28);
+    mSpeedEditWidget->Resize(284, 148, 50, 28);
 
     if (mFromGameSelector)
     {
@@ -301,19 +289,17 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
             TodDrawString(g, _S("Debug Mode"), mDebugModeBox->mX - 6, mDebugModeBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Discord Presence"), mDiscordBox->mX - 6, mDiscordBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Seed Bank Keybinds"), mBankKeybindsBox->mX - 6, mBankKeybindsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-            TodDrawString(g, _S(!m09FormatBox->mChecked ? "Keybind: 0-9" : "Keybind: 1-0"), m09FormatBox->mX - 6, m09FormatBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, StrFormat(_S("Keybind: %s"), m09FormatBox->mChecked ? "0-9" : "1-0"), m09FormatBox->mX - 6, m09FormatBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Shovel Keybind: S"), mWidth / 2, m09FormatBox->mY + 55, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
         }
         else if (mAdvancedPage == 2)
         {
             #ifdef _DEBUG
-            TodDrawString(g, "Git Commit: " + mApp->mGitCommit, mWidth / 2, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
+            TodDrawString(g, StrFormat(_S("Git Commit: %s"), mApp->mGitCommit.c_str()), mWidth / 2, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
             #endif
             TodDrawString(g, _S("Speed Multiplier"), mSpeedEditWidget->mX - 6, mSpeedEditWidget->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-            //TodDrawString(g, _S(StrFormat("%d", mAdvancedPage)), mWidth / 2, mHeight / 2, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
-
         }
-        TodDrawString(g, _S(StrFormat("Page %d", mAdvancedPage)), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
+        TodDrawString(g, StrFormat(_S("Page %d"), mAdvancedPage), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
     }
 }
 
@@ -439,6 +425,30 @@ void NewOptionsDialog::UpdateAdvancedPage()
             mSpeedEditWidget->SetVisible(true);
             break;
         break;
+    }
+}
+
+void NewOptionsDialog::Update()
+{
+    if (mAdvancedMode && mSpeedEditPrevText != mSpeedEditWidget->mString)
+    {
+        if ((mSpeedEditWidget->mString == "" || mSpeedEditWidget->mString == " ") && (mSpeedEditPrevText != "" || mSpeedEditPrevText != " "))
+            mSpeedEditWidget->mString = mSpeedEditPrevText;
+        int num;
+        try
+        {
+            num = stoi(mSpeedEditWidget->mString);
+        }
+        catch(exception)
+        {
+            mSpeedEditWidget->mString = mSpeedEditPrevText;
+            return;
+        }
+        if (num < ADVANCED_SPEED_MIN)
+            mSpeedEditWidget->mString = StrFormat(_S("%d"), ADVANCED_SPEED_MIN);
+        else if (num > ADVANCED_SPEED_MAX)
+            mSpeedEditWidget->mString = StrFormat(_S("%d"), ADVANCED_SPEED_MAX);
+        mSpeedEditPrevText = mSpeedEditWidget->mString;
     }
 }
 

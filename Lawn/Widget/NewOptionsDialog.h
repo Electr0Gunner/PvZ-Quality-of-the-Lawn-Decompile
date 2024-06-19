@@ -64,6 +64,7 @@ public:
 	bool					mAdvancedMode;
 	int						mAdvancedPage;
 	EditWidget*				mSpeedEditWidget;
+	SexyString				mSpeedEditPrevText;
 
 public:
 	NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bool theAdvanced);
@@ -80,8 +81,7 @@ public:
 	void					ButtonDepress(int theId);
 	void					KeyDown(Sexy::KeyCode theKey);
 	void					UpdateAdvancedPage();
-	virtual void			EditWidgetText(int theId, const SexyString& theString);
-	virtual bool			AllowChar(int theId, SexyChar theChar);
+	void					Update();
 };
 
 #endif
