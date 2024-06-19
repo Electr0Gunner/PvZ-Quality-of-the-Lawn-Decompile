@@ -1243,13 +1243,20 @@ bool LawnApp::KillNewOptionsDialog()
 	if (aNewOptionsDialog == nullptr)
 		return false;
 
-	bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
-	mDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
-	mBankKeybinds = aNewOptionsDialog->mBankKeybindsBox->IsChecked();
-	mZeroNineBankFormat = aNewOptionsDialog->m09FormatBox->IsChecked();
-	bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
-	SwitchScreenMode(wantWindowed, want3D, false);
-	ToggleDebugMode();
+	if (aNewOptionsDialog->mAdvancedMode)
+	{
+		mDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
+		mBankKeybinds = aNewOptionsDialog->mBankKeybindsBox->IsChecked();
+		mZeroNineBankFormat = aNewOptionsDialog->m09FormatBox->IsChecked();
+		mSpeedModifier = stoi(aNewOptionsDialog->mSpeedEditWidget->mString.c_str());
+	}
+	else
+	{
+		bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
+		bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
+		SwitchScreenMode(wantWindowed, want3D, false);
+		ToggleDebugMode();
+	}
 
 	KillDialog(Dialogs::DIALOG_NEWOPTIONS);
 	ClearUpdateBacklog();
