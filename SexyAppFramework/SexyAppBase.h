@@ -305,6 +305,7 @@ public:
 	bool					mDiscordPresence;
 	bool					mBankKeybinds;
 	bool					mZeroNineBankFormat;
+	int						mSpeedModifier;
 	bool					mSoftVSyncWait;
 	bool					mUserChanged3DSetting;
 	bool					mAutoEnable3D;

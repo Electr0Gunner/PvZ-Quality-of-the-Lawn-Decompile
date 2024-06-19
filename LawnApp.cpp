@@ -128,13 +128,22 @@ LawnApp::LawnApp()
 	mAutoStartLoadingThread = false;
 	mDebugKeysEnabled = false;
 	isFastMode = false;
-	mSpeedValue = 2;
 	mProdName = "PlantsVsZombies";
-	mReconVersion = "PvZ QoTL v1.3.4";
-	std::string aTitleName = "Plants vs. Zombies";
+	mReconVersion = "PvZ QoTL v1.4";
 #ifdef _DEBUG
-	aTitleName += " QoTL v1.3.4";
+	mGitCommit = exec_getStr("git rev-parse --short HEAD");
+	if (mGitCommit.back() == '\n') 
+		mGitCommit.pop_back();
+
+	std::string aTitleName = "Plants vs. Zombies";
+	aTitleName += " QoTL v1.4";
 	aTitleName += " DEBUG ";
+	if (mGitCommit == "")
+	{
+		mGitCommit = "None";
+	}
+	else
+		aTitleName += "(" + mGitCommit + ")";
 	//aTitleName += mProductVersion; tbh i dont get how this works. sooooooooo, commenting it. just do "aTitleName += "some random version string";   "
 #endif
 
@@ -920,7 +929,7 @@ void LawnApp::DoUserDialog()
 
 float LawnApp::GetSpeedVal()
 {
-	return mSpeedValue;
+	return mSpeedModifier;
 }
 
 //0x450930
@@ -1824,7 +1833,7 @@ void LawnApp::UpdateFrames()
 	}
 	else if (isFastMode)
 	{
-		aUpdateCount = mSpeedValue;
+		aUpdateCount = mSpeedModifier;
 	}
 
 	for (int i = 0; i < aUpdateCount; i++)

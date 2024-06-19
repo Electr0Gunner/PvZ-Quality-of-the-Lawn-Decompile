@@ -4,9 +4,12 @@
 #include "../../SexyAppFramework/Dialog.h"
 #include "../../SexyAppFramework/SliderListener.h"
 #include "../../SexyAppFramework/CheckboxListener.h"
+#include "../../SexyAppFramework/EditListener.h"
 
 const int ADVANCED_PAGE_Y = 355;
-const int ADVANCED_MAX_PAGES = 3;
+const int ADVANCED_MAX_PAGES = 2;
+const int ADVANCED_SPEED_MAX = 4;
+const int ADVANCED_SPEED_MIN = 2;
 
 class LawnApp;
 class LawnStoneButton;
@@ -17,7 +20,7 @@ namespace Sexy
 	class Checkbox;
 };
 
-class NewOptionsDialog : public Sexy::Dialog, public Sexy::SliderListener, public Sexy::CheckboxListener
+class NewOptionsDialog : public Sexy::Dialog, public Sexy::SliderListener, public Sexy::CheckboxListener, public EditListener
 {
 protected:
 	enum
@@ -36,7 +39,8 @@ protected:
 		NewOptionsDialog_BankKeybinds,
 		NewOptionsDialog_ZeroNineBankFormat,
 		NewOptionsDialog_LeftPage,
-		NewOptionsDialog_RightPage
+		NewOptionsDialog_RightPage,
+		NewOptionsDialog_SpeedInput
 	};
 
 public:
@@ -59,6 +63,7 @@ public:
 	bool					mFromGameSelector;					//+0x17C
 	bool					mAdvancedMode;
 	int						mAdvancedPage;
+	EditWidget*				mSpeedEditWidget;
 
 public:
 	NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bool theAdvanced);
@@ -75,6 +80,8 @@ public:
 	void					ButtonDepress(int theId);
 	void					KeyDown(Sexy::KeyCode theKey);
 	void					UpdateAdvancedPage();
+	virtual void			EditWidgetText(int theId, const SexyString& theString);
+	virtual bool			AllowChar(int theId, SexyChar theChar);
 };
 
 #endif

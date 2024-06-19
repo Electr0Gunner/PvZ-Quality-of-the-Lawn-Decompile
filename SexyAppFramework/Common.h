@@ -149,6 +149,7 @@ bool				StringToDouble(const std::wstring theString, double* theDoubleVal);
 int					StrFindNoCase(const char *theStr, const char *theFind);
 bool				StrPrefixNoCase(const char *theStr, const char *thePrefix, int maxLength = 10000000);
 SexyString			CommaSeperate(int theValue);
+SexyString			exec_getStr(const char* cmd);
 std::string			Evaluate(const std::string& theString, const DefinesMap& theDefinesMap);
 std::string			XMLDecodeString(const std::string& theString);
 std::string			XMLEncodeString(const std::string& theString);

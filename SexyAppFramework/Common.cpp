@@ -1324,3 +1324,24 @@ bool Sexy::StrPrefixNoCase(const char *theStr, const char *thePrefix, int maxLen
 
 	return c2==0 || i==maxLength;
 }
+
+#ifdef _WIN32
+#define popen _popen
+#define pclose _pclose
+#endif
+
+#include <iostream>
+#include <array>
+
+SexyString Sexy::exec_getStr(const char* cmd) {
+	std::array<char, 128> buffer;
+	std::string result;
+	std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+	if (!pipe) {
+		throw std::runtime_error("popen() failed!");
+	}
+	while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+		result += buffer.data();
+	}
+	return result;
+}
