@@ -412,7 +412,6 @@ void NewOptionsDialog::UpdateAdvancedPage()
     mBankKeybindsBox->SetVisible(false);
     m09FormatBox->SetVisible(false);
     mSpeedEditWidget->SetVisible(false);
-    mSpeedEditWidget->mHasFocus = false;
 
     switch (mAdvancedPage)
     {
