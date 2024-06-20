@@ -132,6 +132,7 @@ public:
 	bool							mMuteSoundsForCutscene;							//+0x8C5
 	Achievements*						mAchievement;
 	bool							isFastMode;
+	SexyString						mVersion;
 	SexyString						mReconVersion;
 	SexyString						mGitCommit;
 	int								mQuickLevel;
