@@ -148,6 +148,11 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     {
         mAlmanacButton->SetVisible(false);
     }
+    if ((!mRestartButton->mVisible || !mAlmanacButton->mVisible) && !mFromGameSelector && !mAdvancedMode)
+    {
+        mAdvancedButton->SetVisible(true);
+        mGameAdvancedButton->SetVisible(false);
+    }
 }
 
 //0x45C760��0x45C780
@@ -247,6 +252,15 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mGameAdvancedButton->Resize(mWidth - Sexy::IMAGE_BUTTON_SMALL->mWidth - 9, mRestartButton->mY, 
         Sexy::IMAGE_BUTTON_SMALL->mWidth, Sexy::IMAGE_BUTTON_SMALL->mHeight);
 
+    if ((!mRestartButton->mVisible || !mAlmanacButton->mVisible) && !mFromGameSelector && !mAdvancedMode)
+    {
+        LawnStoneButton* button;
+        if (!mRestartButton->mVisible)
+            button = mRestartButton;
+        else if (!mAlmanacButton->mVisible)
+            button = mAlmanacButton;
+        mAdvancedButton->Resize(button->mX, button->mY, button->mWidth, button->mHeight);
+    }
     if (mFromGameSelector)
     {
         mMusicVolumeSlider->mY += 5;
@@ -449,6 +463,9 @@ void NewOptionsDialog::UpdateAdvancedPage()
 
 void NewOptionsDialog::Update()
 {
+    bool isGameAdvancedDown = mGameAdvancedButton->mIsDown;
+    mGameAdvancedButton->mTextDownOffsetX = isGameAdvancedDown;
+    mGameAdvancedButton->mTextDownOffsetY = isGameAdvancedDown;
     if (mAdvancedMode)
     {
         if (mSpeedEditWidget->mHasFocus && mSpeedEditWidget->mFont != FONT_DWARVENTODCRAFT18BRIGHTGREENINSET)
@@ -497,6 +514,7 @@ void NewOptionsDialog::ButtonDepress(int theId)
     }
     case NewOptionsDialog::NewOptionsDialog_Advanced:
     {
+        mApp->KillNewOptionsDialog();
         mApp->DoAdvancedOptions(mFromGameSelector, mX, mY);
         break;
     }

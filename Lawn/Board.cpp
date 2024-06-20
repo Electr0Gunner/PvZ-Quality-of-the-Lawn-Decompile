@@ -8013,8 +8013,8 @@ static void TodCrash()
 //0x41B950（原版中废弃）
 void Board::KeyChar(SexyChar theChar)
 {
-	bool ignoreKeybinds = mPaused || mApp->mGameScene != GameScenes::SCENE_PLAYING ||
-		mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || !mApp->mBankKeybinds;
+	bool ignoreKeybinds = mPaused || mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
+		mApp->mGameScene != GameScenes::SCENE_PLAYING || mApp->mCrazyDaveReanimID != ReanimationID::REANIMATIONID_NULL || !mApp->mBankKeybinds;
 	if (isdigit(theChar))
 	{
 		if (!ignoreKeybinds || mSeedBank->mY < 0)
@@ -8064,8 +8064,7 @@ void Board::KeyChar(SexyChar theChar)
 		{
 			if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK)
 				RefreshSeedPacketFromCursor();
-			mCursorObject->mCursorType = CursorType::CURSOR_TYPE_SHOVEL;
-			mApp->PlayFoley(FoleyType::FOLEY_SHOVEL);
+			PickUpTool(GameObjectType::OBJECT_TYPE_SHOVEL);
 		}
 		else
 		{
