@@ -132,9 +132,10 @@ LawnApp::LawnApp()
 	mReconVersion = "PvZ QoTL v1.4";
 #ifdef _DEBUG
 	mGitCommit = exec_getStr("git rev-parse --short HEAD");
-	if (mGitCommit.back() == '\n') 
-		mGitCommit.pop_back();
-
+	if (mGitCommit != "") {
+		if (mGitCommit.back() == '\n')
+			mGitCommit.pop_back();
+	}
 	std::string aTitleName = "Plants vs. Zombies";
 	aTitleName += " QoTL v1.4";
 	aTitleName += " DEBUG ";
