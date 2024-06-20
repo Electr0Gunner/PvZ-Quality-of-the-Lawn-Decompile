@@ -14,6 +14,8 @@
 #include "../Sexy.TodLib/TodDebug.h"
 #include "../Sexy.TodLib/Reanimator.h"
 #include "../Sexy.TodLib/Attachment.h"
+#include "../SexyAppFramework/WidgetManager.h"
+
 
 Coin::Coin()
 {
@@ -760,6 +762,16 @@ void Coin::Update()
         {
             AttachmentOverrideColor(mAttachmentID, Color(0, 0, 0, 0));  // 运动中的金币和银币使用贴图，故以此法隐藏附件的动画
         }
+    }
+
+    if ((mApp->mAutoCollectSuns && (mType == CoinType::COIN_SUN || mType == CoinType::COIN_SMALLSUN || mType == CoinType::COIN_LARGESUN))
+        || (mApp->mAutoCollectCoins && (mType == CoinType::COIN_SILVER || mType == CoinType::COIN_GOLD || mType == CoinType::COIN_DIAMOND)))
+    {
+        int aMouseX = mApp->mWidgetManager->mLastMouseX - mX;
+        int aMouseY = mApp->mWidgetManager->mLastMouseY - mY;
+        HitResult aHitResultCoin;
+        if (MouseHitTest(aMouseX, aMouseY, &aHitResultCoin))
+            MouseDown(aMouseX, aMouseY, 0);
     }
 }
 

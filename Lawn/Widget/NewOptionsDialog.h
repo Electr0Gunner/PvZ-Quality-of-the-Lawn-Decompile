@@ -30,19 +30,13 @@ protected:
 		NewOptionsDialog_Almanac,
 		NewOptionsDialog_MainMenu,
 		NewOptionsDialog_Restart,
-		NewOptionsDialog_Update,
 		NewOptionsDialog_MusicVolume,
 		NewOptionsDialog_SoundVolume,
 		NewOptionsDialog_Fullscreen,
 		NewOptionsDialog_HardwareAcceleration,
-		NewOptionsDialog_DebugMode,
 		NewOptionsDialog_Advanced,
-		NewOptionsDialog_Discord,
-		NewOptionsDialog_BankKeybinds,
-		NewOptionsDialog_ZeroNineBankFormat,
 		NewOptionsDialog_LeftPage,
 		NewOptionsDialog_RightPage,
-		NewOptionsDialog_SpeedInput,
 		NewOptionsDialog_Back
 	};
 
@@ -56,6 +50,8 @@ public:
 	Sexy::Checkbox*			mDiscordBox;
 	Sexy::Checkbox*			mBankKeybindsBox;
 	Sexy::Checkbox*			m09FormatBox;
+	Sexy::Checkbox*			mAutoCollectSunsBox;
+	Sexy::Checkbox*			mAutoCollectCoinsBox;
 	LawnStoneButton*		mAlmanacButton;						//+0x16C
 	LawnStoneButton*		mBackToMainButton;					//+0x170
 	LawnStoneButton*		mRestartButton;						//+0x174
