@@ -1251,6 +1251,8 @@ bool LawnApp::KillNewOptionsDialog()
 		mBankKeybinds = aNewOptionsDialog->mBankKeybindsBox->IsChecked();
 		mZeroNineBankFormat = aNewOptionsDialog->m09FormatBox->IsChecked();
 		mSpeedModifier = stoi(aNewOptionsDialog->mSpeedEditWidget->mString.c_str());
+		mAutoCollectSuns = aNewOptionsDialog->mAutoCollectSunsBox->IsChecked();
+		mAutoCollectCoins = aNewOptionsDialog->mAutoCollectCoinsBox->IsChecked();
 		ToggleDebugMode();
 	}
 	else

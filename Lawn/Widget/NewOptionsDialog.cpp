@@ -59,17 +59,23 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
 
     mFullscreenCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Fullscreen, this, !theApp->mIsWindowed);
     mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->Is3DAccelerated());
-    mDebugModeBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_DebugMode, this, mApp->mTodCheatKeys);
+    mDebugModeBox = MakeNewCheckbox(-1, this, mApp->mTodCheatKeys);
     mDebugModeBox->SetVisible(false);
 
-    mDiscordBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Discord, this, mApp->mDiscordPresence);
+    mDiscordBox = MakeNewCheckbox(-1, this, mApp->mDiscordPresence);
     mDiscordBox->SetVisible(false);
 
-    mBankKeybindsBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_BankKeybinds, this, mApp->mBankKeybinds);
+    mBankKeybindsBox = MakeNewCheckbox(-1, this, mApp->mBankKeybinds);
     mBankKeybindsBox->SetVisible(false);
 
-    m09FormatBox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_ZeroNineBankFormat, this, mApp->mZeroNineBankFormat);
+    m09FormatBox = MakeNewCheckbox(-1, this, mApp->mZeroNineBankFormat);
     m09FormatBox->SetVisible(false);
+
+    mAutoCollectSunsBox = MakeNewCheckbox(-1, this, mApp->mAutoCollectSuns);
+    mAutoCollectSunsBox->SetVisible(false);
+
+    mAutoCollectCoinsBox = MakeNewCheckbox(-1, this, mApp->mAutoCollectCoins);
+    mAutoCollectCoinsBox->SetVisible(false);
 
     mLeftPageButton = MakeNewButton(NewOptionsDialog::NewOptionsDialog_LeftPage, this, "", nullptr, Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON,
         Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT, Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT);
@@ -79,7 +85,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
         Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT, Sexy::IMAGE_QUICKPLAY_RIGHT_BUTTON_HIGHLIGHT);
     mRightPageButton->SetVisible(false);
 
-    mSpeedEditWidget = CreateEditWidget(NewOptionsDialog_SpeedInput, this, this);
+    mSpeedEditWidget = CreateEditWidget(-1, this, this);
     mSpeedEditWidget->mMaxChars = 1;
     mSpeedEditWidget->SetFont(FONT_DWARVENTODCRAFT18GREENINSET);
     mSpeedEditWidget->AddWidthCheckFont(FONT_DWARVENTODCRAFT18GREENINSET, IMAGE_OPTIONS_CHECKBOX0->mWidth);
@@ -103,13 +109,6 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
         {
             mBackToMainButton->SetVisible(false);
             mBackToMainButton->SetLabel(_S("[CREDITS]"));
-        }
-        else
-        {
-            mBackToMainButton->SetVisible(false);
-            mDiscordBox->SetVisible(false);
-            m09FormatBox->SetVisible(false);
-            mBankKeybindsBox->SetVisible(false);
         }
     }
     else
@@ -175,6 +174,8 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mRightPageButton;
     delete mSpeedEditWidget;
     delete mGameAdvancedButton;
+    delete mAutoCollectSunsBox;
+    delete mAutoCollectCoinsBox;
 }
 
 //0x45C880
@@ -204,6 +205,8 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mRightPageButton);
     AddWidget(mSpeedEditWidget);
     AddWidget(mGameAdvancedButton);
+    AddWidget(mAutoCollectSunsBox);
+    AddWidget(mAutoCollectCoinsBox);
 }
 
 //0x45C930
@@ -227,6 +230,8 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mRightPageButton);
     RemoveWidget(mSpeedEditWidget);
     RemoveWidget(mGameAdvancedButton);
+    RemoveWidget(mAutoCollectSunsBox);
+    RemoveWidget(mAutoCollectCoinsBox);
 }
 
 //0x45C9D0
@@ -241,6 +246,8 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mDiscordBox->Resize(mDebugModeBox->mX, mDebugModeBox->mY + 40, 46, 45);
     mBankKeybindsBox->Resize(mDiscordBox->mX, mDiscordBox->mY + 40, 46, 45);
     m09FormatBox->Resize(mBankKeybindsBox->mX, mBankKeybindsBox->mY + 40, 46, 45);
+    mAutoCollectSunsBox->Resize(mDiscordBox->mX, mDiscordBox->mY, 46, 45);
+    mAutoCollectCoinsBox->Resize(mBankKeybindsBox->mX, mBankKeybindsBox->mY, 46, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
@@ -249,8 +256,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mLeftPageButton->Resize(100, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_LEFT_BUTTON->mWidth, IMAGE_QUICKPLAY_LEFT_BUTTON->mHeight);
     mRightPageButton->Resize(280, ADVANCED_PAGE_Y - 25, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
     mSpeedEditWidget->Resize(ADVANCED_SPEED_X + 9, ADVANCED_SPEED_Y - 4, IMAGE_OPTIONS_CHECKBOX0->mWidth, IMAGE_OPTIONS_CHECKBOX0->mHeight + 4);
-    mGameAdvancedButton->Resize(mWidth - Sexy::IMAGE_BUTTON_SMALL->mWidth - 9, mRestartButton->mY, 
-        Sexy::IMAGE_BUTTON_SMALL->mWidth, Sexy::IMAGE_BUTTON_SMALL->mHeight);
+    mGameAdvancedButton->Resize(mWidth - Sexy::IMAGE_BUTTON_SMALL->mWidth - 9, mRestartButton->mY, Sexy::IMAGE_BUTTON_SMALL->mWidth, Sexy::IMAGE_BUTTON_SMALL->mHeight);
 
     if ((!mRestartButton->mVisible || !mAlmanacButton->mVisible) && !mFromGameSelector && !mAdvancedMode)
     {
@@ -327,6 +333,8 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
             TodDrawString(g, StrFormat(_S("Git Commit: %s"), mApp->mGitCommit.c_str()), mWidth / 2, 137, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
             #endif
             TodDrawString(g, _S("Speed Multiplier"), ADVANCED_SPEED_X - 6, ADVANCED_SPEED_Y + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Auto-Collect Suns"), mAutoCollectSunsBox->mX - 6, mAutoCollectSunsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Auto-Collect Coins"), mAutoCollectCoinsBox->mX - 6, mAutoCollectCoinsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             g->DrawImage(Sexy::IMAGE_OPTIONS_CHECKBOX0, ADVANCED_SPEED_X, ADVANCED_SPEED_Y);
         }
         TodDrawString(g, StrFormat(_S("Page %d"), mAdvancedPage), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18GREENINSET, Color::White, DrawStringJustification::DS_ALIGN_CENTER);
@@ -445,6 +453,8 @@ void NewOptionsDialog::UpdateAdvancedPage()
     mBankKeybindsBox->SetVisible(false);
     m09FormatBox->SetVisible(false);
     mSpeedEditWidget->SetVisible(false);
+    mAutoCollectSunsBox->SetVisible(false);
+    mAutoCollectCoinsBox->SetVisible(false);
 
     switch (mAdvancedPage)
     {
@@ -456,6 +466,8 @@ void NewOptionsDialog::UpdateAdvancedPage()
             break;
         case 2:
             mSpeedEditWidget->SetVisible(true);
+            mAutoCollectSunsBox->SetVisible(true);
+            mAutoCollectCoinsBox->SetVisible(true);
             break;
         break;
     }
@@ -582,10 +594,6 @@ void NewOptionsDialog::ButtonDepress(int theId)
         }
         break;
     }
-
-    case NewOptionsDialog::NewOptionsDialog_Update:
-        mApp->CheckForUpdates();
-        break;
 
     case NewOptionsDialog::NewOptionsDialog_LeftPage:
         mAdvancedPage--;
