@@ -8,6 +8,9 @@
 #include "../../SexyAppFramework/SliderListener.h"
 #include "../../SexyAppFramework/Slider.h"
 
+const int IMITATER_POS_X = 459;
+const int IMITATER_POS_Y = 503;
+
 using namespace Sexy;
 
 class Board;

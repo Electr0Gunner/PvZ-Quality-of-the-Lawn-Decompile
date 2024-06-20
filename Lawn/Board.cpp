@@ -3378,8 +3378,7 @@ void Board::UpdateToolTip()
 
 		if (mSeedBank->ContainsPoint(mWidgetManager->mLastMouseX, mWidgetManager->mLastMouseY) ||
 			mApp->mSeedChooserScreen->mAlmanacButton->IsMouseOver() ||
-			mApp->mSeedChooserScreen->mStoreButton->IsMouseOver() ||
-			mApp->mSeedChooserScreen->mImitaterButton->IsMouseOver())
+			mApp->mSeedChooserScreen->mStoreButton->IsMouseOver()) // || mApp->mSeedChooserScreen->mImitaterButton->IsMouseOver()
 		{
 			mToolTip->mVisible = false;
 			return;
@@ -3424,6 +3423,7 @@ void Board::UpdateToolTip()
 		{
 			mToolTip->mMaxBottom = 570;
 		}
+		/*
 		if (!mApp->mSeedChooserScreen->mImitaterButton->mBtnNoDraw)
 		{
 			mToolTip->CalculateSize();
@@ -3432,7 +3432,7 @@ void Board::UpdateToolTip()
 				mToolTip->mMaxBottom = 503;
 			}
 		}
-
+		*/
 		return;
 	}
 
