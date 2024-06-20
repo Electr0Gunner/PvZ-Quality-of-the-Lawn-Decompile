@@ -1156,8 +1156,8 @@ void SeedChooserScreen::MouseDown(int x, int y, int theClickCount)
 	*/
 	else
 	{
-		bool isOverImitater = x >= IMITATER_POS_X && x <= IMITATER_POS_X + Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON->mWidth
-			&& y >= IMITATER_POS_Y && y <= IMITATER_POS_Y + Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON->mHeight;
+		bool isOverImitater = mApp->SeedTypeAvailable(SEED_IMITATER) && (x >= IMITATER_POS_X && x <= IMITATER_POS_X + Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON->mWidth
+			&& y >= IMITATER_POS_Y && y <= IMITATER_POS_Y + Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON->mHeight);
 		if (!mBoard->mSeedBank->ContainsPoint(x, y) && !isOverImitater && !mAlmanacButton->IsMouseOver() && !mStoreButton->IsMouseOver() && mApp->CanShowAlmanac())
 		{
 			Zombie* aZombie = mBoard->ZombieHitTest(x - mBoard->mX, y - mBoard->mY);
