@@ -4015,20 +4015,20 @@ void Challenge::ScaryPotterPopulate()
 			ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_FOOTBALL, SEED_NONE, 3, aGridArray, aGridArrayCount);
 			ScaryPotterChangePotType(GRIDITEM_STATE_SCARY_POT_LEAF, 2);
 			break;
-		case GAMEMODE_SCARY_POTTER_6:
-			ScaryPotterDontPlaceInCol(0, aGridArray, aGridArrayCount);
-			ScaryPotterDontPlaceInCol(1, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_LEFTPEATER, 7, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_SQUASH, 2, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_TALLNUT, 5, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_THREEPEATER, 2, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_TORCHWOOD, 4, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_NORMAL, SEED_NONE, 7, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_POLEVAULTER, SEED_NONE, 5, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_FOOTBALL, SEED_NONE, 6, aGridArray, aGridArrayCount);
-			ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_JACK_IN_THE_BOX, SEED_NONE, 6, aGridArray, aGridArrayCount);
-			ScaryPotterChangePotType(GRIDITEM_STATE_SCARY_POT_LEAF, 2);
-			break;
+        case GAMEMODE_SCARY_POTTER_6:
+            ScaryPotterDontPlaceInCol(0, aGridArray, aGridArrayCount);
+            ScaryPotterDontPlaceInCol(1, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_LEFTPEATER, 6, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_SQUASH, 1, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_TALLNUT, 4, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_THREEPEATER, 1, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_SEED, ZOMBIE_INVALID, SEED_TORCHWOOD, 3, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_NORMAL, SEED_NONE, 6, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_POLEVAULTER, SEED_NONE, 4, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_FOOTBALL, SEED_NONE, 5, aGridArray, aGridArrayCount);
+            ScaryPotterPlacePot(SCARYPOT_ZOMBIE, ZOMBIE_JACK_IN_THE_BOX, SEED_NONE, 5, aGridArray, aGridArrayCount);
+            ScaryPotterChangePotType(GRIDITEM_STATE_SCARY_POT_LEAF, 2);
+            break;
 		case GAMEMODE_SCARY_POTTER_7:
 			ScaryPotterDontPlaceInCol(0, aGridArray, aGridArrayCount);
 			ScaryPotterDontPlaceInCol(1, aGridArray, aGridArrayCount);
