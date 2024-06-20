@@ -921,7 +921,7 @@ void SeedChooserScreen::ClickedSeedInBank(ChosenSeed& theChosenSeed)
 	//theChosenSeed.mStartX = theChosenSeed.mX;
 	//theChosenSeed.mStartY = theChosenSeed.mY;
 	GetSeedPositionInChooser(theChosenSeed.mSeedType, theChosenSeed.mX, theChosenSeed.mY);
-	theChosenSeed.mY += mScrollPosition;
+	theChosenSeed.mY += theChosenSeed.mSeedType == SEED_IMITATER ? 0 : mScrollPosition;
 	theChosenSeed.mSeedState = SEED_IN_CHOOSER;
 	theChosenSeed.mImitaterType = SEED_NONE;
 	theChosenSeed.mSeedIndexInBank = 0;
@@ -954,7 +954,7 @@ void SeedChooserScreen::ClickedSeedInChooser(ChosenSeed& theChosenSeed)
 	theChosenSeed.mTimeStartMotion = mSeedChooserAge;
 	theChosenSeed.mTimeEndMotion = mSeedChooserAge + 25;
 	theChosenSeed.mStartX = theChosenSeed.mX;
-	theChosenSeed.mStartY = theChosenSeed.mY - mScrollPosition;
+	theChosenSeed.mStartY = theChosenSeed.mY - (theChosenSeed.mSeedType == SEED_IMITATER ? 0 : mScrollPosition);
 	GetSeedPositionInBank(mSeedsInBank, theChosenSeed.mEndX, theChosenSeed.mEndY);
 	theChosenSeed.mSeedState = SEED_FLYING_TO_BANK;
 	theChosenSeed.mSeedIndexInBank = mSeedsInBank;
