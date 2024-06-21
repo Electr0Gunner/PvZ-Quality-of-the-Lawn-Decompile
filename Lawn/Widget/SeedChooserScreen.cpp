@@ -409,8 +409,7 @@ void SeedChooserScreen::Draw(Graphics* g)
 			(aSeedState == SEED_IN_CHOOSER || mBoard->mCutScene->mSeedChoosing))
 		{
 			bool aGrayed = false;
-			if (((SeedNotRecommendedToPick(aSeedType) || SeedNotAllowedToPick(aSeedType)) && aSeedState == SEED_IN_CHOOSER) ||
-				SeedNotAllowedDuringTrial(aSeedType) || IsImitaterUnselectable(aSeedType))
+			if (((SeedNotRecommendedToPick(aSeedType) || SeedNotAllowedToPick(aSeedType) || IsImitaterUnselectable(aSeedType)) && aSeedState == SEED_IN_CHOOSER) || SeedNotAllowedDuringTrial(aSeedType))
 				aGrayed = true;
 
 			int aPosX, aPosY;
