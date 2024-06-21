@@ -36,11 +36,6 @@ enum MusicFile
 	MUSIC_FILE_DRUMS,
 	MUSIC_FILE_HIHATS,
 	MUSIC_FILE_CREDITS_ZOMBIES_ON_YOUR_LAWN,
-	MUSIC_FILE_GRASS_THE_MOON,
-	MUSIC_FILE_GRASS_THE_MOON_BASS,
-	MUSIC_FILE_BRAIN_STORM,
-	MUSIC_FILE_FALLING_CRYSTALS,
-	MUSIC_FILE_RAINY_RIGOR_MORMIST,
 	NUM_MUSIC_FILES
 };
 
@@ -64,22 +59,22 @@ enum MusicDrumsState
 class MusicFileData
 {
 public:
-	unsigned int* mFileData;
+	unsigned int*				mFileData;
 };
 extern MusicFileData gMusicFileData[MusicFile::NUM_MUSIC_FILES];  //0x6A9ED0
 
 class Music
 {
 public:
-	LawnApp* mApp;								//+0x0
-	Sexy::MusicInterface* mMusicInterface;					//+0x4
+	LawnApp*					mApp;								//+0x0
+	Sexy::MusicInterface*		mMusicInterface;					//+0x4
 	MusicTune					mCurMusicTune;						//+0x8
 	MusicFile					mCurMusicFileMain;					//+0xC
 	MusicFile					mCurMusicFileDrums;					//+0x10
 	MusicFile					mCurMusicFileHihats;				//+0x14
 	int							mBurstOverride;						//+0x18
-	float						mBaseBPM;							//+0x1C
-	float						mBaseModSpeed;						//+0x20
+	int							mBaseBPM;							//+0x1C
+	int							mBaseModSpeed;						//+0x20
 	MusicBurstState				mMusicBurstState;					//+0x24
 	int							mBurstStateCounter;					//+0x28
 	MusicDrumsState				mMusicDrumsState;					//+0x2C
