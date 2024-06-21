@@ -182,22 +182,10 @@ void AchievementScreen::ExitScreen()
     mApp->mGameSelector->mMovementTimer = 75;
     mApp->mGameSelector->mDestinationY = 0;
     mApp->mGameSelector->mSelectorState = SELECTOR_IDLE;
+    mApp->mGameSelector->mEnableButtonsTransition = true;
     mApp->mWidgetManager->SetFocus(mApp->mGameSelector);
-
-    mApp->mGameSelector->mAdventureButton->SetDisabled(false);
-    mApp->mGameSelector->mMinigameButton->SetDisabled(false);
-    mApp->mGameSelector->mPuzzleButton->SetDisabled(false);
-    mApp->mGameSelector->mOptionsButton->SetDisabled(false);
-    mApp->mGameSelector->mQuitButton->SetDisabled(false);
-    mApp->mGameSelector->mHelpButton->SetDisabled(false);
-    mApp->mGameSelector->mChangeUserButton->SetDisabled(false);
-    mApp->mGameSelector->mStoreButton->SetDisabled(false);
-    mApp->mGameSelector->mAlmanacButton->SetDisabled(false);
-    mApp->mGameSelector->mSurvivalButton->SetDisabled(false);
-    mApp->mGameSelector->mZenGardenButton->SetDisabled(false);
-    mApp->mGameSelector->mAchievementButton->SetDisabled(false);
-    mApp->mGameSelector->mQuickPlayButton->SetDisabled(false);
-    mApp->mGameSelector->mCreditsButton->SetDisabled(false);
+    mBackButton->SetDisabled(true);
+    mRockButton->SetDisabled(true);
 }
 
 void AchievementScreen::MouseWheel(int theDelta)

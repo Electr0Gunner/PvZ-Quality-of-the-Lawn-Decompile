@@ -307,6 +307,7 @@ public:
 	bool					mZeroNineBankFormat;
 	bool					mAutoCollectSuns;
 	bool					mAutoCollectCoins;
+	bool					mZombieHealthbars;
 	int						mSpeedModifier;
 	bool					mSoftVSyncWait;
 	bool					mUserChanged3DSetting;

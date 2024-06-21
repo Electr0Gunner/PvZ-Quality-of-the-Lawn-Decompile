@@ -6406,6 +6406,15 @@ void Board::DrawGameObjects(Graphics* g)
 					aRenderItem.mZombie = aZombie;
 					aRenderItemCount++;
 				}
+
+				if (mApp->mZombieHealthbars)
+				{
+					RenderItem& aRenderItem = aRenderList[aRenderItemCount];
+					aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR;
+					aRenderItem.mZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, aZombie->mRow, 1);
+					aRenderItem.mZombie = aZombie;
+					aRenderItemCount++;
+				}
 			}
 		}
 	}
@@ -6736,6 +6745,38 @@ void Board::DrawGameObjects(Graphics* g)
 		case RenderObjectType::RENDER_ITEM_SCREEN_FADE:
 			DrawFadeOut(g);
 			break;
+
+		case RenderObjectType::RENDER_ITEM_HEALTHBAR:
+		{
+			Zombie* aZombie = aRenderItem.mZombie;
+			Rect rect = aZombie->GetZombieRect();
+			int barWidth = 55;
+			int barHeight = 10;
+			int barOffsetY = 0;
+			int baseBarOffsetY = 3;
+			int textOffsetY = 3;
+			int baseTextOffsetY = 12;
+			int textOutlineOffset = 1;
+			Color maxColor = Color(255, 0, 0);
+			Color textColor = Color::White;
+			bool drawBarOutline = true;
+			if (aZombie->mBodyHealth > 0)
+			{
+				barOffsetY += baseBarOffsetY;
+				DrawHealthbar(g, rect, maxColor, aZombie->mBodyMaxHealth, Color(255, 255, 0), aZombie->mBodyHealth, barWidth, barHeight, barOffsetY, textColor, FONT_BRIANNETOD12, textOffsetY, Color::Black, textOutlineOffset, drawBarOutline);
+			}
+			if (aZombie->mHelmHealth > 0)
+			{
+				barOffsetY += baseBarOffsetY + barHeight + textOffsetY + baseTextOffsetY;
+				DrawHealthbar(g, rect, maxColor, aZombie->mHelmMaxHealth, Color(0, 0, 255), aZombie->mHelmHealth, barWidth, barHeight, barOffsetY, textColor, FONT_BRIANNETOD12, textOffsetY, Color::Black, textOutlineOffset, drawBarOutline);
+			}
+			if (aZombie->mShieldHealth > 0)
+			{
+				barOffsetY += baseBarOffsetY + barHeight + textOffsetY + baseTextOffsetY;
+				DrawHealthbar(g, rect, maxColor, aZombie->mShieldMaxHealth, Color(0, 255, 255), aZombie->mShieldHealth, barWidth, barHeight, barOffsetY, textColor, FONT_BRIANNETOD12, textOffsetY, Color::Black, textOutlineOffset, drawBarOutline);
+			}
+			break;
+		}
 
 		default:
 			TOD_ASSERT();
@@ -10220,6 +10261,33 @@ int Board::NumberZombiesInWave(int theWaveIndex)
 bool Board::IsZombieTypeSpawnedOnly(ZombieType theZombieType)
 {
 	return (theZombieType == ZombieType::ZOMBIE_BACKUP_DANCER || theZombieType == ZombieType::ZOMBIE_BOBSLED || theZombieType == ZombieType::ZOMBIE_IMP);
+}
+
+void Board::DrawHealthbar(Graphics* g, Rect rect, Color maxColor, int maxNumber, Color baseColor, int baseNumber, int barWidth, int barHeight, int barOffsetY, Color textColor, Font* textFont, int textOffsetY, Color textOutlineColor, int textOutlineOffset, bool drawBarOutline)
+{
+	int barX = rect.mX + (rect.mWidth - barWidth) / 2;
+	int barY = rect.mY - barHeight - barOffsetY;
+	int basePercentage = baseNumber * 100 / maxNumber;
+	int baseBarWidth = barWidth * basePercentage / 100;
+	SexyString text = StrFormat(_S("%d / %d"), baseNumber, maxNumber);
+	TodDrawString(g, text, barX + (barWidth / 2) + textOutlineOffset, barY - textOffsetY + textOutlineOffset, textFont, textOutlineColor, DS_ALIGN_CENTER);
+	TodDrawString(g, text, barX + (barWidth / 2), barY - textOffsetY, textFont, textColor, DS_ALIGN_CENTER);
+	Color lastColor = g->mColor;
+	g->SetColor(maxColor);
+	for (int i = 0; i < barHeight; ++i)
+		g->DrawLine(barX + baseBarWidth, barY + i, barX + barWidth, barY + i);
+	g->SetColor(baseColor);
+	for (int i = 0; i < barHeight; ++i)
+		g->DrawLine(barX, barY + i, barX + baseBarWidth, barY + i);
+	if (drawBarOutline)
+	{
+		g->SetColor(Color::Black);
+		g->DrawLine(barX - 1, barY - 1, barX + barWidth + 1, barY - 1);
+		g->DrawLine(barX + barWidth + 1, barY - 1, barX + barWidth + 1, barY + barHeight);
+		g->DrawLine(barX + barWidth + 1, barY + barHeight, barX - 1, barY + barHeight);
+		g->DrawLine(barX - 1, barY + barHeight, barX - 1, barY - 1);
+	}
+	g->SetColor(lastColor);
 }
 
 

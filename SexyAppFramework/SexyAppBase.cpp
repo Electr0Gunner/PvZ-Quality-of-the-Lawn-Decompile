@@ -292,6 +292,7 @@ SexyAppBase::SexyAppBase()
 	mZeroNineBankFormat = false;
 	mAutoCollectSuns = false;
 	mAutoCollectCoins = false;
+	mZombieHealthbars = false;
 
 	int i;
 
@@ -1578,6 +1579,7 @@ void SexyAppBase::WriteToRegistry()
 	RegistryWriteBoolean("ZeroNineBankFormat", mZeroNineBankFormat);
 	RegistryWriteBoolean("AutoCollectSuns", mAutoCollectSuns);
 	RegistryWriteBoolean("AutoCollectCoins", mAutoCollectCoins);
+	RegistryWriteBoolean("ZombieHealthbars", mZombieHealthbars);
 	RegistryWriteInteger("MouseSensitivity", (int) (mMouseSensitivity * 100));
 }
 
@@ -1930,6 +1932,7 @@ void SexyAppBase::ReadFromRegistry()
 	RegistryReadBoolean("ZeroNineBankFormat", &mZeroNineBankFormat);
 	RegistryReadBoolean("AutoCollectSuns", &mAutoCollectSuns);
 	RegistryReadBoolean("AutoCollectCoins", &mAutoCollectCoins);
+	RegistryReadBoolean("ZombieHealthbars", &mZombieHealthbars);
 
 	if (RegistryReadInteger("InProgress", &anInt))
 		mLastShutdownWasGraceful = anInt == 0;

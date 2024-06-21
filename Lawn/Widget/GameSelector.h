@@ -88,6 +88,7 @@ public:
     int                         mDestinationY;
     int                         mCurrentX;
     int                         mDestinationX;
+    bool                        mEnableButtonsTransition;
 
 public:
     GameSelector(LawnApp* theApp);

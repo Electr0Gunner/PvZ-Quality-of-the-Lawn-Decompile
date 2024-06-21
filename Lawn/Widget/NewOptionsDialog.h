@@ -52,6 +52,7 @@ public:
 	Sexy::Checkbox*			m09FormatBox;
 	Sexy::Checkbox*			mAutoCollectSunsBox;
 	Sexy::Checkbox*			mAutoCollectCoinsBox;
+	Sexy::Checkbox*			mZombieHealthbarsBox;
 	LawnStoneButton*		mAlmanacButton;						//+0x16C
 	LawnStoneButton*		mBackToMainButton;					//+0x170
 	LawnStoneButton*		mRestartButton;						//+0x174

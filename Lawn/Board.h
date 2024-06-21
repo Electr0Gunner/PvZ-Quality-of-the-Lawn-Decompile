@@ -485,6 +485,7 @@ public:
 	void							DoTypingCheck(KeyCode theKey);
 	int								CountZombieByType(ZombieType theZombieType);
 	static /*inline*/ bool			IsZombieTypeSpawnedOnly(ZombieType theZombieType);
+	void							DrawHealthbar(Graphics* g, Rect rect, Color maxColor, int maxNumber, Color baseColor, int baseNumber, int barWidth, int barHeight, int barOffsetY, Color textColor, Font* textFont, int textOffsetY, Color textOutlineColor, int textOutlineOffset, bool drawBarOutline);
 };
 extern bool gShownMoreSunTutorial;
 

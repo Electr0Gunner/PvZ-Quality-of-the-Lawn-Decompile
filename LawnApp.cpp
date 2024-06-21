@@ -139,13 +139,13 @@ LawnApp::LawnApp()
 	}
 	std::string aTitleName = "Plants vs. Zombies";
 	aTitleName += " QoTL " + mVersion;
-	aTitleName += " DEBUG ";
+	aTitleName += " DEBUG";
 	if (mGitCommit == "")
 	{
 		mGitCommit = "None";
 	}
 	else
-		aTitleName += "(" + mGitCommit + ")";
+		aTitleName += " (" + mGitCommit + ")";
 	//aTitleName += mProductVersion; tbh i dont get how this works. sooooooooo, commenting it. just do "aTitleName += "some random version string";   "
 #endif
 
@@ -155,7 +155,7 @@ LawnApp::LawnApp()
 	mLastLevelStats = new LevelStats();
 	mFirstTimeGameSelector = true;
 	mGameMode = GameMode::GAMEMODE_ADVENTURE;
-	mEasyPlantingCheat = false;
+	mEasyPlantingCheat = true;
 	mAutoEnable3D = true;
 	Tod_SWTri_AddAllDrawTriFuncs();
 	mLoadingZombiesThreadCompleted = true;
@@ -1255,6 +1255,7 @@ bool LawnApp::KillNewOptionsDialog()
 		mSpeedModifier = stoi(aNewOptionsDialog->mSpeedEditWidget->mString.c_str());
 		mAutoCollectSuns = aNewOptionsDialog->mAutoCollectSunsBox->IsChecked();
 		mAutoCollectCoins = aNewOptionsDialog->mAutoCollectCoinsBox->IsChecked();
+		mZombieHealthbars = aNewOptionsDialog->mZombieHealthbarsBox->IsChecked();
 		ToggleDebugMode();
 	}
 	else

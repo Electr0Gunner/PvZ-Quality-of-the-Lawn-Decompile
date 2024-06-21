@@ -57,6 +57,7 @@ GameSelector::GameSelector(LawnApp* theApp)
 	mDestinationY = mCurrentY;
 	mCurrentX = mX;
 	mDestinationX = mCurrentX;
+	mEnableButtonsTransition = false;
 
 	mAdventureButton = MakeNewButton(
 		GameSelector::GameSelector_Adventure,
@@ -844,6 +845,24 @@ void GameSelector::Update()
 	{
 		mCurrentY = mY;
 		mCurrentX = mX;
+		if (mEnableButtonsTransition)
+		{
+			mAdventureButton->SetDisabled(false);
+			mMinigameButton->SetDisabled(false);
+			mPuzzleButton->SetDisabled(false);
+			mOptionsButton->SetDisabled(false);
+			mQuitButton->SetDisabled(false);
+			mHelpButton->SetDisabled(false);
+			mChangeUserButton->SetDisabled(false);
+			mCreditsButton->SetDisabled(false);
+			mStoreButton->SetDisabled(false);
+			mAlmanacButton->SetDisabled(false);
+			mSurvivalButton->SetDisabled(false);
+			mZenGardenButton->SetDisabled(false);
+			mAchievementButton->SetDisabled(false);
+			mQuickPlayButton->SetDisabled(false);
+			mEnableButtonsTransition = false;
+		}
 	}
 
 	TodParticleSystem* aParticle = mApp->ParticleTryToGet(mTrophyParticleID);
