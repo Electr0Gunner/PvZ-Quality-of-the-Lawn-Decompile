@@ -6416,15 +6416,14 @@ void Board::DrawGameObjects(Graphics* g)
 					aRenderItem.mZombie = aZombie;
 					aRenderItemCount++;
 				}
-
-				if (mApp->mZombieHealthbars)
-				{
-					RenderItem& aRenderItem = aRenderList[aRenderItemCount];
-					aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR_ZOMBIE;
-					aRenderItem.mZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, aZombie->mRow, 1);
-					aRenderItem.mZombie = aZombie;
-					aRenderItemCount++;
-				}
+			}
+			if (mApp->mZombieHealthbars)
+			{
+				RenderItem& aRenderItem = aRenderList[aRenderItemCount];
+				aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR_ZOMBIE;
+				aRenderItem.mZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, aZombie->mRow, 1);
+				aRenderItem.mZombie = aZombie;
+				aRenderItemCount++;
 			}
 		}
 	}
