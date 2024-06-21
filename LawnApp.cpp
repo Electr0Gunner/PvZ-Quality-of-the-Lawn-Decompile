@@ -129,7 +129,7 @@ LawnApp::LawnApp()
 	mDebugKeysEnabled = false;
 	isFastMode = false;
 	mProdName = "PlantsVsZombies";
-	mVersion = "v1.4.1";
+	mVersion = "v1.4.2";
 	mReconVersion = "PvZ QoTL " + mVersion;
 #ifdef _DEBUG
 	mGitCommit = exec_getStr("git rev-parse --short HEAD");
@@ -146,7 +146,6 @@ LawnApp::LawnApp()
 	}
 	else
 		aTitleName += " (" + mGitCommit + ")";
-	//aTitleName += mProductVersion; tbh i dont get how this works. sooooooooo, commenting it. just do "aTitleName += "some random version string";   "
 #endif
 
 	mTitle = StringToSexyStringFast(aTitleName);
