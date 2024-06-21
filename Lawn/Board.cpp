@@ -6788,6 +6788,8 @@ void Board::DrawGameObjects(Graphics* g)
 		case RenderObjectType::RENDER_ITEM_HEALTHBAR_PLANT:
 		{
 			Plant* aPlant = aRenderItem.mPlant;
+			if (aPlant->mSeedType == SeedType::SEED_INSTANT_COFFEE)
+				break;
 			Rect rect = aPlant->GetPlantRect();
 			int barWidth = 55;
 			int barHeight = 10;
