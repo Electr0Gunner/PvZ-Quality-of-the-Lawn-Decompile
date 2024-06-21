@@ -186,13 +186,14 @@ SeedChooserScreen::SeedChooserScreen()
 	}
 	if ((mApp->mRandomCrazySeeds && mApp->mPlayedQuickplay) || (mApp->IsAdventureMode() && !mApp->IsFirstTimeAdventureMode() && !mApp->mPlayedQuickplay))
 		CrazyDavePickSeeds();
-	UpdateImitaterButton();
 
 	mSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mSlider->mHorizontal = false;
 	mSlider->Resize(770, 110, 20, 470);
 	mSlider->mVisible = true;
+
+	mPreviousType = FindSeedInBank(mSeedsInBank - 1);
 }
 
 int SeedChooserScreen::PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArray* theArray, int theCount, MTRand& theLevelRNG)
@@ -409,7 +410,7 @@ void SeedChooserScreen::Draw(Graphics* g)
 		{
 			bool aGrayed = false;
 			if (((SeedNotRecommendedToPick(aSeedType) || SeedNotAllowedToPick(aSeedType)) && aSeedState == SEED_IN_CHOOSER) ||
-				SeedNotAllowedDuringTrial(aSeedType))
+				SeedNotAllowedDuringTrial(aSeedType) || IsImitaterUnselectable(aSeedType))
 				aGrayed = true;
 
 			int aPosX, aPosY;
@@ -900,6 +901,7 @@ void SeedChooserScreen::EnableStartButton(bool theEnabled)
 //0x485E90
 void SeedChooserScreen::ClickedSeedInBank(ChosenSeed& theChosenSeed)
 {
+	mPreviousType = FindSeedInBank(mSeedsInBank - (theChosenSeed.mSeedIndexInBank == mSeedsInBank - 1 ? 2 : 1));
 	for (int anIndex = theChosenSeed.mSeedIndexInBank + 1; anIndex < mBoard->mSeedBank->mNumPackets; anIndex++)
 	{
 		SeedType aSeedType = FindSeedInBank(anIndex);
@@ -947,9 +949,9 @@ void SeedChooserScreen::ClickedSeedInChooser(ChosenSeed& theChosenSeed)
 		return;
 
 	if (theChosenSeed.mSeedType == SEED_IMITATER)
-	{
 		theChosenSeed.mImitaterType = FindSeedInBank(mSeedsInBank - 1);
-	}
+	else
+		mPreviousType = theChosenSeed.mSeedType;
 
 	theChosenSeed.mTimeStartMotion = mSeedChooserAge;
 	theChosenSeed.mTimeEndMotion = mSeedChooserAge + 25;
@@ -1091,19 +1093,9 @@ void SeedChooserScreen::MouseUp(int x, int y, int theClickCount)
 	}
 }
 
-//0x4866E0
-void SeedChooserScreen::UpdateImitaterButton()
+bool SeedChooserScreen::IsImitaterUnselectable(SeedType seedType)
 {
-	/*if (!mApp->SeedTypeAvailable(SEED_IMITATER))
-	{
-		mImitaterButton->mBtnNoDraw = true;
-		mImitaterButton->mDisabled = true;
-	}
-	else
-	{
-		mImitaterButton->mBtnNoDraw = false;
-		mImitaterButton->mDisabled = mChosenSeeds[SEED_IMITATER].mSeedState != SEED_PACKET_HIDDEN;
-	}*/
+	return seedType == SEED_IMITATER && (mSeedsInBank == 0 || Plant::IsUpgrade(mPreviousType) || SeedNotAllowedToPick(mPreviousType));
 }
 
 //0x486770
@@ -1282,7 +1274,6 @@ void SeedChooserScreen::UpdateAfterPurchase()
 		aChosenSeed.mEndY = aChosenSeed.mY;
 	}
 	EnableStartButton(mSeedsInBank == mBoard->mSeedBank->mNumPackets);
-	UpdateImitaterButton();
 }
 
 

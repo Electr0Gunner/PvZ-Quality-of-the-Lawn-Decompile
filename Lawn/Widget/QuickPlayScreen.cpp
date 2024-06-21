@@ -31,7 +31,6 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
     mBackground = BackgroundType::BACKGROUND_1_DAY;
     mZombieType = ZombieType::ZOMBIE_NORMAL;
     mSeedType = SeedType::SEED_PEASHOOTER;
-    mLevel = 1;
 
     mBackButton = MakeNewButton(0, this, "", nullptr, Sexy::IMAGE_BLANK,
         Sexy::IMAGE_QUICKPLAY_BACK_HIGHLIGHT, Sexy::IMAGE_QUICKPLAY_BACK_HIGHLIGHT);
@@ -72,10 +71,9 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
     mRightButton->Resize(mPlayButton->mX + mPlayButton->mWidth + 20, mPlayButton->mY, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
     mCrazySeedsCheck->Resize(130, mRightButton->mY + 2, 50, 50);
 
-    mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
     ChooseBackground();
     ResetZombie();
-    ResetPlant(false);
+    ResetPlant();
 }
 QuickPlayScreen::~QuickPlayScreen()
 {
@@ -111,9 +109,9 @@ void QuickPlayScreen::Draw(Graphics* g)
     }
     if (mDisplayZombie)
     {
-        if (mLevel != 35) {
+        if (mApp->mQuickLevel != 35) {
             Graphics aZombieGraphics = Graphics(*g);
-            if (mLevel == 25) {
+            if (mApp->mQuickLevel == 25) {
                 mDisplayZombie->mScaleZombie = 0.5f;
             }
             mDisplayZombie->mPosX = 340;
@@ -126,12 +124,14 @@ void QuickPlayScreen::Draw(Graphics* g)
                 mDisplayZombie->mPosX = -100;
                 mDisplayZombie->mPosY = -20;
             }
-            mDisplayZombie->BeginDraw(&aZombieGraphics);
-            if (mZombieType != ZombieType::ZOMBIE_BUNGEE && mZombieType != ZombieType::ZOMBIE_BOSS &&
-                mZombieType != ZombieType::ZOMBIE_ZAMBONI && mZombieType != ZombieType::ZOMBIE_CATAPULT)
-                mDisplayZombie->DrawShadow(&aZombieGraphics);
-            mDisplayZombie->Draw(&aZombieGraphics);
-            mDisplayZombie->EndDraw(&aZombieGraphics);
+            if (mDisplayZombie->BeginDraw(&aZombieGraphics))
+            {
+                if (mZombieType != ZombieType::ZOMBIE_BUNGEE && mZombieType != ZombieType::ZOMBIE_BOSS &&
+                    mZombieType != ZombieType::ZOMBIE_ZAMBONI && mZombieType != ZombieType::ZOMBIE_CATAPULT)
+                    mDisplayZombie->DrawShadow(&aZombieGraphics);
+                mDisplayZombie->Draw(&aZombieGraphics);
+                mDisplayZombie->EndDraw(&aZombieGraphics);
+            }
         }
     }
     if (mFlowerPot)
@@ -141,14 +141,16 @@ void QuickPlayScreen::Draw(Graphics* g)
             Graphics aPotGraphics = Graphics(*g);
             mFlowerPot->mX = 280;
             mFlowerPot->mY = 280;
-            mFlowerPot->BeginDraw(&aPotGraphics);
-            mFlowerPot->Draw(&aPotGraphics);
-            mFlowerPot->EndDraw(&aPotGraphics);
+            if (mFlowerPot->BeginDraw(&aPotGraphics))
+            {
+                mFlowerPot->Draw(&aPotGraphics);
+                mFlowerPot->EndDraw(&aPotGraphics);
+            }
         }
     }
     if (mDisplayPlant)
     {
-        if (mLevel != 35 && mLevel != 15) {
+        if (mApp->mQuickLevel != 35 && mApp->mQuickLevel != 15) {
             Graphics aPlantGraphics = Graphics(*g);
 
             mDisplayPlant->mX = 280;
@@ -161,20 +163,22 @@ void QuickPlayScreen::Draw(Graphics* g)
             {
                 mDisplayPlant->mY -= 10;
             }
-            mDisplayPlant->BeginDraw(&aPlantGraphics);
-            mDisplayPlant->Draw(&aPlantGraphics);
-            mDisplayPlant->EndDraw(&aPlantGraphics);
+            if (mDisplayPlant->BeginDraw(&aPlantGraphics))
+            {
+                mDisplayPlant->Draw(&aPlantGraphics);
+                mDisplayPlant->EndDraw(&aPlantGraphics);
+            }
         }
     }
-    if (mLevel == 5)
+    if (mApp->mQuickLevel == 5)
     {
         g->DrawImage(Sexy::IMAGE_WALLNUT_BOWLINGSTRIPE, 268, 77);
     }
-    if (mLevel == 15)
+    if (mApp->mQuickLevel == 15)
     {
         mApp->ReanimationGet(mHammerID)->Draw(g);
     }
-    if (mLevel == 35)
+    if (mApp->mQuickLevel == 35)
     {
         g->DrawImageCel(IMAGE_SCARY_POT, 370, 270, 0, 1);
         g->DrawImageCel(IMAGE_SCARY_POT, 290, 270, 1, 1);
@@ -182,7 +186,7 @@ void QuickPlayScreen::Draw(Graphics* g)
     g->ClearClipRect();
     int posX = 100;
     g->DrawImage(Sexy::IMAGE_QUICKPLAY_WIDGET, posX, 0);
-    TodDrawString(g, mApp->GetStageString(mLevel).erase(0, 1), posX + (Sexy::IMAGE_QUICKPLAY_WIDGET->mWidth / 2), 30, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color::White, DS_ALIGN_CENTER);
+    TodDrawString(g, mApp->GetStageString(mApp->mQuickLevel).erase(0, 1), posX + (Sexy::IMAGE_QUICKPLAY_WIDGET->mWidth / 2), 30, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color::White, DS_ALIGN_CENTER);
     TodDrawString(g, "Crazy Dave Seeds", mCrazySeedsCheck->mX + 45, mCrazySeedsCheck->mY + 23, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color::White, DS_ALIGN_LEFT);
 }
 
@@ -216,32 +220,32 @@ void QuickPlayScreen::DrawPool(Graphics* g, bool isNight)
 void QuickPlayScreen::ChooseBackground()
 {
     SexyString groupName;
-    if (mLevel <= 1 * LEVELS_PER_AREA)
+    if (mApp->mQuickLevel <= 1 * LEVELS_PER_AREA)
     {
         groupName = "DelayLoad_Background1";
         mBackground = BackgroundType::BACKGROUND_1_DAY;
     }
-    else if (mLevel <= 2 * LEVELS_PER_AREA)
+    else if (mApp->mQuickLevel <= 2 * LEVELS_PER_AREA)
     {
         groupName = "DelayLoad_Background2";
         mBackground = BackgroundType::BACKGROUND_2_NIGHT;
     }
-    else if (mLevel <= 3 * LEVELS_PER_AREA)
+    else if (mApp->mQuickLevel <= 3 * LEVELS_PER_AREA)
     {
         groupName = "DelayLoad_Background3";
         mBackground = BackgroundType::BACKGROUND_3_POOL;
     }
-    else if (mLevel <= 4 * LEVELS_PER_AREA)
+    else if (mApp->mQuickLevel <= 4 * LEVELS_PER_AREA)
     {
         groupName = "DelayLoad_Background4";
         mBackground = BackgroundType::BACKGROUND_4_FOG;
     }
-    else if (mLevel < FINAL_LEVEL)
+    else if (mApp->mQuickLevel < FINAL_LEVEL)
     {
         groupName = "DelayLoad_Background5";
         mBackground = BackgroundType::BACKGROUND_5_ROOF;
     }
-    else if (mLevel == FINAL_LEVEL)
+    else if (mApp->mQuickLevel == FINAL_LEVEL)
     {
         groupName = "DelayLoad_Background6";
         mBackground = BackgroundType::BACKGROUND_6_BOSS;
@@ -252,7 +256,7 @@ void QuickPlayScreen::ChooseBackground()
         mBackground = BackgroundType::BACKGROUND_1_DAY;
     }
 
-    if (mLevel == 35)
+    if (mApp->mQuickLevel == 35)
     {
         groupName = "DelayLoad_Background2";
         mBackground = BackgroundType::BACKGROUND_2_NIGHT;
@@ -263,7 +267,7 @@ void QuickPlayScreen::ChooseBackground()
 
 void QuickPlayScreen::ChooseZombieType()
 {
-    if (mLevel == 45)
+    if (mApp->mQuickLevel == 45)
     {
         mZombieType = ZOMBIE_BUNGEE;
         return;
@@ -274,7 +278,7 @@ void QuickPlayScreen::ChooseZombieType()
         ZombieDefinition aZombieDefinition = GetZombieDefinition(aZombieType);
         if (aZombieType != ZOMBIE_INVALID)
         {
-            if (mLevel == aZombieDefinition.mStartingLevel)
+            if (mApp->mQuickLevel == aZombieDefinition.mStartingLevel)
             {
                 mZombieType = aZombieDefinition.mZombieType;
                 break;
@@ -328,7 +332,7 @@ void QuickPlayScreen::Update()
         aHammerReanim->Update();
     }
     mApp->mPoolEffect->PoolEffectUpdate();
-    TOD_ASSERT(mLevel < NUM_LEVELS + 1);
+    TOD_ASSERT(mApp->mQuickLevel < NUM_LEVELS + 1);
     if (mDisplayZombie) mDisplayZombie->UpdateReanim();
     if (mDisplayPlant) mDisplayPlant->UpdateReanim();
     if (mFlowerPot) mFlowerPot->UpdateReanim();
@@ -363,16 +367,16 @@ void QuickPlayScreen::ResetZombie()
     mDisplayZombie->ZombieInitialize(0, mZombieType, false, nullptr, Zombie::ZOMBIE_WAVE_UI);
 }
 
-void QuickPlayScreen::ResetPlant(bool decrease)
+void QuickPlayScreen::ResetPlant()
 {
-    int mSeedLevel = mLevel - 1;
-    if (mLevel % 10 == 0)
+    int mSeedLevel = mApp->mQuickLevel - 1;
+    if (mApp->mQuickLevel % 10 == 0)
         mSeedLevel -= 1;
-    if (mApp->GetAwardSeedForLevel(mLevel - 1) == SEED_FLOWERPOT)
+    if (mApp->GetAwardSeedForLevel(mApp->mQuickLevel - 1) == SEED_FLOWERPOT)
         return;
     SeedType aSpecialSeed;
-    bool aSpecialLevel = mLevel == 5 || mLevel == 25 || mLevel == 45;
-    switch (mLevel)
+    bool aSpecialLevel = mApp->mQuickLevel == 5 || mApp->mQuickLevel == 25 || mApp->mQuickLevel == 45;
+    switch (mApp->mQuickLevel)
     {
     case 5:
         aSpecialSeed = SEED_EXPLODE_O_NUT;
@@ -395,7 +399,6 @@ void QuickPlayScreen::ResetPlant(bool decrease)
 
 void QuickPlayScreen::StartLevel()
 {
-    mApp->mQuickLevel = mLevel;
     mApp->mPlayedQuickplay = true;
     mApp->mRandomCrazySeeds = mCrazySeedsCheck->mChecked;
     mApp->KillGameSelector();
@@ -418,18 +421,16 @@ void QuickPlayScreen::ExitScreen()
 
 void QuickPlayScreen::PreviousLevel()
 {
-    mLevel--;
-    mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
+    mApp->mQuickLevel = ClampInt(mApp->mQuickLevel - 1, 1, NUM_LEVELS);
     ChooseBackground();
     ResetZombie();
-    ResetPlant(true);
+    ResetPlant();
 }
 
 void QuickPlayScreen::NextLevel()
 {
-    mLevel++;
-    mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
+    mApp->mQuickLevel = ClampInt(mApp->mQuickLevel + 1, 1, NUM_LEVELS);
     ChooseBackground();
     ResetZombie();
-    ResetPlant(false);
+    ResetPlant();
 }

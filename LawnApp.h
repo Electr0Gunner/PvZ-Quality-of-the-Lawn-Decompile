@@ -130,12 +130,11 @@ public:
 	TrialType						mTrialType;										//+0x8C0
 	bool							mDebugTrialLocked;								//+0x8C4
 	bool							mMuteSoundsForCutscene;							//+0x8C5
-	Achievements*						mAchievement;
+	Achievements*					mAchievement;
 	bool							isFastMode;
 	SexyString						mVersion;
 	SexyString						mReconVersion;
 	SexyString						mGitCommit;
-	int								mQuickLevel;
 	bool							mPlayedQuickplay;
 	bool							mRandomCrazySeeds;
 	SexyString                      mDetails;

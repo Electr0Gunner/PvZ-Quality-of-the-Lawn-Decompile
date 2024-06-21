@@ -45,7 +45,7 @@ public:
     void                        ChooseBackground();
     void                        ChooseZombieType();
     void                        ResetZombie();
-    void                        ResetPlant(bool decrease);
+    void                        ResetPlant();
     void                        StartLevel();
     void                        ExitScreen();
     void                        PreviousLevel();

@@ -129,16 +129,16 @@ LawnApp::LawnApp()
 	mDebugKeysEnabled = false;
 	isFastMode = false;
 	mProdName = "PlantsVsZombies";
-	mVersion = "v1.4.2";
+	mVersion = "v1.4.3";
 	mReconVersion = "PvZ: QoTL " + mVersion;
+	std::string aTitleName = "Plants vs. Zombies: QoTL";
+	aTitleName += " " + mVersion;
 #ifdef _DEBUG
 	mGitCommit = exec_getStr("git rev-parse --short HEAD");
 	if (mGitCommit != "") {
 		if (mGitCommit.back() == '\n')
 			mGitCommit.pop_back();
 	}
-	std::string aTitleName = "Plants vs. Zombies:";
-	aTitleName += " QoTL " + mVersion;
 	aTitleName += " DEBUG";
 	if (mGitCommit == "")
 	{
@@ -173,7 +173,6 @@ LawnApp::LawnApp()
 	mCrazyDaveMessageIndex = -1;
 	mBigArrowCursor = LoadCursor(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDC_CURSOR1));
 	mDRM = nullptr;
-	mQuickLevel = 1;
 	mPlayedQuickplay = false;
 	mRandomCrazySeeds = false;
 	StartDiscord();

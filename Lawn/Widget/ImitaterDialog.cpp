@@ -163,7 +163,7 @@ void ImitaterDialog::MouseDown(int x, int y, int theClickCount)
 			aImitater.mX = aSeedChooser->mImitaterButton->mX;
 			aImitater.mY = aSeedChooser->mImitaterButton->mY;
 			aSeedChooser->ClickedSeedInChooser(aImitater);
-			aSeedChooser->UpdateImitaterButton();
+			//aSeedChooser->UpdateImitaterButton();
 			mApp->KillDialog(mId);
 		}
 	}

@@ -85,6 +85,7 @@ public:
     const float             mBaseScrollSpeed = 1.0f;
     const float             mScrollAccel = 0.1f;
     float					mMaxScrollPosition;
+    SeedType                mPreviousType;
 
 
 public:
@@ -120,7 +121,7 @@ public:
     /*inline*/ void         RemoveToolTip();
     /*inline*/ void         CancelLawnView();
     virtual void            MouseUp(int x, int y, int theClickCount);
-    void                    UpdateImitaterButton();
+    bool                    IsImitaterUnselectable(SeedType seedType);
     virtual void            MouseDown(int x, int y, int theClickCount);
     /*inline*/ bool         PickedPlantType(SeedType theSeedType);
     void                    CloseSeedChooser();
