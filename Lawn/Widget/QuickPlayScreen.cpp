@@ -27,13 +27,6 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
     mApp = theApp;
     TodLoadResources("DelayLoad_QuickPlay");
     TodLoadResources("DelayLoad_AwardScreen");
-    TodLoadResources("DelayLoad_Background1");
-    TodLoadResources("DelayLoad_BackgroundUnsodded");
-    TodLoadResources("DelayLoad_Background2");
-    TodLoadResources("DelayLoad_Background3");
-    TodLoadResources("DelayLoad_Background4");
-    TodLoadResources("DelayLoad_Background5");
-    TodLoadResources("DelayLoad_Background6");
 
     mBackground = BackgroundType::BACKGROUND_1_DAY;
     mZombieType = ZombieType::ZOMBIE_NORMAL;
@@ -78,6 +71,11 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
     mPlayButton->Resize(mLeftButton->mX + mLeftButton->mWidth + 20, mLeftButton->mY, 163, 46);
     mRightButton->Resize(mPlayButton->mX + mPlayButton->mWidth + 20, mPlayButton->mY, IMAGE_QUICKPLAY_RIGHT_BUTTON->mWidth, IMAGE_QUICKPLAY_RIGHT_BUTTON->mHeight);
     mCrazySeedsCheck->Resize(130, mRightButton->mY + 2, 50, 50);
+
+    mLevel = ClampInt(mLevel, 1, NUM_LEVELS);
+    ChooseBackground();
+    ResetZombie();
+    ResetPlant(false);
 }
 QuickPlayScreen::~QuickPlayScreen()
 {
@@ -217,39 +215,50 @@ void QuickPlayScreen::DrawPool(Graphics* g, bool isNight)
 
 void QuickPlayScreen::ChooseBackground()
 {
+    SexyString groupName;
     if (mLevel <= 1 * LEVELS_PER_AREA)
     {
+        groupName = "DelayLoad_Background1";
         mBackground = BackgroundType::BACKGROUND_1_DAY;
     }
     else if (mLevel <= 2 * LEVELS_PER_AREA)
     {
+        groupName = "DelayLoad_Background2";
         mBackground = BackgroundType::BACKGROUND_2_NIGHT;
     }
     else if (mLevel <= 3 * LEVELS_PER_AREA)
     {
+        groupName = "DelayLoad_Background3";
         mBackground = BackgroundType::BACKGROUND_3_POOL;
     }
     else if (mLevel <= 4 * LEVELS_PER_AREA)
     {
+        groupName = "DelayLoad_Background4";
         mBackground = BackgroundType::BACKGROUND_4_FOG;
     }
     else if (mLevel < FINAL_LEVEL)
     {
+        groupName = "DelayLoad_Background5";
         mBackground = BackgroundType::BACKGROUND_5_ROOF;
     }
     else if (mLevel == FINAL_LEVEL)
     {
+        groupName = "DelayLoad_Background6";
         mBackground = BackgroundType::BACKGROUND_6_BOSS;
     }
     else
     {
+        groupName = "DelayLoad_Background1";
         mBackground = BackgroundType::BACKGROUND_1_DAY;
     }
 
     if (mLevel == 35)
     {
+        groupName = "DelayLoad_Background2";
         mBackground = BackgroundType::BACKGROUND_2_NIGHT;
     }
+    if (!mApp->mResourceManager->IsGroupLoaded(groupName))
+        TodLoadResources(groupName);
 }
 
 void QuickPlayScreen::ChooseZombieType()
@@ -320,10 +329,9 @@ void QuickPlayScreen::Update()
     }
     mApp->mPoolEffect->PoolEffectUpdate();
     TOD_ASSERT(mLevel < NUM_LEVELS + 1);
-    if (mDisplayZombie) mDisplayZombie->Update();
-    if (mDisplayPlant) mDisplayPlant->Update();
-    if (mFlowerPot) mFlowerPot->Update();
-    if (mCrazySeedsCheck) mCrazySeedsCheck->Update();
+    if (mDisplayZombie) mDisplayZombie->UpdateReanim();
+    if (mDisplayPlant) mDisplayPlant->UpdateReanim();
+    if (mFlowerPot) mFlowerPot->UpdateReanim();
 }
 
 //0x42F740
@@ -349,7 +357,7 @@ void QuickPlayScreen::ButtonDepress(int theId)
 void QuickPlayScreen::ResetZombie()
 {
     ChooseZombieType();
-    mDisplayZombie = nullptr;
+    delete mDisplayZombie;
     mDisplayZombie = new Zombie();
     mDisplayZombie->mBoard = nullptr;
     mDisplayZombie->ZombieInitialize(0, mZombieType, false, nullptr, Zombie::ZOMBIE_WAVE_UI);
@@ -379,7 +387,7 @@ void QuickPlayScreen::ResetPlant(bool decrease)
         aSpecialSeed = SEED_PEASHOOTER;
         break;
     }
-    mDisplayPlant = nullptr;
+    delete mDisplayPlant;
     mDisplayPlant = new Plant();
     mDisplayPlant->mIsOnBoard = false;
     mDisplayPlant->PlantInitialize(0, 0, !aSpecialLevel ? mApp->GetAwardSeedForLevel(mSeedLevel) : aSpecialSeed, SEED_NONE);
