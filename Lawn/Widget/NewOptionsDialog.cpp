@@ -80,6 +80,9 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mZombieHealthbarsBox = MakeNewCheckbox(-1, this, mApp->mZombieHealthbars);
     mZombieHealthbarsBox->SetVisible(false);
 
+    mPlantHealthbarsBox = MakeNewCheckbox(-1, this, mApp->mPlantHealthbars);
+    mPlantHealthbarsBox->SetVisible(false);
+
     mLeftPageButton = MakeNewButton(NewOptionsDialog::NewOptionsDialog_LeftPage, this, "", nullptr, Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON,
         Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT, Sexy::IMAGE_QUICKPLAY_LEFT_BUTTON_HIGHLIGHT);
     mLeftPageButton->SetVisible(false);
@@ -212,6 +215,7 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mAutoCollectSunsBox);
     AddWidget(mAutoCollectCoinsBox);
     AddWidget(mZombieHealthbarsBox);
+    AddWidget(mPlantHealthbarsBox);
 }
 
 //0x45C930
@@ -238,6 +242,7 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mAutoCollectSunsBox);
     RemoveWidget(mAutoCollectCoinsBox);
     RemoveWidget(mZombieHealthbarsBox);
+    RemoveWidget(mPlantHealthbarsBox);
 }
 
 //0x45C9D0
@@ -255,6 +260,7 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mAutoCollectSunsBox->Resize(mDiscordBox->mX, mDiscordBox->mY, 46, 45);
     mAutoCollectCoinsBox->Resize(mBankKeybindsBox->mX, mBankKeybindsBox->mY, 46, 45);
     mZombieHealthbarsBox->Resize(m09FormatBox->mX, m09FormatBox->mY, 46, 45);
+    mPlantHealthbarsBox->Resize(mZombieHealthbarsBox->mX, mZombieHealthbarsBox->mY + 40, 46, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
@@ -343,6 +349,7 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
             TodDrawString(g, _S("Auto-Collect Suns"), mAutoCollectSunsBox->mX - 6, mAutoCollectSunsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Auto-Collect Coins"), mAutoCollectCoinsBox->mX - 6, mAutoCollectCoinsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             TodDrawString(g, _S("Zombie Healthbars"), mZombieHealthbarsBox->mX - 6, mZombieHealthbarsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, _S("Plant Healthbars"), mPlantHealthbarsBox->mX - 6, mPlantHealthbarsBox->mY + 22, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
             g->DrawImage(Sexy::IMAGE_OPTIONS_CHECKBOX0, ADVANCED_SPEED_X, ADVANCED_SPEED_Y);
         }
         TodDrawString(g, StrFormat(_S("Page %d"), mAdvancedPage), mWidth / 2, ADVANCED_PAGE_Y, FONT_DWARVENTODCRAFT18GREENINSET, Color::White, DrawStringJustification::DS_ALIGN_CENTER);
@@ -464,6 +471,7 @@ void NewOptionsDialog::UpdateAdvancedPage()
     mAutoCollectSunsBox->SetVisible(false);
     mAutoCollectCoinsBox->SetVisible(false);
     mZombieHealthbarsBox->SetVisible(false);
+    mPlantHealthbarsBox->SetVisible(false);
 
     switch (mAdvancedPage)
     {
@@ -478,6 +486,7 @@ void NewOptionsDialog::UpdateAdvancedPage()
             mAutoCollectSunsBox->SetVisible(true);
             mAutoCollectCoinsBox->SetVisible(true);
             mZombieHealthbarsBox->SetVisible(true);
+            mPlantHealthbarsBox->SetVisible(true);
             break;
         break;
     }

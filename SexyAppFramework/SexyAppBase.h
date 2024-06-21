@@ -308,6 +308,7 @@ public:
 	bool					mAutoCollectSuns;
 	bool					mAutoCollectCoins;
 	bool					mZombieHealthbars;
+	bool					mPlantHealthbars;
 	int						mSpeedModifier;
 	bool					mSoftVSyncWait;
 	bool					mUserChanged3DSetting;

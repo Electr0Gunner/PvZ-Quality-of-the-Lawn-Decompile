@@ -6367,6 +6367,14 @@ void Board::DrawGameObjects(Graphics* g)
 					aRenderItem.mPlant = aPlant;
 					aRenderItemCount++;
 				}
+				if (mApp->mPlantHealthbars)
+				{
+					RenderItem& aRenderItem = aRenderList[aRenderItemCount];
+					aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR_PLANT;
+					aRenderItem.mZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, aPlant->mRow, 1);
+					aRenderItem.mPlant = aPlant;
+					aRenderItemCount++;
+				}
 			}
 		}
 	}
@@ -6410,7 +6418,7 @@ void Board::DrawGameObjects(Graphics* g)
 				if (mApp->mZombieHealthbars)
 				{
 					RenderItem& aRenderItem = aRenderList[aRenderItemCount];
-					aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR;
+					aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR_ZOMBIE;
 					aRenderItem.mZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, aZombie->mRow, 1);
 					aRenderItem.mZombie = aZombie;
 					aRenderItemCount++;
@@ -6746,7 +6754,7 @@ void Board::DrawGameObjects(Graphics* g)
 			DrawFadeOut(g);
 			break;
 
-		case RenderObjectType::RENDER_ITEM_HEALTHBAR:
+		case RenderObjectType::RENDER_ITEM_HEALTHBAR_ZOMBIE:
 		{
 			Zombie* aZombie = aRenderItem.mZombie;
 			Rect rect = aZombie->GetZombieRect();
@@ -6777,7 +6785,28 @@ void Board::DrawGameObjects(Graphics* g)
 			}
 			break;
 		}
-
+		case RenderObjectType::RENDER_ITEM_HEALTHBAR_PLANT:
+		{
+			Plant* aPlant = aRenderItem.mPlant;
+			Rect rect = aPlant->GetPlantRect();
+			int barWidth = 55;
+			int barHeight = 10;
+			int barOffsetY = aPlant->mSeedType == SeedType::SEED_PUMPKINSHELL ? 20: 0;
+			int baseBarOffsetY = 3;
+			int textOffsetY = 3;
+			int baseTextOffsetY = 12;
+			int textOutlineOffset = 1;
+			barOffsetY += aPlant->mSeedType == SeedType::SEED_PUMPKINSHELL ? baseBarOffsetY + barHeight : 0;
+			Color maxColor = Color(255, 0, 0);
+			Color textColor = Color::White;
+			bool drawBarOutline = true;
+			if (aPlant->mPlantHealth > 0)
+			{
+				barOffsetY += baseBarOffsetY;
+				DrawHealthbar(g, rect, maxColor, aPlant->mPlantMaxHealth, Color(0, 255, 0), aPlant->mPlantHealth, barWidth, barHeight, barOffsetY, textColor, FONT_BRIANNETOD12, textOffsetY, Color::Black, textOutlineOffset, drawBarOutline);
+			}
+			break;
+		}
 		default:
 			TOD_ASSERT();
 			break;

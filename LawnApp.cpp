@@ -1256,6 +1256,7 @@ bool LawnApp::KillNewOptionsDialog()
 		mAutoCollectSuns = aNewOptionsDialog->mAutoCollectSunsBox->IsChecked();
 		mAutoCollectCoins = aNewOptionsDialog->mAutoCollectCoinsBox->IsChecked();
 		mZombieHealthbars = aNewOptionsDialog->mZombieHealthbarsBox->IsChecked();
+		mPlantHealthbars = aNewOptionsDialog->mPlantHealthbarsBox->IsChecked();
 		ToggleDebugMode();
 	}
 	else
