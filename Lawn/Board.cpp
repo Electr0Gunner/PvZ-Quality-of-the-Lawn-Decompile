@@ -2753,7 +2753,7 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 		TodTrace("Too many zombies!!");
 		return nullptr;
 	}
-	if (theZombieType == ZombieType::ZOMBIE_YETI)
+	if (theZombieType == ZombieType::ZOMBIE_YETI && !mApp->mPlayedQuickplay)
 		mApp->GetAchievement(ZOMBOLOGIST);
 	bool aVariant = !Rand(5);
 	Zombie* aZombie = mZombies.DataArrayAlloc();
@@ -5950,7 +5950,7 @@ void Board::Update()
 	mApp->mDetails = Details;
 	mApp->UpdateDiscordState(mBoardFadeOutCounter >= 0 ? "Finishing" : "Playing");
 
-	if(mSunMoney >= 8000)
+	if(mSunMoney >= 8000 && !mApp->mPlayedQuickplay)
 		mApp->GetAchievement(SUNNY_DAYS);
 
 	mCutScene->Update();

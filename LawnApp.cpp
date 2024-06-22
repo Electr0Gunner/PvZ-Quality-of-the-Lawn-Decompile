@@ -1649,6 +1649,16 @@ void LawnApp::CheckForGameEnd()
 		return;
 	isFastMode = false;
 
+	if (mPlayedQuickplay)
+	{
+		ShowGameSelector();
+		mPlayedQuickplay = false;
+		KillBoard();
+		return;
+	}
+
+	bool aUnlockedNewChallenge = UpdatePlayerProfileForFinishingLevel();
+
 	bool forceAchievements = false;
 	for (int aAchivement = 0; aAchivement < TOTAL_ACHIEVEMENTS; aAchivement++)
 	{
@@ -1658,20 +1668,6 @@ void LawnApp::CheckForGameEnd()
 		}
 	}
 
-	if (mPlayedQuickplay)
-	{
-		if (!forceAchievements) {
-			ShowGameSelector();
-			mPlayedQuickplay = false;
-		}
-		else {
-			ShowAwardScreen(AwardType::AWARD_ACHIEVEMENTONLY, true);
-		}
-		KillBoard();
-		return;
-	}
-
-	bool aUnlockedNewChallenge = UpdatePlayerProfileForFinishingLevel();
 	if (IsAdventureMode())
 	{
 
