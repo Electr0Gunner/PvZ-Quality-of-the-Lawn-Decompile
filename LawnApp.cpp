@@ -467,6 +467,7 @@ void LawnApp::PreNewGame(GameMode theGameMode, bool theLookForSavedGame)
 void LawnApp::StartQuickPlay()
 {
 	mGameMode = GameMode::GAMEMODE_ADVENTURE;
+	mPlayedQuickplay = true;
 	NewGame(true);
 }
 
