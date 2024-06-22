@@ -3734,8 +3734,6 @@ void LawnApp::UpdateDiscordState(SexyString def)
 		State = "Game Over";
 	else if (mSeedChooserScreen != nullptr && mBoard != nullptr && mBoard->ChooseSeedsOnCurrentLevel())
 		State = "Choosing Plants";
-	else if (NewOptionsDialog* dialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS))
-		State = dialog->mAdvancedMode ? ("Advanced Options" + StrFormat(" (Page %d)", dialog->mAdvancedPage)) : "Options";
 	else if (AlmanacDialog* dialog = (AlmanacDialog*)GetDialog(Dialogs::DIALOG_ALMANAC))
 		switch (dialog->mOpenPage)
 		{
@@ -3754,6 +3752,8 @@ void LawnApp::UpdateDiscordState(SexyString def)
 		}
 	else if (GetDialog(Dialogs::DIALOG_STORE))
 		State = "Store";
+	else if (NewOptionsDialog* dialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS))
+		State = dialog->mAdvancedMode ? ("Advanced Options" + StrFormat(" (Page %d)", dialog->mAdvancedPage)) : "Options";
 	else if (GetDialog(Dialogs::DIALOG_USERDIALOG))
 		State = "Profiles";
 	else
