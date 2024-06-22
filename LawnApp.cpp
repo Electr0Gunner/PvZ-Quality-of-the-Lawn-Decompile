@@ -174,7 +174,6 @@ LawnApp::LawnApp()
 	mBigArrowCursor = LoadCursor(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDC_CURSOR1));
 	mDRM = nullptr;
 	mPlayedQuickplay = false;
-	mRandomCrazySeeds = false;
 	StartDiscord();
 }
 
@@ -1649,6 +1648,8 @@ void LawnApp::CheckForGameEnd()
 
 	if (mPlayedQuickplay)
 	{
+		KillBoard();
+		ShowGameSelector();
 		int result = Dialog::ID_NO;
 		if (mQuickLevel != FINAL_LEVEL)
 		{
@@ -1659,14 +1660,11 @@ void LawnApp::CheckForGameEnd()
 		if (result == Dialog::ID_YES)
 		{
 			mQuickLevel++;
+			KillGameSelector();
 			StartQuickPlay();
 		}
 		else if (result == Dialog::ID_NO)
-		{
-			ShowGameSelector();
 			mPlayedQuickplay = false;
-			KillBoard();
-		}
 		return;
 	}
 

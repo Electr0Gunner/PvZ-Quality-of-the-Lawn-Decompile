@@ -43,7 +43,7 @@ QuickPlayScreen::QuickPlayScreen(LawnApp* theApp)
 
     mPlayButton = MakeButton(3, this, "PLAY");
 
-    mCrazySeedsCheck = MakeNewCheckbox(4, this, theApp->mRandomCrazySeeds);
+    mCrazySeedsCheck = MakeNewCheckbox(4, this, theApp->mCrazySeeds);
     mCrazySeedsCheck->mVisible = true;
 
     mDisplayZombie = new Zombie();
@@ -399,7 +399,7 @@ void QuickPlayScreen::ResetPlant()
 
 void QuickPlayScreen::StartLevel()
 {
-    mApp->mRandomCrazySeeds = mCrazySeedsCheck->mChecked;
+    mApp->mCrazySeeds = mCrazySeedsCheck->mChecked;
     mApp->KillGameSelector();
     mApp->KillQuickPlayScreen();
     mApp->StartQuickPlay();

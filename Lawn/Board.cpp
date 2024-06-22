@@ -5944,9 +5944,7 @@ void Board::Update()
 	if (mApp->mGameMode != GameMode::GAMEMODE_ADVENTURE)
 		Details = TodStringTranslate(mApp->GetCurrentChallengeDef().mChallengeName);
 	else
-	{
 		Details = (mApp->mPlayedQuickplay ? "Quick Play" : "Adventure") + mApp->GetStageString(mLevel);
-	}
 	mApp->mDetails = Details;
 	mApp->UpdateDiscordState(mBoardFadeOutCounter >= 0 ? "Finishing" : "Playing");
 

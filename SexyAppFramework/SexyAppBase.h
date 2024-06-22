@@ -311,6 +311,7 @@ public:
 	bool					mPlantHealthbars;
 	int						mSpeedModifier;
 	int						mQuickLevel;
+	bool					mCrazySeeds;
 	bool					mSoftVSyncWait;
 	bool					mUserChanged3DSetting;
 	bool					mAutoEnable3D;

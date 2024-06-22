@@ -136,7 +136,6 @@ public:
 	SexyString						mReconVersion;
 	SexyString						mGitCommit;
 	bool							mPlayedQuickplay;
-	bool							mRandomCrazySeeds;
 	SexyString                      mDetails;
 	SexyString                      mState;
 
