@@ -1649,8 +1649,13 @@ void LawnApp::CheckForGameEnd()
 
 	if (mPlayedQuickplay)
 	{
-		//ShowGameSelector();
-		int result = mQuickLevel == FINAL_LEVEL ? Dialog::ID_NO : LawnMessageBox(DIALOG_MESSAGE, "Continue?", "Would you like to go to the next level in Quick Play?", "", "", Dialog::BUTTONS_YES_NO);
+		int result = Dialog::ID_NO;
+		if (mQuickLevel != FINAL_LEVEL)
+		{
+			LawnDialog* dialog = (LawnDialog*)DoDialog(DIALOG_MESSAGE, true, "Continue?", "Would you like to go to the next level in Quick Play?", "", Dialog::BUTTONS_YES_NO);
+			result = dialog->WaitForResult(true);
+		}
+
 		if (result == Dialog::ID_YES)
 		{
 			mQuickLevel++;
@@ -1658,6 +1663,7 @@ void LawnApp::CheckForGameEnd()
 		}
 		else if (result == Dialog::ID_NO)
 		{
+			ShowGameSelector();
 			mPlayedQuickplay = false;
 			KillBoard();
 		}
