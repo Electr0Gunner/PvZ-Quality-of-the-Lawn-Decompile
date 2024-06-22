@@ -403,7 +403,7 @@ void QuickPlayScreen::StartLevel()
     mApp->mRandomCrazySeeds = mCrazySeedsCheck->mChecked;
     mApp->KillGameSelector();
     mApp->KillQuickPlayScreen();
-    mApp->StartQuickPlay(GameMode::GAMEMODE_ADVENTURE, true);
+    mApp->StartQuickPlay();
 }
 
 void QuickPlayScreen::ExitScreen()

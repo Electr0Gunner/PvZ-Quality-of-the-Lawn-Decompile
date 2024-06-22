@@ -464,12 +464,9 @@ void LawnApp::PreNewGame(GameMode theGameMode, bool theLookForSavedGame)
 	NewGame();
 }
 
-void LawnApp::StartQuickPlay(GameMode theGameMode, bool theLookForSavedGame)
+void LawnApp::StartQuickPlay()
 {
-	mGameMode = theGameMode;
-	//if (theLookForSavedGame && TryLoadGame())
-		//return;
-
+	mGameMode = GameMode::GAMEMODE_ADVENTURE;
 	NewGame(true);
 }
 
@@ -1651,9 +1648,18 @@ void LawnApp::CheckForGameEnd()
 
 	if (mPlayedQuickplay)
 	{
-		ShowGameSelector();
-		mPlayedQuickplay = false;
-		KillBoard();
+		//ShowGameSelector();
+		int result = mQuickLevel == FINAL_LEVEL ? Dialog::ID_NO : LawnMessageBox(DIALOG_MESSAGE, "Continue?", "Would you like to go to the next level in Quick Play?", "", "", Dialog::BUTTONS_YES_NO);
+		if (result == Dialog::ID_YES)
+		{
+			mQuickLevel++;
+			StartQuickPlay();
+		}
+		else if (result == Dialog::ID_NO)
+		{
+			mPlayedQuickplay = false;
+			KillBoard();
+		}
 		return;
 	}
 
