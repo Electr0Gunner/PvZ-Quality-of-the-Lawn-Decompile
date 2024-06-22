@@ -2466,7 +2466,7 @@ void Plant::UpdateBowling()
             aZombie->TakeDamage(1800, 0U);
         }
 
-        if ((!mApp->IsFirstTimeAdventureMode() || mApp->mPlayerInfo->GetLevel() > 10) && mSeedType == SeedType::SEED_WALLNUT)
+        if ((!mApp->IsFirstTimeAdventureMode() || mApp->mPlayerInfo->GetLevel() > 10) && mSeedType == SeedType::SEED_WALLNUT && !mApp->mPlayedQuickplay)
         {
             mLaunchCounter++;
             if (mLaunchCounter == 2)
@@ -2491,8 +2491,7 @@ void Plant::UpdateBowling()
             {
                 mApp->PlayFoley(FoleyType::FOLEY_SPAWN_SUN);
                 mBoard->AddCoin(aPosX, aPosY, CoinType::COIN_GOLD, CoinMotion::COIN_MOTION_COIN);
-                if (!mApp->mPlayedQuickplay)
-                    mApp->GetAchievement(ROLL_SOME_HEADS);
+                mApp->GetAchievement(ROLL_SOME_HEADS);
             }
         }
 

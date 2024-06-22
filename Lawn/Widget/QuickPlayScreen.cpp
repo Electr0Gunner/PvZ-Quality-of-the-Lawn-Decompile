@@ -399,7 +399,6 @@ void QuickPlayScreen::ResetPlant()
 
 void QuickPlayScreen::StartLevel()
 {
-    mApp->mPlayedQuickplay = true;
     mApp->mRandomCrazySeeds = mCrazySeedsCheck->mChecked;
     mApp->KillGameSelector();
     mApp->KillQuickPlayScreen();
