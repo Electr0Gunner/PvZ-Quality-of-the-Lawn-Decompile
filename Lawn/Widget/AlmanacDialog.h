@@ -17,6 +17,8 @@ constexpr const int				ALMANAC_INDEXPLANT_POSITION_X	= 167;
 constexpr const int				ALMANAC_INDEXPLANT_POSITION_Y	= 255;
 constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_X	= 535.0f;
 constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_Y	= 215.0f;
+constexpr const int				ALMANAC_LEVEL_BUTTON_OFFSET_Y = 3;
+constexpr const int				ALMANAC_LEVEL_BUTTON_HEIGHT = 48;
 
 class Plant;
 class Zombie;
@@ -29,13 +31,14 @@ class AlmanacDialog : public LawnDialog, public Sexy::SliderListener
 private:
 	enum
 	{
-		ALMANAC_BUTTON_CLOSE = 0,
-		ALMANAC_BUTTON_PLANT = 1,
-		ALMANAC_BUTTON_ZOMBIE = 2,
-		ALMANAC_BUTTON_INDEX = 3,
-		AlmanacSlider = 4, 
-		ALMANAC_BUTTON_NEXT = 5,
-		ALMANAC_BUTTON_LAST = 6
+		ALMANAC_BUTTON_CLOSE,
+		ALMANAC_BUTTON_PLANT,
+		ALMANAC_BUTTON_ZOMBIE,
+		ALMANAC_BUTTON_LEVEL,
+		ALMANAC_BUTTON_INDEX,
+		ALMANAC_SLIDER,
+		ALMANAC_BUTTON_NEXT,
+		ALMANAC_BUTTON_LAST 
 	};
 
 public:
@@ -44,8 +47,12 @@ public:
 	GameButton*					mIndexButton;			//+0x174
 	GameButton*					mPlantButton;			//+0x178
 	GameButton*					mZombieButton;			//+0x17C
+	GameButton*					mLevelButton;
+	GameButton*					mLevelButtons[NUM_LEVELS];
+	int							mLevelButtonsY[NUM_LEVELS];
 	Sexy::Slider* mSlider;
 	AlmanacPage					mOpenPage;				//+0x180
+	AlmanacSubPage				mSubPage;
 	Reanimation*				mReanim[4];				//+0x184
 	SeedType					mSelectedSeed;			//+0x194
 	ZombieType					mSelectedZombie;		//+0x198
@@ -58,22 +65,28 @@ public:
 	const float					mBaseScrollSpeed = 1.0f;
 	const float					mScrollAccel = 0.1f;
 	float						mMaxScrollPosition;
+	bool						mHasLevelButtons;
+	int							mSelectedLevel;
+	int							mNumZombies;
 	
 public:
 	AlmanacDialog(LawnApp* theApp);
 	virtual ~AlmanacDialog();
 
-	void						ClearPlantsAndZombies();
+	void						ClearObjects();
 	virtual void				RemovedFromManager(WidgetManager* theWidgetManager);
 	virtual void				AddedToManager(WidgetManager* theWidgetManager);
 	void                        SliderVal(int theId, double theVal);
 	void						SetupPlant();
 	void						SetupZombie();
-	void						SetPage(AlmanacPage thePage);
+	void						SetupLevels();
+	void						SetupWaves();
+	void						SetPage(AlmanacPage thePage, AlmanacSubPage theSubPage = ALMANAC_NONE);
 	virtual void				Update();
 	void						DrawIndex(Graphics* g);
 	void						DrawPlants(Graphics* g);
 	void						DrawZombies(Graphics* g);
+	void						DrawSubPages(Graphics* g);
 	virtual void				Draw(Graphics* g);
 	void						GetSeedPosition(SeedType theSeedType, int& x, int& y, bool specialSpot = false);
 	SeedType					SeedHitTest(int x, int y);

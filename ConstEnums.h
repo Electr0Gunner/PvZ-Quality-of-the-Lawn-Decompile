@@ -99,7 +99,15 @@ enum AlmanacPage
 {
     ALMANAC_PAGE_INDEX,
     ALMANAC_PAGE_PLANTS,
-    ALMANAC_PAGE_ZOMBIES
+    ALMANAC_PAGE_ZOMBIES,
+    ALMANAC_PAGE_LEVELS
+};
+
+enum AlmanacSubPage
+{
+    ALMANAC_NONE,
+    ALMANAC_LEVEL_LIST,
+    ALMANAC_LEVEL_WAVES
 };
 enum AwardType
 {

@@ -3735,21 +3735,21 @@ void LawnApp::UpdateDiscordState(SexyString def)
 	else if (mSeedChooserScreen != nullptr && mBoard != nullptr && mBoard->ChooseSeedsOnCurrentLevel())
 		State = "Choosing Plants";
 	else if (AlmanacDialog* dialog = (AlmanacDialog*)GetDialog(Dialogs::DIALOG_ALMANAC))
-		switch (dialog->mOpenPage)
-		{
-		case AlmanacPage::ALMANAC_PAGE_ZOMBIES:
-			State = "Almanac (Zombies)";
-			break;
-		case AlmanacPage::ALMANAC_PAGE_PLANTS:
-			State = "Almanac (Plants)";
-			break;
-		case AlmanacPage::ALMANAC_PAGE_INDEX:
+	{
+		if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_INDEX)
 			State = "Almanac (Index)";
-			break;
-		default:
-			TOD_ASSERT();
-			break;
+		else if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_ZOMBIES)
+			State = "Almanac (Zombies)";
+		else if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_PLANTS)
+			State = "Almanac (Plants)";
+		else if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_LEVELS)
+		{
+			if (dialog->mSubPage == AlmanacSubPage::ALMANAC_LEVEL_LIST)
+				State = "Almanac (Levels)";
+			else if (dialog->mSubPage == AlmanacSubPage::ALMANAC_LEVEL_WAVES)
+				State = "Almanac (Waves in" + GetStageString(dialog->mSelectedLevel) + ")";
 		}
+	}
 	else if (GetDialog(Dialogs::DIALOG_STORE))
 		State = "Store";
 	else if (NewOptionsDialog* dialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS))

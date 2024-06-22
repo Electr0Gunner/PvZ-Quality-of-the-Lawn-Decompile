@@ -2448,7 +2448,7 @@ Projectile* Board::AddProjectile(int theX, int theY, int theRenderOrder, int the
 }
 
 //0x40D660
-bool Board::CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel)
+int Board::CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel)
 {
 	const ZombieDefinition& aZombieDef = GetZombieDefinition(theZombieType);
 	if (theZombieType == ZombieType::ZOMBIE_YETI)

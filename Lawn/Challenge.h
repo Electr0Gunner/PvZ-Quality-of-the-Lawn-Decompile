@@ -243,7 +243,7 @@ class ZombieAllowedLevels
 {
 public:
     ZombieType                      mZombieType;
-    int                             mAllowedOnLevel[50];
+    int                             mAllowedOnLevel[NUM_LEVELS];
 };
 extern int gZombieWaves[NUM_LEVELS]; //0x6A34E8
 extern ZombieAllowedLevels gZombieAllowedLevels[NUM_ZOMBIE_TYPES];  //0x6A35B0
