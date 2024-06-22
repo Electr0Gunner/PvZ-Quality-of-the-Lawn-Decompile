@@ -796,7 +796,7 @@ void GameSelector::Update()
 		if (mApp->mAchievementScreen)
 			State = "Achievements";
 		else if(mApp->mQuickPlayScreen)
-			State = "Quick Play";
+			State = "Quick Play (" + mApp->GetStageString(mApp->mQuickLevel).erase(0, 1) + ")";
 	}
 	else
 		State = "Game Selector";

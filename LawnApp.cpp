@@ -3732,7 +3732,7 @@ void LawnApp::UpdateDiscordState(SexyString def)
 	SexyString State;
 	if (mGameScene == GameScenes::SCENE_ZOMBIES_WON || GetDialog(Dialogs::DIALOG_GAME_OVER))
 		State = "Game Over";
-	else if (mSeedChooserScreen != nullptr)
+	else if (mSeedChooserScreen != nullptr && mBoard != nullptr && mBoard->ChooseSeedsOnCurrentLevel())
 		State = "Choosing Plants";
 	else if (NewOptionsDialog* dialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS))
 		State = dialog->mAdvancedMode ? ("Advanced Options" + StrFormat(" (Page %d)", dialog->mAdvancedPage)) : "Options";
