@@ -30,7 +30,7 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
     TodLoadResources("DelayLoad_AwardScreen");
     TodLoadResources("DelayLoad_Achievements");
 
-    int aLevel = mApp->mPlayerInfo->GetLevel();
+    int aLevel = mApp->mPlayerInfo->mLevel;
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
     {
         TodLoadResources("DelayLoad_Background6");
@@ -209,7 +209,7 @@ bool AwardScreen::IsPaperNote()
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE || mAwardType == AWARD_HELP_ZOMBIENOTE)
         return true;
 
-    int aLevel = mApp->mPlayerInfo->GetLevel();
+    int aLevel = mApp->mPlayerInfo->mLevel;
     return mApp->IsAdventureMode() && (aLevel == 10 || aLevel == 20 || aLevel == 30 || aLevel == 40 || aLevel == 50);
 }
 
@@ -225,7 +225,7 @@ void AwardScreen::DrawBottom(Graphics* g, const SexyString& theTitle, const Sexy
 //0x4066A0
 void AwardScreen::DrawAwardSeed(Graphics* g)
 {
-    SeedType aSeedType = mApp->GetAwardSeedForLevel(mApp->mPlayerInfo->GetLevel() - 1);
+    SeedType aSeedType = mApp->GetAwardSeedForLevel(mApp->mPlayerInfo->mLevel - 1);
     SexyString aAward = Plant::GetNameString(aSeedType, SEED_NONE);
     SexyString aMessage;
     if (mApp->IsTrialStageLocked() && aSeedType >= SEED_SQUASH && aSeedType != SEED_TANGLEKELP)
@@ -244,7 +244,7 @@ void AwardScreen::Draw(Graphics* g)
 {
     g->SetLinearBlend(true);
     
-    int aLevel = mApp->mPlayerInfo->GetLevel();
+    int aLevel = mApp->mPlayerInfo->mLevel;
     if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
     {
         g->SetColor(Color(125, 200, 255, 255));
@@ -481,7 +481,7 @@ void AwardScreen::ExitScreen()
     }
     else
     {
-        int aLevel = mApp->mPlayerInfo->GetLevel();
+        int aLevel = mApp->mPlayerInfo->mLevel;
         if (aLevel == 1)
         {
             mApp->KillAwardScreen();

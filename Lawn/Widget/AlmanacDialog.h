@@ -6,9 +6,6 @@
 #include "../../SexyAppFramework/SliderListener.h"
 #include "../../SexyAppFramework/Slider.h"
 
-#define NUM_ALMANAC_SEEDS NUM_SEED_TYPES - 4
-#define NUM_ALMANAC_ZOMBIES NUM_ZOMBIE_TYPES - 6
-
 constexpr const float			ALMANAC_PLANT_POSITION_X		= 578.0f;
 constexpr const float			ALMANAC_PLANT_POSITION_Y		= 140.0f;
 constexpr const float			ALMANAC_ZOMBIE_POSITION_X		= 559.0f;
@@ -49,8 +46,8 @@ public:
 	GameButton*					mZombieButton;			//+0x17C
 	GameButton*					mLevelButton;
 	GameButton*					mLevelButtons[NUM_LEVELS];
-	int							mLevelButtonsY[NUM_LEVELS];
-	Sexy::Slider* mSlider;
+	int							mLevelButtonsPos[NUM_LEVELS];
+	Sexy::Slider*				mSlider;
 	AlmanacPage					mOpenPage;				//+0x180
 	AlmanacSubPage				mSubPage;
 	Reanimation*				mReanim[4];				//+0x184
@@ -67,8 +64,13 @@ public:
 	float						mMaxScrollPosition;
 	bool						mHasLevelButtons;
 	int							mSelectedLevel;
+	int							mNumLevelButtons;
 	int							mNumZombies;
-	
+	int							mIsOverLevelButton;
+	int							mMouseX;
+	int							mMouseY;
+	Zombie*						mZombieWaves[NUM_ZOMBIES_IN_ALMANAC];
+
 public:
 	AlmanacDialog(LawnApp* theApp);
 	virtual ~AlmanacDialog();

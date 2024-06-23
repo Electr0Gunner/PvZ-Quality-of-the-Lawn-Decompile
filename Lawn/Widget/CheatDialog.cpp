@@ -22,11 +22,11 @@ CheatDialog::CheatDialog(LawnApp* theApp) : LawnDialog(theApp, Dialogs::DIALOG_C
 	}
 	else if (mApp->HasFinishedAdventure())
 	{
-		aCheatStr = StrFormat(_S("F%s"), mApp->GetStageString(mApp->mPlayerInfo->GetLevel()).c_str());
+		aCheatStr = StrFormat(_S("F%s"), mApp->GetStageString(mApp->mPlayerInfo->mLevel).c_str());
 	}
 	else
 	{
-		aCheatStr = mApp->GetStageString(mApp->mPlayerInfo->GetLevel());
+		aCheatStr = mApp->GetStageString(mApp->mPlayerInfo->mLevel);
 	}
 	mLevelEditWidget->SetText(aCheatStr, true);
 
@@ -124,7 +124,7 @@ bool CheatDialog::ApplyCheat()
 	}
 
 	mApp->mGameMode = GameMode::GAMEMODE_ADVENTURE;
-	mApp->mPlayerInfo->SetLevel(aLevel);
+	mApp->mPlayerInfo->mLevel = aLevel;
 	mApp->mPlayerInfo->mFinishedAdventure = aFinishedAdventure;
 	mApp->WriteCurrentUserConfig();
 	return true;

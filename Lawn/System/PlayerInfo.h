@@ -85,8 +85,6 @@ public:
     void                DeleteUserFiles();
     void                LoadDetails();
     void                SaveDetails();
-    inline int          GetLevel() const { return mLevel; }
-    inline void         SetLevel(int theLevel) { mLevel = theLevel; }
     /*inline*/ void     ResetChallengeRecord(GameMode theGameMode);
 };
 

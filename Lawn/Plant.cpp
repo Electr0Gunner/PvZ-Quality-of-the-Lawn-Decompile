@@ -2466,7 +2466,7 @@ void Plant::UpdateBowling()
             aZombie->TakeDamage(1800, 0U);
         }
 
-        if ((!mApp->IsFirstTimeAdventureMode() || mApp->mPlayerInfo->GetLevel() > 10) && mSeedType == SeedType::SEED_WALLNUT && !mApp->mPlayedQuickplay)
+        if ((!mApp->IsFirstTimeAdventureMode() || mApp->mPlayerInfo->mLevel > 10) && mSeedType == SeedType::SEED_WALLNUT && !mApp->mPlayedQuickplay)
         {
             mLaunchCounter++;
             if (mLaunchCounter == 2)

@@ -1550,7 +1550,7 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 	{
 		if (mBoard->mLevel == FINAL_LEVEL)
 		{
-			mPlayerInfo->SetLevel(1);  // 存档回到第 1-1 关
+			mPlayerInfo->mLevel = 1;  // 存档回到第 1-1 关
 			mPlayerInfo->mFinishedAdventure++;  // 完成冒险模式周目数增加 1 次
 			if (mPlayerInfo->mFinishedAdventure == 1)
 			{
@@ -1559,7 +1559,7 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 		}
 		else
 		{
-			mPlayerInfo->SetLevel(mBoard->mLevel + 1);  // 存档进入下一关
+			mPlayerInfo->mLevel = mBoard->mLevel + 1;  // 存档进入下一关
 		}
 
 		if (!HasFinishedAdventure() && mBoard->mLevel == 34)
@@ -1674,9 +1674,7 @@ void LawnApp::CheckForGameEnd()
 	for (int aAchivement = 0; aAchivement < TOTAL_ACHIEVEMENTS; aAchivement++)
 	{
 		if (mPlayerInfo->mEarnedAchievements[aAchivement] && !mPlayerInfo->mShownedAchievements[aAchivement] && mAchievement->ReturnShowInAwards(aAchivement))
-		{
 			forceAchievements = true;
-		}
 	}
 
 	if (IsAdventureMode())
@@ -2625,7 +2623,7 @@ SeedType LawnApp::GetAwardSeedForLevel(int theLevel)
 //0x453AC0
 int LawnApp::GetSeedsAvailable()
 {
-	int aLevel = mPlayerInfo->GetLevel();
+	int aLevel = mPlayerInfo->mLevel;
 	if (HasFinishedAdventure() || aLevel > 50)
 	{
 		return 49;

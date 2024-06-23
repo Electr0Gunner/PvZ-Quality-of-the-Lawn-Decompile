@@ -236,23 +236,23 @@ bool StoreScreen::IsItemUnavailable(StoreItem theStoreItem)
 
     if (theStoreItem == STORE_ITEM_ROOF_CLEANER)
     {
-        return mApp->IsTrialStageLocked() || (!mApp->HasFinishedAdventure() && mApp->mPlayerInfo->GetLevel() < 42);
+        return mApp->IsTrialStageLocked() || (!mApp->HasFinishedAdventure() && mApp->mPlayerInfo->mLevel < 42);
     }
     if (theStoreItem == STORE_ITEM_PLANT_GLOOMSHROOM)
     {
-        return mApp->IsTrialStageLocked() || (!mApp->HasFinishedAdventure() && mApp->mPlayerInfo->GetLevel() < 35);
+        return mApp->IsTrialStageLocked() || (!mApp->HasFinishedAdventure() && mApp->mPlayerInfo->mLevel < 35);
     }
     if (theStoreItem == STORE_ITEM_PLANT_CATTAIL)
     {
-        return mApp->IsTrialStageLocked() || (!mApp->HasFinishedAdventure() && mApp->mPlayerInfo->GetLevel() < 35);
+        return mApp->IsTrialStageLocked() || (!mApp->HasFinishedAdventure() && mApp->mPlayerInfo->mLevel < 35);
     }
     if (theStoreItem == STORE_ITEM_PLANT_SPIKEROCK)
     {
-        return !mApp->HasFinishedAdventure() && mApp->mPlayerInfo->GetLevel() < 41;
+        return !mApp->HasFinishedAdventure() && mApp->mPlayerInfo->mLevel < 41;
     }
     if (theStoreItem == STORE_ITEM_PLANT_GOLD_MAGNET)
     {
-        return !mApp->HasFinishedAdventure() && mApp->mPlayerInfo->GetLevel() < 41;
+        return !mApp->HasFinishedAdventure() && mApp->mPlayerInfo->mLevel < 41;
     }
     if (theStoreItem == STORE_ITEM_PLANT_WINTERMELON || theStoreItem == STORE_ITEM_PLANT_COBCANNON ||
         theStoreItem == STORE_ITEM_PLANT_IMITATER || theStoreItem == STORE_ITEM_FIRSTAID)
