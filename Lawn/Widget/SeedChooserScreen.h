@@ -113,6 +113,7 @@ public:
     void                    PickRandomSeeds();
     virtual void            ButtonDepress(int theId);
     SeedType                SeedHitTest(int x, int y);
+    Zombie*                 ZombieHitTest(int x, int y);
     SeedType                FindSeedInBank(int theIndexInBank);
     /*inline*/ void         EnableStartButton(bool theEnabled);
     void                    ClickedSeedInBank(ChosenSeed& theChosenSeed);
@@ -122,6 +123,7 @@ public:
     /*inline*/ void         CancelLawnView();
     virtual void            MouseUp(int x, int y, int theClickCount);
     bool                    IsImitaterUnselectable(SeedType seedType);
+    bool                    IsOverImitater(int x, int y);
     virtual void            MouseDown(int x, int y, int theClickCount);
     /*inline*/ bool         PickedPlantType(SeedType theSeedType);
     void                    CloseSeedChooser();

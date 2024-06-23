@@ -57,8 +57,8 @@ public:
 	const float					mBaseScrollSpeed = 1.0f;
 	const float					mScrollAccel = 0.1f;
 	float						mMaxScrollPosition;
-	int							mMouseX;
-	int							mMouseY;
+	int							mLastMouseX;
+	int							mLastMouseY;
 
 public:
 	AlmanacDialog(LawnApp* theApp);

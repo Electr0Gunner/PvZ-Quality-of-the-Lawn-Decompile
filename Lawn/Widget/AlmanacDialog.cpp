@@ -239,8 +239,8 @@ void AlmanacDialog::ShowZombie(ZombieType theZombieType)
 //0x401D30
 void AlmanacDialog::Update()
 {
-	mMouseX = mApp->mWidgetManager->mLastMouseX;
-	mMouseY = mApp->mWidgetManager->mLastMouseY;
+	mLastMouseX = mApp->mWidgetManager->mLastMouseX;
+	mLastMouseY = mApp->mWidgetManager->mLastMouseY;
 	mCloseButton->Update();
 	mIndexButton->Update();
 	mPlantButton->Update();
@@ -283,8 +283,8 @@ void AlmanacDialog::Update()
 		}
 	}
 
-	ZombieType aZombieType = ZombieHitTest(mMouseX, mMouseY);
-	if (SeedHitTest(mMouseX, mMouseY) != SeedType::SEED_NONE || (aZombieType != ZOMBIE_INVALID && ZombieIsShown(aZombieType)) ||
+	ZombieType aZombieType = ZombieHitTest(mLastMouseX, mLastMouseY);
+	if (SeedHitTest(mLastMouseX, mLastMouseY) != SeedType::SEED_NONE || (aZombieType != ZOMBIE_INVALID && ZombieIsShown(aZombieType)) ||
 		mCloseButton->IsMouseOver() || mIndexButton->IsMouseOver() || mPlantButton->IsMouseOver() || mZombieButton->IsMouseOver())
 		mApp->SetCursor(CURSOR_HAND);
 	else
@@ -324,7 +324,7 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 {
 	g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBACK, 0, 0);
 	TodDrawString(g, _S("[SUBURBAN_ALMANAC_PLANTS]"), BOARD_WIDTH / 2, 48, Sexy::FONT_HOUSEOFTERROR20, Color(213, 159, 43), DS_ALIGN_CENTER);
-	SeedType aSeedMouseOn = SeedHitTest(mMouseX, mMouseY);
+	SeedType aSeedMouseOn = SeedHitTest(mLastMouseX, mLastMouseY);
 	for (SeedType aSeedType = SeedType::SEED_PEASHOOTER; aSeedType < NUM_SEEDS_IN_CHOOSER; aSeedType = (SeedType)(aSeedType + 1))
 	{
 		int aPosX, aPosY;
@@ -416,7 +416,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 	g->DrawImage(Sexy::IMAGE_ALMANAC_ZOMBIEBACK, 0, 0);
 	TodDrawString(g, _S("[SUBURBAN_ALMANAC_ZOMBIES]"), BOARD_WIDTH / 2, 54, Sexy::FONT_DWARVENTODCRAFT24, Color(0, 196, 0), DS_ALIGN_CENTER);
 
-	ZombieType aZombieMouseOn = ZombieHitTest(mMouseX, mMouseY);
+	ZombieType aZombieMouseOn = ZombieHitTest(mLastMouseX, mLastMouseY);
 	g->SetClipRect(cZombieClipRect);
 	for (int i = 0; i < NUM_ZOMBIES_IN_ALMANAC; i++)
 	{

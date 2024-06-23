@@ -560,7 +560,7 @@ void SeedChooserScreen::UpdateCursor()
 		if (aMouseChosenSeed.mSeedState == SEED_IN_BANK && aMouseChosenSeed.mCrazyDavePicked)
 			aMouseSeedType = SEED_NONE;
 	}
-	if (mMouseVisible && mChooseState != CHOOSE_VIEW_LAWN && ((aMouseSeedType != SEED_NONE && !SeedNotAllowedToPick(aMouseSeedType)) ||
+	if (mMouseVisible && mChooseState != CHOOSE_VIEW_LAWN && ((ZombieHitTest(mLastMouseX, mLastMouseY) && mApp->CanShowAlmanac() && !IsOverImitater(mLastMouseX, mLastMouseY)) || (aMouseSeedType != SEED_NONE && !SeedNotAllowedToPick(aMouseSeedType)) ||
 		mRandomButton->IsMouseOver() || mViewLawnButton->IsMouseOver() || mAlmanacButton->IsMouseOver() ||
 		mStoreButton->IsMouseOver() || mMenuButton->IsMouseOver() || mStartButton->IsMouseOver()))
 		mApp->SetCursor(CURSOR_HAND);
@@ -877,6 +877,35 @@ SeedType SeedChooserScreen::SeedHitTest(int x, int y)
 	return SEED_NONE;
 }
 
+Zombie* SeedChooserScreen::ZombieHitTest(int x, int y)
+{
+	Zombie* aRecord = nullptr;
+	if (mMouseVisible)
+	{
+		Zombie* aZombie = nullptr;
+		while (mBoard->IterateZombies(aZombie))
+		{
+			// 排除已死亡的僵尸
+			if (aZombie->mDead || aZombie->IsDeadOrDying())
+				continue;
+
+			// 排除关卡引入阶段及选卡界面的植物僵尸
+			if (mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO && Zombie::IsZombotany(aZombie->mZombieType))
+				continue;
+
+			// 范围判定
+			if (aZombie->GetZombieRect().Contains(x - mBoard->mX, y - mBoard->mY))
+			{
+				if (aRecord == nullptr || aZombie->mY > aRecord->mY)
+				{
+					aRecord = aZombie;
+				}
+			}
+		}
+	}
+	return aRecord;
+}
+
 //0x485E20
 SeedType SeedChooserScreen::FindSeedInBank(int theIndexInBank)
 {
@@ -975,96 +1004,116 @@ void SeedChooserScreen::ShowToolTip()
 	if (!mApp->mWidgetManager->mMouseIn || !mApp->mActive || mApp->GetDialogCount() > 0 || mChooseState == CHOOSE_VIEW_LAWN)
 	{
 		RemoveToolTip();
+		return;
 	}
-	else if (mSeedsInFlight <= 0)
+
+	Zombie* aZombie = ZombieHitTest(mLastMouseX, mLastMouseY);
+	if (aZombie == nullptr || aZombie->mFromWave != Zombie::ZOMBIE_WAVE_CUTSCENE)
 	{
-		/*if (mImitaterButton->IsMouseOver() && mMouseVisible)
+		RemoveToolTip();
+	}
+	else if (!IsOverImitater(mLastMouseX, mLastMouseY))
+	{
+		
+		SexyString aZombieName = StrFormat(_S("[%s]"), GetZombieDefinition(aZombie->mZombieType).mZombieName);
+		mToolTip->SetTitle(aZombieName);
+		if (mApp->CanShowAlmanac())
 		{
-			mToolTip->SetLabel(Plant::GetToolTip(SEED_IMITATER));
-			mToolTip->SetTitle(Plant::GetNameString(SEED_IMITATER));
-			mToolTip->SetWarningText(_S(""));
-			mToolTip->mX = (SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + mImitaterButton->mX;
-			mToolTip->mY = mImitaterButton->mY - mToolTip->mHeight;
-			mToolTip->mVisible = true;
+			mToolTip->SetLabel(_S("[CLICK_TO_VIEW]"));
 		}
-		else*/
+		else
 		{
-			SeedType aSeedType = SeedHitTest(mLastMouseX, mLastMouseY);
-			if (aSeedType == SEED_NONE)
+			mToolTip->SetLabel(_S(""));
+		}
+		mToolTip->SetWarningText(_S(""));
+
+		Rect aRect = aZombie->GetZombieRect();
+		mToolTip->mX = aRect.mWidth / 2 + aRect.mX + 5 + mBoard->mX;
+		mToolTip->mY = aRect.mHeight + aRect.mY - 10 - mBoard->mY;
+		if (aZombie->mZombieType == ZombieType::ZOMBIE_BUNGEE)
+			mToolTip->mY = aZombie->mY;
+		mToolTip->mCenter = true;
+		mToolTip->mVisible = true;
+		return;
+	}
+
+	if (mSeedsInFlight <= 0)
+	{
+		SeedType aSeedType = SeedHitTest(mLastMouseX, mLastMouseY);
+		if (aSeedType == SEED_NONE)
+		{
+			RemoveToolTip();
+		}
+		else if (aSeedType != mToolTipSeed)
+		{
+			RemoveToolTip();
+			ChosenSeed& aChosenSeed = mChosenSeeds[aSeedType];
+			uint aRecFlags = SeedNotRecommendedToPick(aSeedType);
+			if (SeedNotAllowedToPick(aSeedType))
 			{
-				RemoveToolTip();
+				mToolTip->SetWarningText(_S("[NOT_ALLOWED_ON_THIS_LEVEL]"));
 			}
-			else if (aSeedType != mToolTipSeed)
+			else if (SeedNotAllowedDuringTrial(aSeedType))
 			{
-				RemoveToolTip();
-				ChosenSeed& aChosenSeed = mChosenSeeds[aSeedType];
-				uint aRecFlags = SeedNotRecommendedToPick(aSeedType);
-				if (SeedNotAllowedToPick(aSeedType))
-				{
-					mToolTip->SetWarningText(_S("[NOT_ALLOWED_ON_THIS_LEVEL]"));
-				}
-				else if (SeedNotAllowedDuringTrial(aSeedType))
-				{
-					mToolTip->SetWarningText(_S("[FULL_VERSION_ONLY]"));
-				}
-				else if (aChosenSeed.mSeedState == SEED_IN_BANK && aChosenSeed.mCrazyDavePicked)
-				{
-					mToolTip->SetWarningText(_S("[CRAZY_DAVE_WANTS]"));
-				}
-				else if (aRecFlags != 0U)
-				{
-					if (TestBit(aRecFlags, NOT_RECOMMENDED_NOCTURNAL))
-					{
-						mToolTip->SetWarningText(_S("[NOCTURNAL_WARNING]"));
-					}
-					else
-					{
-						mToolTip->SetWarningText(_S("[NOT_RECOMMENDED_FOR_LEVEL]"));
-					}
-				}
-				else
-				{
-					mToolTip->SetWarningText(_S(""));
-				}
-
-				if (aSeedType == SEED_IMITATER)
-				{
-					mToolTip->SetTitle(Plant::GetNameString(aSeedType, aChosenSeed.mImitaterType));
-					mToolTip->SetLabel(Plant::GetToolTip(aChosenSeed.mImitaterType == SEED_NONE ? SEED_IMITATER : aChosenSeed.mImitaterType));
-				}
-				else
-				{
-					mToolTip->SetTitle(Plant::GetNameString(aSeedType, SEED_NONE));
-					mToolTip->SetLabel(Plant::GetToolTip(aSeedType));
-				}
-
-				int aSeedX, aSeedY;
-				if (aChosenSeed.mSeedState == SEED_IN_BANK)
-				{
-					GetSeedPositionInBank(aChosenSeed.mSeedIndexInBank, aSeedX, aSeedY);
-				}
-				else
-				{
-					GetSeedPositionInChooser(aSeedType, aSeedX, aSeedY);
-				}
-
-				mToolTip->mX = ClampInt((SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + aSeedX, 0, BOARD_WIDTH - mToolTip->mWidth);
-				mToolTip->mY = aSeedY + 70;
-				mToolTip->mVisible = true;
-				mToolTipSeed = aSeedType;
+				mToolTip->SetWarningText(_S("[FULL_VERSION_ONLY]"));
 			}
-			else if(aSeedType == mToolTipSeed)
+			else if (aChosenSeed.mSeedState == SEED_IN_BANK && aChosenSeed.mCrazyDavePicked)
 			{
-				ChosenSeed& aChosenSeed = mChosenSeeds[aSeedType];
-				if (aChosenSeed.mSeedState != SEED_IN_CHOOSER) return;
+				mToolTip->SetWarningText(_S("[CRAZY_DAVE_WANTS]"));
+			}
+			else if (aRecFlags != 0U)
+			{
+				if (TestBit(aRecFlags, NOT_RECOMMENDED_NOCTURNAL))
+				{
+					mToolTip->SetWarningText(_S("[NOCTURNAL_WARNING]"));
+				}
+				else
+				{
+					mToolTip->SetWarningText(_S("[NOT_RECOMMENDED_FOR_LEVEL]"));
+				}
+			}
+			else
+			{
+				mToolTip->SetWarningText(_S(""));
+			}
 
-				// Update tooltip pos since seeds in the chooser might be moving
-				int aSeedX, aSeedY;
+			if (aSeedType == SEED_IMITATER)
+			{
+				mToolTip->SetTitle(Plant::GetNameString(aSeedType, aChosenSeed.mImitaterType));
+				mToolTip->SetLabel(Plant::GetToolTip(aChosenSeed.mImitaterType == SEED_NONE ? SEED_IMITATER : aChosenSeed.mImitaterType));
+			}
+			else
+			{
+				mToolTip->SetTitle(Plant::GetNameString(aSeedType, SEED_NONE));
+				mToolTip->SetLabel(Plant::GetToolTip(aSeedType));
+			}
+
+			int aSeedX, aSeedY;
+			if (aChosenSeed.mSeedState == SEED_IN_BANK)
+			{
+				GetSeedPositionInBank(aChosenSeed.mSeedIndexInBank, aSeedX, aSeedY);
+			}
+			else
+			{
 				GetSeedPositionInChooser(aSeedType, aSeedX, aSeedY);
-
-				mToolTip->mX = ClampInt((SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + aSeedX, 0, BOARD_WIDTH - mToolTip->mWidth);
-				mToolTip->mY = aSeedY + 70;
 			}
+
+			mToolTip->mX = ClampInt((SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + aSeedX, 0, BOARD_WIDTH - mToolTip->mWidth);
+			mToolTip->mY = aSeedY + 70;
+			mToolTip->mVisible = true;
+			mToolTipSeed = aSeedType;
+		}
+		else if(aSeedType == mToolTipSeed)
+		{
+			ChosenSeed& aChosenSeed = mChosenSeeds[aSeedType];
+			if (aChosenSeed.mSeedState != SEED_IN_CHOOSER) return;
+
+			// Update tooltip pos since seeds in the chooser might be moving
+			int aSeedX, aSeedY;
+			GetSeedPositionInChooser(aSeedType, aSeedX, aSeedY);
+
+			mToolTip->mX = ClampInt((SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + aSeedX, 0, BOARD_WIDTH - mToolTip->mWidth);
+			mToolTip->mY = aSeedY + 70;
 		}
 	}
 }
@@ -1072,6 +1121,7 @@ void SeedChooserScreen::ShowToolTip()
 void SeedChooserScreen::RemoveToolTip()
 {
 	mToolTip->mVisible = false;
+	mToolTip->mCenter = false;
 	mToolTipSeed = SEED_NONE;
 }
 
@@ -1096,6 +1146,11 @@ void SeedChooserScreen::MouseUp(int x, int y, int theClickCount)
 bool SeedChooserScreen::IsImitaterUnselectable(SeedType seedType)
 {
 	return seedType == SEED_IMITATER && (mSeedsInBank == 0 || Plant::IsUpgrade(mPreviousType) || SeedNotAllowedToPick(mPreviousType));
+}
+
+bool SeedChooserScreen::IsOverImitater(int x, int y)
+{
+	return mApp->SeedTypeAvailable(SEED_IMITATER) && Rect(IMITATER_POS_X, IMITATER_POS_Y, IMAGE_SEEDCHOOSER_IMITATERADDON->mWidth, IMAGE_SEEDCHOOSER_IMITATERADDON->mHeight).Contains(x, y);
 }
 
 //0x486770
@@ -1148,11 +1203,9 @@ void SeedChooserScreen::MouseDown(int x, int y, int theClickCount)
 	*/
 	else
 	{
-		bool isOverImitater = mApp->SeedTypeAvailable(SEED_IMITATER) && (x >= IMITATER_POS_X && x <= IMITATER_POS_X + Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON->mWidth
-			&& y >= IMITATER_POS_Y && y <= IMITATER_POS_Y + Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON->mHeight);
-		if (!mBoard->mSeedBank->ContainsPoint(x, y) && !isOverImitater && !mAlmanacButton->IsMouseOver() && !mStoreButton->IsMouseOver() && mApp->CanShowAlmanac())
+		if (!mBoard->mSeedBank->ContainsPoint(x, y) && !IsOverImitater(x, y) && !mAlmanacButton->IsMouseOver() && !mStoreButton->IsMouseOver() && mApp->CanShowAlmanac())
 		{
-			Zombie* aZombie = mBoard->ZombieHitTest(x - mBoard->mX, y - mBoard->mY);
+			Zombie* aZombie = ZombieHitTest(x, y);
 			if (aZombie && aZombie->mFromWave == Zombie::ZOMBIE_WAVE_CUTSCENE && aZombie->mZombieType != ZOMBIE_REDEYE_GARGANTUAR)
 			{
 				mApp->DoAlmanacDialog(SEED_NONE, aZombie->mZombieType)->WaitForResult(true);

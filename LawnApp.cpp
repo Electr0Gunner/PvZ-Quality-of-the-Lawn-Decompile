@@ -3727,9 +3727,11 @@ void LawnApp::UpdateDiscordState(SexyString def)
 {
 	SexyString State;
 	if (mGameScene == GameScenes::SCENE_ZOMBIES_WON || GetDialog(Dialogs::DIALOG_GAME_OVER))
-		State = "Game Over";
-	else if (mSeedChooserScreen != nullptr && mBoard != nullptr && mBoard->ChooseSeedsOnCurrentLevel())
+		State = "Gameover";
+	else if (mBoard != nullptr && mBoard->mCutScene->mSeedChoosing)
 		State = "Choosing Plants";
+	else if (mBoard != nullptr && mGameScene != GameScenes::SCENE_PLAYING && mBoard->mCutScene->mCutsceneTime > 0)
+		State = "Cutscene";
 	else if (AlmanacDialog* dialog = (AlmanacDialog*)GetDialog(Dialogs::DIALOG_ALMANAC))
 	{
 		if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_INDEX)
