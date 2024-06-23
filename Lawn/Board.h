@@ -353,7 +353,7 @@ public:
 	Plant*							GetPumpkinAt(int theGridX, int theGridY);
 	Plant*							GetFlowerPotAt(int theGridX, int theGridY);
 	bool							LawnHasNocturnal();
-	static int						CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel);
+	static bool						CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel);
 	bool							IsZombieWaveDistributionOk();
 	void							PickBackground();
 	void							InitZombieWaves();

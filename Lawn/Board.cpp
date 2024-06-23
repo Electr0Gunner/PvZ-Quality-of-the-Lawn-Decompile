@@ -608,7 +608,7 @@ void Board::PickZombieWaves()
 		}
 		else
 		{
-			mNumWaves = gZombieWaves[ClampInt(mLevel - 1, 0, 49)];
+			mNumWaves = gZombieWaves[ClampInt(mLevel - 1, 0, NUM_LEVELS - 1)];
 			if (!mApp->IsFirstTimeAdventureMode() && !mApp->IsMiniBossLevel())
 			{
 				mNumWaves = mNumWaves < 10 ? 20 : mNumWaves + 10;
@@ -2448,7 +2448,7 @@ Projectile* Board::AddProjectile(int theX, int theY, int theRenderOrder, int the
 }
 
 //0x40D660
-int Board::CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel)
+bool Board::CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel)
 {
 	const ZombieDefinition& aZombieDef = GetZombieDefinition(theZombieType);
 	if (theZombieType == ZombieType::ZOMBIE_YETI)

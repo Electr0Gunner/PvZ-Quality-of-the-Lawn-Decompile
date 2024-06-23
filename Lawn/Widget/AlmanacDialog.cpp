@@ -229,9 +229,17 @@ void AlmanacDialog::SetupWaves()
 	if (!mApp->mResourceManager->IsGroupLoaded(groupName))
 		TodLoadResources(groupName);
 
-	for (int i = 0; i < NUM_ZOMBIES_IN_ALMANAC; i++)
+	for (ZombieType i = (ZombieType)0; i < NUM_ZOMBIES_IN_ALMANAC; i = (ZombieType)(i + 1))
 	{
-
+		if (bool canSpawn = Board::CanZombieSpawnOnLevel(i, mSelectedLevel))
+		{
+			if (!canSpawn)
+				continue;
+			OutputDebugString(StrFormat("(%s) - Zombie: %d\n", 
+				mApp->GetStageString(mSelectedLevel).erase(0, 1).c_str(),
+				static_cast<int>(i)).c_str());
+			mNumZombies++;
+		}
 	}
 }
 
