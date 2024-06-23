@@ -53,6 +53,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mStoreTime = 0;
     mBubbleCountDown = 0;
     mBubbleClickToContinue = false;
+    mInCutscene = false;
     mAmbientSpeechCountDown = 200;
     mPreviousAmbientSpeechIndex = -1;
     mPage = STORE_PAGE_SLOT_UPGRADES;
@@ -528,6 +529,9 @@ void StoreScreen::SetBubbleText(int theCrazyDaveMessage, int theTime, bool theCl
 void StoreScreen::UpdateMouse()
 {
     mMouseOverItem = STORE_ITEM_INVALID;
+    if (mInCutscene)
+        return;
+
     if (mStoreTime < 120 || mBubbleClickToContinue || mHatchTimer > 0 || mWaitForDialog) return;
     int aMouseX = mApp->mWidgetManager->mLastMouseX - mX, aMouseY = mApp->mWidgetManager->mLastMouseY - mY;
     bool aShowFinger = false;
@@ -783,7 +787,7 @@ void StoreScreen::Update()
         }
         if (mApp->mCrazyDaveMessageIndex == 4004)
         {
-            mWaitForDialog = false;
+            mInCutscene = false;
             mApp->GetAchievement(AchievementType::MORTICULTURALIST);
         }
     }
@@ -835,6 +839,8 @@ bool StoreScreen::IsPageShown(StorePages thePage)
 //0x48C4D0
 void StoreScreen::ButtonDepress(int theId)
 {
+    if (mInCutscene)
+        return;
     if (theId == StoreScreen::StoreScreen_Back)
         mResult = 1000;
     else if (theId == StoreScreen::StoreScreen_Prev || theId == StoreScreen::StoreScreen_Next)
@@ -1047,7 +1053,7 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
             if (theStoreItem >= STORE_ITEM_PLANT_GATLINGPEA && theStoreItem <= STORE_ITEM_PLANT_IMITATER) {
                 if (mApp->HasAllUpgrades())
                 {
-                    mWaitForDialog = true;
+                    mInCutscene = true;
                     SetBubbleText(4000, 300, false);
                     AdvanceCrazyDaveDialog();
                 }
@@ -1112,6 +1118,9 @@ void StoreScreen::AdvanceCrazyDaveDialog()
 //0x48D130
 void StoreScreen::MouseDown(int x, int y, int theClickCount)
 {
+    if (mInCutscene)
+        return;
+
     if (mBubbleClickToContinue)
     {
         AdvanceCrazyDaveDialog();
