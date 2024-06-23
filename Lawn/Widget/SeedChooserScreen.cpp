@@ -554,11 +554,12 @@ void SeedChooserScreen::UpdateCursor()
 	SeedType aMouseSeedType = SeedHitTest(mLastMouseX, mLastMouseY);
 	if (aMouseSeedType != SEED_NONE)
 	{
+		if (IsImitaterUnselectable(aMouseSeedType))
+			aMouseSeedType = SEED_NONE;
 		ChosenSeed& aMouseChosenSeed = mChosenSeeds[aMouseSeedType];
 		if (aMouseChosenSeed.mSeedState == SEED_IN_BANK && aMouseChosenSeed.mCrazyDavePicked)
 			aMouseSeedType = SEED_NONE;
 	}
-
 	if (mMouseVisible && mChooseState != CHOOSE_VIEW_LAWN && ((aMouseSeedType != SEED_NONE && !SeedNotAllowedToPick(aMouseSeedType)) ||
 		mRandomButton->IsMouseOver() || mViewLawnButton->IsMouseOver() || mAlmanacButton->IsMouseOver() ||
 		mStoreButton->IsMouseOver() || mMenuButton->IsMouseOver() || mStartButton->IsMouseOver()))
