@@ -31,7 +31,6 @@ private:
 		ALMANAC_BUTTON_CLOSE,
 		ALMANAC_BUTTON_PLANT,
 		ALMANAC_BUTTON_ZOMBIE,
-		ALMANAC_BUTTON_LEVEL,
 		ALMANAC_BUTTON_INDEX,
 		ALMANAC_SLIDER,
 		ALMANAC_BUTTON_NEXT,
@@ -44,12 +43,8 @@ public:
 	GameButton*					mIndexButton;			//+0x174
 	GameButton*					mPlantButton;			//+0x178
 	GameButton*					mZombieButton;			//+0x17C
-	GameButton*					mLevelButton;
-	GameButton*					mLevelButtons[NUM_LEVELS];
-	int							mLevelButtonsPos[NUM_LEVELS];
 	Sexy::Slider*				mSlider;
 	AlmanacPage					mOpenPage;				//+0x180
-	AlmanacSubPage				mSubPage;
 	Reanimation*				mReanim[4];				//+0x184
 	SeedType					mSelectedSeed;			//+0x194
 	ZombieType					mSelectedZombie;		//+0x198
@@ -62,14 +57,8 @@ public:
 	const float					mBaseScrollSpeed = 1.0f;
 	const float					mScrollAccel = 0.1f;
 	float						mMaxScrollPosition;
-	bool						mHasLevelButtons;
-	int							mSelectedLevel;
-	int							mNumLevelButtons;
-	int							mNumZombies;
-	int							mIsOverLevelButton;
 	int							mMouseX;
 	int							mMouseY;
-	Zombie*						mZombieWaves[NUM_ZOMBIES_IN_ALMANAC];
 
 public:
 	AlmanacDialog(LawnApp* theApp);
@@ -81,14 +70,11 @@ public:
 	void                        SliderVal(int theId, double theVal);
 	void						SetupPlant();
 	void						SetupZombie();
-	void						SetupLevels();
-	void						SetupWaves();
-	void						SetPage(AlmanacPage thePage, AlmanacSubPage theSubPage = ALMANAC_NONE);
+	void						SetPage(AlmanacPage thePage);
 	virtual void				Update();
 	void						DrawIndex(Graphics* g);
 	void						DrawPlants(Graphics* g);
 	void						DrawZombies(Graphics* g);
-	void						DrawSubPages(Graphics* g);
 	virtual void				Draw(Graphics* g);
 	void						GetSeedPosition(SeedType theSeedType, int& x, int& y, bool specialSpot = false);
 	SeedType					SeedHitTest(int x, int y);

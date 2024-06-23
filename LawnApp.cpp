@@ -3740,13 +3740,6 @@ void LawnApp::UpdateDiscordState(SexyString def)
 			State = "Almanac (Zombies)";
 		else if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_PLANTS)
 			State = "Almanac (Plants)";
-		else if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_LEVELS)
-		{
-			if (dialog->mSubPage == AlmanacSubPage::ALMANAC_LEVEL_LIST)
-				State = "Almanac (Levels)";
-			else if (dialog->mSubPage == AlmanacSubPage::ALMANAC_LEVEL_WAVES)
-				State = "Almanac (Waves in" + GetStageString(dialog->mSelectedLevel) + ")";
-		}
 	}
 	else if (GetDialog(Dialogs::DIALOG_STORE))
 		State = "Store";
