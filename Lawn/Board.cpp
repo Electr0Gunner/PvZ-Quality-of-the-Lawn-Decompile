@@ -8017,9 +8017,9 @@ static void TodCrash()
 //0x41B950（原版中废弃）
 void Board::KeyChar(SexyChar theChar)
 {
-	bool ignoreKeybinds = mApp->mBankKeybinds && (mPaused || mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
+	bool ignoreKeybinds = (mPaused || mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
 		mApp->mGameScene != GameScenes::SCENE_PLAYING || mApp->mCrazyDaveReanimID != ReanimationID::REANIMATIONID_NULL);
-	if (isdigit(theChar))
+	if (isdigit(theChar) && mApp->mBankKeybinds)
 	{
 		if (!ignoreKeybinds || mSeedBank->mY < 0)
 			return;
@@ -8058,7 +8058,6 @@ void Board::KeyChar(SexyChar theChar)
 				break;
 			}
 		}
-		return;
 	}
 	else if (theChar == _S('s'))
 	{
@@ -8078,91 +8077,10 @@ void Board::KeyChar(SexyChar theChar)
 		return;
 	}
 
-	if (!mApp->mDebugKeysEnabled && !mApp->mCtrlDown)
+	if (!mApp->mDebugKeysEnabled)
 		return;
 
 	TodTraceAndLog("Board cheat key '%c'", theChar);
-
-	if (theChar == _S('u'))
-	{
-		mApp->GetAchievement(HOME_LAWN_SECURITY);
-	}
-	if (theChar == _S('i'))
-	{
-		mApp->GetAchievement(BETTER_OFF_DEAD);
-	}
-	if (theChar == _S('o'))
-	{
-		mApp->GetAchievement(BETTER_OFF_DEAD);
-	}
-	if (theChar == _S('p'))
-	{
-		mApp->GetAchievement(CHINA_SHOP);
-	}/*
-	if (theChar == _S('a4'))
-	{
-		mApp->GetAchievement(SPUDOW);
-	}
-	if (theChar == _S('a5'))
-	{
-		mApp->GetAchievement(EXPLODONATOR);
-	}
-	if (theChar == _S('a6'))
-	{
-		mApp->GetAchievement(MORTICULTURALIST);
-	}
-	if (theChar == _S('a7'))
-	{
-		mApp->GetAchievement(DONT_PEA_IN_THE_POOL);
-	}
-	if (theChar == _S('a8'))
-	{
-		mApp->GetAchievement(ROLL_SOME_HEADS);
-	}
-	if (theChar == _S('a9'))
-	{
-		mApp->GetAchievement(GROUNDED);
-	}
-	if (theChar == _S('a10'))
-	{
-		mApp->GetAchievement(ZOMBOLOGIST);
-	}
-	if (theChar == _S('a11'))
-	{
-		mApp->GetAchievement(PENNY_PINCHER);
-	}
-	if (theChar == _S('a12'))
-	{
-		mApp->GetAchievement(SUNNY_DAYS);
-	}
-	if (theChar == _S('a13'))
-	{
-		mApp->GetAchievement(POPCORN_PARTY);
-	}
-	if (theChar == _S('a14'))
-	{
-		mApp->GetAchievement(GOOD_MORNING);
-	}
-	if (theChar == _S('a15'))
-	{
-		mApp->GetAchievement(NO_FUNGUS_AMONG_US);
-	}
-	if (theChar == _S('a16'))
-	{
-		mApp->GetAchievement(BEYOND_THE_GRAVE);
-	}
-	if (theChar == _S('a17'))
-	{
-		mApp->GetAchievement(IMMORTAL);
-	}
-	if (theChar == _S('a18'))
-	{
-		mApp->GetAchievement(TOWERING_WISDOM);
-	}
-	if (theChar == _S('a19'))
-	{
-		mApp->GetAchievement(MUSTACHE_MODE);
-	}*/
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
 	{
