@@ -3346,8 +3346,6 @@ void Board::UpdateToolTip()
 		return;
 	}
 
-	mToolTip->mMinLeft = 0;
-	mToolTip->mMaxBottom = BOARD_HEIGHT;
 	mToolTip->SetTitle(_S(""));
 	mToolTip->SetLabel(_S(""));
 	mToolTip->SetWarningText(_S(""));
