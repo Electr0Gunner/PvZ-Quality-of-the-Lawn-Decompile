@@ -1034,6 +1034,10 @@ void SeedChooserScreen::ShowToolTip()
 			mToolTip->mY = aZombie->mY;
 		mToolTip->mCenter = true;
 		mToolTip->mVisible = true;
+		if (mAlmanacButton->mBtnNoDraw && mStoreButton->mBtnNoDraw)
+			mToolTip->mMaxBottom = BOARD_HEIGHT;
+		else
+			mToolTip->mMaxBottom = BOARD_HEIGHT - 30;
 		return;
 	}
 
@@ -1121,6 +1125,7 @@ void SeedChooserScreen::ShowToolTip()
 void SeedChooserScreen::RemoveToolTip()
 {
 	mToolTip->mVisible = false;
+	mToolTip->mMaxBottom = BOARD_HEIGHT;
 	mToolTip->mCenter = false;
 	mToolTipSeed = SEED_NONE;
 }
