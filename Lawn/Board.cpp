@@ -3167,34 +3167,6 @@ void Board::MouseDrag(int x, int y)
 	mChallenge->MouseMove(x, y);
 }
 
-//0x40E780
-Zombie* Board::ZombieHitTest(int theMouseX, int theMouseY)
-{
-	Zombie* aZombie = nullptr;
-	Zombie* aRecord = nullptr;
-	while (IterateZombies(aZombie))
-	{
-		// 排除已死亡的僵尸
-		if (aZombie->mDead || aZombie->IsDeadOrDying())
-			continue;
-
-		// 排除关卡引入阶段及选卡界面的植物僵尸
-		if (mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO && Zombie::IsZombotany(aZombie->mZombieType))
-			continue;
-
-		// 范围判定
-		if (aZombie->GetZombieRect().Contains(theMouseX, theMouseY))
-		{
-			if (aRecord == nullptr || aZombie->mY > aRecord->mY)
-			{
-				aRecord = aZombie;
-			}
-		}
-	}
-
-	return aRecord;
-}
-
 //0x40E880
 bool Board::IsPlantInGoldWateringCanRange(int theMouseX, int theMouseY, Plant* thePlant)
 {
@@ -3367,74 +3339,6 @@ void Board::UpdateToolTip()
 
 	int aMouseX = mWidgetManager->mLastMouseX - mX;
 	int aMouseY = mWidgetManager->mLastMouseY - mY;
-
-	if (mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO)
-	{
-		if (!mCutScene->mSeedChoosing)
-		{
-			mToolTip->mVisible = false;
-			return;
-		}
-
-		if (mSeedBank->ContainsPoint(mWidgetManager->mLastMouseX, mWidgetManager->mLastMouseY) ||
-			mApp->mSeedChooserScreen->mAlmanacButton->IsMouseOver() ||
-			mApp->mSeedChooserScreen->mStoreButton->IsMouseOver()) // || mApp->mSeedChooserScreen->mImitaterButton->IsMouseOver()
-		{
-			mToolTip->mVisible = false;
-			return;
-		}
-
-		Zombie* aZombie = ZombieHitTest(aMouseX, aMouseY);
-		if (aZombie == nullptr || aZombie->mFromWave != Zombie::ZOMBIE_WAVE_CUTSCENE)
-		{
-			mToolTip->mVisible = false;
-			return;
-		}
-
-		SexyString aZombieName = StrFormat(_S("[%s]"), GetZombieDefinition(aZombie->mZombieType).mZombieName);
-		mToolTip->SetTitle(aZombieName);
-		if (mApp->CanShowAlmanac() && aZombie->mZombieType != ZombieType::ZOMBIE_REDEYE_GARGANTUAR)
-		{
-			mToolTip->SetLabel(_S("[CLICK_TO_VIEW]"));
-		}
-		else
-		{
-			mToolTip->SetLabel(_S(""));
-		}
-		mToolTip->SetWarningText(_S(""));
-
-		Rect aRect = aZombie->GetZombieRect();
-		mToolTip->mX = aRect.mWidth / 2 + aRect.mX + 5;
-		mToolTip->mY = aRect.mHeight + aRect.mY - 10;
-		if (aZombie->mZombieType == ZombieType::ZOMBIE_BUNGEE)
-		{
-			mToolTip->mY = aZombie->mY;
-		}
-
-		mToolTip->mVisible = true;
-		mToolTip->mCenter = true;
-
-		mToolTip->mMinLeft = IMAGE_SEEDCHOOSER_BACKGROUND->GetWidth();
-		if (mApp->mSeedChooserScreen->mAlmanacButton->mBtnNoDraw && mApp->mSeedChooserScreen->mStoreButton->mBtnNoDraw)
-		{
-			mToolTip->mMaxBottom = 600;
-		}
-		else
-		{
-			mToolTip->mMaxBottom = 570;
-		}
-		/*
-		if (!mApp->mSeedChooserScreen->mImitaterButton->mBtnNoDraw)
-		{
-			mToolTip->CalculateSize();
-			if (mX + mToolTip->mX - mToolTip->mWidth / 2 < 524)
-			{
-				mToolTip->mMaxBottom = 503;
-			}
-		}
-		*/
-		return;
-	}
 
 	if (!CanInteractWithBoardButtons())
 	{

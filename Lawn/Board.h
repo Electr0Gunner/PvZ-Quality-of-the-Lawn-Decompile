@@ -348,7 +348,6 @@ public:
 	void							UpdateProgressMeter();
 	void							DrawUIBottom(Graphics* g);
 	void							DrawUITop(Graphics* g);
-	Zombie*							ZombieHitTest(int theMouseX, int theMouseY);
 	void							KillAllPlantsInRadius(int theX, int theY, int theRadius);
 	Plant*							GetPumpkinAt(int theGridX, int theGridY);
 	Plant*							GetFlowerPotAt(int theGridX, int theGridY);
