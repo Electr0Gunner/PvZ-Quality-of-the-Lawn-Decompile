@@ -189,11 +189,12 @@ SeedChooserScreen::SeedChooserScreen()
 	if ((mApp->mCrazySeeds && mApp->mPlayedQuickplay) || (mApp->IsAdventureMode() && !mApp->IsFirstTimeAdventureMode() && !mApp->mPlayedQuickplay))
 		CrazyDavePickSeeds();
 
-	mSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
+	mSlider = new Sexy::Slider(IMAGE_OPTIONS_SLIDERSLOT_PLANT, IMAGE_OPTIONS_SLIDERKNOB_PLANT, 0, this);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mSlider->mHorizontal = false;
-	mSlider->Resize(770, 110, 20, 470);
-	mSlider->mVisible = true;
+	mSlider->Resize(472, 92, 40, 405);
+	mSlider->mThumbOffsetX = -14;
+	mSlider->mNoDraw = true;
 
 	mPreviousType = FindSeedInBank(mSeedsInBank - 1);
 }
@@ -458,6 +459,7 @@ void SeedChooserScreen::Draw(Graphics* g)
 	aBoardFrameG.mTransX -= mX;
 	aBoardFrameG.mTransY -= mY;
 	mMenuButton->Draw(&aBoardFrameG);
+	mSlider->SliderDraw(g);
 	mToolTip->Draw(g);
 }
 
@@ -880,11 +882,9 @@ Zombie* SeedChooserScreen::ZombieHitTest(int x, int y)
 		Zombie* aZombie = nullptr;
 		while (mBoard->IterateZombies(aZombie))
 		{
-			// 排除已死亡的僵尸
-			if (aZombie->mDead || aZombie->IsDeadOrDying())
+			if (aZombie->mDead || aZombie->IsDeadOrDying() || aZombie->mZombieType >= NUM_ZOMBIES_IN_ALMANAC)
 				continue;
 
-			// 范围判定
 			if (aZombie->GetZombieRect().Contains(x - mBoard->mX, y - mBoard->mY))
 			{
 				if (aRecord == nullptr || aZombie->mY > aRecord->mY)
@@ -1141,7 +1141,7 @@ void SeedChooserScreen::MouseUp(int x, int y, int theClickCount)
 
 bool SeedChooserScreen::IsImitaterUnselectable(SeedType seedType)
 {
-	return seedType == SEED_IMITATER && (mSeedsInBank == 0 || Plant::IsUpgrade(mPreviousType) || SeedNotAllowedToPick(mPreviousType));
+	return seedType == SEED_IMITATER && (mSeedsInBank == 0 || mSeedsInBank == mBoard->mSeedBank->mNumPackets || Plant::IsUpgrade(mPreviousType) || SeedNotAllowedToPick(mPreviousType));
 }
 
 bool SeedChooserScreen::IsOverImitater(int x, int y)

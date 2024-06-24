@@ -90,11 +90,18 @@ AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANA
 	mZombieButton->mDrawStoneButton = true;
 	mZombieButton->mParentWidget = this;
 
-	mSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
-	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
-	mSlider->mHorizontal = false;
-	mSlider->Resize(10, 85, 20, 470);
-	mSlider->mVisible = true;
+	mPlantSlider = new Sexy::Slider(IMAGE_OPTIONS_SLIDERSLOT_PLANT, IMAGE_OPTIONS_SLIDERKNOB_PLANT, 0, this);
+	mPlantSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
+	mPlantSlider->mHorizontal = false;
+	mPlantSlider->Resize(10, 85, 20, 470);
+	mPlantSlider->mThumbOffsetX = -5;
+	mPlantSlider->mVisible = false;
+
+	mZombieSlider = new Sexy::Slider(IMAGE_CHALLENGE_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, 0, this);
+	mZombieSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
+	mZombieSlider->mHorizontal = false;
+	mZombieSlider->Resize(10, 85, 20, 470);
+	mZombieSlider->mVisible = false;
 
 	SetPage(ALMANAC_PAGE_INDEX);
 	if (!mApp->mBoard || !mApp->mBoard->mPaused)
@@ -108,7 +115,8 @@ AlmanacDialog::~AlmanacDialog()
 	if (mIndexButton)	delete mIndexButton;
 	if (mPlantButton)	delete mPlantButton;
 	if (mZombieButton)	delete mZombieButton;
-	delete mSlider;
+	delete mPlantSlider;
+	delete mZombieSlider;
 	ClearObjects();
 }
 
@@ -143,13 +151,15 @@ void AlmanacDialog::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	LawnDialog::RemovedFromManager(theWidgetManager);
 	ClearObjects();
-	RemoveWidget(mSlider);
+	RemoveWidget(mPlantSlider);
+	RemoveWidget(mZombieSlider);
 }
 
 void AlmanacDialog::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
-	AddWidget(mSlider);
+	AddWidget(mPlantSlider);
+	AddWidget(mZombieSlider);
 }
 
 
@@ -190,7 +200,8 @@ void AlmanacDialog::SetupZombie()
 void AlmanacDialog::SetPage(AlmanacPage thePage)
 {
 	mOpenPage = thePage;
-	mSlider->SetValue(0.1f);
+	mPlantSlider->SetValue(0.1f);
+	mZombieSlider->SetValue(0.1f);
 
 	if (mOpenPage == AlmanacPage::ALMANAC_PAGE_INDEX)
 	{
@@ -257,7 +268,7 @@ void AlmanacDialog::Update()
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
-		mSlider->mVisible = mMaxScrollPosition != 0;
+		mPlantSlider->mVisible = mMaxScrollPosition != 0;
 	}
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
@@ -266,17 +277,18 @@ void AlmanacDialog::Update()
 		mScrollPosition += mScrollAmount * aScrollSpeed;
 		mScrollPosition = ClampFloat(mScrollPosition, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
-		mSlider->mVisible = mMaxScrollPosition != 0;
+		mZombieSlider->mVisible = mMaxScrollPosition != 0;
 	}
 	else
 	{
 		mScrollAmount = 0;
 		mScrollPosition = 0;
-		mSlider->mVisible = false;
+		mPlantSlider->mVisible = false;
+		mZombieSlider->mVisible = false;
 	}
 
-	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
-
+	mPlantSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
+	mZombieSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
 
 	for (Zombie* aZombie : mZombiePerfTest)
 	{

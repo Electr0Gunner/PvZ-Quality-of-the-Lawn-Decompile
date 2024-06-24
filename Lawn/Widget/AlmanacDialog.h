@@ -43,7 +43,8 @@ public:
 	GameButton*					mIndexButton;			//+0x174
 	GameButton*					mPlantButton;			//+0x178
 	GameButton*					mZombieButton;			//+0x17C
-	Sexy::Slider*				mSlider;
+	Sexy::Slider*				mPlantSlider;
+	Sexy::Slider*				mZombieSlider;
 	AlmanacPage					mOpenPage;				//+0x180
 	Reanimation*				mReanim[4];				//+0x184
 	SeedType					mSelectedSeed;			//+0x194

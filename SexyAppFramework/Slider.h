@@ -22,6 +22,8 @@ public:
 	int						mRelY;
 
 	bool					mHorizontal;
+	int						mThumbOffsetX;
+	bool					mNoDraw;
 
 public:
 	Slider(Image* theTrackImage, Image* theThumbImage, int theId, SliderListener* theListener);
@@ -30,6 +32,7 @@ public:
 
 	virtual bool			HasTransparencies();
 	virtual void			Draw(Graphics* g);	
+	void					SliderDraw(Graphics* g);
 
 	virtual void			MouseMove(int x, int y);
 	virtual void			MouseDown(int x, int y, int theClickCount);
