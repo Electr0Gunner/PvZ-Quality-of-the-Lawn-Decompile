@@ -8015,12 +8015,10 @@ static void TodCrash()
 //0x41B950（原版中废弃）
 void Board::KeyChar(SexyChar theChar)
 {
-	bool ignoreKeybinds = (mPaused || mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
+	bool canUseKeybinds = mApp->mBankKeybinds && (mPaused || mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
 		mApp->mGameScene != GameScenes::SCENE_PLAYING || mApp->mCrazyDaveReanimID != ReanimationID::REANIMATIONID_NULL);
-	if (isdigit(theChar) && mApp->mBankKeybinds)
+	if (isdigit(theChar) && canUseKeybinds && mSeedBank->mY >= 0)
 	{
-		if (!ignoreKeybinds || mSeedBank->mY < 0)
-			return;
 		for (int i = 0; i < mSeedBank->mNumPackets; i++)
 		{
 			int aSeedIndex = i;
@@ -8057,10 +8055,8 @@ void Board::KeyChar(SexyChar theChar)
 			}
 		}
 	}
-	else if (theChar == _S('s') && mApp->mBankKeybinds)
+	else if (theChar == _S('s') && canUseKeybinds && mShowShovel)
 	{
-		if (!ignoreKeybinds || !mShowShovel)
-			return;
 		if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_SHOVEL)
 		{
 			if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK)
