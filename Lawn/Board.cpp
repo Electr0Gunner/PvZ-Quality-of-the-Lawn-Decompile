@@ -8057,7 +8057,7 @@ void Board::KeyChar(SexyChar theChar)
 			}
 		}
 	}
-	else if (theChar == _S('s'))
+	else if (theChar == _S('s') && mApp->mBankKeybinds)
 	{
 		if (!ignoreKeybinds || !mShowShovel)
 			return;
@@ -8072,7 +8072,6 @@ void Board::KeyChar(SexyChar theChar)
 			ClearCursor();
 			mApp->PlayFoley(FoleyType::FOLEY_DROP);
 		}
-		return;
 	}
 
 	if (!mApp->mDebugKeysEnabled)
