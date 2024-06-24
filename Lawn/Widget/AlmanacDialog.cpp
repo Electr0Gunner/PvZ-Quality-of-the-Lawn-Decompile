@@ -18,9 +18,12 @@
 
 int gZombieDefeated[NUM_ZOMBIE_TYPES] = { false };
 const Rect cSeedClipRect = Rect(0, 90, BOARD_WIDTH, 463);
-const Rect cZombieClipRect = Rect(0, 80, BOARD_WIDTH, 480);
-const int levelClipRectX = 20;
-const Rect cLevelClipRect = Rect(levelClipRectX, 85, BOARD_WIDTH - (levelClipRectX * 2), 477);
+const int zombieHeight = 80;
+const int zombieOffsetY = 6;
+const Rect cZombieClipRect = Rect(0, zombieHeight + zombieOffsetY, BOARD_WIDTH, 474);
+const int seedPacketRows = 8;
+const int seedPacketHeight = SEED_PACKET_HEIGHT + 8;
+const int zombieRows = 5;
 
 //0x401010
 AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANAC, true, _S("Almanac"), _S(""), _S(""), BUTTONS_NONE)
@@ -250,7 +253,7 @@ void AlmanacDialog::Update()
 
 	if (mOpenPage == ALMANAC_PAGE_PLANTS)
 	{
-		mMaxScrollPosition = SeedType::NUM_SEED_TYPES / 8 * 36.5 - 128; //this is a calculation that gets the maximum scroll also used in the seed chooser
+		mMaxScrollPosition = seedPacketHeight * (0 - (cSeedClipRect.mHeight / seedPacketHeight) + ((NUM_SEEDS_IN_CHOOSER - 2) / seedPacketRows));
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
@@ -258,7 +261,7 @@ void AlmanacDialog::Update()
 	}
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
-		mMaxScrollPosition = ZombieType::NUM_ZOMBIE_TYPES / 5 * 36.5 - 128; //also for zombies
+		mMaxScrollPosition = zombieHeight * (0 - (cZombieClipRect.mHeight / zombieHeight) + ((NUM_ZOMBIES_IN_ALMANAC - 1) / zombieRows));
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition += mScrollAmount * aScrollSpeed;
 		mScrollPosition = ClampFloat(mScrollPosition, 0, mMaxScrollPosition);
@@ -328,13 +331,13 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 	for (SeedType aSeedType = SeedType::SEED_PEASHOOTER; aSeedType < NUM_SEEDS_IN_CHOOSER; aSeedType = (SeedType)(aSeedType + 1))
 	{
 		int aPosX, aPosY;
-		GetSeedPosition(aSeedType, aPosX, aPosY, aSeedType == SeedType::SEED_IMITATER);
+		GetSeedPosition(aSeedType, aPosX, aPosY);
 		PlantDefinition& aPlantDef = GetPlantDefinition(aSeedType);
 		if (!mApp->SeedTypeAvailable(aSeedType))
 		{
 			if (aSeedType != SeedType::SEED_IMITATER){
 				g->SetClipRect(cSeedClipRect);
-				g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX, aPosY - mScrollPosition);
+				g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBLANK, aPosX, aPosY);
 			}
 			g->ClearClipRect();
 		}
@@ -349,9 +352,9 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 			else
 			{
 				g->SetClipRect(cSeedClipRect);
-				DrawSeedPacket(g, aPosX, aPosY + -mScrollPosition, aSeedType, SeedType::SEED_NONE, 0, 255, true, false);
+				DrawSeedPacket(g, aPosX, aPosY, aSeedType, SeedType::SEED_NONE, 0, 255, true, false);
 				if (aSeedType == aSeedMouseOn)
-					g->DrawImage(Sexy::IMAGE_SEEDPACKETFLASH, aPosX, aPosY + -mScrollPosition);
+					g->DrawImage(Sexy::IMAGE_SEEDPACKETFLASH, aPosX, aPosY);
 			}
 		}
 	}
@@ -359,7 +362,7 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 	if (mSelectedSeed == SeedType::SEED_LILYPAD || mSelectedSeed == SeedType::SEED_TANGLEKELP || 
 		mSelectedSeed == SeedType::SEED_CATTAIL || mSelectedSeed == SeedType::SEED_SEASHROOM)
 	{
-		int aNight = mSelectedSeed == SeedType::SEED_SEASHROOM;
+		bool aNight = mSelectedSeed == SeedType::SEED_SEASHROOM;
 		g->DrawImage(aNight ? Sexy::IMAGE_ALMANAC_GROUNDNIGHTPOOL : Sexy::IMAGE_ALMANAC_GROUNDPOOL, 521, 107);
 
 		if (mApp->Is3DAccelerated())
@@ -423,7 +426,6 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 		ZombieType aZombieType = GetZombieType(i);
 		int aPosX, aPosY;
 		GetZombiePosition(aZombieType, aPosX, aPosY);
-		aPosY += -mScrollPosition;
 		ZombieDefinition aZombieDefiniton = GetZombieDefinition(aZombieType);
 		if (aZombieType != ZombieType::ZOMBIE_INVALID)
 		{
@@ -490,8 +492,6 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 					g->SetDrawMode(Graphics::DRAWMODE_NORMAL);
 					g->SetColorizeImages(false);
 				}
-				//aZombieGraphics.SetClipRect(cSeedClipRect);
-				//g->SetClipRect(cSeedClipRect);
 			}
 		}
 	}
@@ -582,21 +582,21 @@ void AlmanacDialog::Draw(Graphics* g)
 	mZombieButton->Draw(g);
 }
 
-void AlmanacDialog::GetSeedPosition(SeedType theSeedType, int& x, int& y, bool specialSpot)
+void AlmanacDialog::GetSeedPosition(SeedType theSeedType, int& x, int& y)
 {
 	SeedType aPlantIndex = theSeedType;
 	if (aPlantIndex > SeedType::SEED_IMITATER)
 		aPlantIndex = (SeedType)(aPlantIndex - 1);
 
-	if (aPlantIndex == SeedType::SEED_IMITATER && specialSpot)
+	if (aPlantIndex == SeedType::SEED_IMITATER)
 		x = 20, y = 23;
-	else if (aPlantIndex == SeedType::NUM_SEED_TYPES)
-		x = 26, y = 482;
 	else
 	{
 		int aFinalSeedType = aPlantIndex;
-		x = aFinalSeedType % 8 * 52 + 26;
-		y = aFinalSeedType / 8 * 78 + 92 - mScrollPosition;
+		int width = SEED_PACKET_WIDTH + 2;
+		int offsetY = 14;
+		x = aFinalSeedType % seedPacketRows * width + (width / 2);
+		y = aFinalSeedType / seedPacketRows * seedPacketHeight + (seedPacketHeight + offsetY) - mScrollPosition;
 	}
 }
 
@@ -611,21 +611,12 @@ SeedType AlmanacDialog::SeedHitTest(int x, int y)
 			if (mApp->SeedTypeAvailable(aSeedType))
 			{
 				int aSeedX, aSeedY;
-				GetSeedPosition(aSeedType, aSeedX, aSeedY, aSeedType == SeedType::SEED_IMITATER);
-				Rect aSeedRect = aSeedType != SeedType::SEED_IMITATER ? Rect(aSeedX, aSeedY + -mScrollPosition, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT) : Rect(aSeedX, aSeedY, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT);
-				if (aSeedType != SeedType::SEED_IMITATER) {
-					if (cSeedClipRect.Contains(x, y) && aSeedRect.Contains(x, y))
-					{
-						return aSeedType;
-					}
+				GetSeedPosition(aSeedType, aSeedX, aSeedY);
+				Rect aSeedRect = aSeedType != SeedType::SEED_IMITATER ? Rect(aSeedX, aSeedY, SEED_PACKET_WIDTH, SEED_PACKET_HEIGHT) : Rect(aSeedX, aSeedY, IMAGE_ALMANAC_IMITATER->mWidth, IMAGE_ALMANAC_IMITATER->mHeight);
+				if ((cSeedClipRect.Contains(x, y) || aSeedType == SeedType::SEED_IMITATER) && aSeedRect.Contains(x, y))
+				{
+					return aSeedType;
 				}
-				else {
-					if (aSeedRect.Contains(x, y))
-					{
-						return aSeedType;
-					}
-				}
-
 			}
 		}
 	}
@@ -634,37 +625,28 @@ SeedType AlmanacDialog::SeedHitTest(int x, int y)
 
 int AlmanacDialog::ZombieHasSilhouette(ZombieType theZombieType)
 {
-	// 除雪人僵尸以外的其他僵尸，或者雪人僵尸已经可以刷出（已经到达或完成冒险模式二周目 4-10 关卡），则不会显示为剪影
 	if (theZombieType != ZombieType::ZOMBIE_YETI || mApp->CanSpawnYetis())
 		return false;
 
-	// 排除上述情况后，若已完成雪人僵尸出现的关卡（冒险模式一周目 4-10 关卡），则雪人僵尸显示为剪影
 	return mApp->HasFinishedAdventure() || mApp->mPlayerInfo->mLevel > GetZombieDefinition(ZombieType::ZOMBIE_YETI).mStartingLevel;
 }
 
 //0x403A10
 int AlmanacDialog::ZombieIsShown(ZombieType theZombieType)
 {
-	// 试玩模式下，仅展示潜水僵尸及其之前出现的僵尸
 	if (mApp->IsTrialStageLocked() && theZombieType > ZombieType::ZOMBIE_SNORKEL)
 		return false;
 
-	// 对于雪人僵尸，要求其可以在刷怪中出现（已经到达或完成冒险模式二周目 4-10 关卡），
-	// 或已得知其存在但未解锁其形象（已经完成冒险模式一周目 4-10 关卡，但未到达二周目 4-10 关卡）
 	if (theZombieType == ZombieType::ZOMBIE_YETI)
 		return mApp->CanSpawnYetis() || ZombieHasSilhouette(ZombieType::ZOMBIE_YETI);
 
-	// 对于冒险模式中出现的僵尸
 	if (theZombieType <= ZombieType::ZOMBIE_BOSS)
 	{
-		// 冒险模式一周目完成后，图鉴展示所有僵尸
 		if (mApp->HasFinishedAdventure())
 			return true;
 
 		int aLevel = mApp->mPlayerInfo->mLevel;
 		int aStart = GetZombieDefinition(theZombieType).mStartingLevel;
-		// 要求已经达到僵尸首次出现的关卡
-		// 对于不能通过自然刷怪出现的僵尸（小鬼僵尸、雪橇僵尸小队、伴舞僵尸），额外要求已通过其首次出现的关卡或已击败过该僵尸
 		return aStart <= aLevel && (aStart != aLevel || !Board::IsZombieTypeSpawnedOnly(theZombieType) || gZombieDefeated[theZombieType]);
 	}
 	else if (theZombieType > ZombieType::ZOMBIE_BOSS)
@@ -680,35 +662,23 @@ int AlmanacDialog::ZombieHasDescription(ZombieType theZombieType)
 	int aLevel = mApp->mPlayerInfo->mLevel;
 	int aStart = GetZombieDefinition(theZombieType).mStartingLevel;
 
-	// 对于雪人僵尸
 	if (theZombieType == ZombieType::ZOMBIE_YETI)
 	{
-		// 当雪人僵尸不可在刷怪中出现时（冒险模式二周目 4-10 关卡之前），不显示僵尸描述
 		if (!mApp->CanSpawnYetis())
 			return false;
-		// 从第三周目开始，总是显示雪人僵尸的描述
 		if (mApp->mPlayerInfo->mFinishedAdventure >= 2)
 			return true;
 	}
-	// 对于雪人僵尸外的其他僵尸，当冒险模式已完成时，总是显示僵尸的描述
 	else if (mApp->HasFinishedAdventure())
 		return true;
 
-	// 雪人僵尸在二周目 4-10 关卡至三周目之间，或其他僵尸在冒险模式一周目中的情况，
-	// 要求已经达到僵尸首次出现的关卡，且已通过其首次出现的关卡或已击败过该僵尸
 	return aStart <= aLevel && (aStart != aLevel || gZombieDefeated[theZombieType]);
 }
 
 void AlmanacDialog::GetZombiePosition(ZombieType theZombieType, int& x, int& y)
 {
-	if (theZombieType == ZombieType::NUM_ZOMBIE_TYPES)
-		x = 192, y = 482;
-	else
-	{
-		int aFinalZombeType = theZombieType;
-		x = aFinalZombeType % 5 * 85 + 22;
-		y = aFinalZombeType / 5 * 80 + 86 - mScrollPosition;
-	}
+	x = theZombieType % zombieRows * 85 + 22;
+	y = theZombieType / zombieRows * zombieHeight + (zombieHeight + zombieOffsetY) - mScrollPosition;
 }
 
 //0x403BB0
@@ -724,7 +694,6 @@ ZombieType AlmanacDialog::ZombieHitTest(int x, int y)
 			{
 				int aZombieX, aZombieY;
 				GetZombiePosition(aZombieType, aZombieX, aZombieY);
-				aZombieY += -mScrollPosition;
 				Rect aZombieRect = Rect(aZombieX, aZombieY, 76 , 76);
 				if (aZombieRect.Contains(x, y) && cZombieClipRect.Contains(x, y))
 				{

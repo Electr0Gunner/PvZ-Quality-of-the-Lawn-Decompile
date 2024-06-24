@@ -2462,7 +2462,7 @@ bool Board::CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel)
 	}
 
 	TOD_ASSERT(gZombieAllowedLevels[theZombieType].mZombieType == theZombieType);
-	return gZombieAllowedLevels[theZombieType].mAllowedOnLevel[ClampInt(theLevel - 1, 0, 49)];
+	return gZombieAllowedLevels[theZombieType].mAllowedOnLevel[ClampInt(theLevel - 1, 0, NUM_LEVELS - 1)];
 }
 
 //0x40D6F0
@@ -3550,7 +3550,7 @@ void Board::UpdateToolTip()
 	}
 	else
 	{
-		mToolTip->SetLabel(StrFormat(_S("[%s]"),GetPlantDefinition(aUseSeedType).mPlantName));
+		mToolTip->SetLabel(Plant::GetNameString(aSeedPacket->mPacketType, aSeedPacket->mImitaterType));
 	}
 
 	int aPlantCost = GetCurrentPlantCost(aSeedPacket->mPacketType, aSeedPacket->mImitaterType);

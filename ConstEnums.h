@@ -1,5 +1,8 @@
 #pragma once
 
+#define ENUM_VALUE(name, value) name = value,
+#define ENUM_AUTO_VALUE(name) name,
+
 enum AdviceType
 {
     ADVICE_NONE = -1,
@@ -1037,10 +1040,8 @@ enum SeedChooserState
 };
 enum SeedType
 {
-#define ENUM_VALUE(name, value) name = value,
-#define ENUM_AUTO_VALUE(name) name,
-
-    ENUM_VALUE(SEED_PEASHOOTER, 0)                   // 豌豆射手
+    ENUM_VALUE(SEED_NONE, -1)
+    ENUM_AUTO_VALUE(SEED_PEASHOOTER)                 // 豌豆射手
     ENUM_AUTO_VALUE(SEED_SUNFLOWER)                  // 向日葵
     ENUM_AUTO_VALUE(SEED_CHERRYBOMB)                 // 樱桃炸弹
     ENUM_AUTO_VALUE(SEED_WALLNUT)                    // 坚果
@@ -1115,10 +1116,7 @@ enum SeedType
     ENUM_AUTO_VALUE(SEED_ZOMBIE_DANCER)
     ENUM_AUTO_VALUE(SEED_ZOMBIE_GARGANTUAR)
     ENUM_AUTO_VALUE(SEED_ZOMBIE_IMP)
-    ENUM_VALUE(NUM_SEEDS_IN_CHOOSER, 49)
-    ENUM_VALUE(SEED_NONE, -1)
-
-
+    ENUM_VALUE(NUM_SEEDS_IN_CHOOSER, SEED_IMITATER + 1)
 };
 enum ShieldType
 {
@@ -1347,9 +1345,6 @@ enum ZombiePhase
 };
 enum ZombieType
 {
-#define ENUM_VALUE(name, value) name = value,
-#define ENUM_AUTO_VALUE(name) name,
-
     ENUM_VALUE(ZOMBIE_INVALID, -1)
     ENUM_AUTO_VALUE(ZOMBIE_NORMAL)
     ENUM_AUTO_VALUE(ZOMBIE_FLAG)
@@ -1387,7 +1382,7 @@ enum ZombieType
     ENUM_AUTO_VALUE(NUM_ZOMBIE_TYPES)
     ENUM_AUTO_VALUE(ZOMBIE_CACHED_POLEVAULTER_WITH_POLE)
     ENUM_AUTO_VALUE(NUM_CACHED_ZOMBIE_TYPES)
-    ENUM_VALUE(NUM_ZOMBIES_IN_ALMANAC, 27)
+    ENUM_VALUE(NUM_ZOMBIES_IN_ALMANAC, ZOMBIE_REDEYE_GARGANTUAR + 1)
 };
 
 //////////////////////////////

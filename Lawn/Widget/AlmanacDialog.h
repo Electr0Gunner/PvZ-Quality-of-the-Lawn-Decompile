@@ -76,11 +76,11 @@ public:
 	void						DrawPlants(Graphics* g);
 	void						DrawZombies(Graphics* g);
 	virtual void				Draw(Graphics* g);
-	void						GetSeedPosition(SeedType theSeedType, int& x, int& y, bool specialSpot = false);
+	void						GetSeedPosition(SeedType theSeedType, int& x, int& y);
 	SeedType					SeedHitTest(int x, int y);
 	/*inline*/ int				ZombieHasSilhouette(ZombieType theZombieType);
-	int						ZombieIsShown(ZombieType theZombieType);
-	int						ZombieHasDescription(ZombieType theZombieType);
+	int							ZombieIsShown(ZombieType theZombieType);
+	int							ZombieHasDescription(ZombieType theZombieType);
 	void						GetZombiePosition(ZombieType theZombieType, int& x, int& y);
 	ZombieType					ZombieHitTest(int x, int y);
 	virtual void				MouseUp(int x, int y, int theClickCount);
