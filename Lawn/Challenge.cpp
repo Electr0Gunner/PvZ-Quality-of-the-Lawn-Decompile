@@ -2166,7 +2166,7 @@ void Challenge::Update()
 	{
 		ScaryPotterUpdate();
 	}
-	if ((mApp->IsScaryPotterLevel() || mApp->IsWhackAZombieLevel()) && mBoard->mSeedBank->mY < 0)
+	if (mApp->CanShowSeedBankAfterSun() && mBoard->mSeedBank->mY < 0)
 	{
 		if (mBoard->mSunMoney + mBoard->CountSunBeingCollected() > 0 || mBoard->mSeedBank->mY > Sexy::IMAGE_SEEDBANK->mWidth)
 		{

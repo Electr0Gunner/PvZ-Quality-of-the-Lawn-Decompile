@@ -2528,6 +2528,11 @@ bool LawnApp::IsChallengeWithoutSeedBank()
 		mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM;
 }
 
+bool LawnApp::CanShowSeedBankAfterSun()
+{
+	return IsChallengeWithoutSeedBank() && (IsScaryPotterLevel() || IsWhackAZombieLevel());
+}
+
 bool LawnApp::IsNight()
 {
 	if (IsIceDemo() || mPlayerInfo == nullptr)
