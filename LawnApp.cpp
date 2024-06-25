@@ -1661,8 +1661,6 @@ void LawnApp::CheckForGameEnd()
 			KillGameSelector();
 			StartQuickPlay();
 		}
-		else if (result == Dialog::ID_NO)
-			mPlayedQuickplay = false;
 		return;
 	}
 
