@@ -753,7 +753,7 @@ void LawnApp::EndLevel()
 	mFirstTimeGameSelector = true;
 
 	MakeNewBoard();
-	mBoard->InitLevel();
+	mBoard->InitLevel(mPlayedQuickplay);
 	mBoardResult = BoardResult::BOARDRESULT_NONE;
 	mGameScene = GameScenes::SCENE_LEVEL_INTRO;
 	ShowSeedChooserScreen();
