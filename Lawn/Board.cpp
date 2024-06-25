@@ -165,9 +165,6 @@ Board::Board(LawnApp* theApp)
 	mFastButton->mBtnNoDraw = true;
 	mFastButton->mDisabled = true;
 	mFastButton->Resize(740, -90, IMAGE_FASTBUTTON->mWidth, 46);
-	mFastButton->mButtonImage = IMAGE_FASTBUTTON;
-	mFastButton->mOverImage = IMAGE_FASTBUTTON;
-	mFastButton->mDownImage = IMAGE_FASTBUTTON_HIGHLIGHT;
 	mStoreButton = nullptr;
 	mIgnoreMouseUp = false;
 	mPeashootersUsed = false;
@@ -5841,6 +5838,13 @@ void Board::Update()
 
 	if (mPaused && mApp->isFastMode)
 		mApp->isFastMode = false;
+
+	if (mFastButton != nullptr && !mFastButton->mBtnNoDraw)
+	{
+		mFastButton->mButtonImage = !mApp->isFastMode ? IMAGE_FASTBUTTON : IMAGE_FASTBUTTON_HIGHLIGHT;
+		mFastButton->mOverImage = !mApp->isFastMode ? IMAGE_FASTBUTTON : IMAGE_FASTBUTTON_HIGHLIGHT;
+		mFastButton->mDownImage = !mApp->isFastMode ? IMAGE_FASTBUTTON_HIGHLIGHT : IMAGE_FASTBUTTON;
+	}
 
 	SexyString Details;
 	if (mApp->mGameMode != GameMode::GAMEMODE_ADVENTURE)
