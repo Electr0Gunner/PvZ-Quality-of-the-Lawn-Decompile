@@ -492,7 +492,7 @@ void CutScene::PlaceStreetZombies()
 		return;
 
 	mPlacedZombies = true;
-	if (mApp->IsFinalBossLevel())
+	if (!mBoard->ChooseSeedsOnCurrentLevel())
 		return;
 
 	// 以下统计出怪列表中各种可预览的僵尸的数量

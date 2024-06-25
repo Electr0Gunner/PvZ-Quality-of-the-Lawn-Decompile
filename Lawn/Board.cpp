@@ -1680,9 +1680,9 @@ void Board::InitLawnMowers()
 
 	for (int aRow = 0; aRow < MAX_GRID_SIZE_Y; aRow++)
 	{
-		if ((aGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED && aRow <= 4) || 
-			(mApp->IsAdventureMode() && mLevel == 35) ||   // 这里原版没有对于行的判断，故冒险模式 4-5 关卡有 6 行小推车
-			(!mApp->IsScaryPotterLevel() && mPlantRow[aRow] != PlantRowType::PLANTROW_DIRT))  // 除冒险模式 4-5 关卡外的破罐者模式关卡无小推车
+		if (aGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED && aRow >= 5)
+			continue;
+		if ((!mApp->IsScaryPotterLevel() || (mApp->IsAdventureMode() && (mLevel == 35 || mApp->mQuickLevel == 35))) && (aGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED || mPlantRow[aRow] != PlantRowType::PLANTROW_DIRT))
 		{
 			LawnMower* aLawnMower = mLawnMowers.DataArrayAlloc();
 			aLawnMower->LawnMowerInitialize(aRow);
