@@ -757,7 +757,7 @@ void GameSelector::UpdateTooltip()
 	{
 		int aMouseX = mApp->mWidgetManager->mLastMouseX;
 		int aMouseY = mApp->mWidgetManager->mLastMouseY;
-		if (aMouseX >= 50 && aMouseX < 135 && aMouseY >= 325 && aMouseY <= 550)
+		if (Rect(50, 325, 85, 155).Contains(aMouseX, aMouseY))
 		{
 			if (mApp->EarnedGoldTrophy())
 			{
@@ -773,7 +773,6 @@ void GameSelector::UpdateTooltip()
 				mToolTip->mY = 495;
 				mToolTip->mVisible = true;
 			}
-
 			return;
 		}
 	}
