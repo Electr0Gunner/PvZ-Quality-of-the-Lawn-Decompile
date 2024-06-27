@@ -44,7 +44,7 @@ void Achievements::GiveAchievement(AchievementType theAchivementType)
 
 	mApp->mPlayerInfo->mEarnedAchievements[theAchivementType] = true;
 
-	SexyString aAchivementText = StrFormat(_S("[%s]"), ReturnAchievementName(theAchivementType).c_str());
+	SexyString aAchivementText = StrFormat(_S("[ACHIEVEMENT_%s_TITLE]"), ReturnAchievementName(theAchivementType).c_str());
 	SexyString aMessage = TodReplaceString(_S("[ACHIEVEMENT_ACHIEVED]"), _S("{ACHIEVEMENT}"), aAchivementText);
 
 	if(mApp->mBoard)
