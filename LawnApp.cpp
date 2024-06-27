@@ -1632,6 +1632,10 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 			{
 				mPlayerInfo->mHasNewMiniGame = 1;
 			}
+			else if (aNumTrophies >= GetTotalTrophies(ChallengePage::CHALLENGE_PAGE_CHALLENGE))
+			{
+				GetAchievement(BEYOND_THE_GRAVE);
+			}
 		}
 	}
 
@@ -3607,6 +3611,11 @@ int LawnApp::GetNumTrophies(ChallengePage thePage)
 	}
 
 	return aNumTrophies;
+}
+
+int LawnApp::GetTotalTrophies(ChallengePage thePage)
+{
+	return thePage == CHALLENGE_PAGE_SURVIVAL ? 10 : thePage == CHALLENGE_PAGE_CHALLENGE ? 20 : thePage == CHALLENGE_PAGE_PUZZLE ? 18 : thePage == CHALLENGE_PAGE_LIMBO ? 0 : 0;
 }
 
 //0x455C20

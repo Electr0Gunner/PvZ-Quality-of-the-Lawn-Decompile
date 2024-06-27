@@ -303,6 +303,7 @@ public:
 	void							KillQuickPlayScreen();
 	static SexyString				Pluralize(int theCount, const SexyChar* theSingular, const SexyChar* thePlural);
 	int								GetNumTrophies(ChallengePage thePage);
+	int								GetTotalTrophies(ChallengePage thePage);
 	/*inline*/ bool					EarnedGoldTrophy();
 	inline bool						IsRegistered() { return false; }
 	inline bool						IsExpired() { return false; }
