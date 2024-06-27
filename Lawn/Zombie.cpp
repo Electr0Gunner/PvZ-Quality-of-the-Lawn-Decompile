@@ -4670,7 +4670,7 @@ void Zombie::AnimateChewSound()
             mAnimTicksPerFrame = 18;
             UpdateAnimSpeed();
 
-            if (mZombieType == ZombieType::ZOMBIE_DANCER)
+            if (mZombieType == ZombieType::ZOMBIE_DANCER && !mApp->mPlayedQuickplay)
             {
                 mApp->GetAchievement(AchievementType::DISCO_IS_UNDEAD);
             }
