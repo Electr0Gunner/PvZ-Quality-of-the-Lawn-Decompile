@@ -3329,7 +3329,7 @@ void Board::UpdateMousePosition()
 //0x40EF00
 void Board::UpdateToolTip()
 {
-	if (!mApp->mWidgetManager->mMouseIn || !mApp->mActive || mTimeStopCounter > 0 || mApp->GetDialogCount() > 0 || mApp->mGameScene == GameScenes::SCENE_ZOMBIES_WON)
+	if (!mApp->mWidgetManager->mMouseIn || !mApp->mActive || mTimeStopCounter > 0 || mApp->GetDialogCount() > 0 || mApp->mGameScene == GameScenes::SCENE_ZOMBIES_WON || mApp->mGameScene != GameScenes::SCENE_PLAYING)
 	{
 		mToolTip->mVisible = false;
 		return;
@@ -7145,29 +7145,18 @@ void Board::DrawZenButtons(Graphics* g)
 //0x418B70
 void Board::DrawShovel(Graphics* g)
 {
-	if (mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN && mApp->mGameMode != GameMode::GAMEMODE_TREE_OF_WISDOM)
+	Rect aShovelRect = GetShovelButtonRect();
+	g->DrawImage(Sexy::IMAGE_SHOVELBANK, aShovelRect.mX, aShovelRect.mY);
+
+	if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_SHOVEL)
 	{
-		if (mShowShovel)
+		if (mChallenge->mChallengeState == (ChallengeState)15)
 		{
-			Rect aShovelRect = GetShovelButtonRect();
-			g->DrawImage(Sexy::IMAGE_SHOVELBANK, aShovelRect.mX, aShovelRect.mY);
-
-			if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_SHOVEL)
-			{
-				if (mChallenge->mChallengeState == (ChallengeState)15)
-				{
-					g->SetColorizeImages(true);
-					g->SetColor(GetFlashingColor(mMainCounter, 75));
-				}
-				g->DrawImage(Sexy::IMAGE_SHOVEL, aShovelRect.mX - 7, aShovelRect.mY - 3);
-				g->SetColorizeImages(false);
-			}
+			g->SetColorizeImages(true);
+			g->SetColor(GetFlashingColor(mMainCounter, 75));
 		}
-	}
-
-	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
-	{
-		DrawZenButtons(g);
+		g->DrawImage(Sexy::IMAGE_SHOVEL, aShovelRect.mX - 7, aShovelRect.mY - 3);
+		g->SetColorizeImages(false);
 	}
 }
 
@@ -7513,10 +7502,17 @@ void Board::DrawUIBottom(Graphics* g)
 		}
 	}
 
-	DrawShovel(g);
+	if (mShowShovel)
+	{
+		DrawShovel(g);
+	}
 	if (!StageHasFog())
 	{
 		DrawTopRightUI(g);
+	}
+	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
+	{
+		DrawZenButtons(g);
 	}
 }
 
@@ -8020,8 +8016,7 @@ static void TodCrash()
 //0x41B950（原版中废弃）
 void Board::KeyChar(SexyChar theChar)
 {
-	bool canUseKeybinds = mApp->mBankKeybinds && (mPaused || mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
-		mApp->mGameScene != GameScenes::SCENE_PLAYING || mApp->mCrazyDaveReanimID != ReanimationID::REANIMATIONID_NULL);
+	bool canUseKeybinds = mApp->mBankKeybinds && (!mPaused || mApp->mGameScene == GameScenes::SCENE_PLAYING || mApp->mCrazyDaveReanimID != ReanimationID::REANIMATIONID_NULL);
 	if (isdigit(theChar) && canUseKeybinds && mSeedBank->mY >= 0)
 	{
 		for (int i = 0; i < mSeedBank->mNumPackets; i++)
@@ -8060,7 +8055,7 @@ void Board::KeyChar(SexyChar theChar)
 			}
 		}
 	}
-	else if (theChar == _S('s') && canUseKeybinds && mShowShovel)
+	else if (tolower(theChar) == _S('s') && canUseKeybinds && mShowShovel)
 	{
 		if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_SHOVEL)
 		{

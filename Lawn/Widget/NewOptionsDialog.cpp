@@ -609,6 +609,7 @@ void NewOptionsDialog::ButtonDepress(int theId)
                     mApp->StartQuickPlay();
                 else
                     mApp->PreNewGame(mApp->mGameMode, false);
+                mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
             }
         }
         break;

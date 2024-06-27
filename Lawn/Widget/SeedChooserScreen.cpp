@@ -1204,7 +1204,7 @@ void SeedChooserScreen::MouseDown(int x, int y, int theClickCount)
 			Zombie* aZombie = ZombieHitTest(x, y);
 			if (aZombie && aZombie->mFromWave == Zombie::ZOMBIE_WAVE_CUTSCENE && aZombie->mZombieType != ZOMBIE_REDEYE_GARGANTUAR)
 			{
-				mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
+				mApp->PlaySample(Sexy::SOUND_TAP);
 				mApp->DoAlmanacDialog(SEED_NONE, aZombie->mZombieType)->WaitForResult(true);
 				mApp->mWidgetManager->SetFocus(this);
 				return;

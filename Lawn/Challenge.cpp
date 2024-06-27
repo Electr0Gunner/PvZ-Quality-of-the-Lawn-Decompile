@@ -5385,6 +5385,7 @@ void Challenge::TreeOfWisdomDraw(Graphics* g)
 //0x42CEE0
 void Challenge::TreeOfWisdomInit()
 {
+	mBoard->mShowShovel = false;
 	ReanimatorEnsureDefinitionLoaded(REANIM_TREEOFWISDOM, true);
 	Reanimation* aReanimTree = mApp->AddReanimation(0.5f, 0.5f, 0, REANIM_TREEOFWISDOM);
 	aReanimTree->mIsAttachment = true;
