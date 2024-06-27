@@ -22,9 +22,8 @@
 #include "../../SexyAppFramework/WidgetManager.h"
 #include "../../SexyAppFramework/Slider.h"
 
-const Rect cSeedClipRect = Rect(0, 120, BOARD_WIDTH, 430);
+const Rect cSeedClipRect = Rect(0, 123, BOARD_WIDTH, 420);
 const int seedPacketRows = 8;
-const int seedPacketHeight = SEED_PACKET_HEIGHT + 2;
 
 //0x483380
 SeedChooserScreen::SeedChooserScreen()
@@ -54,7 +53,7 @@ SeedChooserScreen::SeedChooserScreen()
 	mStartButton->SetFont(Sexy::FONT_DWARVENTODCRAFT18YELLOW);
 	mStartButton->mColors[ButtonWidget::COLOR_LABEL] = Color::White;
 	mStartButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color::White;
-	mStartButton->Resize(154, 549, 156, 42);
+	mStartButton->Resize(154, 545, 156, 42);
 	mStartButton->mTextOffsetY = -1;
 	EnableStartButton(false);
 
@@ -71,7 +70,7 @@ SeedChooserScreen::SeedChooserScreen()
 	mRandomButton->SetFont(Sexy::FONT_BRIANNETOD12);
 	mRandomButton->mColors[0] = Color(255, 240, 0);
 	mRandomButton->mColors[1] = Color(200, 200, 255);
-	mRandomButton->Resize(332, 560, 100, 30);
+	mRandomButton->Resize(332, 555, 100, 30);
 	if (!mApp->mTodCheatKeys)
 	{
 		mRandomButton->mBtnNoDraw = true;
@@ -289,7 +288,7 @@ void SeedChooserScreen::GetSeedPositionInChooser(int theIndex, int& x, int& y)
 	else
 	{
 		x = theIndex % seedPacketRows * 53 + 22;
-		y = theIndex / seedPacketRows * seedPacketHeight + (seedPacketHeight + 48) - mScrollPosition;
+		y = theIndex / seedPacketRows * SEED_PACKET_HEIGHT + (SEED_PACKET_HEIGHT + 53) - mScrollPosition;
 	}
 }
 
@@ -567,7 +566,7 @@ void SeedChooserScreen::Update()
 
 	float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 
-	mMaxScrollPosition = seedPacketHeight * (0 - (cSeedClipRect.mHeight / seedPacketHeight) + ((NUM_SEEDS_IN_CHOOSER - 2) / seedPacketRows));
+	mMaxScrollPosition = SEED_PACKET_HEIGHT * ((cSeedClipRect.mHeight % SEED_PACKET_HEIGHT == 0 ? 1 : 0) - (cSeedClipRect.mHeight / SEED_PACKET_HEIGHT) + ((NUM_SEEDS_IN_CHOOSER - 2) / seedPacketRows));
 	mSlider->mVisible = mMaxScrollPosition != 0;
 	if (mSlider->mVisible)
 	{
@@ -1094,7 +1093,7 @@ void SeedChooserScreen::ShowToolTip()
 			}
 
 			mToolTip->mX = ClampInt((SEED_PACKET_WIDTH - mToolTip->mWidth) / 2 + aSeedX, 0, BOARD_WIDTH - mToolTip->mWidth);
-			mToolTip->mY = aSeedY + 70;
+			mToolTip->mY = aSeedY + (aSeedType == SEED_IMITATER && aChosenSeed.mSeedState == SEED_IN_CHOOSER ? -mToolTip->mHeight : SEED_PACKET_HEIGHT);
 			mToolTip->mVisible = true;
 			mToolTipSeed = aSeedType;
 		}

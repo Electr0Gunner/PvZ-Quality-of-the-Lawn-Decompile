@@ -444,7 +444,10 @@ void NewOptionsDialog::KeyDown(Sexy::KeyCode theKey)
         if (mAdvancedMode)
             ButtonDepress(NewOptionsDialog::NewOptionsDialog_Back);
         else
+        {
             Dialog::ButtonDepress(Dialog::ID_OK);
+            mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
+        }
     }
     else if (theKey == KeyCode::KEYCODE_ESCAPE)
     {
@@ -547,6 +550,7 @@ void NewOptionsDialog::ButtonDepress(int theId)
     {
         mApp->KillNewOptionsDialog();
         mApp->DoAdvancedOptions(mFromGameSelector, mX, mY);
+        mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
         break;
     }
     case NewOptionsDialog::NewOptionsDialog_MainMenu:
@@ -562,7 +566,7 @@ void NewOptionsDialog::ButtonDepress(int theId)
         else
         {
             mApp->mBoardResult = BoardResult::BOARDRESULT_QUIT;
-            mApp->DoBackToMain();
+            mApp->DoBackToMain(true);
         }
         break;
     }
@@ -628,6 +632,11 @@ void NewOptionsDialog::ButtonDepress(int theId)
     case NewOptionsDialog::NewOptionsDialog_Back:
         mApp->KillNewOptionsDialog();
         mApp->DoNewOptions(mFromGameSelector, mX, mY);
+        mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
+        break;
+
+    case Dialog::ID_OK:
+        mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
         break;
     }
 }

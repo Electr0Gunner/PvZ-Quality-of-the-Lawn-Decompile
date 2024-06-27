@@ -608,7 +608,7 @@ void GameSelector::Draw(Graphics* g)
 		mDebugFont = new SysFont("Arial Unicode MS", 10, true, false, false);
 		SexyString aText;
 		aText += StrFormat(_S("ACHIEVEMENTS DEBUG\n"));
-		for (int i = 0; i <= AchievementType::TOTAL_ACHIEVEMENTS - 1; i++) {
+		for (int i = 0; i < AchievementType::NUM_ACHIEVEMENTS; i++) {
 			aText += StrFormat(_S("ACHIEVEMENT %d: "), i);
 			if (mApp->mPlayerInfo->mEarnedAchievements[i])
 			{

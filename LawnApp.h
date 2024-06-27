@@ -130,7 +130,7 @@ public:
 	TrialType						mTrialType;										//+0x8C0
 	bool							mDebugTrialLocked;								//+0x8C4
 	bool							mMuteSoundsForCutscene;							//+0x8C5
-	Achievements*					mAchievement;
+	Achievements*					mAchievements;
 	bool							isFastMode;
 	SexyString						mVersion;
 	SexyString						mReconVersion;
@@ -190,7 +190,7 @@ public:
 	void							ShowSeedChooserScreen();
 	void							KillSeedChooserScreen();
 	void							DoHighScoreDialog();
-	void							DoBackToMain();
+	void							DoBackToMain(bool hasSound = false);
 	void							DoConfirmBackToMain();
 	void							DoNewOptions(bool theFromGameSelector, int x = -1, int y = -1);
 	void							DoAdvancedOptions(bool theFromGameSelector, int x, int y);

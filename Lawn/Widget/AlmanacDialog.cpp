@@ -264,7 +264,7 @@ void AlmanacDialog::Update()
 
 	if (mOpenPage == ALMANAC_PAGE_PLANTS)
 	{
-		mMaxScrollPosition = seedPacketHeight * (0 - (cSeedClipRect.mHeight / seedPacketHeight) + ((NUM_SEEDS_IN_CHOOSER - 2) / seedPacketRows));
+		mMaxScrollPosition = seedPacketHeight * ((cSeedClipRect.mHeight % SEED_PACKET_HEIGHT == 0 ? 1 : 0) - (cSeedClipRect.mHeight / seedPacketHeight) + ((NUM_SEEDS_IN_CHOOSER - 2) / seedPacketRows));
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
 		mScrollAmount *= (1.0f - mScrollAccel);
@@ -272,7 +272,7 @@ void AlmanacDialog::Update()
 	}
 	else if (mOpenPage == ALMANAC_PAGE_ZOMBIES)
 	{
-		mMaxScrollPosition = zombieHeight * (0 - (cZombieClipRect.mHeight / zombieHeight) + ((NUM_ZOMBIES_IN_ALMANAC - 1) / zombieRows));
+		mMaxScrollPosition = zombieHeight * ((cZombieClipRect.mHeight % zombieHeight == 0 ? 1 : 0) - (cZombieClipRect.mHeight / zombieHeight) + ((NUM_ZOMBIES_IN_ALMANAC - 1) / zombieRows));
 		float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
 		mScrollPosition += mScrollAmount * aScrollSpeed;
 		mScrollPosition = ClampFloat(mScrollPosition, 0, mMaxScrollPosition);

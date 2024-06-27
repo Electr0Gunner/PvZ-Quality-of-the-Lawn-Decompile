@@ -19,8 +19,8 @@ public:
     NewLawnButton* mRockButton;
     float						mScrollPosition;
     float						mScrollAmount;
-    const float					mBaseScrollSpeed = 5.0f;
-    const float					mScrollAccel = 0.1f;
+    const float					mBaseScrollSpeed = 5.5f;
+    const float					mScrollAccel = 0.2f;
     float						mMaxScrollPosition;
     int						    mTweenTimer;
     bool						mGoesDown;
@@ -28,8 +28,6 @@ public:
 public:
     AchievementScreen(LawnApp* theApp);
     virtual ~AchievementScreen();
-    void                        DrawButton(Graphics* g);
-    void				        UpdateRock();
     void                        KeyDown(KeyCode theKey);
     void				        DoButtonMovement(int StartX, int FinalX);
     void                        ExitScreen();

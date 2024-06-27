@@ -6,8 +6,6 @@
 
 using namespace Sexy;
 
-#define NUM_ACHIEVEMENTS ((int)AchievementType::TOTAL_ACHIEVEMENTS)
-
 class LawnApp;
 class Achievements
 {
@@ -16,7 +14,7 @@ public:
     Achievements(LawnApp* theApp);
 
     LawnApp*                mApp;
-    void                    GiveAchievement(LawnApp* theApp, AchievementType theAchivementType);
+    void                    GiveAchievement(AchievementType theAchivementType);
     void                    InitAchievement();
     SexyString              ReturnAchievementName(int theAchivementIndex);
     bool                    ReturnShowInAwards(int theAchivementIndex);
@@ -30,7 +28,7 @@ public:
     const SexyChar*             mAchievementName;
     bool                        mShowInAwards;
 };
+
 extern AchievementDefinition gAchievementDefs[NUM_ACHIEVEMENTS];
-AchievementDefinition& GetAchievementDefinition(AchievementType theAchivementType);
 
 #endif

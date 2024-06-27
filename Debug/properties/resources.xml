@@ -678,7 +678,7 @@
 <Resources id="DelayLoad_AwardScreen">
 <SetDefaults path="images" idprefix="IMAGE_" />
 <Image id="AWARDSCREEN_BACK" path="AwardScreen_Back" a8r8g8b8="" />
-<Image id="ACHIEVEMENTS_PORTRAITS" path="acheesements_icons" cols="20" />
+<Image id="ACHIEVEMENTS_PORTRAITS" path="acheesements_icons" cols="21" />
 </Resources>  
 
 <Resources id="DelayLoad_ChallengeScreen">

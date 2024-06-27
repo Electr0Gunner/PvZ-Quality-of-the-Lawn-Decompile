@@ -62,29 +62,30 @@ void AchievementScreen::Draw(Graphics* g)
    g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_PIPE, 0, 9000 + mScrollPosition);
    g->DrawImage(Sexy::IMAGE_ACHIEVEMENT_ZUMA, 0, 11250 + mScrollPosition);
 
-    g->SetScale(0.9f, 0.9f,0,0);
-    for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++)
+    for (int i = 0; i < NUM_ACHIEVEMENTS; i++)
     {
-            yPosIndex++;
-            SexyString aAchievementName = StrFormat(_S("[%s]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
-            SexyString aAchievementDesc = StrFormat(_S("[%s_DESCRIPTION]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
-            int yPos = 178 + (72 * (i / 2)) + mScrollPosition;
-            int xPos = 120;
-            if (i % 2 != 0)
-            {
-                xPos = 429;
-            }
-            xPos += 120;
-            TodDrawString(g, aAchievementName, xPos - 10, yPos + 17, Sexy::FONT_DWARVENTODCRAFT15, Color(21, 175, 0) , DS_ALIGN_LEFT);
-            //TodDrawString(g, aAchievementDesc, 150, yPos + 50, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 255, 255, 255), DS_ALIGN_LEFT);
-            TodDrawStringWrapped(g, aAchievementDesc, Rect(xPos - 10, yPos + 19, 230, 260), Sexy::FONT_DWARVENTODCRAFT12, Color(255, 255, 255, 255), DS_ALIGN_LEFT);
-            g->SetColorizeImages(true);
-            g->SetColor(mApp->mPlayerInfo->mEarnedAchievements[i] ? Color(255, 255, 255) : Color(255, 255, 255, 32));
-            g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, xPos - 90, yPos, i);
-            g->SetColorizeImages(false);
+        yPosIndex++;
+        SexyString aAchievementName = StrFormat(_S("[ACHIEVEMENT_%s_TITLE]"), mApp->mAchievements->ReturnAchievementName(i).c_str());
+        SexyString aAchievementDesc = StrFormat(_S("[ACHIEVEMENT_%s_DESCRIPTION]"), mApp->mAchievements->ReturnAchievementName(i).c_str());
+        int yPos = 178 + (57 * (i / 2)) + mScrollPosition;
+        int xPos = 90;
+        if (i % 2 != 0)
+        {
+            xPos = 380;
+        }
+        xPos += 120;
+        TodDrawString(g, aAchievementName, xPos - 20, yPos + 16, Sexy::FONT_DWARVENTODCRAFT15, Color(21, 175, 0), DS_ALIGN_LEFT);
+        g->SetColor(Color::White);
+        g->SetFont(Sexy::FONT_DWARVENTODCRAFT12);
+        g->DrawStringWordWrapped(TodStringTranslate(aAchievementDesc), xPos - 20, yPos + 30, 215, 12);
+        g->SetColorizeImages(true);
+        g->SetColor(mApp->mPlayerInfo->mEarnedAchievements[i] ? Color(255, 255, 255) : Color(255, 255, 255, 32));
+        int imagePosX = xPos - 90;
+        g->SetScale(0.8f, 0.8f, imagePosX, yPos);
+        g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, imagePosX, yPos, i);
+        g->SetScale(1, 1, 0, 0);
+        g->SetColorizeImages(false);
     }
-    g->SetScale(1.0f, 1.0f, 0, 0);
-
 }
 
 void AchievementScreen::KeyDown(KeyCode theKey) {
@@ -135,13 +136,12 @@ void AchievementScreen::Update()
         DoButtonMovement(mScrollPosition, direction);
     }
 
-
-    mBackButton->Resize(128, 55 + mScrollPosition, 130, 80);
-    mRockButton->Resize(710, 470 + mScrollPosition, IMAGE_ACHIEVEMENT_MORE->mWidth, IMAGE_ACHIEVEMENT_MORE->mHeight);
     mMaxScrollPosition = 15342;//Sexy::IMAGE_ACHIEVEMENT_TILE->mHeight * 69 + Sexy::IMAGE_ACHIEVEMENT_TILE_CHINA->mHeight;
     float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
     mScrollPosition = ClampFloat(mScrollPosition -= mScrollAmount * aScrollSpeed, -mMaxScrollPosition, 0);
     mScrollAmount *= (1.0f - mScrollAccel);
+    mBackButton->Resize(128, 55 + mScrollPosition, 130, 80);
+    mRockButton->Resize(710, 470 + mScrollPosition, IMAGE_ACHIEVEMENT_MORE->mWidth, IMAGE_ACHIEVEMENT_MORE->mHeight);
 }
 
 //0x42F740

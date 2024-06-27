@@ -114,7 +114,7 @@ LawnApp::LawnApp()
 	mEffectSystem = nullptr;
 	mReanimatorCache = nullptr;
 	mCloseRequest = false;
-	mAchievement = nullptr;
+	mAchievements = nullptr;
 	mWidth = BOARD_WIDTH;
 	mHeight = BOARD_HEIGHT;
 	mFullscreenBits = 32;
@@ -761,7 +761,7 @@ void LawnApp::EndLevel()
 }
 
 //0x44FEB0
-void LawnApp::DoBackToMain()
+void LawnApp::DoBackToMain(bool hasSound)
 {
 	mMusic->StopAllMusic();
 	mSoundSystem->CancelPausedFoley();
@@ -771,6 +771,8 @@ void LawnApp::DoBackToMain()
 	mPlayedQuickplay = false;
 	ShowGameSelector();
 	PlaySample(Sexy::SOUND_BUTTONCLICK);
+	if (hasSound)
+		PlaySample(Sexy::SOUND_BUTTONCLICK);
 }
 
 //0x44FF00
@@ -1426,8 +1428,8 @@ void LawnApp::Init()
 	mTitleScreen->Resize(0, 0, mWidth, mHeight);
 	mWidgetManager->AddWidget(mTitleScreen);
 	mWidgetManager->SetFocus(mTitleScreen);
-	mAchievement = new Achievements(this);
-	mAchievement->InitAchievement();
+	mAchievements = new Achievements(this);
+	mAchievements->InitAchievement();
 
 #ifdef _DEBUG
 	int aDuration = mTimer.GetDuration();
@@ -1567,7 +1569,7 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 		}
 
 		if (mBoard->mBackground == BACKGROUND_3_POOL && !mBoard->mPeashootersUsed) {
-			GetAchievement(DONT_PEA_IN_THE_POOL);
+			GetAchievement(DONT_PEA_IN_POOL);
 		}
 		if (mBoard->StageHasRoof() && !mBoard->HasConveyorBeltSeedBank() && !mBoard->mCatapultsUsed) {
 			GetAchievement(GROUNDED);
@@ -1668,9 +1670,9 @@ void LawnApp::CheckForGameEnd()
 	bool aUnlockedNewChallenge = UpdatePlayerProfileForFinishingLevel();
 
 	bool forceAchievements = false;
-	for (int aAchivement = 0; aAchivement < TOTAL_ACHIEVEMENTS; aAchivement++)
+	for (int aAchivement = 0; aAchivement < NUM_ACHIEVEMENTS; aAchivement++)
 	{
-		if (mPlayerInfo->mEarnedAchievements[aAchivement] && !mPlayerInfo->mShownedAchievements[aAchivement] && mAchievement->ReturnShowInAwards(aAchivement))
+		if (mPlayerInfo->mEarnedAchievements[aAchivement] && !mPlayerInfo->mShownedAchievements[aAchivement] && mAchievements->ReturnShowInAwards(aAchivement))
 			forceAchievements = true;
 	}
 
@@ -1686,7 +1688,7 @@ void LawnApp::CheckForGameEnd()
 		}
 		else if (aLevel == FINAL_LEVEL)
 		{
-			GetAchievement(HOME_LAWN_SECURITY);
+			GetAchievement(HOME_SECURITY);
 			if (mPlayerInfo->mFinishedAdventure == 1)
 			{
 				ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);
@@ -2153,7 +2155,7 @@ void LawnApp::ButtonDepress(int theId)
 			KillDialog(Dialogs::DIALOG_CONFIRM_BACK_TO_MAIN);
 			mBoardResult = BoardResult::BOARDRESULT_QUIT;
 			mBoard->TryToSaveGame();
-			DoBackToMain();
+			DoBackToMain(true);
 			return;
 
 		case Dialogs::DIALOG_USERDIALOG:
@@ -3722,9 +3724,9 @@ SexyString LawnGetCurrentLevelName()
 
 void LawnApp::GetAchievement(AchievementType theAchievementType)
 {
-	if (mPlayerInfo == nullptr || gLawnApp == nullptr || mAchievement == nullptr)
+	if (mAchievements == nullptr)
 		return;
-	mAchievement->GiveAchievement(this, theAchievementType);
+	mAchievements->GiveAchievement(theAchievementType);
 }
 
 void LawnApp::UpdateDiscordState(SexyString def)

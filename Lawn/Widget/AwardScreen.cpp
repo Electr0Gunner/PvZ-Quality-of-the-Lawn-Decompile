@@ -190,8 +190,8 @@ void AwardScreen::LoadAchievements()
 {
     TodLoadResources("DelayLoad_ChallengeScreen");
     if (mShowAchievements) {
-        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
-            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievement->ReturnShowInAwards(i)) {
+        for (int i = 0; i < NUM_ACHIEVEMENTS; i++) {
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievements->ReturnShowInAwards(i)) {
                 mShowAchievements = true;
                 break;
             }
@@ -372,13 +372,13 @@ void AwardScreen::Draw(Graphics* g)
         TodDrawString(g, aTitleString, 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
         mMenuButton->mBtnNoDraw = true;
         int yPosIndex = 0;
-        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) 
+        for (int i = 0; i < NUM_ACHIEVEMENTS; i++)
         {
-            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievement->ReturnShowInAwards(i)) 
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievements->ReturnShowInAwards(i)) 
             {
                 yPosIndex++;
-                SexyString aAchievementName = StrFormat(_S("[%s]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
-                SexyString aAchievementDesc = StrFormat(_S("[%s_DESCRIPTION]"), mApp->mAchievement->ReturnAchievementName(i).c_str());
+                SexyString aAchievementName = StrFormat(_S("[ACHIEVEMENT_%s_TITLE]"), mApp->mAchievements->ReturnAchievementName(i).c_str());
+                SexyString aAchievementDesc = StrFormat(_S("[ACHIEVEMENT_%s_DESCRIPTION]"), mApp->mAchievements->ReturnAchievementName(i).c_str());
                 int yPos = TodAnimateCurve(200, 0, mAchievementCounter, BOARD_HEIGHT + 50, 90 + (yPosIndex * 100), TodCurves::CURVE_EASE_IN_OUT);
 
                 TodDrawString(g, aAchievementName, 150, yPos + 20, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
@@ -558,7 +558,7 @@ void AwardScreen::StartButtonPressed()
 
     if (mShowAchievements)
     {
-        for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
+        for (int i = 0; i < NUM_ACHIEVEMENTS; i++) {
             if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
                 mApp->mPlayerInfo->mShownedAchievements[i] = true;
             }
@@ -590,7 +590,7 @@ void AwardScreen::MouseUp(int x, int y, int theClickCount)
             StartButtonPressed();
         if (mMenuButton->IsMouseOver())
         {
-            for (int i = 0; i < TOTAL_ACHIEVEMENTS; i++) {
+            for (int i = 0; i < NUM_ACHIEVEMENTS; i++) {
                 if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i]) {
                     mApp->mPlayerInfo->mShownedAchievements[i] = true;
                 }
