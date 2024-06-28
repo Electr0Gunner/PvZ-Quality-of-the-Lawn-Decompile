@@ -730,8 +730,13 @@ void GameSelector::DrawOverlay(Graphics* g)
 		g->ClearClipRect();
 	}
 	mApp->ReanimationGet(mLeafReanimID)->Draw(g);
-	for (int i = 0; i < 3; i++)
-		mApp->ReanimationGet(mFlowerReanimID[i])->Draw(g);
+	
+	for (int i = 0; i < 3; i++){
+		Reanimation* aFlowerReanim = mApp->ReanimationGet(mFlowerReanimID[i]); 
+		if (aFlowerReanim->mTrackInstances[i].mBlendTransform.mFrame == aFlowerReanim->mFrameCount)
+			break;
+		aFlowerReanim->Draw(g);
+	}
 
 	if (mApp->mBetaValidate)
 	{
