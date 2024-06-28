@@ -3676,7 +3676,7 @@ SexyString LawnApp::GetMoneyString(int theAmount)
 	{
 		return StrFormat(_S("$%d,%03d,%03d"), aValue / 1000000, (aValue - aValue / 1000000 * 1000000) / 1000, aValue - aValue / 1000 * 1000);
 	}
-	else if (aValue > 9999)
+	else if (aValue > 999)
 	{
 		return StrFormat(_S("$%d,%03d"), aValue / 1000, aValue - aValue / 1000 * 1000);
 	}

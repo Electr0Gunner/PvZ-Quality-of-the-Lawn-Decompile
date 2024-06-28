@@ -486,7 +486,7 @@ void StoreScreen::Draw(Graphics* g)
     g->SetColor(Color(180, 255, 90));
     g->SetFont(Sexy::FONT_CONTINUUMBOLD14);
     SexyString aCoinLabel = mApp->GetMoneyString(mApp->mPlayerInfo->mCoins);
-    g->DrawString(aCoinLabel, STORESCREEN_COINBANK_X + 111 - Sexy::FONT_CONTINUUMBOLD14->StringWidth(aCoinLabel), STORESCREEN_COINBANK_Y + 24);
+    g->DrawString(aCoinLabel, STORESCREEN_COINBANK_X + 113 - Sexy::FONT_CONTINUUMBOLD14->StringWidth(aCoinLabel), STORESCREEN_COINBANK_Y + 24);
 
     if (!mPrevButton->mDisabled)
     {
@@ -500,7 +500,7 @@ void StoreScreen::Draw(Graphics* g)
         }
 
         SexyString aPageString = TodReplaceNumberString(TodReplaceNumberString(_S("[STORE_PAGE]"), _S("{PAGE}"), mPage + 1), _S("{NUM_PAGES}"), aNumPages);
-        TodDrawString(g, aPageString, STORESCREEN_PAGESTRING_X, STORESCREEN_COINBANK_Y, Sexy::FONT_BRIANNETOD12, Color(80, 80, 80), DS_ALIGN_CENTER);
+        TodDrawString(g, aPageString, STORESCREEN_PAGESTRING_X, STORESCREEN_PAGESTRING_Y, Sexy::FONT_BRIANNETOD12, Color(128, 128, 128), DS_ALIGN_CENTER);
     }
 }
 
