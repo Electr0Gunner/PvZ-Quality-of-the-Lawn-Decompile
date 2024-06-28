@@ -678,6 +678,7 @@ void CutScene::StartLevelIntro()
 	mCutsceneTime = 0;
 	mBoard->mSeedBank->Move(SEED_BANK_OFFSET_X, -IMAGE_SEEDBANK->GetHeight());
 	mBoard->mMenuButton->mBtnNoDraw = true;
+	mBoard->mFastButton->mBtnNoDraw = true;
 	mApp->mSeedChooserScreen->mMouseVisible = false;
 	mApp->mSeedChooserScreen->Move(0, SEED_CHOOSER_OFFSET_Y);
 	mApp->mSeedChooserScreen->mMenuButton->mBtnNoDraw = true;
@@ -1482,9 +1483,12 @@ void CutScene::Update()
 		{
 			mBoard->mMenuButton->mBtnNoDraw = false;
 		}
-
 		ShowShovel();
 		mApp->StartPlaying();
+		if (mBoard->mFastButton && mApp->mGameMode != GAMEMODE_CHALLENGE_ZEN_GARDEN && mApp->mGameMode != GAMEMODE_TREE_OF_WISDOM)
+		{
+			mBoard->mFastButton->mBtnNoDraw = false;
+		}
 		return;
 	}
 
@@ -1496,6 +1500,7 @@ void CutScene::StartZombiesWon()
 {
 	mCutsceneTime = 0;
 	mBoard->mMenuButton->mBtnNoDraw = true;
+	mBoard->mFastButton->mBtnNoDraw = true;
 	mBoard->mShowShovel = false;
 	mApp->mMusic->StopAllMusic();
 	mBoard->StopAllZombieSounds();

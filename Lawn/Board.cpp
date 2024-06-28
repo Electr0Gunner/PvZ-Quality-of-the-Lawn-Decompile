@@ -162,9 +162,7 @@ Board::Board(LawnApp* theApp)
 	mMenuButton = new GameButton(0);
 	mMenuButton->mDrawStoneButton = true;
 	mFastButton = new GameButton(2);
-	mFastButton->mBtnNoDraw = true;
-	mFastButton->mDisabled = true;
-	mFastButton->Resize(740, -90, IMAGE_FASTBUTTON->mWidth, 46);
+	mFastButton->Resize(740, 30, IMAGE_FASTBUTTON->mWidth, 46);
 	mStoreButton = nullptr;
 	mIgnoreMouseUp = false;
 	mPeashootersUsed = false;
@@ -374,9 +372,7 @@ bool Board::LoadGame(const string& theFileName)
 	LoadBackgroundImages();
 	mApp->ClearUpdateBacklog();
 	ResetFPSStats();
-	UpdateLayers();
-	if (mApp->mGameScene == GameScenes::SCENE_PLAYING)
-		mFastButton->mY = 30;
+	UpdateLayers();		
 	return true;
 }
 
@@ -1306,7 +1302,6 @@ void Board::InitSurvivalStage()
 	mApp->ShowSeedChooserScreen();
 	mCutScene->StartLevelIntro();
 	mSeedBank->UpdateWidth();
-	mFastButton->mY = -90;
 
 	for (int i = 0; i < SEEDBANK_MAX; i++)
 	{
@@ -1725,7 +1720,6 @@ void Board::StartLevel()
 		FreezeEffectsForCutscene(false);
 		mApp->mSoundSystem->GamePause(false);
 	}
-	mFastButton->mY = 30;
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE || 
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || 
 		mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM ||
@@ -5170,7 +5164,6 @@ void Board::PuzzleSaveStreak()
 void Board::ZombiesWon(Zombie* theZombie)
 {
 	mApp->isFastMode = false;
-	mFastButton->mBtnNoDraw = true;
 	if (mApp->mGameScene == GameScenes::SCENE_ZOMBIES_WON)
 		return;
 
@@ -7435,13 +7428,11 @@ void Board::DrawTopRightUI(Graphics* g)
 		if (mChallenge->mChallengeState == STATECHALLENGE_ZEN_FADING)
 		{
 			mMenuButton->mY = TodAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, -10, -50, TodCurves::CURVE_EASE_IN_OUT);
-			mFastButton->mY = TodAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, -10, 30, TodCurves::CURVE_EASE_IN_OUT);
 			mStoreButton->mX = TodAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, 678, 800, TodCurves::CURVE_EASE_IN_OUT);
 		}
 		else
 		{
 			mMenuButton->mY = -10;
-			mFastButton->mY = 30;
 			mStoreButton->mX = 678;
 		}
 	}
@@ -7711,8 +7702,7 @@ void Board::DrawUITop(Graphics* g)
 	}
 
 	mMenuButton->Draw(g);
-	if (!mFastButton->mBtnNoDraw)
-		mFastButton->Draw(g);
+	mFastButton->Draw(g);
 
 	if (mTimeStopCounter > 0)
 	{

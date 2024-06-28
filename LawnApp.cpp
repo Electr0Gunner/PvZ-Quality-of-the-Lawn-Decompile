@@ -511,7 +511,6 @@ bool LawnApp::TryLoadGame()
 			DoContinueDialog();
 			return true;
 		}
-
 		KillBoard();
 	}
 
@@ -770,7 +769,6 @@ void LawnApp::DoBackToMain(bool hasSound)
 	KillBoard();
 	mPlayedQuickplay = false;
 	ShowGameSelector();
-	PlaySample(Sexy::SOUND_BUTTONCLICK);
 	if (hasSound)
 		PlaySample(Sexy::SOUND_BUTTONCLICK);
 }
