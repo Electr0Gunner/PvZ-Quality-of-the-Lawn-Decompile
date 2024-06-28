@@ -1568,16 +1568,17 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 			mPlayerInfo->mNeedsMagicTacoReward = 1;
 		}
 
-		if (mBoard->mBackground == BACKGROUND_3_POOL && !mBoard->mPeashootersUsed) {
+		bool isChallengeLevel = IsWallnutBowlingLevel() || IsWhackAZombieLevel() || IsLittleTroubleLevel() || IsBungeeBlitzLevel() || IsStormyNightLevel() || mBoard->HasConveyorBeltSeedBank();
+		if (mBoard->mBackground == BACKGROUND_3_POOL && !mBoard->mPeashootersUsed && !isChallengeLevel) {
 			GetAchievement(DONT_PEA_IN_POOL);
 		}
-		if (mBoard->StageHasRoof() && !mBoard->HasConveyorBeltSeedBank() && !mBoard->mCatapultsUsed) {
+		if (mBoard->StageHasRoof() && !mBoard->mCatapultsUsed && !isChallengeLevel) {
 			GetAchievement(GROUNDED);
 		}
-		if (mBoard->StageIsNight() && !mBoard->mMushroomsUsed) {
+		if (mBoard->StageIsNight() && !mBoard->mMushroomsUsed && !isChallengeLevel) {
 			GetAchievement(NO_FUNGUS_AMONG_US);
 		}
-		if (mBoard->mBackground == BACKGROUND_1_DAY && mBoard->mMushroomsNCoffeeUsed && !mBoard->mUsedNonMushrooms) {
+		if (mBoard->mBackground == BACKGROUND_1_DAY && mBoard->mMushroomsNCoffeeUsed && !mBoard->mUsedNonMushrooms && !isChallengeLevel) {
 			GetAchievement(GOOD_MORNING);
 		}
 	}

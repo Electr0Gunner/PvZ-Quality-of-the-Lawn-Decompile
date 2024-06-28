@@ -74,6 +74,11 @@ void Achievements::InitAchievement()
 	if (aTreeSize >= 100) {
 		GiveAchievement(AchievementType::TOWERING_WISDOM);
 	}
+
+	if (mApp->GetNumTrophies(ChallengePage::CHALLENGE_PAGE_CHALLENGE) >= mApp->GetTotalTrophies(ChallengePage::CHALLENGE_PAGE_CHALLENGE))
+	{
+		GiveAchievement(AchievementType::BEYOND_THE_GRAVE);
+	}
 }
 
 SexyString Achievements::ReturnAchievementName(int theAchivementIndex)
