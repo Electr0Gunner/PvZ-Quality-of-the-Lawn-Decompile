@@ -1712,7 +1712,7 @@ void Board::StartLevel()
 
 	if (mApp->IsSurvivalEndless(mApp->mGameMode) && GetSurvivalFlagsCompleted() >= 20)
 	{
-		mApp->GetAchievement(AchievementType::IMMORTAL);
+		mApp->GetAchievement(AchievementType::ACHIEVEMENT_IMMORTAL);
 	}
 
 	if (mApp->IsSurvivalMode() && mChallenge->mSurvivalStage > 0)
@@ -2747,7 +2747,7 @@ Zombie* Board::AddZombieInRow(ZombieType theZombieType, int theRow, int theFromW
 		return nullptr;
 	}
 	if (theZombieType == ZombieType::ZOMBIE_YETI && !mApp->mPlayedQuickplay)
-		mApp->GetAchievement(ZOMBOLOGIST);
+		mApp->GetAchievement(ACHIEVEMENT_ZOMBOLOGIST);
 	bool aVariant = !Rand(5);
 	Zombie* aZombie = mZombies.DataArrayAlloc();
 	aZombie->ZombieInitialize(theRow, theZombieType, aVariant, nullptr, theFromWave);
@@ -5850,7 +5850,7 @@ void Board::Update()
 	mApp->UpdateDiscordState(mBoardFadeOutCounter >= 0 ? "Finishing" : "Playing");
 
 	if(mSunMoney >= 8000 && !mApp->mPlayedQuickplay)
-		mApp->GetAchievement(SUNNY_DAYS);
+		mApp->GetAchievement(ACHIEVEMENT_SUNNY_DAYS);
 
 	mCutScene->Update();
 	UpdateMousePosition();
@@ -7805,7 +7805,7 @@ void Board::SetMustacheMode(bool theEnableMustache)
 
 	if (mMustacheMode)
 	{
-		mApp->GetAchievement(MUSTACHE_MODE);
+		mApp->GetAchievement(ACHIEVEMENT_MUSTACHE_MODE);
 	}
 
 	Zombie* aZombie = nullptr;

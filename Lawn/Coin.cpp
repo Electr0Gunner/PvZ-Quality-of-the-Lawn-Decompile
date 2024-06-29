@@ -444,7 +444,7 @@ void Coin::ScoreCoin()
             mBoard->mAchievementCoinCount++;
 
             if (mBoard->mAchievementCoinCount >= 30 && !mBoard->mCoinFaded && !mApp->mPlayedQuickplay) {
-                mApp->GetAchievement(PENNY_PINCHER);
+                mApp->GetAchievement(ACHIEVEMENT_PENNY_PINCHER);
             }
         }
     }

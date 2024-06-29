@@ -1568,16 +1568,16 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 
 		bool isChallengeLevel = IsWallnutBowlingLevel() || IsWhackAZombieLevel() || IsLittleTroubleLevel() || IsBungeeBlitzLevel() || IsStormyNightLevel() || mBoard->HasConveyorBeltSeedBank();
 		if (mBoard->mBackground == BACKGROUND_3_POOL && !mBoard->mPeashootersUsed && !isChallengeLevel) {
-			GetAchievement(DONT_PEA_IN_POOL);
+			GetAchievement(ACHIEVEMENT_DONT_PEA_IN_POOL);
 		}
 		if (mBoard->StageHasRoof() && !mBoard->mCatapultsUsed && !isChallengeLevel) {
-			GetAchievement(GROUNDED);
+			GetAchievement(ACHIEVEMENT_GROUNDED);
 		}
 		if (mBoard->StageIsNight() && !mBoard->mMushroomsUsed && !isChallengeLevel) {
-			GetAchievement(NO_FUNGUS_AMONG_US);
+			GetAchievement(ACHIEVEMENT_NO_FUNGUS_AMONG_US);
 		}
 		if (mBoard->mBackground == BACKGROUND_1_DAY && mBoard->mMushroomsNCoffeeUsed && !mBoard->mUsedNonMushrooms && !isChallengeLevel) {
-			GetAchievement(GOOD_MORNING);
+			GetAchievement(ACHIEVEMENT_GOOD_MORNING);
 		}
 	}
 	else if (IsSurvivalMode())
@@ -1633,7 +1633,7 @@ bool LawnApp::UpdatePlayerProfileForFinishingLevel()
 			}
 			else if (aNumTrophies >= GetTotalTrophies(ChallengePage::CHALLENGE_PAGE_CHALLENGE))
 			{
-				GetAchievement(BEYOND_THE_GRAVE);
+				GetAchievement(ACHIEVEMENT_BEYOND_THE_GRAVE);
 			}
 		}
 	}
@@ -1691,7 +1691,7 @@ void LawnApp::CheckForGameEnd()
 		}
 		else if (aLevel == FINAL_LEVEL)
 		{
-			GetAchievement(HOME_SECURITY);
+			GetAchievement(ACHIEVEMENT_HOME_SECURITY);
 			if (mPlayerInfo->mFinishedAdventure == 1)
 			{
 				ShowAwardScreen(AwardType::AWARD_FORLEVEL, true);

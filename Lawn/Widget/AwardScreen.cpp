@@ -150,7 +150,7 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
         mStartButton->SetLabel("[NEXT_LEVEL_BUTTON]");
 
     if (mApp->IsAdventureMode() && mApp->EarnedGoldTrophy()) {
-        mApp->GetAchievement(NOBEL_PEAS_PRIZE);
+        mApp->GetAchievement(ACHIEVEMENT_NOBEL_PEAS_PRIZE);
     }
 
     if (mApp->IsFirstTimeAdventureMode() && aLevel == 25 && mApp->IsTrialStageLocked() && !mApp->mPlayerInfo->mHasSeenUpsell)

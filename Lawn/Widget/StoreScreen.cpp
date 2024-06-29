@@ -788,7 +788,7 @@ void StoreScreen::Update()
         if (mApp->mCrazyDaveMessageIndex == 4004)
         {
             mInCutscene = false;
-            mApp->GetAchievement(AchievementType::MORTICULTURALIST);
+            mApp->GetAchievement(AchievementType::ACHIEVEMENT_MORTICULTURALIST);
         }
     }
 }
