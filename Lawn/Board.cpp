@@ -372,6 +372,8 @@ bool Board::LoadGame(const string& theFileName)
 	mApp->ClearUpdateBacklog();
 	ResetFPSStats();
 	UpdateLayers();		
+	if (mApp->mGameScene == GameScenes::SCENE_PLAYING)
+		mFastButton->mBtnNoDraw = false;
 	return true;
 }
 
