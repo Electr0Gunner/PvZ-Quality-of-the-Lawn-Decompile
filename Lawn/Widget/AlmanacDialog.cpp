@@ -893,7 +893,7 @@ void AlmanacPlayerDefeatedZombie(ZombieType theZombieType)
 
 void AlmanacDialog::MouseWheel(int theDelta)
 {
-	if (mIsOverDescription)
+	if (mIsOverDescription && !mDescriptionSliderDragging)
 	{
 		mDescriptionScroll -= mDescriptionLineSpacing * theDelta;
 		if (mDescriptionScroll < 0)
