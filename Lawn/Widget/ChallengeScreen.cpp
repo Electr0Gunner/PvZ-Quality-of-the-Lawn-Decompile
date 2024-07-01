@@ -205,6 +205,8 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mSlider->Resize(770, 85, 20, 470);
 	mSlider->mVisible = true;
 	mSlider->mThumbOffsetX = -7;
+
+	mApp->mDetails = "In the Challenge Screen";
 }
 
 void ChallengeScreen::SliderVal(int theId, double theVal)
@@ -226,6 +228,7 @@ ChallengeScreen::~ChallengeScreen()
 	for (ButtonWidget* aChallengeButton : mChallengeButtons) delete aChallengeButton;
 	delete mToolTip;
 	delete mSlider;
+	mApp->UpdateDiscordState();
 }
 
 ChallengeDefinition& GetChallengeDefinition(int theChallengeMode)
@@ -379,8 +382,6 @@ bool ChallengeScreen::ShowPageButtons()
 //0x42E710
 void ChallengeScreen::UpdateButtons()
 {
-
-
 	for (int aChallengeMode = 0; aChallengeMode < NUM_CHALLENGE_MODES; aChallengeMode++)
 		mChallengeButtons[aChallengeMode]->mVisible = GetChallengeDefinition(aChallengeMode).mPage == mPageIndex;
 	for (int aPage = 0; aPage < MAX_CHALLANGE_PAGES; aPage++)
@@ -638,18 +639,19 @@ void ChallengeScreen::Update()
 	switch (mPageIndex)
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
-		mApp->mDetails = "In the Minigames Page";
+		mApp->UpdateDiscordState("Mini-games");
 		break;
 	case CHALLENGE_PAGE_LIMBO:
-		mApp->mDetails = "In the Limbo Page";
+		mApp->UpdateDiscordState("Limbo");
 		break;
 	case CHALLENGE_PAGE_SURVIVAL:
-		mApp->mDetails = "In the Survival Page";
+		mApp->UpdateDiscordState("Survival");
 		break;
 	case CHALLENGE_PAGE_PUZZLE:
-		mApp->mDetails = "In the Puzzle Page";
+		mApp->UpdateDiscordState("Puzzle");
 		break;
 	}
+
 	mSlider->mVisible = mMaxScrollPosition > 0.0f;
 
 	if (ShowPages) /// TodAnimateCurve(int theTimeStart, int theTimeEnd, int theTimeAge, int thePositionStart, int thePositionEnd, TodCurves theCurve)
