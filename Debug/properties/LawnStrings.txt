@@ -405,33 +405,41 @@ Dog Zombie
 [PROPELLER_ZOMBIE]
 Propeller Zombie
 
-[PEASHOOTER_DESCRIPTION]
+[PEASHOOTER_DESCRIPTION_HEADER]
 Peashooters are your first line of defense. They shoot peas at attacking zombies.
+
+[PEASHOOTER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {SHORTLINE}
 {FLAVOR}How can a single plant grow and shoot so many peas so quickly? Peashooter says, 
-"Hard work, commitment, and a healthy, well-balanced breakfast of sunlight and high-fiber 
+"Hard work, commitment, and a healthy, well-balanced breakfast of sunlight and high-fiber
 carbon dioxide make it all possible."
 
-[SUNFLOWER_DESCRIPTION]
+[SUNFLOWER_DESCRIPTION_HEADER]
 Sunflowers are essential for you to produce extra sun. Try planting as many as you can!
+
+[SUNFLOWER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Sun production:{STAT} normal
 {SHORTLINE}
 {FLAVOR}Sunflower can't resist bouncing to the beat. Which beat is that? Why, the 
 life-giving jazzy rhythm of the Earth itself, thumping at a frequency only Sunflower can hear.
 
-[WALL_NUT_DESCRIPTION]
+[WALL_NUT_DESCRIPTION_HEADER]
 Wall-nuts have hard shells which you can use to protect your other plants.
+
+[WALL_NUT_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} high
 {SHORTLINE}
 {FLAVOR}"People wonder how I feel about getting constantly chewed on by zombies," says Wall-nut. 
 "What they don't realize is that with my limited senses all I can feel is a kind of tingling, like a relaxing back rub."
 
-[CHERRY_BOMB_DESCRIPTION]
+[CHERRY_BOMB_DESCRIPTION_HEADER]
 Cherry Bombs can blow up all zombies in an area. They have a short fuse so plant them near zombies.
+
+[CHERRY_BOMB_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Range:{STAT} all zombies in a medium area
@@ -440,8 +448,10 @@ Cherry Bombs can blow up all zombies in an area. They have a short fuse so plant
 {FLAVOR}"I wanna explode," says Cherry #1. "No, let's detonate instead!" says 
 his brother, Cherry #2. After intense consultation they agree to explodonate.
 
-[POTATO_MINE_DESCRIPTION]
+[POTATO_MINE_DESCRIPTION_HEADER]
 Potato Mines pack a powerful punch, but they need a while to arm themselves. You should plant them ahead of zombies. They will explode on contact.
+
+[POTATO_MINE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Range:{STAT} all zombies in a small area
@@ -450,8 +460,10 @@ Potato Mines pack a powerful punch, but they need a while to arm themselves. You
 {FLAVOR}Some folks say Potato Mine is lazy, that he leaves everything to the last 
 minute. Potato Mine says nothing. He's too busy thinking about his investment strategy.
 
-[REPEATER_DESCRIPTION]
+[REPEATER_DESCRIPTION_HEADER]
 Repeaters fire two peas at a time.
+
+[REPEATER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal (for each pea)
 {KEYWORD}Firing speed:{STAT} 2x
@@ -459,16 +471,20 @@ Repeaters fire two peas at a time.
 {FLAVOR}Repeater is fierce. He's from the streets. He doesn't take attitude from anybody, 
 plant or zombie, and he shoots peas to keep people at a distance. Secretly, though, Repeater yearns for love.
 
-[SNOW_PEA_DESCRIPTION]
+[SNOW_PEA_DESCRIPTION_HEADER]
 Snow Peas shoot frozen peas that damage and slow the enemy.
+
+[SNOW_PEA_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal, slows zombies
 {SHORTLINE}
 {FLAVOR}Folks often tell Snow Pea how "cool" he is, or exhort him to "chill out." They 
 tell him to "stay frosty." Snow Pea just rolls his eyes. He's heard 'em all.
 
-[CHOMPER_DESCRIPTION]
+[CHOMPER_DESCRIPTION_HEADER]
 Chompers can devour a zombie whole, but they are vulnerable while chewing.
+
+[CHOMPER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Range:{STAT} very short
@@ -478,8 +494,10 @@ Chompers can devour a zombie whole, but they are vulnerable while chewing.
 through when his agent demanded too much on the front end. Chomper's not resentful, 
 though. He says it's just part of the business.
 
-[PUFF_SHROOM_DESCRIPTION]
+[PUFF_SHROOM_DESCRIPTION_HEADER]
 Puff-shrooms are cheap, but can only fire a short distance.
+
+[PUFF_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} short
@@ -488,8 +506,10 @@ Puff-shrooms are cheap, but can only fire a short distance.
 {FLAVOR}"I only recently became aware of the existence of zombies," says Puff-shroom. "Like many fungi, 
 I'd just assumed they were fairy tales or movie monsters. This whole experience has been a huge eye-opener for me."
 
-[SUN_SHROOM_DESCRIPTION]
+[SUN_SHROOM_DESCRIPTION_HEADER]
 Sun-shrooms give small sun at first and normal sun later.
+
+[SUN_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Sun production:{STAT} low, then normal
 {NOCTURNAL}Sleeps during the day
@@ -497,8 +517,10 @@ Sun-shrooms give small sun at first and normal sun later.
 {FLAVOR}Sun-shroom hates sun. He hates it so much that when it builds up in his system, 
 he spits it out as fast as he can. He just won't abide it. To him, sun is crass.
 
-[FUME_SHROOM_DESCRIPTION]
+[FUME_SHROOM_DESCRIPTION_HEADER]
 Fume-shrooms shoot fumes that can pass through screen doors.
+
+[FUME_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal, penetrates screen doors
 {KEYWORD}Range:{STAT} all zombies in the fume cloud
@@ -507,8 +529,10 @@ Fume-shrooms shoot fumes that can pass through screen doors.
 {FLAVOR}"I was in a dead-end job producing yeast spores for a bakery," says Fume-shroom. 
 "Then Puff-shroom, bless 'im, told me about this great opportunity blasting zombies. Now I really feel like I'm making a difference."
 
-[GRAVE_BUSTER_DESCRIPTION]
+[GRAVE_BUSTER_DESCRIPTION_HEADER]
 Plant Grave Busters on graves to remove the graves.
+
+[GRAVE_BUSTER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Usage:{STAT} single use, must be planted on graves
 {KEYWORD}Special:{STAT} removes graves
@@ -516,8 +540,10 @@ Plant Grave Busters on graves to remove the graves.
 {FLAVOR}Despite Grave Buster's fearsome appearance, he wants everyone to know that he loves 
 kittens and spends his off hours volunteering at a local zombie rehabilitation center. "It's just the right thing to do," he says.
 
-[HYPNO_SHROOM_DESCRIPTION]
+[HYPNO_SHROOM_DESCRIPTION_HEADER]
 When eaten, Hypno-shrooms will make a zombie turn around and fight for you.
+
+[HYPNO_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Usage:{STAT} single use, on contact
 {KEYWORD}Special:{STAT} makes a zombie fight for you
@@ -526,8 +552,10 @@ When eaten, Hypno-shrooms will make a zombie turn around and fight for you.
 {FLAVOR}"Zombies are our friends," asserts Hypno-shroom. "They're badly misunderstood creatures 
 who play a valuable role in our ecology. We can and should do more to bring them round to our way of thinking."
 
-[SCAREDY_SHROOM_DESCRIPTION]
+[SCAREDY_SHROOM_DESCRIPTION_HEADER]
 Scaredy-shrooms are long-ranged shooters that hide when enemies get near them.
+
+[SCAREDY_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Special:{STAT} stops shooting when enemy is close
@@ -535,8 +563,10 @@ Scaredy-shrooms are long-ranged shooters that hide when enemies get near them.
 {SHORTLINE}
 {FLAVOR}"Who's there?" whispers Scaredy-shroom, voice barely audible. "Go away. I don't want to see anybody. Unless it's the man from the circus."
 
-[ICE_SHROOM_DESCRIPTION]
+[ICE_SHROOM_DESCRIPTION_HEADER]
 Ice-shrooms temporarily immobilize all zombies on the screen.
+
+[ICE_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} very light, immobilizes zombies
 {KEYWORD}Range:{STAT} all zombies on the screen
@@ -545,8 +575,10 @@ Ice-shrooms temporarily immobilize all zombies on the screen.
 {SHORTLINE}
 {FLAVOR}Ice-shroom frowns, not because he's unhappy or because he disapproves, but because of a childhood injury that left his facial nerves paralyzed.
 
-[DOOM_SHROOM_DESCRIPTION]
+[DOOM_SHROOM_DESCRIPTION_HEADER]
 Doom-shrooms destroy everything in a large area and leave a crater that can't be planted on.
+
+[DOOM_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Range:{STAT} all zombies in a huge area
@@ -556,8 +588,10 @@ Doom-shrooms destroy everything in a large area and leave a crater that can't be
 {SHORTLINE}
 {FLAVOR}"You're lucky I'm on your side," says Doom-shroom. "I could destroy everything you hold dear. It wouldn't be hard."
 
-[LILY_PAD_DESCRIPTION]
+[LILY_PAD_DESCRIPTION_HEADER]
 Lily pads let you plant non-aquatic plants on top of them.
+
+[LILY_PAD_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Special:{STAT} non-aquatic plants can be planted on top of it
 {AQUATIC}Must be planted in water
@@ -565,8 +599,10 @@ Lily pads let you plant non-aquatic plants on top of them.
 {FLAVOR}Lily Pad never complains. Lily Pad never wants to know what's going on. Put a plant on top of Lily Pad, 
 he won't say a thing. Does he have startling opinions or shocking secrets? Nobody knows. Lily Pad keeps it all inside.
 
-[SQUASH_DESCRIPTION]
+[SQUASH_DESCRIPTION_HEADER]
 Squashes will smash the first zombie that gets close to it.
+
+[SQUASH_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Range:{STAT} short range, hits all zombies that it lands on
@@ -574,8 +610,10 @@ Squashes will smash the first zombie that gets close to it.
 {SHORTLINE}
 {FLAVOR}"I'm ready!" yells Squash. "Let's do it! Put me in! There's nobody better! I'm your guy! C'mon! Whaddya waiting for? I need this!"
 
-[THREEPEATER_DESCRIPTION]
+[THREEPEATER_DESCRIPTION_HEADER]
 Threepeaters shoot peas in three lanes.
+
+[THREEPEATER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal (for each pea)
 {KEYWORD}Range:{STAT} three lanes
@@ -583,8 +621,10 @@ Threepeaters shoot peas in three lanes.
 {FLAVOR}Threepeater likes reading, backgammon and long periods of immobility in the park. Threepeater enjoys 
 going to shows, particularly modern jazz. "I'm just looking for that special someone," he says. Threepeater's favorite number is 5.
 
-[TANGLE_KELP_DESCRIPTION]
+[TANGLE_KELP_DESCRIPTION_HEADER]
 Tangle Kelp are aquatic plants that pull the first zombie that nears them underwater.
+
+[TANGLE_KELP_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Usage:{STAT} single use, on contact
@@ -593,8 +633,10 @@ Tangle Kelp are aquatic plants that pull the first zombie that nears them underw
 {FLAVOR}"I'm totally invisible," Tangle Kelp thinks to himself. "I'll hide here just below the surface and 
 nobody will see me." His friends tell him they can see him perfectly well, but he'll never change.
 
-[JALAPENO_DESCRIPTION]
+[JALAPENO_DESCRIPTION_HEADER]
 Jalapenos destroy an entire lane of zombies.
+
+[JALAPENO_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} massive
 {KEYWORD}Range:{STAT} all zombies in a lane
@@ -603,8 +645,10 @@ Jalapenos destroy an entire lane of zombies.
 {FLAVOR}"NNNNNGGGGGG!!!!!!!!" Jalapeno says. He's not going to explode, not this time. But soon. Oh, so soon. 
 It's close. He knows it, he can feel it, his whole life's been leading up to this moment.
 
-[SPIKEWEED_DESCRIPTION]
+[SPIKEWEED_DESCRIPTION_HEADER]
 Spikeweeds pop tires and hurt any zombies that step on them.
+
+[SPIKEWEED_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} all zombies that walk over it
@@ -613,16 +657,20 @@ Spikeweeds pop tires and hurt any zombies that step on them.
 {FLAVOR}Hockey is Spikeweed's obsession. He's got box seat season tickets. He keeps close track of his favorite 
 players. And he consistently cleans up in the office hockey pool. Just one problem: he's terrified of pucks.
 
-[TORCHWOOD_DESCRIPTION]
+[TORCHWOOD_DESCRIPTION_HEADER]
 Torchwoods turn peas that pass through them into fireballs that deal twice as much damage.
+
+[TORCHWOOD_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Special:{STAT} doubles the damage of peas that pass through it.  Fireballs deal damage to nearby zombies on impact
 {SHORTLINE}
 {FLAVOR}Everybody likes and respects Torchwood. They like him for his integrity, for his steadfast friendship, 
 for his ability to greatly maximize pea damage. But Torchwood has a secret: he can't read.
 
-[TALL_NUT_DESCRIPTION]
+[TALL_NUT_DESCRIPTION_HEADER]
 Tall-nuts are heavy-duty wall plants that can't be vaulted over.
+
+[TALL_NUT_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} very high
 {KEYWORD}Special:{STAT} can't be vaulted or jumped over
@@ -631,8 +679,10 @@ Tall-nuts are heavy-duty wall plants that can't be vaulted over.
 laugh. "How could there be anything between us? We are brothers. If you knew what Wall-nut has done for me..." 
 Tall-nut's voice trails off and he smiles knowingly.
 
-[SEA_SHROOM_DESCRIPTION]
+[SEA_SHROOM_DESCRIPTION_HEADER]
 Sea-shrooms are aquatic plants that shoot short ranged spores.
+
+[SEA_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} short
@@ -641,8 +691,10 @@ Sea-shrooms are aquatic plants that shoot short ranged spores.
 {SHORTLINE}
 {FLAVOR}Sea-shroom has never seen the sea. It's in his name, he's heard loads about it, but he's just never found the time. One day, though, it'll go down.
 
-[PLANTERN_DESCRIPTION]
+[PLANTERN_DESCRIPTION_HEADER]
 Planterns light up an area, letting you see through fog.
+
+[PLANTERN_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Range:{STAT} one lane
 {KEYWORD}Special:{STAT} lets you see through fog
@@ -651,8 +703,10 @@ Planterns light up an area, letting you see through fog.
 darkness and excretes light. Plantern's cagey about how he does it. "I'm not gonna say 'sorcery,' I 
 wouldn't use the term 'dark forces,' I just... I think I've said enough."
 
-[CACTUS_DESCRIPTION]
+[CACTUS_DESCRIPTION_HEADER]
 Cactuses shoot spikes that can hit both ground and air targets.
+
+[CACTUS_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} ground and air
@@ -661,8 +715,10 @@ Cactuses shoot spikes that can hit both ground and air targets.
 She just wants to hug and be hugged. Most folks can't hang with that, but Cactus doesn't mind. She's 
 been seeing an armadillo for a while and it really seems to be working out.
 
-[BLOVER_DESCRIPTION]
+[BLOVER_DESCRIPTION_HEADER]
 Blovers blow away all balloon zombies and fog.
+
+[BLOVER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Usage:{STAT} single use, instant
 {KEYWORD}Special:{STAT} blows away all balloon zombies
@@ -671,8 +727,10 @@ Blovers blow away all balloon zombies and fog.
 but was able to extinguish only 60% of the candles. Instead of giving up, though, he's used that early 
 defeat as a catalyst to push himself harder ever since.
 
-[SPLIT_PEA_DESCRIPTION]
+[SPLIT_PEA_DESCRIPTION_HEADER]
 Split Peas shoot peas forward and backwards.
+
+[SPLIT_PEA_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} forward and backwards
@@ -681,8 +739,10 @@ Split Peas shoot peas forward and backwards.
 {FLAVOR}"Yeah, I'm a Gemini," says Split Pea. "I know, big surprise. But having two heads --or really, 
 one head with a large head-like growth on the back-- pays off big in my line of work."
 
-[STARFRUIT_DESCRIPTION]
+[STARFRUIT_DESCRIPTION_HEADER]
 Starfruits shoot stars in 5 directions.
+
+[STARFRUIT_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} 5 directions
@@ -690,8 +750,10 @@ Starfruits shoot stars in 5 directions.
 {FLAVOR}"Aw, man," says Starfruit. "I went to the dentist the other day and he said I have four cavities. 
 I've got --count it-- ONE tooth! Four cavities in one tooth? How does this happen?"
 
-[PUMPKIN_DESCRIPTION]
+[PUMPKIN_DESCRIPTION_HEADER]
 Pumpkins protect plants that are within their shells.
+
+[PUMPKIN_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} high
 {KEYWORD}Special:{STAT} can be planted over another plant
@@ -699,8 +761,10 @@ Pumpkins protect plants that are within their shells.
 {FLAVOR}Pumpkin hasn't heard from his cousin Renfield lately. Apparently Renfield's a big star, some kind 
 of... what was it... sports hero? Peggle Master? Pumpkin doesn't really get it. He just does his job.
 
-[MAGNET_SHROOM_DESCRIPTION]
+[MAGNET_SHROOM_DESCRIPTION_HEADER]
 Magnet-shrooms remove helmets and other metal objects from zombies.
+
+[MAGNET_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Range:{STAT} nearby zombies
 {KEYWORD}Special:{STAT} removes metal objects from zombies
@@ -709,8 +773,10 @@ Magnet-shrooms remove helmets and other metal objects from zombies.
 {FLAVOR}Magnetism is a powerful force. Very powerful. Sometimes it scares Magnet-shroom a little. He's 
 not sure if he can handle that kind of responsibility.
 
-[CABBAGE_PULT_DESCRIPTION]
+[CABBAGE_PULT_DESCRIPTION_HEADER]
 Cabbage-pults hurl cabbages at the enemy.
+
+[CABBAGE_PULT_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal
 {KEYWORD}Range:{STAT} lobbed
@@ -718,15 +784,19 @@ Cabbage-pults hurl cabbages at the enemy.
 {FLAVOR}Cabbage-pult is okay with launching cabbages at zombies. It's what he's paid for, after all, and 
 he's good at it. He just doesn't understand how the zombies get up on the roof in the first place.
 
-[FLOWER_POT_DESCRIPTION]
+[FLOWER_POT_DESCRIPTION_HEADER]
 Flower Pots let you plant on the roof.
+
+[FLOWER_POT_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Special:{STAT} allows you to plant on the roof
 {SHORTLINE}
 {FLAVOR}"I'm a pot for planting. Yet I'm also a plant. HAS YOUR MIND EXPLODED YET?"
 
-[KERNEL_PULT_DESCRIPTION]
+[KERNEL_PULT_DESCRIPTION_HEADER]
 Kernel-pults fling corn kernels and butter at zombies.
+
+[KERNEL_PULT_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} light (kernel), normal (butter)
 {KEYWORD}Range:{STAT} lobbed
@@ -735,8 +805,10 @@ Kernel-pults fling corn kernels and butter at zombies.
 {FLAVOR}Kernel-Pult is the eldest of the Pult brothers. Of the three of them, Kernel is the only one 
 who consistently remembers the others' birthdays. He bugs them about it a little, too.
 
-[COFFEE_BEAN_DESCRIPTION]
+[COFFEE_BEAN_DESCRIPTION_HEADER]
 Use Coffee Beans to wake up sleeping mushrooms.
+
+[COFFEE_BEAN_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Usage:{STAT} single use, instant
 {KEYWORD}Special:{STAT} can be planted over another plant, wakes up mushrooms
@@ -744,8 +816,10 @@ Use Coffee Beans to wake up sleeping mushrooms.
 {FLAVOR}"Hey, guys, hey!" says Coffee Bean. "Hey! What's up? Who's that? Hey! Didja see that thing? 
 What thing? Whoa! Lions!" Yep, Coffee Bean sure does get excited.
 
-[GARLIC_DESCRIPTION]
+[GARLIC_DESCRIPTION_HEADER]
 Garlic diverts zombies into other lanes.
+
+[GARLIC_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Usage:{STAT} on contact
 {KEYWORD}Special:{STAT} diverts zombies into other lanes
@@ -754,16 +828,20 @@ Garlic diverts zombies into other lanes.
 in Redirection from the Brussels University. He'll talk all day about lane vectors and repulse arrays. 
 He even pushes things into alternate avenues at home. Somehow his wife puts up with it.
 
-[UMBRELLA_LEAF_DESCRIPTION]
+[UMBRELLA_LEAF_DESCRIPTION_HEADER]
 Umbrella Leaves protect nearby plants from bungees and catapults.
+
+[UMBRELLA_LEAF_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Special:{STAT} protects adjacent plants from bungees and catapults
 {SHORTLINE}
 {FLAVOR}"SPROING!" says Umbrella Leaf. "Didja like that? I can do it again. SPROING! Woo! That's me 
 popping up to protect stuff around me. Yeah. Just like that. EXACTLY like that. Believe it."
 
-[MARIGOLD_DESCRIPTION]
+[MARIGOLD_DESCRIPTION_HEADER]
 Marigolds give you silver and gold coins.
+
+[MARIGOLD_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Special:{STAT} gives coins
 {SHORTLINE}
@@ -771,8 +849,10 @@ Marigolds give you silver and gold coins.
 thinks about it, weighs the angles. She does solid research and keeps up with current publications. 
 That's how winners stay ahead.
 
-[MELON_PULT_DESCRIPTION]
+[MELON_PULT_DESCRIPTION_HEADER]
 Melon-pults do heavy damage to groups of zombies.
+
+[MELON_PULT_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} heavy
 {KEYWORD}Range:{STAT} lobbed
@@ -781,8 +861,10 @@ Melon-pults do heavy damage to groups of zombies.
 {FLAVOR}There's no false modesty with Melon-pult. "Sun-for-damage, I deliver the biggest punch on 
 the lawn," he says. "I'm not bragging. Run the numbers. You'll see."
 
-[GATLING_PEA_DESCRIPTION]
+[GATLING_PEA_DESCRIPTION_HEADER]
 Gatling Peas shoot four peas at a time.
+
+[GATLING_PEA_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} normal (for each pea)
 {KEYWORD}Firing Speed:{STAT} 4x
@@ -792,8 +874,10 @@ Gatling Peas shoot four peas at a time.
 "But honey, it's so dangerous!" they said in unison. Gatling Pea refused to budge. "Life is dangerous," 
 he replied, eyes glinting with steely conviction.
 
-[TWIN_SUNFLOWER_DESCRIPTION]
+[TWIN_SUNFLOWER_DESCRIPTION_HEADER]
 Twin Sunflowers give twice as much sun as a normal sunflower.
+
+[TWIN_SUNFLOWER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Sun production:{STAT} double
 {KEYWORD}Must be planted on sunflowers
@@ -802,8 +886,10 @@ Twin Sunflowers give twice as much sun as a normal sunflower.
 crashed overhead, strange lights flickered, even the very roaring wind seemed to hiss its angry denial. 
 But to no avail. Twin Sunflower was alive, ALIVE!
 
-[GLOOM_SHROOM_DESCRIPTION]
+[GLOOM_SHROOM_DESCRIPTION_HEADER]
 Gloom-shrooms release heavy fumes in an area around themselves.
+
+[GLOOM_SHROOM_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Must be planted on fume-shrooms
 {SHORTLINE}
@@ -811,8 +897,10 @@ Gloom-shrooms release heavy fumes in an area around themselves.
 cool with that. They say it's rude or that it smells bad. All I can say is, would you rather have your 
 brain eaten by zombies?"
 
-[CATTAIL_DESCRIPTION]
+[CATTAIL_DESCRIPTION_HEADER]
 Cattails can attack any lane and shoot down balloon zombies too.
+
+[CATTAIL_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Must be planted on lily pads
 {SHORTLINE}
@@ -820,8 +908,10 @@ Cattails can attack any lane and shoot down balloon zombies too.
 like a cat just because the word 'cat' is in my name and I also look like a cat? That's not how things 
 work around here. I refuse to be pigeonholed."
 
-[WINTER_MELON_DESCRIPTION]
+[WINTER_MELON_DESCRIPTION_HEADER]
 Winter Melons do heavy damage and slow groups of zombies.
+
+[WINTER_MELON_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Damage:{STAT} very heavy
 {KEYWORD}Range:{STAT} lobbed
@@ -831,8 +921,10 @@ Winter Melons do heavy damage and slow groups of zombies.
 {SHORTLINE}
 {FLAVOR}Winter Melon tries to calm his nerves. He hears the zombies approach. Will he make it? Will anyone make it?
 
-[GOLD_MAGNET_DESCRIPTION]
+[GOLD_MAGNET_DESCRIPTION_HEADER]
 Gold Magnets collect coins and diamonds for you.
+
+[GOLD_MAGNET_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Must be planted on magnet-shrooms
 {SHORTLINE}
@@ -840,8 +932,10 @@ Gold Magnets collect coins and diamonds for you.
 benefits, stock options. I was gonna be Vice President of Midwestern Operations. Now I'm here, on this 
 lawn, in serious danger of being eaten to death. Ooh! A coin!"
 
-[COB_CANNON_DESCRIPTION]
+[COB_CANNON_DESCRIPTION_HEADER]
 Click on the Cob Cannon to launch deadly cobs of corn.
+
+[COB_CANNON_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Must be planted on 2 side-by-side kernel-pults
 {SHORTLINE}
@@ -849,14 +943,18 @@ Click on the Cob Cannon to launch deadly cobs of corn.
 New York firm. He can explode whole areas of zombies with a single corn-launch. All this is common knowledge. 
 But deep inside, what really makes him tick?
 
-[IMITATER_DESCRIPTION]
+[IMITATER_DESCRIPTION_HEADER]
 Imitaters let you use two of the same plant during a level!
+
+[IMITATER_DESCRIPTION]
 {SHORTLINE}
 {FLAVOR}"I remember the Zombie Wars back in '76," says Imitater in a raspy, old-man's voice. "Back then, 
 we didn't have all these fancy peashooters and jalapenos. All we had was guts. Guts and a spoon."
 
-[SPIKEROCK_DESCRIPTION]
+[SPIKEROCK_DESCRIPTION_HEADER]
 Spikerocks pop multiple tires and damage zombies that walk over it.
+
+[SPIKEROCK_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Must be planted on spikeweeds
 {SHORTLINE}
@@ -864,32 +962,40 @@ Spikerocks pop multiple tires and damage zombies that walk over it.
 really broadened his horizons. He never knew they made museums so big, or put so many paintings in them. 
 That was a big surprise for him.
 
-[ZOMBIE_DESCRIPTION]
+[ZOMBIE_DESCRIPTION_HEADER]
 Regular Garden-variety Zombie
+
+[ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {SHORTLINE}
 {FLAVOR}This zombie loves brains. Can't get enough. Brains, brains, brains, day in and night out. 
 Old and stinky brains? Rotten brains? Brains clearly past their prime? Doesn't matter. Regular zombie wants 'em. 
 
-[FLAG_ZOMBIE_DESCRIPTION]
+[FLAG_ZOMBIE_DESCRIPTION_HEADER]
 Flag Zombie marks the arrival of a huge pile or "wave" of zombies.
+
+[FLAG_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {SHORTLINE}
 {FLAVOR}Make no mistake, Flag Zombie loves brains. But somewhere down the line he also picked 
 up a fascination with flags. Maybe it's because the flags always have brains on them. Hard to say.
 
-[CONEHEAD_ZOMBIE_DESCRIPTION]
+[CONEHEAD_ZOMBIE_DESCRIPTION_HEADER]
 His traffic cone headpiece makes him twice as tough as normal zombies.
+
+[CONEHEAD_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {640}
 {SHORTLINE}
 {FLAVOR}Conehead Zombie shuffled mindlessly forward like every other zombie.
 But something made him stop, made him pick up a traffic cone and stick it on his head. Oh yeah. He likes to party.
 
-[BUCKETHEAD_ZOMBIE_DESCRIPTION]
+[BUCKETHEAD_ZOMBIE_DESCRIPTION_HEADER]
 His bucket hat makes him extremely resistant to damage.
+
+[BUCKETHEAD_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} high {1370}
 {KEYMETAL}Weakness:{METAL} magnet-shroom
@@ -897,8 +1003,10 @@ His bucket hat makes him extremely resistant to damage.
 {FLAVOR}Buckethead Zombie always wore a bucket. Part of it was to assert his uniqueness 
 in an uncaring world. Mostly he just forgot it was there in the first place.
 
-[POLE_VAULTING_ZOMBIE_DESCRIPTION]
+[POLE_VAULTING_ZOMBIE_DESCRIPTION_HEADER]
 Pole Vaulting Zombie vaults with a pole.
+
+[POLE_VAULTING_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {500}
 {KEYWORD}Speed:{STAT} fast, then normal (after jump)
@@ -907,8 +1015,10 @@ Pole Vaulting Zombie vaults with a pole.
 {FLAVOR}Some zombies take it further, aspire more, push themselves beyond the 
 normal into greatness. That's Pole Vaulting Zombie right there. That is so him.
 
-[NEWSPAPER_ZOMBIE_DESCRIPTION]
+[NEWSPAPER_ZOMBIE_DESCRIPTION_HEADER]
 His newspaper provides limited defense.
+
+[NEWSPAPER_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {KEYWORD}Newspaper Toughness:{STAT} low {150}
@@ -916,8 +1026,10 @@ His newspaper provides limited defense.
 {SHORTLINE}
 {FLAVOR}Newspaper Zombie was *this* close to finishing his sudoku puzzle. No wonder he's freaking out.
 
-[SCREEN_DOOR_ZOMBIE_DESCRIPTION]
+[SCREEN_DOOR_ZOMBIE_DESCRIPTION_HEADER]
 His screen door is an effective shield.
+
+[SCREEN_DOOR_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {KEYWORD}Screen Door Toughness:{STAT} high {1100}
@@ -925,8 +1037,10 @@ His screen door is an effective shield.
 {SHORTLINE}
 {FLAVOR}He got his screen door from the last inexpertly defended home he visited, after he ATE THE HOMEOWNER'S BRAINS.
 
-[FOOTBALL_ZOMBIE_DESCRIPTION]
+[FOOTBALL_ZOMBIE_DESCRIPTION_HEADER]
 Football Zombie makes the big plays.
+
+[FOOTBALL_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} very high {1670}
 {KEYWORD}Speed:{STAT} fast
@@ -935,24 +1049,30 @@ Football Zombie makes the big plays.
 {FLAVOR}Football Zombie gives 110 percent whenever he's on the field. He's a team player 
 who delivers both offensively and defensively. He has no idea what a football is.
 
-[DANCING_ZOMBIE_DESCRIPTION]
+[DANCING_ZOMBIE_DESCRIPTION_HEADER]
 Any resemblance between Dancing Zombie and persons living or dead is purely coincidental.
+
+[DANCING_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {500}
 {KEYWORD}Special:{STAT} summons back-up dancers
 {SHORTLINE}
 {FLAVOR}Dancing Zombie's latest album, "GrarrBRAINSarblarbl," is already rocketing up the undead charts.
 
-[BACKUP_DANCER_DESCRIPTION]
+[BACKUP_DANCER_DESCRIPTION_HEADER]
 These zombies appear in sets of four whenever Dancing Zombie rocks out.
+
+[BACKUP_DANCER_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {SHORTLINE}
 {FLAVOR}Backup Dancer Zombie spent six years perfecting his art at the Chewliard 
 Performing Arts School in Zombie New York City.
 
-[DUCKY_TUBE_ZOMBIE_DESCRIPTION]
+[DUCKY_TUBE_ZOMBIE_DESCRIPTION_HEADER]
 The ducky tube allows this zombie to float on water.
+
+[DUCKY_TUBE_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {AQUATIC}Only appears in the pool
@@ -960,8 +1080,10 @@ The ducky tube allows this zombie to float on water.
 {FLAVOR}It takes a certain kind of zombie to be a Ducky Tuber. Not every zombie can handle it. 
 Some crack. They can't take it. They walk away and give up on brains forever.
 
-[SNORKEL_ZOMBIE_DESCRIPTION]
+[SNORKEL_ZOMBIE_DESCRIPTION_HEADER]
 Snorkel zombies can swim underwater.
+
+[SNORKEL_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {KEYWORD}Special:{STAT} submerges to avoid attacks
@@ -970,15 +1092,20 @@ Snorkel zombies can swim underwater.
 {FLAVOR}Zombies don't breathe. They don't need air. So why does Snorkel Zombie need a snorkel to swim underwater?{KEYWORD}
 {FLAVOR}Answer: peer pressure.
 
+[ZOMBONI_DESCRIPTION_HEADER]
+The Zomboni applies ice, steam and pressure to your plants.
+
 [ZOMBONI_DESCRIPTION]
+{SHORTLINE}
 {KEYWORD}Toughness:{STAT} high {1350}
 {KEYWORD}Special:{STAT} crushes plants, leaves an ice trail
-{FLAVOR}Not to be mistaken for a Zamboni  brand ice resurfacing machine. Zamboni  and the image of the ice-resurfacing
-machine are registered trademarks of Frank J. Zamboni & Co., Inc., and "Zomboni" is used with permission. For all
-your non-zombie related ice resurfacing needs, visit www.zamboni.com!
+{SHORTLINE}
+{FLAVOR}Not to be mistaken for a Zamboni® brand ice resurfacing machine.  Zamboni® and the image of the ice-resurfacing machine are registered trademarks of Frank J. Zamboni & Co., Inc., and "Zomboni" is used with permission.  For all your non-zombie-related ice resurfacing needs, visit www.zamboni.com!
+
+[ZOMBIE_BOBSLED_TEAM_DESCRIPTION_HEADER]
+These zombies appear in teams of four.
 
 [ZOMBIE_BOBSLED_TEAM_DESCRIPTION]
-These zombies appear in teams of four.
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low (each zombie) {270}
 {KEYWORD}Bobsled Toughness:{STAT} low {300}
@@ -987,8 +1114,10 @@ These zombies appear in teams of four.
 {FLAVOR}Zombie Bobsled Team worked hard to get where they are. They live together, eat brains 
 together and train together to become a cohesive zombie unit.
 
-[DOLPHIN_RIDER_ZOMBIE_DESCRIPTION]
+[DOLPHIN_RIDER_ZOMBIE_DESCRIPTION_HEADER]
 Dolphin Rider Zombies use dolphins to exploit weaknesses in your pool defense.
+
+[DOLPHIN_RIDER_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {500}
 {KEYWORD}Speed:{STAT} fast, then slow (after jump)
@@ -997,8 +1126,10 @@ Dolphin Rider Zombies use dolphins to exploit weaknesses in your pool defense.
 {SHORTLINE}
 {FLAVOR}The dolphin is also a zombie.
 
-[ZOMBIE_YETI_DESCRIPTION]
+[ZOMBIE_YETI_DESCRIPTION_HEADER]
 A rare and curious creature.
+
+[ZOMBIE_YETI_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} high {1350}
 {KEYWORD}Special:{STAT} runs away after a short while
@@ -1006,8 +1137,10 @@ A rare and curious creature.
 {FLAVOR}Little is known about the Zombie Yeti other than his name, birth date, social security number, 
 educational history, past work experience and sandwich preference (roast beef and Swiss).
 
-[JACK_IN_THE_BOX_ZOMBIE_DESCRIPTION]
+[JACK_IN_THE_BOX_ZOMBIE_DESCRIPTION_HEADER]
 This zombie carries an explosive surprise.
+
+[JACK_IN_THE_BOX_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {500}
 {KEYWORD}Speed:{STAT} fast
@@ -1016,8 +1149,10 @@ This zombie carries an explosive surprise.
 {SHORTLINE}
 {FLAVOR}This zombie shivers, not because he's cold but because he's crazy.
 
-[BALLOON_ZOMBIE_DESCRIPTION]
+[BALLOON_ZOMBIE_DESCRIPTION_HEADER]
 Balloon Zombie floats above the fray, immune to most attacks.
+
+[BALLOON_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {KEYWORD}Special:{STAT} flying
@@ -1026,8 +1161,10 @@ Balloon Zombie floats above the fray, immune to most attacks.
 {FLAVOR}Balloon Zombie really lucked out. The balloon thing really works and 
 none of the other zombies have picked up on it.
 
-[DIGGER_ZOMBIE_DESCRIPTION]
+[DIGGER_ZOMBIE_DESCRIPTION_HEADER]
 This zombie digs to bypass your defenses.
+
+[DIGGER_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {370}
 {KEYWORD}Speed:{STAT} fast, then slow
@@ -1036,8 +1173,10 @@ This zombie digs to bypass your defenses.
 {SHORTLINE}
 {FLAVOR}Digger Zombie spends three days a week getting his excavation permits in order.
 
-[POGO_ZOMBIE_DESCRIPTION]
+[POGO_ZOMBIE_DESCRIPTION_HEADER]
 Pogo Zombie hops to bypass your defenses.
+
+[POGO_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {500}
 {KEYWORD}Special:{STAT} hops over plants
@@ -1045,16 +1184,20 @@ Pogo Zombie hops to bypass your defenses.
 {SHORTLINE}
 {FLAVOR}Sproing! Sproing! Sproing! That's the sound of a powerful and effective zombie doing what he does best.
 
-[BUNGEE_ZOMBIE_DESCRIPTION]
+[BUNGEE_ZOMBIE_DESCRIPTION_HEADER]
 Bungee Zombie attacks from above.
+
+[BUNGEE_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {400}
 {KEYWORD}Special:{STAT} descends from the sky and steals a plant
 {SHORTLINE}
 {FLAVOR}Bungee Zombie loves to take risks. After all, what's the point of being dead if you don't live a little?
 
-[LADDER_ZOMBIE_DESCRIPTION]
+[LADDER_ZOMBIE_DESCRIPTION_HEADER]
 Ladder Zombie climbs over obstacles.
+
+[LADDER_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {500}
 {KEYWORD}Ladder Toughness:{STAT} medium {500}
@@ -1063,8 +1206,10 @@ Ladder Zombie climbs over obstacles.
 {SHORTLINE}
 {FLAVOR}He picked the ladder up for $8.99.
 
-[CATAPULT_ZOMBIE_DESCRIPTION]
+[CATAPULT_ZOMBIE_DESCRIPTION_HEADER]
 Catapult Zombie operates heavy machinery.
+
+[CATAPULT_ZOMBIE_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} medium {850}
 {KEYWORD}Special:{STAT} lobs basketballs at your plants
@@ -1072,32 +1217,40 @@ Catapult Zombie operates heavy machinery.
 {FLAVOR}Of all the things Catapult Zombie could launch with his catapult, basketballs seemed 
 like the best and most obvious choice.
 
-[GARGANTUAR_DESCRIPTION]
+[GARGANTUAR_DESCRIPTION_HEADER]
 Gargantuar is a gigantic zombie.
+
+[GARGANTUAR_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} extremely high {3000}
 {SHORTLINE}
 {FLAVOR}When Gargantuar walks, the earth trembles. When he moans, other zombies fall silent.
 He is the zombie other zombies dream they could be. But he still can't find a girlfriend. 
 
-[IMP_DESCRIPTION]
+[IMP_DESCRIPTION_HEADER]
 Imps are tiny zombies hurled by Gargantuar deep into your defenses.
+
+[IMP_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {SHORTLINE}
 {FLAVOR}Imp may be small, but he's wiry. He's proficient in zombie judo, zombie karate 
 and zombie bare-knuckle brawling. He also plays the melodica.
 
-[BOSS_DESCRIPTION]
+[BOSS_DESCRIPTION_HEADER]
 Dr. Zomboss rules them all.
+
+[BOSS_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness (in Zombot shell):{STAT} extreme
 {SHORTLINE}
 {FLAVOR}Edgar George Zomboss achieved his Doctorate in Thanatology in only two years. Quickly mastering 
 thanatological technology, he built his fearsome Zombot and set about establishing absolute dominance of his local subdivision.
 
-[REDEYED_GARGANTUAR_DESCRIPTION]
+[REDEYED_GARGANTUAR_DESCRIPTION_HEADER]
 Giga-Gargantuar is the most feared zombie of them all.
+
+[REDEYED_GARGANTUAR_DESCRIPTION]
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} extremely high {6000}
 {SHORTLINE}

@@ -10143,18 +10143,13 @@ void Board::DrawHealthbar(Graphics* g, Rect rect, Color maxColor, int maxNumber,
 	TodDrawString(g, text, barX + (barWidth / 2), barY - textOffsetY, textFont, textColor, DS_ALIGN_CENTER);
 	Color lastColor = g->mColor;
 	g->SetColor(maxColor);
-	for (int i = 0; i < barHeight; ++i)
-		g->DrawLine(barX + baseBarWidth, barY + i, barX + barWidth, barY + i);
+	g->FillRect(Rect(barX + baseBarWidth, barY, barWidth - baseBarWidth, barHeight));
 	g->SetColor(baseColor);
-	for (int i = 0; i < barHeight; ++i)
-		g->DrawLine(barX, barY + i, barX + baseBarWidth, barY + i);
+	g->FillRect(Rect(barX, barY, baseBarWidth, barHeight));
 	if (drawBarOutline)
 	{
 		g->SetColor(Color::Black);
-		g->DrawLine(barX - 1, barY - 1, barX + barWidth + 1, barY - 1);
-		g->DrawLine(barX + barWidth + 1, barY - 1, barX + barWidth + 1, barY + barHeight);
-		g->DrawLine(barX + barWidth + 1, barY + barHeight, barX - 1, barY + barHeight);
-		g->DrawLine(barX - 1, barY + barHeight, barX - 1, barY - 1);
+		g->DrawRect(Rect(barX - 1, barY - 1, barWidth + 1, barHeight + 1));
 	}
 	g->SetColor(lastColor);
 }

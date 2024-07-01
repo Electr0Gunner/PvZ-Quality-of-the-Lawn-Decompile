@@ -14,8 +14,8 @@ constexpr const int				ALMANAC_INDEXPLANT_POSITION_X	= 167;
 constexpr const int				ALMANAC_INDEXPLANT_POSITION_Y	= 255;
 constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_X	= 535.0f;
 constexpr const float			ALMANAC_INDEXZOMBIE_POSITION_Y	= 215.0f;
-constexpr const int				ALMANAC_LEVEL_BUTTON_OFFSET_Y = 3;
-constexpr const int				ALMANAC_LEVEL_BUTTON_HEIGHT = 48;
+constexpr const int				ALMANAC_DESCRIPTION_MIN_HEIGHT	= 20;
+constexpr const int				WEIRD_CHARACTERS_COUNT			= 1;
 
 class Plant;
 class Zombie;
@@ -32,7 +32,6 @@ private:
 		ALMANAC_BUTTON_PLANT,
 		ALMANAC_BUTTON_ZOMBIE,
 		ALMANAC_BUTTON_INDEX,
-		ALMANAC_SLIDER,
 		ALMANAC_BUTTON_NEXT,
 		ALMANAC_BUTTON_LAST 
 	};
@@ -60,6 +59,16 @@ public:
 	float						mMaxScrollPosition;
 	int							mLastMouseX;
 	int							mLastMouseY;
+	bool						mIsOverDescription;
+	int							mDescriptionLineSpacing;
+	float						mDescriptionScroll;
+	float						mDescriptionMaxScroll;
+	float						mDescriptionOffsetScroll;
+	float						mDescriptionOffsetY;
+	bool						mDescriptionOverfill;
+	Rect						mDescriptionRect;
+	Rect						mDescriptionSliderRect;
+	bool						mDescriptionSliderDragging;
 
 public:
 	AlmanacDialog(LawnApp* theApp);
@@ -86,12 +95,15 @@ public:
 	ZombieType					ZombieHitTest(int x, int y);
 	virtual void				MouseUp(int x, int y, int theClickCount);
 	virtual void				MouseDown(int x, int y, int theClickCount);
+	virtual void				MouseDrag(int x, int y);
 	virtual void				KeyChar(char theChar) {  }
 
 	static ZombieType			GetZombieType(int theIndex);
 	/*inline*/ void				ShowPlant(SeedType theSeedType);
 	/*inline*/ void				ShowZombie(ZombieType theZombieType);
 	virtual void				MouseWheel(int theDelta);
+
+	SexyString					TranslateAndSanitize(SexyString str);
 };
 extern int gZombieDefeated[NUM_ZOMBIE_TYPES];
 
