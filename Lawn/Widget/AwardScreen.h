@@ -25,6 +25,7 @@ public:
 	AwardType			mAwardType;			//+0x98
 	bool				mShowAchievements;
 	bool				mWasDrawn;
+	SexyString			mState;
 
 public:
 	AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchievement);
@@ -33,7 +34,7 @@ public:
 	/*inline*/ bool		IsPaperNote();
 	void				LoadAchievements();
 	virtual void		Resize(int theX, int theY, int theWidth, int theHeight) { Widget::Resize(theX, theY, theWidth, theHeight); }
-	static void			DrawBottom(Graphics* g, const SexyString& theTitle, const SexyString& theAward, const SexyString& theMessage);
+	void				DrawBottom(Graphics* g, SexyString theTitle, SexyString theAward, SexyString theMessage);
 	void				DrawAwardSeed(Graphics* g);
 	virtual void		Draw(Graphics* g);
 	virtual void		Update();

@@ -5847,7 +5847,23 @@ void Board::Update()
 	else
 		Details = (mApp->mPlayedQuickplay ? "Quick Play" : "Adventure") + mApp->GetStageString(mLevel);
 	mApp->mDetails = Details;
-	mApp->UpdateDiscordState(mBoardFadeOutCounter >= 0 ? "Finishing" : "Playing");
+
+	SexyString State;
+	if (mApp->GetDialog(Dialogs::DIALOG_CONTINUE))
+		State = "Continue?";
+	else if (mApp->mGameScene == GameScenes::SCENE_ZOMBIES_WON || mApp->GetDialog(Dialogs::DIALOG_GAME_OVER))
+		State = "Game Over";
+	else if (mCutScene->mSeedChoosing)
+		State = "Choosing Plants";
+	else if (mApp->mGameScene != GameScenes::SCENE_PLAYING && mCutScene->mCutsceneTime > 0)
+		State = "Cutscene";
+	else if (mBoardFadeOutCounter >= 0)
+		State = "Finishing";
+	else if (mLevelAwardSpawned)
+		State = "Finished";
+	else
+		State = "Playing";
+	mApp->UpdateDiscordState(State);
 
 	if(mSunMoney >= 8000 && !mApp->mPlayedQuickplay)
 		mApp->GetAchievement(ACHIEVEMENT_SUNNY_DAYS);

@@ -3740,13 +3740,7 @@ void LawnApp::GetAchievement(AchievementType theAchievementType)
 void LawnApp::UpdateDiscordState(SexyString def)
 {
 	SexyString State;
-	if (mGameScene == GameScenes::SCENE_ZOMBIES_WON || GetDialog(Dialogs::DIALOG_GAME_OVER))
-		State = "Gameover";
-	else if (mBoard != nullptr && mBoard->mCutScene->mSeedChoosing)
-		State = "Choosing Plants";
-	else if (mBoard != nullptr && mGameScene != GameScenes::SCENE_PLAYING && mBoard->mCutScene->mCutsceneTime > 0)
-		State = "Cutscene";
-	else if (AlmanacDialog* dialog = (AlmanacDialog*)GetDialog(Dialogs::DIALOG_ALMANAC))
+	if (AlmanacDialog* dialog = (AlmanacDialog*)GetDialog(Dialogs::DIALOG_ALMANAC))
 	{
 		if (dialog->mOpenPage == AlmanacPage::ALMANAC_PAGE_INDEX)
 			State = "Almanac (Index)";
@@ -3761,8 +3755,6 @@ void LawnApp::UpdateDiscordState(SexyString def)
 		State = dialog->mAdvancedMode ? ("Advanced Options" + StrFormat(" (Page %d)", dialog->mAdvancedPage)) : "Options";
 	else if (GetDialog(Dialogs::DIALOG_USERDIALOG))
 		State = "Profiles";
-	else if (GetDialog(Dialogs::DIALOG_CONTINUE))
-		State = "Continue?";
 	else
 		State = def;
 	mState = State;

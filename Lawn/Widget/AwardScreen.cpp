@@ -174,9 +174,8 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
     else
         mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_ZEN_GARDEN);
 
-    mApp->mDetails = mAwardType == AWARD_HELP_ZOMBIENOTE ? "In the Help Screen" : "In the Award Screen";
-
     mWasDrawn = mMenuButton->mBtnNoDraw;
+    mApp->mDetails = "In the Award Screen";
 }
 
 //0x406420 & 0x406440
@@ -184,6 +183,7 @@ AwardScreen::~AwardScreen()
 {
     if (mStartButton) delete mStartButton;
     if (mMenuButton) delete mMenuButton;
+    mApp->UpdateDiscordState();
 }
 
 void AwardScreen::LoadAchievements()
@@ -214,12 +214,13 @@ bool AwardScreen::IsPaperNote()
 }
 
 //0x4064D0
-void AwardScreen::DrawBottom(Graphics* g, const SexyString& theTitle, const SexyString& theAward, const SexyString& theMessage)
+void AwardScreen::DrawBottom(Graphics* g, SexyString theTitle, SexyString theAward, SexyString theMessage)
 {
     g->DrawImage(Sexy::IMAGE_AWARDSCREEN_BACK, 0, 0);
     TodDrawString(g, theTitle, BOARD_WIDTH / 2, 58, Sexy::FONT_DWARVENTODCRAFT24, Color(213, 159, 43), DS_ALIGN_CENTER);
     TodDrawString(g, theAward, BOARD_WIDTH / 2, 326, Sexy::FONT_DWARVENTODCRAFT18YELLOW, Color::White, DS_ALIGN_CENTER);
     TodDrawStringWrapped(g, theMessage, Rect(285, 360, 230, 90), Sexy::FONT_BRIANNETOD16, Color(40, 50, 90), DS_ALIGN_CENTER_VERTICAL_MIDDLE);
+    mState = theAward;
 }
 
 //0x4066A0
@@ -255,12 +256,14 @@ void AwardScreen::Draw(Graphics* g)
         g->FillRect(0, 525, BOARD_WIDTH, BOARD_HEIGHT);
         g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE, 75, 60);
         g->DrawImage(Sexy::IMAGE_CREDITS_ZOMBIENOTE, 149, 103, 475, 325);
+        mState = "Credits Note";
     }
     else if (mAwardType == AWARD_HELP_ZOMBIENOTE)
     {
         g->DrawImage(Sexy::IMAGE_BACKGROUND1, -700, -300, 2800, 1200);
         g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE, 80, 80);
         g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE_HELP, 131, 132);
+        mState = "Help Note";
     }
     else
     {
@@ -304,6 +307,7 @@ void AwardScreen::Draw(Graphics* g)
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE, 80, 80);
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE1, 131, 132);
             TodDrawString(g, _S("[FOUND_NOTE]"), BOARD_WIDTH / 2, 70, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
+            mState = "Zombie Note (" + mApp->GetStageString(aLevel).erase(0, 1) + ")";
         }
         else if (aLevel == 15)
         {
@@ -316,6 +320,7 @@ void AwardScreen::Draw(Graphics* g)
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE, 80, 80);
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE2, 133, 127);
             TodDrawString(g, _S("[FOUND_NOTE]"), BOARD_WIDTH / 2, 70, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
+            mState = "Zombie Note (" + mApp->GetStageString(aLevel).erase(0, 1) + ")";
         }
         else if (aLevel == 25)
         {
@@ -328,6 +333,7 @@ void AwardScreen::Draw(Graphics* g)
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE, 80, 80);
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE3, 120, 117);
             TodDrawString(g, _S("[FOUND_NOTE]"), BOARD_WIDTH / 2, 70, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
+            mState = "Zombie Note (" + mApp->GetStageString(aLevel).erase(0, 1) + ")";
         }
         else if (aLevel == 35)
         {
@@ -340,6 +346,7 @@ void AwardScreen::Draw(Graphics* g)
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE, 80, 80);
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE4, 102, 117);
             TodDrawString(g, _S("[FOUND_NOTE]"), BOARD_WIDTH / 2, 70, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
+            mState = "Zombie Note (" + mApp->GetStageString(aLevel).erase(0, 1) + ")";
         }
         else if (aLevel == 45)
         {
@@ -352,6 +359,7 @@ void AwardScreen::Draw(Graphics* g)
             g->DrawImage(Sexy::IMAGE_ZOMBIE_NOTE, 80, 80);
             g->DrawImage(Sexy::IMAGE_ZOMBIE_FINAL_NOTE, 114, 138);
             TodDrawString(g, _S("[FOUND_NOTE]"), BOARD_WIDTH / 2, 70, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_CENTER);
+            mState = "Zombie Note (" + mApp->GetStageString(aLevel).erase(0, 1) + ")";
         }
         else if (aLevel == 1 && mApp->HasFinishedAdventure())
         {
@@ -436,6 +444,7 @@ void AwardScreen::Update()
     MarkDirty();
     if (mFadeInCounter > 0) mFadeInCounter--;
     if (mAchievementCounter > 0) mAchievementCounter--;
+    mApp->UpdateDiscordState(mState);
 }
 
 //0x407760
