@@ -586,6 +586,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 	ZombieDefinition& aZombieDef = GetZombieDefinition(mSelectedZombie);
 	SexyString aName = ZombieHasSilhouette(mSelectedZombie) ? _S("???") : StrFormat(_S("[%s]"), aZombieDef.mZombieName);
 	TodDrawString(g, aName, 613, 362, Sexy::FONT_DWARVENTODCRAFT18GREENINSET, Color(190, 255, 235, 255), DS_ALIGN_CENTER);
+	Font* descriptionFont = Sexy::FONT_BRIANNETOD12;
 	for (TodStringListFormat& aFormat : gLawnStringFormats)
 	{
 		if (TestBit(aFormat.mFormatFlags, TodStringFormatFlag::TOD_FORMAT_HIDE_UNTIL_MAGNETSHROOM))
@@ -598,11 +599,10 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 			else
 			{
 				aFormat.mNewColor.mAlpha = 0;
-				aFormat.mLineSpacingOffset = -(17 / 2);
+				aFormat.mLineSpacingOffset = -(descriptionFont->GetLineSpacing() / 2);
 			}
 		}
 	}
-	Font* descriptionFont = Sexy::FONT_BRIANNETOD12;
 	Color descriptionColor = Color(40, 50, 90);
 	mDescriptionRect = Rect(485, 377, 257, 160);
 	if (ZombieHasDescription(mSelectedZombie))
