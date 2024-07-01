@@ -638,16 +638,16 @@ void ChallengeScreen::Update()
 	switch (mPageIndex)
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
-		mApp->mDetails = "In The Minigames Page";
+		mApp->mDetails = "In the Minigames Page";
 		break;
 	case CHALLENGE_PAGE_LIMBO:
-		mApp->mDetails = "In The Limbo Page";
+		mApp->mDetails = "In the Limbo Page";
 		break;
 	case CHALLENGE_PAGE_SURVIVAL:
-		mApp->mDetails = "In The Survival Page";
+		mApp->mDetails = "In the Survival Page";
 		break;
 	case CHALLENGE_PAGE_PUZZLE:
-		mApp->mDetails = "In The Puzzle Page";
+		mApp->mDetails = "In the Puzzle Page";
 		break;
 	}
 	mSlider->mVisible = mMaxScrollPosition > 0.0f;
