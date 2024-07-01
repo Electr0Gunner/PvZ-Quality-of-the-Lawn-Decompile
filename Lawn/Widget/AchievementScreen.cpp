@@ -31,6 +31,7 @@ AchievementScreen::AchievementScreen(LawnApp* theApp)
     mRockButton = MakeNewButton(1, this, "", nullptr, Sexy::IMAGE_ACHIEVEMENT_MORE,
         Sexy::IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT, Sexy::IMAGE_ACHIEVEMENT_MORE_HIGHLIGHT);
     mRockButton->Resize(710, 470 + mScrollPosition, IMAGE_ACHIEVEMENT_MORE->mWidth, IMAGE_ACHIEVEMENT_MORE->mHeight);
+    mApp->mDetails = "In the Achievement Screen";
 }
 AchievementScreen::~AchievementScreen()
 {
