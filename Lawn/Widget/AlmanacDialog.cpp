@@ -598,7 +598,7 @@ void AlmanacDialog::DrawZombies(Graphics* g)
 			else
 			{
 				aFormat.mNewColor.mAlpha = 0;
-				aFormat.mLineSpacingOffset = -17;
+				aFormat.mLineSpacingOffset = -(17 / 2);
 			}
 		}
 	}

@@ -1033,7 +1033,7 @@ His screen door is an effective shield.
 {SHORTLINE}
 {KEYWORD}Toughness:{STAT} low {270}
 {KEYWORD}Screen Door Toughness:{STAT} high {1100}
-{KEYWORD}Weakness:{STAT} fume-shroom{METAL} and magnet-shroom{KEYWORD}
+{KEYWORD}Weakness:{STAT} fume-shroom{METAL} and magnet-shroom
 {SHORTLINE}
 {FLAVOR}He got his screen door from the last inexpertly defended home he visited, after he ATE THE HOMEOWNER'S BRAINS.
 
