@@ -6,7 +6,6 @@
 using namespace Sexy;
 static int gProfileVersion = 14;
 
-//0x46A7C0
 PlayerInfo* ProfileMgr::GetAnyProfile()
 {
     if (mProfileMap.size() == 0)
@@ -18,7 +17,6 @@ PlayerInfo* ProfileMgr::GetAnyProfile()
     return aPlayerInfo;
 }
 
-//0x46A7F0
 void ProfileMgr::Clear()
 {
     mProfileMap.clear();
@@ -26,7 +24,6 @@ void ProfileMgr::Clear()
     mNextProfileUseSeq = 1U;
 }
 
-//0x46A830
 void ProfileMgr::SyncState(DataSync& theSync)
 {
     DataReader* aReader = theSync.GetReader();
@@ -69,7 +66,6 @@ void ProfileMgr::SyncState(DataSync& theSync)
     }
 }
 
-//0x46ABC0
 void ProfileMgr::Load()
 {
     Buffer aBuffer;
@@ -91,7 +87,6 @@ void ProfileMgr::Load()
     }
 }
 
-//0x46AD80
 void ProfileMgr::Save()
 {
     DataWriter aWriter;
@@ -110,7 +105,6 @@ void ProfileMgr::DeleteProfile(ProfileMap::iterator theProfile)
     mProfileMap.erase(theProfile);
 }
 
-//0x46AF70
 bool ProfileMgr::DeleteProfile(const SexyString& theName)
 {
     auto anItr = mProfileMap.find(theName);
@@ -121,7 +115,6 @@ bool ProfileMgr::DeleteProfile(const SexyString& theName)
     return true;
 }
 
-//0x46AFF0
 bool ProfileMgr::RenameProfile(const SexyString& theOldName, const SexyString& theNewName)
 {
     auto anOldItr = mProfileMap.find(theOldName);
@@ -129,21 +122,16 @@ bool ProfileMgr::RenameProfile(const SexyString& theOldName, const SexyString& t
         return false;
     else
     {
-        // 判断修改前后的用户名是否一致，一致则直接在原存档中进行修改，否则需要额外操作
         if (_stricmp(theOldName.c_str(), theNewName.c_str()) == 0)
             anOldItr->second.mName = theNewName;
         else
         {
-            // 向 mProfileMap 中插入一个由新用户名及旧存档组成的对组
             auto aRet = mProfileMap.emplace(theNewName, anOldItr->second);  // auto aRet = mProfileMap.insert({theNewName, anOldItr->second});
-            // 通过返回值检测新用户名是否与原有存档重复，重复则返回 false，插入成功则继续操作
             if (!aRet.second)
                 return false;
             else
             {
-                // 删除 mProfileMap 中原用户名及旧存档的键值对
                 mProfileMap.erase(anOldItr);
-                // 修改新插入的键值对中存档的用户名
                 aRet.first->second.mName = theNewName;
             }
         }
@@ -151,22 +139,18 @@ bool ProfileMgr::RenameProfile(const SexyString& theOldName, const SexyString& t
     }
 }
 
-//0x46B1C0
 void ProfileMgr::DeleteOldestProfile()
 {
     if (mProfileMap.size() == 0)
         return;
 
-    //将 mUseSeq 最小的存档的所在位置记录在 anOldest 迭代器中
     auto anOldest = mProfileMap.begin();
     for (auto anItr = anOldest; anItr != mProfileMap.end(); anItr++)
         if (anItr->second.mUseSeq < anOldest->second.mUseSeq)
             anOldest = anItr;
-    //删除记录的 mUseSeq 最小的存档
     DeleteProfile(anOldest);
 }
 
-//0x46B290
 PlayerInfo* ProfileMgr::GetProfile(const SexyString& theName)
 {
     auto anItr = mProfileMap.find(theName);
@@ -180,7 +164,6 @@ PlayerInfo* ProfileMgr::GetProfile(const SexyString& theName)
     return nullptr;
 }
 
-//0x46B310
 PlayerInfo* ProfileMgr::AddProfile(const SexyString& theName)
 {
     auto aRet = mProfileMap.emplace(theName, PlayerInfo());

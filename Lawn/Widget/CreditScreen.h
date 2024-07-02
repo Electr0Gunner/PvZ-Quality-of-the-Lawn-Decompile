@@ -45,10 +45,10 @@ enum CreditBrainType
 class CreditsTiming
 {
 public:
-	float					mFrame;						//+0x0
-	CreditWordType			mWordType;					//+0x4
-	int						mWordX;						//+0x8
-	CreditBrainType			mBrainType;					//+0xC
+	float					mFrame;						
+	CreditWordType			mWordType;					
+	int						mWordX;						
+	CreditBrainType			mBrainType;					
 };
 
 class TodsHackyUnprotectedPerfTimer : public PerfTimer
@@ -73,27 +73,27 @@ protected:
 	};
 
 public:
-	GameButton*				mCloseButton;				//+0x8C
-	LawnApp*				mApp;						//+0x90
-	CreditsPhase			mCreditsPhase;				//+0x94
-	int						mCreditsPhaseCounter;		//+0x98
-	ReanimationID			mCreditsReanimID;			//+0x9C
-	ParticleSystemID		mFogParticleID;				//+0xA0
-	int						mBlinkCountdown;			//+0xA4
-	LawnStoneButton*		mMainMenuButton;			//+0xA8
-	NewLawnButton*			mReplayButton;				//+0xAC
-	Widget*					mOverlayWidget;				//+0xB0
-	bool					mDrawBrain;					//+0xB4
-	float					mBrainPosX;					//+0xB8
-	float					mBrainPosY;					//+0xBC
-	int						mUpdateCount;				//+0xC0
-	int						mDrawCount;					//+0xC4
-	PerfTimer				mTimerSinceStart;			//+0xC8
-	bool					mDontSync;					//+0xE0
-	bool					mCreditsPaused;				//+0xE1
-	double					mOriginalMusicVolume;		//+0xE8
-	bool					mPreloaded;					//+0xF0
-	int						mLastDrawCount;				//+0xF4
+	GameButton*				mCloseButton;				
+	LawnApp*				mApp;						
+	CreditsPhase			mCreditsPhase;				
+	int						mCreditsPhaseCounter;		
+	ReanimationID			mCreditsReanimID;			
+	ParticleSystemID		mFogParticleID;				
+	int						mBlinkCountdown;			
+	LawnStoneButton*		mMainMenuButton;			
+	NewLawnButton*			mReplayButton;				
+	Widget*					mOverlayWidget;				
+	bool					mDrawBrain;					
+	float					mBrainPosX;					
+	float					mBrainPosY;					
+	int						mUpdateCount;				
+	int						mDrawCount;					
+	PerfTimer				mTimerSinceStart;			
+	bool					mDontSync;					
+	bool					mCreditsPaused;				
+	double					mOriginalMusicVolume;		
+	bool					mPreloaded;					
+	int						mLastDrawCount;				
 
 public:
 	CreditScreen(LawnApp* theApp);

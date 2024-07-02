@@ -31,26 +31,26 @@ public:
 	};
 
 public:
-	HyperlinkWidget*		mStartButton;				//+0x8C
-	float					mCurBarWidth;				//+0x90
-	float					mTotalBarWidth; 			//+0x94
-	float					mBarVel;					//+0x98
-	float					mBarStartProgress;			//+0x9C
-	bool					mRegisterClicked;			//+0xA0
-	bool					mLoadingThreadComplete;		//+0xA1
-	int						mTitleAge;					//+0xA4
-	KeyCode					mQuickLoadKey;				//+0xA8
-	bool					mNeedRegister;				//+0xAC
-	bool					mNeedShowRegisterBox;		//+0xAD
-	bool					mDrawnYet;					//+0xAE
-	bool					mNeedToInit;				//+0xAF
-	float					mPrevLoadingPercent;		//+0xB0
-	TitleState				mTitleState;				//+0xB4
-	int						mTitleStateCounter;			//+0xB8
-	int						mTitleStateDuration;		//+0xBC
-	bool					mDisplayPartnerLogo;		//+0xC0
-	bool					mLoaderScreenIsLoaded;		//+0xC1
-	LawnApp*				mApp;						//+0xC4
+	HyperlinkWidget*		mStartButton;				
+	float					mCurBarWidth;				
+	float					mTotalBarWidth; 			
+	float					mBarVel;					
+	float					mBarStartProgress;			
+	bool					mRegisterClicked;			
+	bool					mLoadingThreadComplete;		
+	int						mTitleAge;					
+	KeyCode					mQuickLoadKey;				
+	bool					mNeedRegister;				
+	bool					mNeedShowRegisterBox;		
+	bool					mDrawnYet;					
+	bool					mNeedToInit;				
+	float					mPrevLoadingPercent;		
+	TitleState				mTitleState;				
+	int						mTitleStateCounter;			
+	int						mTitleStateDuration;		
+	bool					mDisplayPartnerLogo;		
+	bool					mLoaderScreenIsLoaded;		
+	LawnApp*				mApp;						
 
 public:
 	TitleScreen(LawnApp* theApp);

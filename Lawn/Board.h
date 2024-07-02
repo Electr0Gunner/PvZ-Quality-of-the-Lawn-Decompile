@@ -103,122 +103,122 @@ struct BungeeDropGrid
 class Board : public Widget, public ButtonListener
 {
 public:
-	LawnApp*						mApp;													//+0x8C
-	DataArray<Zombie>				mZombies;												//+0x90
-	DataArray<Plant>				mPlants;												//+0xAC
-	DataArray<Projectile>			mProjectiles;											//+0xC8
-	DataArray<Coin>					mCoins;													//+0xE4
-	DataArray<LawnMower>			mLawnMowers;											//+0x100
-	DataArray<GridItem>				mGridItems;												//+0x11C
-	CursorObject*					mCursorObject;											//+0x138
-	CursorPreview*					mCursorPreview;											//+0x13C
-	MessageWidget*					mAdvice;												//+0x140
-	SeedBank*						mSeedBank;												//+0x144
-	GameButton*						mMenuButton;											//+0x148
-	GameButton*						mStoreButton;											//+0x14C
-	GameButton*						mFastButton;											//+0x148
-	bool							mIgnoreMouseUp;											//+0x150
-	ToolTipWidget*					mToolTip;												//+0x154
-	Font*							mDebugFont;												//+0x158
-	CutScene*						mCutScene;												//+0x15C
-	Challenge*						mChallenge;												//+0x160
-	bool							mPaused;												//+0x164
-	GridSquareType					mGridSquareType[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];		//+0x168
-	int								mGridCelLook[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];			//+0x240
-	int								mGridCelOffset[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y][2];	//+0x318
-	int								mGridCelFog[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y + 1];		//+0x4C8
-	bool							mEnableGraveStones;										//+0x5C4
-	int								mSpecialGraveStoneX;									//+0x5C8
-	int								mSpecialGraveStoneY;									//+0x5CC
-	float							mFogOffset;												//+0x5D0
-	int								mFogBlownCountDown;										//+0x5D4
-	PlantRowType					mPlantRow[MAX_GRID_SIZE_Y];								//+0x5D8
-	int								mWaveRowGotLawnMowered[MAX_GRID_SIZE_Y];				//+0x5F0
-	int								mBonusLawnMowersRemaining;								//+0x608
-	int								mIceMinX[MAX_GRID_SIZE_Y];								//+0x60C
-	int								mIceTimer[MAX_GRID_SIZE_Y];								//+0x624
-	ParticleSystemID				mIceParticleID[MAX_GRID_SIZE_Y];						//+0x63C
-	TodSmoothArray					mRowPickingArray[MAX_GRID_SIZE_Y];						//+0x654
-	ZombieType						mZombiesInWave[MAX_ZOMBIE_WAVES][MAX_ZOMBIES_IN_WAVE];	//+0x6B4
-	bool							mZombieAllowed[100];									//+0x54D4
-	int								mSunCountDown;											//+0x5538
-	int								mNumSunsFallen;											//+0x553C
-	int								mShakeCounter;											//+0x5540
-	int								mShakeAmountX;											//+0x5544
-	int								mShakeAmountY;											//+0x5548
-	BackgroundType					mBackground;											//+0x554C
-	int								mLevel;													//+0x5550
-	int								mSodPosition;											//+0x5554
-	int								mPrevMouseX;											//+0x5558
-	int								mPrevMouseY;											//+0x555C
-	int								mSunMoney;												//+0x5560
-	int								mNumWaves;												//+0x5564
-	int								mMainCounter;											//+0x5568
-	int								mEffectCounter;											//+0x556C
-	int								mDrawCount;												//+0x5570
-	int								mRiseFromGraveCounter;									//+0x5574
-	int								mOutOfMoneyCounter;										//+0x5578
-	int								mCurrentWave;											//+0x557C
-	int								mTotalSpawnedWaves;										//+0x5580
-	TutorialState					mTutorialState;											//+0x5584
-	ParticleSystemID				mTutorialParticleID;									//+0x5588
-	int								mTutorialTimer;											//+0x558C
-	int								mLastBungeeWave;										//+0x5590
-	int								mZombieHealthToNextWave;								//+0x5594
-	int								mZombieHealthWaveStart;									//+0x5598
-	int								mZombieCountDown;										//+0x559C
-	int								mZombieCountDownStart;									//+0x55A0
-	int								mHugeWaveCountDown;										//+0x55A4
-	bool							mHelpDisplayed[NUM_ADVICE_TYPES];						//+0x55A8
-	AdviceType						mHelpIndex;												//+0x55EC
-	bool							mFinalBossKilled;										//+0x55F0
-	bool							mShowShovel;											//+0x55F1
-	int								mCoinBankFadeCount;										//+0x55F4
-	DebugTextMode					mDebugTextMode;											//+0x55F8
-	bool							mLevelComplete;											//+0x55FC
-	int								mBoardFadeOutCounter;									//+0x5600
-	int								mNextSurvivalStageCounter;								//+0x5604
-	int								mScoreNextMowerCounter;									//+0x5608
-	bool							mLevelAwardSpawned;										//+0x560C
-	int								mProgressMeterWidth;									//+0x5610
-	int								mFlagRaiseCounter;										//+0x5614
-	int								mIceTrapCounter;										//+0x5618
-	int								mBoardRandSeed;											//+0x561C
-	ParticleSystemID				mPoolSparklyParticleID;									//+0x5620
-	ReanimationID					mFwooshID[MAX_GRID_SIZE_Y][12];							//+0x5624
-	int								mFwooshCountDown;										//+0x5744
-	int								mTimeStopCounter;										//+0x5748
-	bool							mDroppedFirstCoin;										//+0x574C
-	int								mFinalWaveSoundCounter;									//+0x5750
-	int								mCobCannonCursorDelayCounter;							//+0x5754
-	int								mCobCannonMouseX;										//+0x5758
-	int								mCobCannonMouseY;										//+0x575C
-	bool							mKilledYeti;											//+0x5760
-	bool							mMustacheMode;											//+0x5761
-	bool							mSuperMowerMode;										//+0x5762
-	bool							mFutureMode;											//+0x5763
-	bool							mPinataMode;											//+0x5764
-	bool							mDanceMode;												//+0x5765
-	bool							mDaisyMode;												//+0x5766
-	bool							mSukhbirMode;											//+0x5767
-	BoardResult						mPrevBoardResult;										//+0x5768
-	int								mTriggeredLawnMowers;									//+0x576C
-	int								mPlayTimeActiveLevel;									//+0x5770
-	int								mPlayTimeInactiveLevel;									//+0x5774
-	int								mMaxSunPlants;											//+0x5778
-	DWORD							mStartDrawTime;											//+0x577C
-	DWORD							mIntervalDrawTime;										//+0x5780
-	int								mIntervalDrawCountStart;								//+0x5784
-	float							mMinFPS;												//+0x5788
-	int								mPreloadTime;											//+0x578C
-	int								mGameID;												//+0x5790
-	int								mGravesCleared;											//+0x5794
-	int								mPlantsEaten;											//+0x5798
-	int								mPlantsShoveled;										//+0x579C
-	int								mCoinsCollected;										//+0x57A0
-	int								mDiamondsCollected;										//+0x57A4
-	int								mPottedPlantsCollected;									//+0x57A8
-	int								mChocolateCollected;									//+0x57AC
+	LawnApp*						mApp;													
+	DataArray<Zombie>				mZombies;												
+	DataArray<Plant>				mPlants;												
+	DataArray<Projectile>			mProjectiles;											
+	DataArray<Coin>					mCoins;													
+	DataArray<LawnMower>			mLawnMowers;											
+	DataArray<GridItem>				mGridItems;												
+	CursorObject*					mCursorObject;											
+	CursorPreview*					mCursorPreview;											
+	MessageWidget*					mAdvice;												
+	SeedBank*						mSeedBank;												
+	GameButton*						mMenuButton;											
+	GameButton*						mStoreButton;											
+	GameButton*						mFastButton;											
+	bool							mIgnoreMouseUp;											
+	ToolTipWidget*					mToolTip;												
+	Font*							mDebugFont;												
+	CutScene*						mCutScene;												
+	Challenge*						mChallenge;												
+	bool							mPaused;												
+	GridSquareType					mGridSquareType[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];		
+	int								mGridCelLook[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y];			
+	int								mGridCelOffset[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y][2];	
+	int								mGridCelFog[MAX_GRID_SIZE_X][MAX_GRID_SIZE_Y + 1];		
+	bool							mEnableGraveStones;										
+	int								mSpecialGraveStoneX;									
+	int								mSpecialGraveStoneY;									
+	float							mFogOffset;												
+	int								mFogBlownCountDown;										
+	PlantRowType					mPlantRow[MAX_GRID_SIZE_Y];								
+	int								mWaveRowGotLawnMowered[MAX_GRID_SIZE_Y];				
+	int								mBonusLawnMowersRemaining;								
+	int								mIceMinX[MAX_GRID_SIZE_Y];								
+	int								mIceTimer[MAX_GRID_SIZE_Y];								
+	ParticleSystemID				mIceParticleID[MAX_GRID_SIZE_Y];						
+	TodSmoothArray					mRowPickingArray[MAX_GRID_SIZE_Y];						
+	ZombieType						mZombiesInWave[MAX_ZOMBIE_WAVES][MAX_ZOMBIES_IN_WAVE];	
+	bool							mZombieAllowed[100];									
+	int								mSunCountDown;											
+	int								mNumSunsFallen;											
+	int								mShakeCounter;											
+	int								mShakeAmountX;											
+	int								mShakeAmountY;											
+	BackgroundType					mBackground;											
+	int								mLevel;													
+	int								mSodPosition;											
+	int								mPrevMouseX;											
+	int								mPrevMouseY;											
+	int								mSunMoney;												
+	int								mNumWaves;												
+	int								mMainCounter;											
+	int								mEffectCounter;											
+	int								mDrawCount;												
+	int								mRiseFromGraveCounter;									
+	int								mOutOfMoneyCounter;										
+	int								mCurrentWave;											
+	int								mTotalSpawnedWaves;										
+	TutorialState					mTutorialState;											
+	ParticleSystemID				mTutorialParticleID;									
+	int								mTutorialTimer;											
+	int								mLastBungeeWave;										
+	int								mZombieHealthToNextWave;								
+	int								mZombieHealthWaveStart;									
+	int								mZombieCountDown;										
+	int								mZombieCountDownStart;									
+	int								mHugeWaveCountDown;										
+	bool							mHelpDisplayed[NUM_ADVICE_TYPES];						
+	AdviceType						mHelpIndex;												
+	bool							mFinalBossKilled;										
+	bool							mShowShovel;											
+	int								mCoinBankFadeCount;										
+	DebugTextMode					mDebugTextMode;											
+	bool							mLevelComplete;											
+	int								mBoardFadeOutCounter;									
+	int								mNextSurvivalStageCounter;								
+	int								mScoreNextMowerCounter;									
+	bool							mLevelAwardSpawned;										
+	int								mProgressMeterWidth;									
+	int								mFlagRaiseCounter;										
+	int								mIceTrapCounter;										
+	int								mBoardRandSeed;											
+	ParticleSystemID				mPoolSparklyParticleID;									
+	ReanimationID					mFwooshID[MAX_GRID_SIZE_Y][12];							
+	int								mFwooshCountDown;										
+	int								mTimeStopCounter;										
+	bool							mDroppedFirstCoin;										
+	int								mFinalWaveSoundCounter;									
+	int								mCobCannonCursorDelayCounter;							
+	int								mCobCannonMouseX;										
+	int								mCobCannonMouseY;										
+	bool							mKilledYeti;											
+	bool							mMustacheMode;											
+	bool							mSuperMowerMode;										
+	bool							mFutureMode;											
+	bool							mPinataMode;											
+	bool							mDanceMode;												
+	bool							mDaisyMode;												
+	bool							mSukhbirMode;											
+	BoardResult						mPrevBoardResult;										
+	int								mTriggeredLawnMowers;									
+	int								mPlayTimeActiveLevel;									
+	int								mPlayTimeInactiveLevel;									
+	int								mMaxSunPlants;											
+	DWORD							mStartDrawTime;											
+	DWORD							mIntervalDrawTime;										
+	int								mIntervalDrawCountStart;								
+	float							mMinFPS;												
+	int								mPreloadTime;											
+	int								mGameID;												
+	int								mGravesCleared;											
+	int								mPlantsEaten;											
+	int								mPlantsShoveled;										
+	int								mCoinsCollected;										
+	int								mDiamondsCollected;										
+	int								mPottedPlantsCollected;									
+	int								mChocolateCollected;									
 	bool							mPeashootersUsed;
 	bool							mCatapultsUsed;
 	bool							mMushroomsUsed;
@@ -238,7 +238,7 @@ public:
 	void							ClearCursor();
 	/*inline*/ bool					AreEnemyZombiesOnScreen();
 	LawnMower*						FindLawnMowerInRow(int theRow);
-	inline bool						SyncState(DataSync& theDataSync) { /* 未发现 */return true; }
+	inline bool						SyncState(DataSync& theDataSync) { return true; }
 	/*inline*/ void					SaveGame(const std::string& theFileName);
 	bool							LoadGame(const std::string& theFileName);
 	void							InitLevel(bool isQuickPlay = false);
@@ -275,7 +275,7 @@ public:
 	bool							TakeSunMoney(int theAmount);
 	/*inline*/ bool					CanTakeSunMoney(int theAmount);
 	/*inline*/ void					Pause(bool thePause);
-	inline bool						MakeEasyZombieType() { /* 未发现 */return false; }
+	inline bool						MakeEasyZombieType() { return false; }
 	void							TryToSaveGame();
 	/*inline*/ bool					NeedSaveGame();
 	/*inline*/ bool					RowCanHaveZombies(int theRow);
@@ -297,7 +297,7 @@ public:
 	bool							MouseHitTest(int x, int y, HitResult* theHitResult);
 	void							MouseDownWithPlant(int x, int y, int theClickCount);
 	void							MouseDownWithTool(int x, int y, int theClickCount, CursorType theCursorType);
-	inline void						MouseDownNormal(int x, int y, int theClickCount) { /* 未发现 */; }
+	inline void						MouseDownNormal(int x, int y, int theClickCount) { ; }
 	bool							CanInteractWithBoardButtons();
 	void							DrawProgressMeter(Graphics* g);
 	void							UpdateToolTip();

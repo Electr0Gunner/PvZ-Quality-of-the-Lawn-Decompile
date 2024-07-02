@@ -23,26 +23,26 @@ public:
 
 public:
 	HWND					mDrmGameWnd;								//+00
-	HWND					mHWnd;										//+0x4
+	HWND					mHWnd;										
 	HANDLE					mUNKNOWN__FileMapping;						//+08 unknown
 	LPVOID					mUNKNOWN__MapViewPtr;						//+0C unknown
-	bool					mIsWindow;									//+0x10
-	HANDLE					mEventHwnd;									//+0x14
-	HANDLE					mEventThreadHwnd;							//+0x18
-	DWORD					mEventThreadID;								//+0x1C
-	DWORD					mCurrentThreadID;							//+0x20
-	UINT					mWindowMessage[PopCapDRM_NumMessages];		//+0x24
-	CRITICAL_SECTION		mCritSect;									//+0x48
+	bool					mIsWindow;									
+	HANDLE					mEventHwnd;									
+	HANDLE					mEventThreadHwnd;							
+	DWORD					mEventThreadID;								
+	DWORD					mCurrentThreadID;							
+	UINT					mWindowMessage[PopCapDRM_NumMessages];		
+	CRITICAL_SECTION		mCritSect;									
 	
 public:
-	PopDRMComm();  //0x5D5AC0
-	~PopDRMComm();  //0x5D5B60
+	PopDRMComm();  
+	~PopDRMComm();  
 
-	void					Start();  //0x5D5BC0
-	void					EnableLocking();  //0x5D5C80
+	void					Start();  
+	void					EnableLocking();  
 	void					BuyGame();
-	bool					DoIPC();  //0x5D5D60
-	bool					QueryData();  //0x5D5CB0
+	bool					DoIPC();  
+	bool					QueryData();  
 };
 
 #endif

@@ -17,12 +17,12 @@ private:
 	};
 
 public:
-	GameButton*			mStartButton;		//+0x88
-	GameButton*			mMenuButton;		//+0x8C
-	LawnApp*			mApp;				//+0x90
-	int					mFadeInCounter;		//+0x94
+	GameButton*			mStartButton;		
+	GameButton*			mMenuButton;		
+	LawnApp*			mApp;				
+	int					mFadeInCounter;		
 	int					mAchievementCounter;
-	AwardType			mAwardType;			//+0x98
+	AwardType			mAwardType;			
 	bool				mShowAchievements;
 	bool				mWasDrawn;
 	SexyString			mState;

@@ -10,7 +10,6 @@ using namespace Sexy;
 static char gLogFileName[MAX_PATH];
 static char gDebugDataFolder[MAX_PATH];
 
-//0x514EA0
 void TodErrorMessageBox(const char* theMessage, const char* theTitle)
 {
 	HWND hWnd = (gSexyAppBase && gSexyAppBase->mHWnd) ? gSexyAppBase->mHWnd : GetActiveWindow();

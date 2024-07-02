@@ -32,7 +32,7 @@ public:
     void                        AddTriangle(Graphics* g, Image* theImage, const SexyMatrix3& theMatrix, const Rect& theClipRect, const Color& theColor, int theDrawMode, const Rect& theSrcRect);
 };
 
-extern bool gTodTriangleDrawAdditive;  //0x6A9EF5
+extern bool gTodTriangleDrawAdditive;  
 
 extern void TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB0_BLEND0(SWHelper::SWVertex* pVerts, void* pFrameBuffer, const unsigned int bytepitch, const SWHelper::SWTextureInfo* textureInfo, SWHelper::SWDiffuse& globalDiffuse);
 extern void TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB0_BLEND1(SWHelper::SWVertex* pVerts, void* pFrameBuffer, const unsigned int bytepitch, const SWHelper::SWTextureInfo* textureInfo, SWHelper::SWDiffuse& globalDiffuse);
@@ -150,6 +150,6 @@ public:
     void                        ProcessDeleteQueue();
     void                        Update();
 };
-extern EffectSystem* gEffectSystem;  //[0x6A9EB8]
+extern EffectSystem* gEffectSystem;  
 
 #endif

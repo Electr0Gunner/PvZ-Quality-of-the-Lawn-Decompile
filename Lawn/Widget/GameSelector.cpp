@@ -26,9 +26,8 @@
 #include "../../SexyAppFramework/WidgetManager.h"
 #include "../../SexyAppFramework/SysFont.h"
 
-static float gFlowerCenter[3][2] = { { 765.0f, 483.0f }, { 663.0f, 455.0f }, { 701.0f, 439.0f } };  //0x665430
+static float gFlowerCenter[3][2] = { { 765.0f, 483.0f }, { 663.0f, 455.0f }, { 701.0f, 439.0f } };  
 
-//0x448C80
 void GameSelectorOverlay::Draw(Graphics* g)
 {
 	mParent->DrawOverlay(g);
@@ -41,7 +40,6 @@ GameSelectorOverlay::GameSelectorOverlay(GameSelector* theGameSelector)
 	mHasAlpha = true;
 }
 
-//0x448CB0
 GameSelector::GameSelector(LawnApp* theApp)
 {
 	TodHesitationTrace("pregameselector");
@@ -342,7 +340,6 @@ GameSelector::GameSelector(LawnApp* theApp)
 	TodHesitationTrace("gameselectorinit");
 }
 
-//0x449D00¡¢0x449D20
 GameSelector::~GameSelector()
 {
 	if (mAdventureButton)
@@ -382,7 +379,6 @@ GameSelector::~GameSelector()
 }
 
 
-//0x449E60
 void GameSelector::SyncButtons()
 {
 	bool aAlmanacAvailable = mApp->CanShowAlmanac() || mUnlockSelectorCheat;
@@ -474,7 +470,6 @@ void GameSelector::SyncButtons()
 	}
 }
 
-//0x44A2E0
 void GameSelector::AddTrophySparkle()
 {
 	TOD_ASSERT(mTrophyParticleID == PARTICLESYSTEMID_NULL);
@@ -482,7 +477,6 @@ void GameSelector::AddTrophySparkle()
 	mTrophyParticleID = mApp->ParticleGetID(aTrophyParticle);
 }
 
-//0x44A320
 void GameSelector::SyncProfile(bool theShowLoading)
 {
 	if (theShowLoading)
@@ -550,7 +544,6 @@ void GameSelector::SyncProfile(bool theShowLoading)
 	BoardInitForPlayer();
 }
 
-//0x44A650
 void GameSelector::Draw(Graphics* g)
 {
 	if (mApp->GetDialog(Dialogs::DIALOG_STORE) || mApp->GetDialog(Dialogs::DIALOG_ALMANAC))
@@ -631,7 +624,6 @@ void GameSelector::Draw(Graphics* g)
 	}
 }
 
-//0x44AB50
 void GameSelector::DrawOverlay(Graphics* g)
 {
 	g->SetLinearBlend(true);
@@ -752,7 +744,6 @@ void GameSelector::DrawOverlay(Graphics* g)
 	mToolTip->Draw(g);
 }
 
-//0x44B0D0
 void GameSelector::UpdateTooltip()
 {
 	if (!mApp->HasFinishedAdventure() || mApp->GetDialog(Dialogs::DIALOG_MESSAGE))
@@ -786,7 +777,6 @@ void GameSelector::UpdateTooltip()
 	mToolTip->Update();
 }
 
-//0x44B2A0
 void GameSelector::Update()
 {
 	Widget::Update();
@@ -1055,7 +1045,6 @@ void GameSelector::Update()
 
 }
 
-//0x44BB20
 void GameSelector::TrackButton(DialogButton* theButton, const char* theTrackName, float theOffsetX, float theOffsetY)
 {
 	Reanimation* aSelectorReanim = mApp->ReanimationGet(mSelectorReanimID);
@@ -1067,7 +1056,6 @@ void GameSelector::TrackButton(DialogButton* theButton, const char* theTrackName
 	theButton->mY = (int)(aTransform.mTransY + theOffsetY);
 }
 
-//0x44BBC0
 void GameSelector::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
@@ -1089,7 +1077,6 @@ void GameSelector::AddedToManager(WidgetManager* theWidgetManager)
 	theWidgetManager->AddWidget(mQuickPlayButton);
 }
 
-//0x44BCA0
 void GameSelector::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	Widget::RemovedFromManager(theWidgetManager);
@@ -1111,7 +1098,6 @@ void GameSelector::RemovedFromManager(WidgetManager* theWidgetManager)
 	theWidgetManager->RemoveWidget(mQuickPlayButton);
 }
 
-//0x44BD80
 void GameSelector::OrderInManagerChanged()
 {
 	mWidgetManager->PutInfront(mOverlayWidget, this);
@@ -1131,7 +1117,6 @@ void GameSelector::OrderInManagerChanged()
 	mWidgetManager->PutInfront(mQuickPlayButton, this);
 }
 
-//0x44BE60
 void GameSelector::KeyDown(KeyCode theKey)
 {
 	if (mApp->mKonamiCheck->Check(theKey))
@@ -1207,7 +1192,6 @@ void GameSelector::KeyDown(KeyCode theKey)
 	}
 }
 
-//0x44C200
 void GameSelector::KeyChar(char theChar)
 {
 	if (mStartingGame)
@@ -1255,7 +1239,6 @@ void GameSelector::KeyChar(char theChar)
 	}
 }
 
-//0x44C360
 void GameSelector::MouseDown(int x, int y, int theClickCount)
 {
 	for (int i = 0; i < 3; i++)
@@ -1272,7 +1255,6 @@ void GameSelector::MouseDown(int x, int y, int theClickCount)
 		mStartingGameCounter = 450;
 }
 
-//0x44C4C0
 void GameSelector::ButtonMouseEnter(int theId)
 {
 	if ((theId == GameSelector::GameSelector_Minigame && mMinigamesLocked) ||
@@ -1283,7 +1265,6 @@ void GameSelector::ButtonMouseEnter(int theId)
 	mApp->PlayFoley(FoleyType::FOLEY_BLEEP);
 }
 
-//0x44C540
 void GameSelector::ButtonPress(int theId, int theClickCount)
 {
 	if (theId == GameSelector::GameSelector_Adventure || theId == GameSelector::GameSelector_Minigame ||
@@ -1293,7 +1274,6 @@ void GameSelector::ButtonPress(int theId, int theClickCount)
 		mApp->PlaySample(Sexy::SOUND_TAP);
 }
 
-//0x44C590
 void GameSelector::ClickedAdventure()
 {
 	if (mApp->IsTrialStageLocked() && (mLevel >= 25 || mApp->HasFinishedAdventure()))
@@ -1339,13 +1319,11 @@ void GameSelector::ClickedAdventure()
 			aHandReanim->mTrackInstances[i].mIgnoreClipRect = true;
 }
 
-//0x44C890
 bool GameSelector::ShouldDoZenTuturialBeforeAdventure()
 {
 	return !mApp->HasFinishedAdventure() && mApp->mPlayerInfo->mLevel == 45 && mApp->mPlayerInfo->mNumPottedPlants == 0;
 }
 
-//0x44C8C0
 void GameSelector::ButtonDepress(int theId)
 {
 	if (theId == GameSelector::GameSelector_Minigame && mMinigamesLocked)
@@ -1476,7 +1454,6 @@ int GameSelector::CalcXPos(int ogX, int theX)
 	return TodAnimateCurve(75, 0, mMovementTimer, mCurrentX, mDestinationX, TodCurves::CURVE_EASE_IN_OUT);
 }
 
-//0x44CB00
 void GameSelector::AddPreviewProfiles()
 {
 	PlayerInfo* aProfile;

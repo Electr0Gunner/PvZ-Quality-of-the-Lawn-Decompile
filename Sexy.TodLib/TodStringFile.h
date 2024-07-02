@@ -24,11 +24,11 @@ public:
     TodStringListFormat();
     TodStringListFormat(const char* theFormatName, Font** theFont, const Color& theColor, int theLineSpacingOffset, unsigned int theFormatFlags);
 };
-extern int gTodStringFormatCount;               //[0x69DE4C]
-extern TodStringListFormat* gTodStringFormats;  //[0x69DA34]
+extern int gTodStringFormatCount;               
+extern TodStringListFormat* gTodStringFormats;  
 
 extern int gLawnStringFormatCount;
-extern TodStringListFormat gLawnStringFormats[14];  //0x6A5010
+extern TodStringListFormat gLawnStringFormats[14];  
 
 void                TodStringListSetColors(TodStringListFormat* theFormats, int theCount);
 void                TodWriteStringSetFormat(const char* theFormat, TodStringListFormat& theCurrentFormat);

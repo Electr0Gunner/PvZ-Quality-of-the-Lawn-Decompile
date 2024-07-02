@@ -6,11 +6,11 @@
 class DataReader
 {
 protected:
-	FILE*					mFile;			//+0x4
-	char*					mData;			//+0x8
-	unsigned long			mDataLen;		//+0xC
-	unsigned long			mDataPos;		//+0x10
-	bool					mOwnData;		//+0x14
+	FILE*					mFile;			
+	char*					mData;			
+	unsigned long			mDataLen;		
+	unsigned long			mDataPos;		
+	bool					mOwnData;		
 
 public:
 	DataReader();
@@ -36,10 +36,10 @@ class DataReaderException : public std::exception
 class DataWriter
 {
 protected:
-	FILE*					mFile;			//+0x4
-	char*					mData;			//+0x8
-	unsigned long			mDataLen;		//+0xC
-	unsigned long			mCapacity;		//+0x10
+	FILE*					mFile;			
+	char*					mData;			
+	unsigned long			mDataLen;		
+	unsigned long			mCapacity;		
 
 protected:
 	void					EnsureCapacity(unsigned long theNumBytes);

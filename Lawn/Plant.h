@@ -127,11 +127,11 @@ enum MagnetItemType
 class MagnetItem
 {
 public:
-    float                   mPosX;                          //+0x0
-    float                   mPosY;                          //+0x4
-    float                   mDestOffsetX;                   //+0x8
-    float                   mDestOffsetY;                   //+0xC
-    MagnetItemType          mItemType;                      //+0x10
+    float                   mPosX;                          
+    float                   mPosY;                          
+    float                   mDestOffsetX;                   
+    float                   mDestOffsetY;                   
+    MagnetItemType          mItemType;                      
 };
 
 class Coin;
@@ -142,53 +142,53 @@ class TodParticleSystem;
 class Plant : public GameObject
 {
 public:
-    SeedType                mSeedType;                      //+0x24
-    int                     mPlantCol;                      //+0x28
-    int                     mAnimCounter;                   //+0x2C
-    int                     mFrame;                         //+0x30
-    int                     mFrameLength;                   //+0x34
-    int                     mNumFrames;                     //+0x38
-    PlantState              mState;                         //+0x3C
-    int                     mPlantHealth;                   //+0x40
-    int                     mPlantMaxHealth;                //+0x44
-    int                     mSubclass;                      //+0x48
-    int                     mDisappearCountdown;            //+0x4C
-    int                     mDoSpecialCountdown;            //+0x50
-    int                     mStateCountdown;                //+0x54
-    int                     mLaunchCounter;                 //+0x58
-    int                     mLaunchRate;                    //+0x5C
-    Rect                    mPlantRect;                     //+0x60
-    Rect                    mPlantAttackRect;               //+0x70
-    int                     mTargetX;                       //+0x80
-    int                     mTargetY;                       //+0x84
-    int                     mStartRow;                      //+0x88
-    ParticleSystemID        mParticleID;                    //+0x8C
-    int                     mShootingCounter;               //+0x90
-    ReanimationID           mBodyReanimID;                  //+0x94
-    ReanimationID           mHeadReanimID;                  //+0x98
-    ReanimationID           mHeadReanimID2;                 //+0x9C
-    ReanimationID           mHeadReanimID3;                 //+0xA0
-    ReanimationID           mBlinkReanimID;                 //+0xA4
-    ReanimationID           mLightReanimID;                 //+0xA8
-    ReanimationID           mSleepingReanimID;              //+0xAC
-    int                     mBlinkCountdown;                //+0xB0
-    int                     mRecentlyEatenCountdown;        //+0xB4
-    int                     mEatenFlashCountdown;           //+0xB8
-    int                     mBeghouledFlashCountdown;       //+0xBC
-    float                   mShakeOffsetX;                  //+0xC0
-    float                   mShakeOffsetY;                  //+0xC4
-    MagnetItem              mMagnetItems[MAX_MAGNET_ITEMS]; //+0xC8
-    ZombieID                mTargetZombieID;                //+0x12C
-    int                     mWakeUpCounter;                 //+0x130
-    PlantOnBungeeState      mOnBungeeState;                 //+0x134
-    SeedType                mImitaterType;                  //+0x138
-    int                     mPottedPlantIndex;              //+0x13C
-    bool                    mAnimPing;                      //+0x140
-    bool                    mDead;                          //+0x141
-    bool                    mSquished;                      //+0x142
-    bool                    mIsAsleep;                      //+0x143
-    bool                    mIsOnBoard;                     //+0x144
-    bool                    mHighlighted;                   //+0x145
+    SeedType                mSeedType;                      
+    int                     mPlantCol;                      
+    int                     mAnimCounter;                   
+    int                     mFrame;                         
+    int                     mFrameLength;                   
+    int                     mNumFrames;                     
+    PlantState              mState;                         
+    int                     mPlantHealth;                   
+    int                     mPlantMaxHealth;                
+    int                     mSubclass;                      
+    int                     mDisappearCountdown;            
+    int                     mDoSpecialCountdown;            
+    int                     mStateCountdown;                
+    int                     mLaunchCounter;                 
+    int                     mLaunchRate;                    
+    Rect                    mPlantRect;                     
+    Rect                    mPlantAttackRect;               
+    int                     mTargetX;                       
+    int                     mTargetY;                       
+    int                     mStartRow;                      
+    ParticleSystemID        mParticleID;                    
+    int                     mShootingCounter;               
+    ReanimationID           mBodyReanimID;                  
+    ReanimationID           mHeadReanimID;                  
+    ReanimationID           mHeadReanimID2;                 
+    ReanimationID           mHeadReanimID3;                 
+    ReanimationID           mBlinkReanimID;                 
+    ReanimationID           mLightReanimID;                 
+    ReanimationID           mSleepingReanimID;              
+    int                     mBlinkCountdown;                
+    int                     mRecentlyEatenCountdown;        
+    int                     mEatenFlashCountdown;           
+    int                     mBeghouledFlashCountdown;       
+    float                   mShakeOffsetX;                  
+    float                   mShakeOffsetY;                  
+    MagnetItem              mMagnetItems[MAX_MAGNET_ITEMS]; 
+    ZombieID                mTargetZombieID;                
+    int                     mWakeUpCounter;                 
+    PlantOnBungeeState      mOnBungeeState;                 
+    SeedType                mImitaterType;                  
+    int                     mPottedPlantIndex;              
+    bool                    mAnimPing;                      
+    bool                    mDead;                          
+    bool                    mSquished;                      
+    bool                    mIsAsleep;                      
+    bool                    mIsOnBoard;                     
+    bool                    mHighlighted;                   
 
 public:
     Plant();
@@ -301,15 +301,15 @@ float                       PlantFlowerPotHeightOffset(SeedType theSeedType, flo
 class PlantDefinition
 {
 public:
-    SeedType                mSeedType;          //+0x0
-    Image**                 mPlantImage;        //+0x4
-    ReanimationType         mReanimationType;   //+0x8
-    int                     mPacketIndex;       //+0xC
-    int                     mSeedCost;          //+0x10
-    int                     mRefreshTime;       //+0x14
-    PlantSubClass           mSubClass;          //+0x18
-    int                     mLaunchRate;        //+0x1C
-    const SexyChar*         mPlantName;         //+0x20
+    SeedType                mSeedType;          
+    Image**                 mPlantImage;        
+    ReanimationType         mReanimationType;   
+    int                     mPacketIndex;       
+    int                     mSeedCost;          
+    int                     mRefreshTime;       
+    PlantSubClass           mSubClass;          
+    int                     mLaunchRate;        
+    const SexyChar*         mPlantName;         
 };
 extern PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES];
 

@@ -16,7 +16,6 @@
 #include "../../Sexy.TodLib/TodCommon.h"
 #include "../../Sexy.TodLib/TodStringFile.h"
 
-//0x405780
 AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchievement)
 {
     mApp = theApp;
@@ -178,7 +177,6 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
     mApp->mDetails = "In the Award Screen";
 }
 
-//0x406420 & 0x406440
 AwardScreen::~AwardScreen()
 {
     if (mStartButton) delete mStartButton;
@@ -213,7 +211,6 @@ bool AwardScreen::IsPaperNote()
     return mApp->IsAdventureMode() && (aLevel == 10 || aLevel == 20 || aLevel == 30 || aLevel == 40 || aLevel == 50);
 }
 
-//0x4064D0
 void AwardScreen::DrawBottom(Graphics* g, SexyString theTitle, SexyString theAward, SexyString theMessage)
 {
     g->DrawImage(Sexy::IMAGE_AWARDSCREEN_BACK, 0, 0);
@@ -223,7 +220,6 @@ void AwardScreen::DrawBottom(Graphics* g, SexyString theTitle, SexyString theAwa
     mState = theAward;
 }
 
-//0x4066A0
 void AwardScreen::DrawAwardSeed(Graphics* g)
 {
     SeedType aSeedType = mApp->GetAwardSeedForLevel(mApp->mPlayerInfo->mLevel - 1);
@@ -240,7 +236,6 @@ void AwardScreen::DrawAwardSeed(Graphics* g)
     g->SetScale(1, 1, 0, 0);
 }
 
-//0x4068D0
 void AwardScreen::Draw(Graphics* g)
 {
     g->SetLinearBlend(true);
@@ -433,7 +428,6 @@ void AwardScreen::Draw(Graphics* g)
     g->FillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
 }
 
-//0x4076A0
 void AwardScreen::Update()
 {
     Widget::Update();
@@ -447,7 +441,6 @@ void AwardScreen::Update()
     mApp->UpdateDiscordState(mState);
 }
 
-//0x407760
 void AwardScreen::KeyChar(char theChar)
 {
     if (theChar == ' ' || theChar == '\r' || theChar == '\u001B')
@@ -559,7 +552,6 @@ void AwardScreen::ExitScreen()
     }
 }
 
-//0x407780
 void AwardScreen::StartButtonPressed()
 {
     if (mApp->GetDialog(DIALOG_STORE))
@@ -583,14 +575,12 @@ void AwardScreen::StartButtonPressed()
     ExitScreen();
 }
 
-//0x4079F0
 void AwardScreen::MouseDown(int x, int y, int theClickCount)
 {
     if (theClickCount == 1 && (mStartButton->IsMouseOver() || mMenuButton->IsMouseOver()))
         mApp->PlaySample(Sexy::SOUND_TAP);
 }
 
-//0x407A70
 void AwardScreen::MouseUp(int x, int y, int theClickCount)
 {
     if (theClickCount == 1)

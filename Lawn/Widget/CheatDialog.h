@@ -7,8 +7,8 @@
 class CheatDialog : public LawnDialog, public EditListener
 {
 public:
-	LawnApp*			mApp;					//+0x170
-	EditWidget*			mLevelEditWidget;		//+0x174
+	LawnApp*			mApp;					
+	EditWidget*			mLevelEditWidget;		
 
 public:
 	CheatDialog(LawnApp* theApp);

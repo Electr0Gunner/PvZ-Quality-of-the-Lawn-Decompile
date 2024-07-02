@@ -1,12 +1,12 @@
 #include "Trail.h"
 #include "Definition.h"
 
-int gTrailDefCount;  //[0x6A9F20]
-TrailDefinition* gTrailDefArray;  //[0x6A9F24]
-int gTrailParamArraySize;  //[0x6A9F28]
-TrailParams* gTrailParamArray;  //[0x6A9F2C]
+int gTrailDefCount;  
+TrailDefinition* gTrailDefArray;  
+int gTrailParamArraySize;  
+TrailParams* gTrailParamArray;  
 
-TrailParams gLawnTrailArray[(int)TrailType::NUM_TRAILS] = { //0x6A19F4
+TrailParams gLawnTrailArray[(int)TrailType::NUM_TRAILS] = { 
 	{ TrailType::TRAIL_ICE, "particles\\IceTrail.trail" }
 };
 
@@ -27,7 +27,6 @@ TrailPoint::TrailPoint()
 {
 }
 
-//0x51B830
 bool TrailLoadADef(TrailDefinition* theTrailDef, const char* theTrailFileName)
 {
 	TodHesitationBracket aHesitation("Load Trail '%s'", theTrailFileName);
@@ -43,7 +42,6 @@ bool TrailLoadADef(TrailDefinition* theTrailDef, const char* theTrailFileName)
 	return true;
 }
 
-//0x51B960
 void TrailLoadDefinitions(TrailParams* theTrailParamArray, int theTrailParamArraySize)
 {
 	TodHesitationBracket aHesitation("TrailLoadDefinitions");
@@ -67,7 +65,6 @@ void TrailLoadDefinitions(TrailParams* theTrailParamArray, int theTrailParamArra
 	}
 }
 
-//0x51BAB0
 void TrailFreeDefinitions()
 {
 	for (int i = 0; i < gTrailDefCount; i++)
@@ -95,7 +92,6 @@ Trail::Trail()
 	}
 }
 
-//0x51BB30
 void Trail::AddPoint(float x, float y)
 {
 	int aMaxPoints = ClampInt(mDefinition->mMaxPoints, 2, 20);
@@ -106,11 +102,10 @@ void Trail::AddPoint(float x, float y)
 		float aDistance = Distance2D(x, y, aPoint.aPos.x, aPoint.aPos.y);
 		if (aDistance < mDefinition->mMinPointDistance)
 		{
-			return;  // 距离上次记录的轨迹点的距离不能小于规定的最小值
+			return;  
 		}
 	}
 	
-	// 当已有轨迹点数量达到上限时，舍弃最早的一个轨迹点
 	if (mNumTrailPoints == aMaxPoints)
 	{
 		memmove(mTrailPoints, mTrailPoints + 1, (mNumTrailPoints - 1) * sizeof(TrailPoint));
@@ -139,7 +134,6 @@ void Trail::Update()
 	}
 }
 
-//0x41BC40
 bool Trail::GetNormalAtPoint(int nIndex, SexyVector2& theNormal)
 {
 	SexyVector2 aDirection;
@@ -169,7 +163,6 @@ bool Trail::GetNormalAtPoint(int nIndex, SexyVector2& theNormal)
 	return true;
 }
 
-//0x51BD00
 void Trail::Draw(Graphics* g)
 {
 	if (mDead || mNumTrailPoints < 2)
@@ -276,7 +269,6 @@ void TrailHolder::InitializeHolder()
 	mTrails.DataArrayInitialize(1024U, "trails");
 }
 
-//0x4455A0
 void TrailHolder::DisposeHolder()
 {
 	mTrails.DataArrayDispose();

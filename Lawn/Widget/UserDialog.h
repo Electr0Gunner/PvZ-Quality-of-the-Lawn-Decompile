@@ -20,10 +20,10 @@ protected:
 	};
 
 public:
-	ListWidget*			mUserList;				//+0x174
-	DialogButton*		mRenameButton;			//+0x178
-	DialogButton*		mDeleteButton;			//+0x17C
-	int					mNumUsers;				//+0x180
+	ListWidget*			mUserList;				
+	DialogButton*		mRenameButton;			
+	DialogButton*		mDeleteButton;			
+	int					mNumUsers;				
 
 public:
 	UserDialog(LawnApp* theApp);

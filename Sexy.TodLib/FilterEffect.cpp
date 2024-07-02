@@ -3,7 +3,6 @@
 #include "FilterEffect.h"
 #include "../SexyAppFramework/MemoryImage.h"
 
-//0x446B80
 void RGB_to_HSL(float r, float g, float b, float& h, float& s, float& l)
 {
 	float maxval = max(r, g);
@@ -33,7 +32,6 @@ void RGB_to_HSL(float r, float g, float b, float& h, float& s, float& l)
 	h /= 6.0f;  //hue
 }
 
-//0x446D80
 void HSL_to_RGB(float h, float sl, float l, float& r, float& g, float& b)
 {
 	float v = (l <= 0.5f) ? (l * (1.0f + sl)) : (l + sl - l * sl);
@@ -70,7 +68,6 @@ void FilterEffectInitForApp()
 {
 }
 
-//0x446F00
 void FilterEffectDisposeForApp()
 {
 	for (int i = 0; i < (int)FilterEffect::NUM_FILTER_EFFECTS; i++)
@@ -88,7 +85,6 @@ void FilterEffectDisposeForApp()
 	}
 }
 
-//0x446FD0
 void FilterEffectDoLumSat(MemoryImage* theImage, float theLum, float theSat)
 {
 	unsigned long* ptr = theImage->mBits;
@@ -123,7 +119,6 @@ void FilterEffectDoLessWashedOut(MemoryImage* theImage)
 	FilterEffectDoLumSat(theImage, 1.2f, 0.3f);
 }
 
-//0x447190
 void FilterEffectDoWhite(MemoryImage* theImage)
 {
 	unsigned long* ptr = theImage->mBits;
@@ -132,7 +127,6 @@ void FilterEffectDoWhite(MemoryImage* theImage)
 			*ptr++ |= 0x00FFFFFF;
 }
 
-//0x4471D0
 MemoryImage* FilterEffectCreateImage(Image* theImage, FilterEffect theFilterEffect)
 {
 	MemoryImage* aImage = new MemoryImage();
@@ -162,7 +156,6 @@ MemoryImage* FilterEffectCreateImage(Image* theImage, FilterEffect theFilterEffe
 	return aImage;
 }
 
-//0x447340
 Image* FilterEffectGetImage(Image* theImage, FilterEffect theFilterEffect)
 {
 	TOD_ASSERT(theFilterEffect >= 0 && theFilterEffect < FilterEffect::NUM_FILTER_EFFECTS);

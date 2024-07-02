@@ -24,11 +24,11 @@ using namespace Sexy;
 class ReanimationWidget : public Widget
 {
 public:
-    LawnApp*				mApp;					//+0x88
-    Reanimation*			mReanim;				//+0x8C
-    LawnDialog*				mLawnDialog;			//+0x90
-    float					mPosX;					//+0x94
-    float					mPosY;					//+0x98
+    LawnApp*				mApp;					
+    Reanimation*			mReanim;				
+    LawnDialog*				mLawnDialog;			
+    float					mPosX;					
+    float					mPosY;					
 
 public:
 	ReanimationWidget();
@@ -43,14 +43,14 @@ public:
 class LawnDialog : public Dialog
 {
 public:
-	LawnApp*				mApp;					//+0x150
-	int						mButtonDelay;			//+0x154
-	ReanimationWidget*		mReanimation;			//+0x158
-	bool					mDrawStandardBack;		//+0x15C
-	LawnStoneButton*		mLawnYesButton;			//+0x160
-	LawnStoneButton*		mLawnNoButton;			//+0x164
-	bool					mTallBottom;			//+0x168
-	bool					mVerticalCenterText;	//+0x169
+	LawnApp*				mApp;					
+	int						mButtonDelay;			
+	ReanimationWidget*		mReanimation;			
+	bool					mDrawStandardBack;		
+	LawnStoneButton*		mLawnYesButton;			
+	LawnStoneButton*		mLawnNoButton;			
+	bool					mTallBottom;			
+	bool					mVerticalCenterText;	
 
 public:
 	LawnDialog(LawnApp* theApp, int theId, bool isModal, const SexyString& theDialogHeader, const SexyString& theDialogLines, const SexyString& theDialogFooter, int theButtonMode);

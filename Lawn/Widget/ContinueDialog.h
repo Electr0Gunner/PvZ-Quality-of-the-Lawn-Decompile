@@ -13,8 +13,8 @@ public:
 	};
 
 public:
-	DialogButton*		mContinueButton;	//+0x16C
-	DialogButton*		mNewGameButton;		//+0x170
+	DialogButton*		mContinueButton;	
+	DialogButton*		mNewGameButton;		
 
 public:
 	ContinueDialog(LawnApp* theApp);

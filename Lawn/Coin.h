@@ -14,29 +14,29 @@ using namespace Sexy;
 class Coin : public GameObject
 {
 public:
-    float                   mPosX;                  //+0x24
-    float                   mPosY;                  //+0x28
-    float                   mVelX;                  //+0x2C
-    float                   mVelY;                  //+0x30
-    float                   mScale;                 //+0x34
-    bool                    mDead;                  //+0x38
-    int                     mFadeCount;             //+0x3C
-    float                   mCollectX;              //+0x40
-    float                   mCollectY;              //+0x44
-    int                     mGroundY;               //+0x48
-    int                     mCoinAge;               //+0x4C
-    bool                    mIsBeingCollected;      //+0x50
-    int                     mDisappearCounter;      //+0x54
-    CoinType                mType;                  //+0x58
-    CoinMotion              mCoinMotion;            //+0x5C
-    AttachmentID            mAttachmentID;          //+0x60
-    float                   mCollectionDistance;    //+0x64
-    SeedType                mUsableSeedType;        //+0x68
-    PottedPlant             mPottedPlantSpec;       //+0x70
-    bool                    mNeedsBouncyArrow;      //+0xC8
-    bool                    mHasBouncyArrow;        //+0xC9
-    bool                    mHitGround;             //+0xCA
-    int                     mTimesDropped;          //+0xCC
+    float                   mPosX;                  
+    float                   mPosY;                  
+    float                   mVelX;                  
+    float                   mVelY;                  
+    float                   mScale;                 
+    bool                    mDead;                  
+    int                     mFadeCount;             
+    float                   mCollectX;              
+    float                   mCollectY;              
+    int                     mGroundY;               
+    int                     mCoinAge;               
+    bool                    mIsBeingCollected;      
+    int                     mDisappearCounter;      
+    CoinType                mType;                  
+    CoinMotion              mCoinMotion;            
+    AttachmentID            mAttachmentID;          
+    float                   mCollectionDistance;    
+    SeedType                mUsableSeedType;        
+    PottedPlant             mPottedPlantSpec;       
+    bool                    mNeedsBouncyArrow;      
+    bool                    mHasBouncyArrow;        
+    bool                    mHitGround;             
+    int                     mTimesDropped;          
 
 public:
     Coin();

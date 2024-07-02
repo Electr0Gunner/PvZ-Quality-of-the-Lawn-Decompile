@@ -37,20 +37,20 @@ private:
 	};
 
 public:
-	LawnApp*					mApp;					//+0x16C
-	GameButton*					mCloseButton;			//+0x170
-	GameButton*					mIndexButton;			//+0x174
-	GameButton*					mPlantButton;			//+0x178
-	GameButton*					mZombieButton;			//+0x17C
+	LawnApp*					mApp;					
+	GameButton*					mCloseButton;			
+	GameButton*					mIndexButton;			
+	GameButton*					mPlantButton;			
+	GameButton*					mZombieButton;			
 	Sexy::Slider*				mPlantSlider;
 	Sexy::Slider*				mZombieSlider;
-	AlmanacPage					mOpenPage;				//+0x180
-	Reanimation*				mReanim[4];				//+0x184
-	SeedType					mSelectedSeed;			//+0x194
-	ZombieType					mSelectedZombie;		//+0x198
-	Plant*						mPlant;					//+0x19C
-	Zombie*						mZombie;				//+0x1A0
-	Zombie*						mZombiePerfTest[400];	//+0x1A4
+	AlmanacPage					mOpenPage;				
+	Reanimation*				mReanim[4];				
+	SeedType					mSelectedSeed;			
+	ZombieType					mSelectedZombie;		
+	Plant*						mPlant;					
+	Zombie*						mZombie;				
+	Zombie*						mZombiePerfTest[400];	
 	float						mIncrement;
 	float						mScrollPosition;
 	float						mScrollAmount;

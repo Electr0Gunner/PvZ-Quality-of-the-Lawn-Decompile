@@ -91,7 +91,6 @@ ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_INTRO,                                10,  ChallengePage::CHALLENGE_PAGE_LIMBO,       2,  3,  _S("Intro") }
 };
 
-//0x42DAE0
 ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 {
 	mLockShakeX = 0;
@@ -219,7 +218,6 @@ void ChallengeScreen::SliderVal(int theId, double theVal)
 	}
 }
 
-//0x42E280 & 0x42E2A0
 ChallengeScreen::~ChallengeScreen()
 {
 	delete mBackButton;
@@ -251,7 +249,6 @@ bool ChallengeScreen::IsIZombieLevel(GameMode theGameMode)
 	return theGameMode >= GAMEMODE_PUZZLE_I_ZOMBIE_1 && theGameMode <= GAMEMODE_PUZZLE_I_ZOMBIE_ENDLESS;
 }
 
-//0x42E3C0
 void ChallengeScreen::SetUnlockChallengeIndex(ChallengePage thePage, bool theIsIZombie)
 {
 	mUnlockState = UNLOCK_SHAKING;
@@ -273,7 +270,6 @@ void ChallengeScreen::SetUnlockChallengeIndex(ChallengePage thePage, bool theIsI
 	}
 }
 
-//0x42E440
 int ChallengeScreen::MoreTrophiesNeeded(int theChallengeIndex)
 {
 	ChallengeDefinition& aDef = GetChallengeDefinition(theChallengeIndex);
@@ -373,13 +369,11 @@ int ChallengeScreen::MoreTrophiesNeeded(int theChallengeIndex)
 	}
 }
 
-//0x42E6E0
 bool ChallengeScreen::ShowPageButtons()
 {
 	return mApp->mTodCheatKeys && mPageIndex != CHALLENGE_PAGE_SURVIVAL && mPageIndex != CHALLENGE_PAGE_PUZZLE;
 }
 
-//0x42E710
 void ChallengeScreen::UpdateButtons()
 {
 	for (int aChallengeMode = 0; aChallengeMode < NUM_CHALLENGE_MODES; aChallengeMode++)
@@ -407,7 +401,6 @@ void ChallengeScreen::UpdateButtons()
 	}
 }
 
-//0x42E8A0
 int ChallengeScreen::AccomplishmentsNeeded(int theChallengeIndex)
 {
 	int aTrophiesNeeded = MoreTrophiesNeeded(theChallengeIndex);
@@ -417,7 +410,6 @@ int ChallengeScreen::AccomplishmentsNeeded(int theChallengeIndex)
 	return mCheatEnableChallenges ? 0 : aTrophiesNeeded;
 }
 
-//0x42E920
 void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 {
 	ButtonWidget* aChallengeButton = mChallengeButtons[theChallengeIndex];
@@ -443,7 +435,6 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 		if (AccomplishmentsNeeded(theChallengeIndex) <= 1)
 		{
 			// ============================================================================================
-			// ▲ 绘制按钮上的小游戏图标
 			// ============================================================================================
 			if (aChallengeButton->mDisabled)
 			{
@@ -476,14 +467,12 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 			g->SetScale(1.0f, 1.0f, aPosX + 13, aPosY + 4);
 
 			// ============================================================================================
-			// ▲ 绘制小游戏按钮边框
 			// ============================================================================================
 			bool aHighLight = aChallengeButton->mIsOver && theChallengeIndex != mUnlockChallengeIndex;
 			g->SetColorizeImages(false);
 			g->DrawImage(aHighLight ? Sexy::IMAGE_CHALLENGE_WINDOW : Sexy::IMAGE_CHALLENGE_WINDOW_HIGHLIGHT, aPosX - 6, aPosY - 2);
 
 			// ============================================================================================
-			// ▲ 绘制小游戏的名称
 			// ============================================================================================
 			Color aTextColor = aHighLight ? Color(250, 40, 40) : Color(42, 42, 90);
 			SexyString aName = TodStringTranslate(aDef.mChallengeName);
@@ -499,7 +488,6 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 			}
 			else
 			{
-				// 先尝试在名称字符串的后半段取空格以将字符串分隔为两行，若后半段中无空格则在整个字符串中寻找空格
 				int aHalfPos = (mPageIndex == CHALLENGE_PAGE_SURVIVAL && !aChallengeButton->mDisabled) ? 7 : (aNameLen / 2 - 1);
 				const SexyChar* aSpacedChar = _S(aName.c_str() + aHalfPos, _S(' '));
 				while(aSpacedChar[0]!=' ')
@@ -522,7 +510,6 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 					aSpacedChar = _S(aName.c_str(), _S(' '));
 				}
 
-				// 分别计算取得两行文本的长度
 				int aLine1Len = aNameLen;
 				int aLine2Len = 0;
 				if (aSpacedChar != nullptr)
@@ -531,7 +518,6 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 					aLine2Len = aNameLen - aLine1Len - 1;
 				}
 				
-				// 分别绘制两行文本字符串
 				auto topStr=aName.substr(0, aLine1Len+1);
 				auto botStr=aName.substr(aLine1Len + 1, aLine2Len);
 				if(botStr.empty())
@@ -550,7 +536,6 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 			}
 
 			// ============================================================================================
-			// ▲ 绘制关卡锁定或关卡完成的贴图以及关卡最高记录的文本等
 			// ============================================================================================
 			int aRecord = mApp->mPlayerInfo->mChallengeRecords[theChallengeIndex];
 			if (theChallengeIndex == mUnlockChallengeIndex)
@@ -597,7 +582,6 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 	}
 }
 
-//0x42F160
 void ChallengeScreen::Draw(Graphics* g)
 {
 	g->SetLinearBlend(true);
@@ -627,7 +611,6 @@ void ChallengeScreen::Draw(Graphics* g)
 	mToolTip->Draw(g);
 }
 
-//0x42F510
 void ChallengeScreen::Update()
 {
 	Widget::Update();
@@ -704,7 +687,6 @@ void ChallengeScreen::MouseWheel(int theDelta)
 	mScrollAmount -= mScrollAmount * mScrollAccel;
 }
 
-//0x42F640
 void ChallengeScreen::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
@@ -715,7 +697,6 @@ void ChallengeScreen::AddedToManager(WidgetManager* theWidgetManager)
 	AddWidget(mSlider);
 }
 
-//0x42F6B0
 void ChallengeScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	Widget::RemovedFromManager(theWidgetManager);
@@ -726,13 +707,11 @@ void ChallengeScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 	RemoveWidget(mSlider);
 }
 
-//0x42F720
 void ChallengeScreen::ButtonPress(int theId)
 {
 	mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
 }
 
-//0x42F740
 void ChallengeScreen::ButtonDepress(int theId)
 {
 	if (theId == ChallengeScreen::ChallengeScreen_Back)
@@ -766,7 +745,6 @@ void ChallengeScreen::ButtonDepress(int theId)
 	}
 }
 
-//0x42F7E0
 void ChallengeScreen::UpdateToolTip()
 {
 	if (!mApp->mWidgetManager->mMouseIn || !mApp->mActive)
@@ -835,7 +813,7 @@ void ChallengeScreen::UpdateToolTip()
 				mToolTip->mVisible = true;
 				return;
 			} // end if (MoreTrophiesNeeded(aChallengeMode) > 0)
-		} // end 需要显示标签的条件判断
+		} 
 	}
 
 	mToolTip->mVisible = false;

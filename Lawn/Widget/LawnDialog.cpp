@@ -12,7 +12,6 @@
 #include "../../SexyAppFramework/ImageFont.h"
 
 
-//0x456A80
 LawnDialog::LawnDialog(LawnApp* theApp, int theId, bool isModal, const SexyString& theDialogHeader, const SexyString& theDialogLines, const SexyString& theDialogFooter, int theButtonMode) :
 	Dialog(nullptr, nullptr, theId, isModal, theDialogHeader, theDialogLines, _S(""), BUTTONS_NONE)
 {
@@ -56,7 +55,6 @@ LawnDialog::LawnDialog(LawnApp* theApp, int theId, bool isModal, const SexyStrin
     CalcSize(0, 0);
 }
 
-//0x456E80 & 0x456EA0
 LawnDialog::~LawnDialog()
 {
     if (mReanimation) delete mReanimation;
@@ -79,17 +77,12 @@ int LawnDialog::GetTop()
     return mContentInsets.mTop + mBackgroundInsets.mTop + 99;
 }
 
-//0x456F30
 void LawnDialog::CalcSize(int theExtraX, int theExtraY)
 {
-    // 根据边距计算一个最小宽度
     int aWidth = mBackgroundInsets.mLeft + mBackgroundInsets.mRight + mContentInsets.mLeft + mContentInsets.mRight + theExtraX;
-    // 最小宽度需要额外考虑到标题字符串的宽度
     if (mDialogHeader.size() > 0) aWidth += mHeaderFont->StringWidth(mDialogHeader);
-    // 对话框贴图的最小宽度
     int aTopMidWidth = Sexy::IMAGE_DIALOG_TOPMIDDLE->mWidth;
     int aImageWidth = Sexy::IMAGE_DIALOG_TOPLEFT->mWidth + Sexy::IMAGE_DIALOG_TOPRIGHT->mWidth + aTopMidWidth;
-    // 计算最终的宽度
     if (aWidth <= aImageWidth)
     {
         aWidth = aImageWidth;
@@ -103,14 +96,11 @@ void LawnDialog::CalcSize(int theExtraX, int theExtraY)
         }
     }
 
-    // 根据边距计算一个最小高度
     int aHeight = mBackgroundInsets.mTop + mBackgroundInsets.mBottom + mContentInsets.mTop + mContentInsets.mBottom + theExtraY + DIALOG_HEADER_OFFSET;
-    // 额外考虑到标题字符串的高度
     if (mDialogHeader.size() > 0)
     {
         aHeight += -mHeaderFont->GetAscentPadding() + mHeaderFont->GetHeight() + mSpaceAfterHeader;
     }
-    // 对话框宽度和高度额外考虑正文文本
     if (mDialogLines.size() > 0)
     {
         aWidth += aTopMidWidth;
@@ -120,10 +110,8 @@ void LawnDialog::CalcSize(int theExtraX, int theExtraY)
         aHeight += GetWordWrappedHeight(&g, aBasicWidth, mDialogLines, mLinesFont->GetLineSpacing() + mLineSpacingOffset) + 30;
     }
     aHeight += mButtonHeight;
-    // 对话框贴图的最小高度
     int aBottomHeight = (mTallBottom ? Sexy::IMAGE_DIALOG_BIGBOTTOMLEFT : Sexy::IMAGE_DIALOG_BOTTOMLEFT)->mHeight;
     int aImageHeight = Sexy::IMAGE_DIALOG_TOPLEFT->mHeight + aBottomHeight + DIALOG_HEADER_OFFSET;
-    // 计算最终的高度
     if (aHeight < aImageHeight)
     {
         aHeight = aImageHeight;
@@ -138,7 +126,6 @@ void LawnDialog::CalcSize(int theExtraX, int theExtraY)
     Resize(mX, mY, aWidth, aHeight);
 }
 
-//0x457160
 void LawnDialog::AddedToManager(WidgetManager* theWidgetManager)
 {
     Dialog::AddedToManager(theWidgetManager);
@@ -147,7 +134,6 @@ void LawnDialog::AddedToManager(WidgetManager* theWidgetManager)
     if (mLawnNoButton) AddWidget(mLawnNoButton);
 }
 
-//0x4571B0
 void LawnDialog::RemovedFromManager(WidgetManager* theWidgetManager)
 {
     Dialog::RemovedFromManager(theWidgetManager);
@@ -162,7 +148,6 @@ void LawnDialog::RemovedFromManager(WidgetManager* theWidgetManager)
     }
 }
 
-//0x457230
 void LawnDialog::SetButtonDelay(int theDelay)
 {
     mButtonDelay = theDelay;
@@ -170,7 +155,6 @@ void LawnDialog::SetButtonDelay(int theDelay)
     if (mLawnNoButton) mLawnNoButton->SetDisabled(true);
 }
 
-//0x457280
 void LawnDialog::Update()
 {
     Dialog::Update();
@@ -182,13 +166,11 @@ void LawnDialog::Update()
     MarkDirty();
 }
 
-//0x4572E0
 void LawnDialog::ButtonPress(int theId)
 {
     mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
 }
 
-//0x457300
 void LawnDialog::ButtonDepress(int theId)
 {
     if (mUpdateCnt > mButtonDelay)
@@ -197,13 +179,11 @@ void LawnDialog::ButtonDepress(int theId)
     }
 }
 
-//0x457320
 void LawnDialog::CheckboxChecked(int theId, bool theChecked)
 {
     mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
 }
 
-//0x457340
 void LawnDialog::KeyDown(KeyCode theKey)
 {
     if (mId == DIALOG_PAUSED && mApp->mBoard)
@@ -224,7 +204,6 @@ void LawnDialog::KeyDown(KeyCode theKey)
     }
 }
 
-//0x4573D0
 void LawnDialog::Resize(int theX, int theY, int theWidth, int theHeight)
 {
     Dialog::Resize(theX, theY, theWidth, theHeight);
@@ -232,12 +211,9 @@ void LawnDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     int aButtonAreaX = mContentInsets.mLeft + mBackgroundInsets.mLeft - 5;
     int aButtonAreaY = mHeight - mContentInsets.mBottom - mBackgroundInsets.mBottom - IMAGE_BUTTON_LEFT->mHeight + 2;
     int aButtonAreaWidth = mWidth - mContentInsets.mRight - mBackgroundInsets.mRight - mBackgroundInsets.mLeft - mContentInsets.mLeft + 8;
-    // 按钮贴图限制下，按钮的最小宽度
     int aButtonMinWidth = IMAGE_BUTTON_LEFT->mWidth + IMAGE_BUTTON_RIGHT->mWidth;
-    // 按钮区域额外空余的宽度
     int aBtnMidWidth = IMAGE_BUTTON_MIDDLE->mWidth;
     int aButtonExtraWidth = (aButtonAreaWidth - 10) / 2 - aBtnMidWidth - aButtonMinWidth + 1;
-    // 计算按钮可以拓展的额外宽度
     if (aButtonExtraWidth <= 0)
     {
         aButtonExtraWidth = 0;
@@ -247,11 +223,9 @@ void LawnDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         int anExtraWidth = aButtonExtraWidth % aBtnMidWidth;
         if (anExtraWidth)
         {
-            // 不足中部贴图宽度的部分补充至中部贴图宽度
             aButtonExtraWidth += aBtnMidWidth - anExtraWidth;
         }
     }
-    // 最终宽度
     int aButtonWidth = aButtonMinWidth + aButtonExtraWidth;
 
     if (mTallBottom)
@@ -290,7 +264,6 @@ void LawnDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     }
 }
 
-//0x4575A0
 void LawnDialog::Draw(Graphics* g)
 {
     if (!mDrawStandardBack)
@@ -376,7 +349,6 @@ void LawnDialog::Draw(Graphics* g)
     WriteWordWrapped(g, aRect, mDialogLines, mLinesFont->GetLineSpacing() + mLineSpacingOffset, mTextAlign);
 }
 
-//0x4579A0
 ReanimationWidget::ReanimationWidget()
 {
     mApp = (LawnApp*)gSexyAppBase;
@@ -389,7 +361,6 @@ ReanimationWidget::ReanimationWidget()
     mHasAlpha = true;
 }
 
-//0x4579F0、0x457A10
 ReanimationWidget::~ReanimationWidget()
 {
     Dispose();
@@ -404,7 +375,6 @@ void ReanimationWidget::Dispose()
     }
 }
 
-//0x457A80
 void ReanimationWidget::AddReanimation(float x, float y, ReanimationType theReanimationType)
 {
     TOD_ASSERT(mReanim == nullptr);
@@ -420,14 +390,12 @@ void ReanimationWidget::AddReanimation(float x, float y, ReanimationType theRean
     Resize(x, y, 10, 10);
 }
 
-//0x457B80
 void ReanimationWidget::Draw(Graphics* g)
 {
     if (mReanim)
         mReanim->Draw(g);
 }
 
-//0x457BA0
 void ReanimationWidget::Update()
 {
     if (mReanim)
@@ -437,7 +405,6 @@ void ReanimationWidget::Update()
     }
 }
 
-//0x457BC0
 GameOverDialog::GameOverDialog(const SexyString& theMessage, bool theShowChallengeName) : LawnDialog(
     gLawnApp, 
     Dialogs::DIALOG_GAME_OVER, 
@@ -474,7 +441,6 @@ GameOverDialog::~GameOverDialog()
     delete mMenuButton;
 }
 
-//0x457E50
 void GameOverDialog::ButtonDepress(int theId)
 {
     if (theId == 1)
@@ -505,7 +471,6 @@ void GameOverDialog::ButtonDepress(int theId)
     }
 }
 
-//0x457F20
 void GameOverDialog::AddedToManager(WidgetManager* theWidgetManager)
 {
     LawnDialog::AddedToManager(theWidgetManager);
@@ -515,7 +480,6 @@ void GameOverDialog::AddedToManager(WidgetManager* theWidgetManager)
     }
 }
 
-//0x457F80
 void GameOverDialog::RemovedFromManager(WidgetManager* theWidgetManager)
 {
     LawnDialog::RemovedFromManager(theWidgetManager);
@@ -525,7 +489,6 @@ void GameOverDialog::RemovedFromManager(WidgetManager* theWidgetManager)
     }
 }
 
-//0x457FB0
 void GameOverDialog::MouseDrag(int x, int y)
 {
     LawnDialog::MouseDrag(x, y);

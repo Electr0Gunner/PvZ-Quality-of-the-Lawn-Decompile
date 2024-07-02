@@ -26,21 +26,21 @@ namespace Sexy
 class ChosenSeed
 {
 public:
-    int                     mX;                                //+0x0
-    int                     mY;                                //+0x4
-    int                     mTimeStartMotion;                  //+0x8
-    int                     mTimeEndMotion;                    //+0xC
-    int                     mStartX;                           //+0x10
-    int                     mStartY;                           //+0x14
-    int                     mEndX;                             //+0x18
-    int                     mEndY;                             //+0x1C
-    SeedType                mSeedType;                         //+0x20
-    ChosenSeedState         mSeedState;                        //+0x24
-    int                     mSeedIndexInBank;                  //+0x28
-    bool                    mRefreshing;                       //+0x2C
-    int                     mRefreshCounter;                   //+0x30
-    SeedType                mImitaterType;                     //+0x34
-    bool                    mCrazyDavePicked;                  //+0x38
+    int                     mX;                                
+    int                     mY;                                
+    int                     mTimeStartMotion;                  
+    int                     mTimeEndMotion;                    
+    int                     mStartX;                           
+    int                     mStartY;                           
+    int                     mEndX;                             
+    int                     mEndY;                             
+    SeedType                mSeedType;                         
+    ChosenSeedState         mSeedState;                        
+    int                     mSeedIndexInBank;                  
+    bool                    mRefreshing;                       
+    int                     mRefreshCounter;                   
+    SeedType                mImitaterType;                     
+    bool                    mCrazyDavePicked;                  
 };
 
 class SeedChooserScreen : public Widget, public Sexy::SliderListener
@@ -59,26 +59,26 @@ private:
     };
 
 public:
-    GameButton*             mStartButton;                       //+0x88
-    GameButton*             mRandomButton;                      //+0x8C
-    GameButton*             mViewLawnButton;                    //+0x90
-    GameButton*             mStoreButton;                       //+0x94
-    GameButton*             mAlmanacButton;                     //+0x98
-    GameButton*             mMenuButton;                        //+0x9C
-    GameButton*             mImitaterButton;                    //+0xA0
-    ChosenSeed              mChosenSeeds[NUM_SEED_TYPES];       //+0xA4
-    LawnApp*                mApp;                               //+0xD10
-    Board*                  mBoard;                             //+0xD14
-    int                     mNumSeedsToChoose;                  //+0xD18
-    int                     mSeedChooserAge;                    //+0xD1C
-    int                     mSeedsInFlight;                     //+0xD20
-    int                     mSeedsInBank;                       //+0xD24
-    ToolTipWidget*          mToolTip;                           //+0xD28
-    int                     mToolTipSeed;                       //+0xD2C
-    int                     mLastMouseX;                        //+0xD30
-    int                     mLastMouseY;                        //+0xD34
-    SeedChooserState        mChooseState;                       //+0xD38
-    int                     mViewLawnTime;                      //+0xD3C
+    GameButton*             mStartButton;                       
+    GameButton*             mRandomButton;                      
+    GameButton*             mViewLawnButton;                    
+    GameButton*             mStoreButton;                       
+    GameButton*             mAlmanacButton;                     
+    GameButton*             mMenuButton;                        
+    GameButton*             mImitaterButton;                    
+    ChosenSeed              mChosenSeeds[NUM_SEED_TYPES];       
+    LawnApp*                mApp;                               
+    Board*                  mBoard;                             
+    int                     mNumSeedsToChoose;                  
+    int                     mSeedChooserAge;                    
+    int                     mSeedsInFlight;                     
+    int                     mSeedsInBank;                       
+    ToolTipWidget*          mToolTip;                           
+    int                     mToolTipSeed;                       
+    int                     mLastMouseX;                        
+    int                     mLastMouseY;                        
+    SeedChooserState        mChooseState;                       
+    int                     mViewLawnTime;                      
     float                   mScrollPosition;
     float                   mScrollAmount;
     Sexy::Slider*           mSlider;

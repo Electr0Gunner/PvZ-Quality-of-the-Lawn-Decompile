@@ -139,21 +139,18 @@ bool PakInterface::AddPakFile(const std::string& theFileName)
 	return true;
 }
 
-//0x5D84D0
 static void FixFileName(const char* theFileName, char* theUpperName)
 {
-	// 检测路径是否为从盘符开始的绝对路径
 	if ((theFileName[0] != 0) && (theFileName[1] == ':'))
 	{
 		char aDir[256];
-		getcwd(aDir, 256);  // 取得当前工作路径
+		getcwd(aDir, 256);  
 		int aLen = strlen(aDir);
 		aDir[aLen++] = '\\';
 		aDir[aLen] = 0;
 
-		// 判断 theFileName 文件是否位于当前目录下
 		if (strnicmp(aDir, theFileName, aLen) == 0)
-			theFileName += aLen;  // 若是，则跳过从盘符到当前目录的部分，转化为相对路径
+			theFileName += aLen;  
 	}
 
 	bool lastSlash = false;
@@ -166,7 +163,6 @@ static void FixFileName(const char* theFileName, char* theUpperName)
 
 		if ((c == '\\') || (c == '/'))
 		{
-			// 统一转为右斜杠，且多个斜杠的情况下只保留一个
 			if (!lastSlash)
 				*(aDest++) = '\\';
 			lastSlash = true;
@@ -175,10 +171,9 @@ static void FixFileName(const char* theFileName, char* theUpperName)
 		{
 			// We have a '/..' on our hands
 			aDest--;
-			while ((aDest > theUpperName + 1) && (*(aDest-1) != '\\'))  // 回退到上一层目录
+			while ((aDest > theUpperName + 1) && (*(aDest-1) != '\\'))  
 				--aDest;
 			aSrc++;
-			// 此处将形如“a\b\..\c”的路径简化为“a\c”
 		}
 		else
 		{
@@ -190,7 +185,6 @@ static void FixFileName(const char* theFileName, char* theUpperName)
 	}
 }
 
-//0x5D85C0
 PFILE* PakInterface::FOpen(const char* theFileName, const char* anAccess)
 {
 	if ((stricmp(anAccess, "r") == 0) || (stricmp(anAccess, "rb") == 0) || (stricmp(anAccess, "rt") == 0))
@@ -219,7 +213,6 @@ PFILE* PakInterface::FOpen(const char* theFileName, const char* anAccess)
 	return aPFP;
 }
 
-//0x5D8780
 int PakInterface::FClose(PFILE* theFile)
 {
 	if (theFile->mRecord == NULL)
@@ -228,7 +221,6 @@ int PakInterface::FClose(PFILE* theFile)
 	return 0;
 }
 
-//0x5D87B0
 int PakInterface::FSeek(PFILE* theFile, long theOffset, int theOrigin)
 {
 	if (theFile->mRecord != NULL)
@@ -240,7 +232,6 @@ int PakInterface::FSeek(PFILE* theFile, long theOffset, int theOrigin)
 		else if (theOrigin == SEEK_CUR)
 			theFile->mPos += theOffset;
 
-		// 当前指针位置不能超过整个文件的大小，且不能小于 0
 		theFile->mPos = max(min(theFile->mPos, theFile->mRecord->mSize), 0);
 		return 0;
 	}
@@ -248,7 +239,6 @@ int PakInterface::FSeek(PFILE* theFile, long theOffset, int theOrigin)
 		return fseek(theFile->mFP, theOffset, theOrigin);
 }
 
-//0x5D8830
 int PakInterface::FTell(PFILE* theFile)
 {
 	if (theFile->mRecord != NULL)
@@ -257,21 +247,18 @@ int PakInterface::FTell(PFILE* theFile)
 		return ftell(theFile->mFP);	
 }
 
-//0x5D8850
 size_t PakInterface::FRead(void* thePtr, int theElemSize, int theCount, PFILE* theFile)
 {
 	if (theFile->mRecord != NULL)
 	{
-		// 实际读取的字节数不能超过当前资源文件剩余可读取的字节数
 		int aSizeBytes = min(theElemSize*theCount, theFile->mRecord->mSize - theFile->mPos);
 
-		// 取得在整个 pak 中开始读取的位置的指针
 		uchar* src = (uchar*) theFile->mRecord->mCollection->mDataPtr + theFile->mRecord->mStartPos + theFile->mPos;
 		uchar* dest = (uchar*) thePtr;
 		for (int i = 0; i < aSizeBytes; i++)
 			*(dest++) = (*src++) ^ 0xF7; // 'Decrypt'
-		theFile->mPos += aSizeBytes;  // 读取完成后，移动当前读取位置的指针
-		return aSizeBytes / theElemSize;  // 返回实际读取的项数
+		theFile->mPos += aSizeBytes;  
+		return aSizeBytes / theElemSize;  
 	}
 	
 	return fread(thePtr, theElemSize, theCount, theFile->mFP);	

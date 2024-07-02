@@ -1,6 +1,5 @@
 #include "PopDRMComm.h"
 
-//0x5D5AC0
 PopDRMComm::PopDRMComm()
 {
 #ifdef _ENABLE_DRM_FOR_DEBUGGING
@@ -29,7 +28,6 @@ PopDRMComm::PopDRMComm()
 #endif
 }
 
-//0x5D5B60
 PopDRMComm::~PopDRMComm()
 {
 #ifdef _ENABLE_DRM_FOR_DEBUGGING
@@ -54,7 +52,6 @@ PopDRMComm::~PopDRMComm()
 #endif
 }
 
-//0x5D5BC0
 void PopDRMComm::Start()
 {
 	//mEventHwnd = CreateEvent(NULL, NULL, NULL, NULL);
@@ -64,7 +61,6 @@ void PopDRMComm::Start()
 
 }
 
-//0x5D5C80
 void PopDRMComm::EnableLocking()
 {
 #ifdef _ENABLE_DRM_FOR_DEBUGGING
@@ -79,7 +75,6 @@ void PopDRMComm::EnableLocking()
 #endif
 }
 
-//0x5D5CB0
 bool PopDRMComm::QueryData()
 {
 #ifdef _ENABLE_DRM_FOR_DEBUGGING
@@ -97,7 +92,6 @@ bool PopDRMComm::QueryData()
 #endif
 }
 
-//0x5D5CE0
 void PopDRMComm::BuyGame()
 {
 #ifdef _ENABLE_DRM_FOR_DEBUGGING
@@ -117,7 +111,6 @@ void PopDRMComm::BuyGame()
 #endif
 }
 
-//0x5D5D60
 bool PopDRMComm::DoIPC()
 {
 #ifdef _ENABLE_DRM_FOR_DEBUGGING

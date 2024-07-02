@@ -307,7 +307,6 @@ void QuickPlayScreen::AddedToManager(WidgetManager* theWidgetManager)
     AddWidget(mCrazySeedsCheck);
 }
 
-//0x42F6B0
 void QuickPlayScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 {
     Widget::RemovedFromManager(theWidgetManager);
@@ -318,7 +317,6 @@ void QuickPlayScreen::RemovedFromManager(WidgetManager* theWidgetManager)
     RemoveWidget(mCrazySeedsCheck);
 }
 
-//0x42F720
 void QuickPlayScreen::ButtonPress(int theId)
 {
     mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
@@ -338,7 +336,6 @@ void QuickPlayScreen::Update()
     if (mFlowerPot) mFlowerPot->UpdateReanim();
 }
 
-//0x42F740
 void QuickPlayScreen::ButtonDepress(int theId)
 {
     switch (theId)

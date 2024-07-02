@@ -13,18 +13,18 @@ namespace Sexy
 enum MusicTune
 {
 	MUSIC_TUNE_NONE = -1,
-	MUSIC_TUNE_DAY_GRASSWALK = 1,				// 白天草地关卡
-	MUSIC_TUNE_NIGHT_MOONGRAINS,				// 黑夜草地关卡
-	MUSIC_TUNE_POOL_WATERYGRAVES,				// 白天泳池关卡
-	MUSIC_TUNE_FOG_RIGORMORMIST,				// 黑夜泳池关卡
-	MUSIC_TUNE_ROOF_GRAZETHEROOF,				// 屋顶关卡
-	MUSIC_TUNE_CHOOSE_YOUR_SEEDS,				// 选卡界面/小游戏界面
-	MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME,		// 主菜单
-	MUSIC_TUNE_ZEN_GARDEN,						// 禅境花园
-	MUSIC_TUNE_PUZZLE_CEREBRAWL,				// 解谜模式
-	MUSIC_TUNE_MINIGAME_LOONBOON,				// 小游戏
-	MUSIC_TUNE_CONVEYER,						// 传送带关卡
-	MUSIC_TUNE_FINAL_BOSS_BRAINIAC_MANIAC,		// 僵王博士关卡
+	MUSIC_TUNE_DAY_GRASSWALK = 1,				
+	MUSIC_TUNE_NIGHT_MOONGRAINS,				
+	MUSIC_TUNE_POOL_WATERYGRAVES,				
+	MUSIC_TUNE_FOG_RIGORMORMIST,				
+	MUSIC_TUNE_ROOF_GRAZETHEROOF,				
+	MUSIC_TUNE_CHOOSE_YOUR_SEEDS,				
+	MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME,		
+	MUSIC_TUNE_ZEN_GARDEN,						
+	MUSIC_TUNE_PUZZLE_CEREBRAWL,				
+	MUSIC_TUNE_MINIGAME_LOONBOON,				
+	MUSIC_TUNE_CONVEYER,						
+	MUSIC_TUNE_FINAL_BOSS_BRAINIAC_MANIAC,		
 	MUSIC_TUNE_CREDITS_ZOMBIES_ON_YOUR_LAWN,	// MV
 	NUM_MUSIC_TUNES
 };
@@ -61,31 +61,31 @@ class MusicFileData
 public:
 	unsigned int*				mFileData;
 };
-extern MusicFileData gMusicFileData[MusicFile::NUM_MUSIC_FILES];  //0x6A9ED0
+extern MusicFileData gMusicFileData[MusicFile::NUM_MUSIC_FILES];  
 
 class Music
 {
 public:
-	LawnApp*					mApp;								//+0x0
-	Sexy::MusicInterface*		mMusicInterface;					//+0x4
-	MusicTune					mCurMusicTune;						//+0x8
-	MusicFile					mCurMusicFileMain;					//+0xC
-	MusicFile					mCurMusicFileDrums;					//+0x10
-	MusicFile					mCurMusicFileHihats;				//+0x14
-	int							mBurstOverride;						//+0x18
-	int							mBaseBPM;							//+0x1C
-	int							mBaseModSpeed;						//+0x20
-	MusicBurstState				mMusicBurstState;					//+0x24
-	int							mBurstStateCounter;					//+0x28
-	MusicDrumsState				mMusicDrumsState;					//+0x2C
-	int							mQueuedDrumTrackPackedOrder;		//+0x30
-	int							mDrumsStateCounter;					//+0x34
-	int							mPauseOffset;						//+0x38
-	int							mPauseOffsetDrums;					//+0x3C
-	bool						mPaused;							//+0x40
-	bool						mMusicDisabled;						//+0x41
-	int							mFadeOutCounter;					//+0x44
-	int							mFadeOutDuration;					//+0x48
+	LawnApp*					mApp;								
+	Sexy::MusicInterface*		mMusicInterface;					
+	MusicTune					mCurMusicTune;						
+	MusicFile					mCurMusicFileMain;					
+	MusicFile					mCurMusicFileDrums;					
+	MusicFile					mCurMusicFileHihats;				
+	int							mBurstOverride;						
+	int							mBaseBPM;							
+	int							mBaseModSpeed;						
+	MusicBurstState				mMusicBurstState;					
+	int							mBurstStateCounter;					
+	MusicDrumsState				mMusicDrumsState;					
+	int							mQueuedDrumTrackPackedOrder;		
+	int							mDrumsStateCounter;					
+	int							mPauseOffset;						
+	int							mPauseOffsetDrums;					
+	bool						mPaused;							
+	bool						mMusicDisabled;						
+	int							mFadeOutCounter;					
+	int							mFadeOutDuration;					
 
 public:
 	Music();

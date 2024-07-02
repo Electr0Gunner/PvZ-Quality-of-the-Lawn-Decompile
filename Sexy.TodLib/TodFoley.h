@@ -9,16 +9,15 @@ using namespace Sexy;
 #define MAX_FOLEY_INSTANCES 8
 
 // ######################################################################################################################################################
-// ############################################################# 以下为拟音音效定义相关内容 #############################################################
 // ######################################################################################################################################################
 
 enum FoleyFlags
 {
-    FOLEYFLAGS_LOOP,                // 循环播放
-    FOLEYFLAGS_ONE_AT_A_TIME,       // 禁止叠加播放：指定该种类的音效同时至多存在 1 个实例，重复播放时仅增加引用计数并刷新开始时间
-    FOLEYFLAGS_MUTE_ON_PAUSE,       // 暂停时静默
-    FOLEYFLAGS_USES_MUSIC_VOLUME,   // 使用音乐音量，指定该种类的音效使用与背景音乐相同的音量
-    FOLEYFLAGS_DONT_REPEAT          // 禁止变式重复，指定该种类的音效每次实际播放的变式不得与上一次相同
+    FOLEYFLAGS_LOOP,                
+    FOLEYFLAGS_ONE_AT_A_TIME,       
+    FOLEYFLAGS_MUTE_ON_PAUSE,       
+    FOLEYFLAGS_USES_MUSIC_VOLUME,   
+    FOLEYFLAGS_DONT_REPEAT          
 };
 
 enum FoleyType
@@ -143,13 +142,12 @@ public:
 /*inline*/ void         TodFoleyDispose();
 FoleyParams*            LookupFoley(FoleyType theFoleyType);
 
-extern int gFoleyParamArraySize;        //[0x6A9F04]
-extern FoleyParams* gFoleyParamArray;   //[0x6A9F00]
+extern int gFoleyParamArraySize;        
+extern FoleyParams* gFoleyParamArray;   
 
-extern FoleyParams gLawnFoleyParamArray[(int)FoleyType::NUM_FOLEY];  //0x69FAD0
+extern FoleyParams gLawnFoleyParamArray[(int)FoleyType::NUM_FOLEY];  
 
 // ######################################################################################################################################################
-// ############################################################ 以下正式开始拟音音效相关声明 ############################################################
 // ######################################################################################################################################################
 
 class TodDSoundInstance : public DSoundInstance

@@ -273,57 +273,57 @@ enum DamageRangeFlags
 };
 enum Dialogs
 {
-    DIALOG_NEW_GAME,                            // 0：
-    DIALOG_OPTIONS,                             // 1：
-    DIALOG_NEWOPTIONS,                          // 2：菜单
-    DIALOG_ALMANAC,                             // 3：图鉴
-    DIALOG_STORE,                               // 4：商店
-    DIALOG_PREGAME_NAG,                         // 5：
-    DIALOG_LOAD_GAME,                           // 6：
-    DIALOG_CONFIRM_UPDATE_CHECK,                // 7：
-    DIALOG_CHECKING_UPDATES,                    // 8：
-    DIALOG_REGISTER_ERROR,                      // 9：
-    DIALOG_COLORDEPTH_EXP,                      // 10：不支持窗口模式
-    DIALOG_OPENURL_WAIT,                        // 11：
-    DIALOG_OPENURL_FAIL,                        // 12：
-    DIALOG_QUIT,                                // 13：退出游戏（主菜单点击退出时）
-    DIALOG_HIGH_SCORES,                         // 14：
-    DIALOG_NAG,                                 // 15：
-    DIALOG_INFO,                                // 16：信息（3D 加速不支持/不推荐）
-    DIALOG_GAME_OVER,                           // 17：游戏结束（关卡失败）
-    DIALOG_LEVEL_COMPLETE,                      // 18：关卡完成
-    DIALOG_PAUSED,                              // 19：暂停游戏
-    DIALOG_NO_MORE_MONEY,                       // 20：
-    DIALOG_BONUS,                               // 21：
-    DIALOG_CONFIRM_BACK_TO_MAIN,                // 22：返回主菜单
-    DIALOG_CONFIRM_RESTART,                     // 23：重新开始关卡
-    DIALOG_THANKS_FOR_REGISTERING,              // 24：
-    DIALOG_NOT_ENOUGH_MONEY,                    // 25：资金不足（购买商品但钱数不够时触发）
-    DIALOG_UPGRADED,                            // 26：卡槽升级
-    DIALOG_NO_UPGRADE,                          // 27：
-    DIALOG_CHOOSER_WARNING,                     // 28：选卡提醒（未携带生产阳光的植物、未携带紫卡原植物等情况下触发）
-    DIALOG_USERDIALOG,                          // 29：用户对话
-    DIALOG_CREATEUSER,                          // 30：创建新用户
-    DIALOG_CONFIRMDELETEUSER,                   // 31：删除用户
-    DIALOG_RENAMEUSER,                          // 32：重命名用户
-    DIALOG_CREATEUSERERROR,                     // 33：请输入名字（创建新用户对话中不输入用户名时触发）
-    DIALOG_RENAMEUSERERROR,                     // 34：请输入名字（重命名用户对话中不输入用户名时触发）
-    DIALOG_CHEAT,                               // 35：跳关对话（仅内测版可触发）
-    DIALOG_CHEATERROR,                          // 36：跳关指令输入有误
-    DIALOG_CONTINUE,                            // 37：继续游戏（读档进入关卡时）
-    DIALOG_GETREADY,                            // 38：
-    DIALOG_RESTARTCONFIRM,                      // 39：重新开始游戏（继续游戏对话中选择开始新游戏时触发）
-    DIALOG_CONFIRMPURCHASE,                     // 40：
-    DIALOG_CONFIRMSELL,                         // 41：
-    DIALOG_TIMESUP,                             // 42：
-    DIALOG_VIRTUALHELP,                         // 43：
-    DIALOG_JUMPAHEAD,                           // 44：
-    DIALOG_CRAZY_DAVE,                          // 45：
-    DIALOG_STORE_PURCHASE,                      // 46：购买商品（戴夫商店）
-    DIALOG_ZEN_SELL,                            // 47：出售盆栽植物（禅境花园）
-    DIALOG_MESSAGE,                             // 48：通用消息对话，包括：①加载中（切换用户时触发）；②小游戏等模式未解锁；……
-    DIALOG_IMITATER,                            // 49：模仿者对话
-    DIALOG_PURCHASE_PACKET_SLOT,                // 50：升级卡槽的格子数量
+    DIALOG_NEW_GAME,                            
+    DIALOG_OPTIONS,                             
+    DIALOG_NEWOPTIONS,                          
+    DIALOG_ALMANAC,                             
+    DIALOG_STORE,                               
+    DIALOG_PREGAME_NAG,                         
+    DIALOG_LOAD_GAME,                           
+    DIALOG_CONFIRM_UPDATE_CHECK,                
+    DIALOG_CHECKING_UPDATES,                    
+    DIALOG_REGISTER_ERROR,                      
+    DIALOG_COLORDEPTH_EXP,                      
+    DIALOG_OPENURL_WAIT,                        
+    DIALOG_OPENURL_FAIL,                        
+    DIALOG_QUIT,                                
+    DIALOG_HIGH_SCORES,                         
+    DIALOG_NAG,                                 
+    DIALOG_INFO,                                
+    DIALOG_GAME_OVER,                           
+    DIALOG_LEVEL_COMPLETE,                      
+    DIALOG_PAUSED,                              
+    DIALOG_NO_MORE_MONEY,                       
+    DIALOG_BONUS,                               
+    DIALOG_CONFIRM_BACK_TO_MAIN,                
+    DIALOG_CONFIRM_RESTART,                     
+    DIALOG_THANKS_FOR_REGISTERING,              
+    DIALOG_NOT_ENOUGH_MONEY,                    
+    DIALOG_UPGRADED,                            
+    DIALOG_NO_UPGRADE,                          
+    DIALOG_CHOOSER_WARNING,                     
+    DIALOG_USERDIALOG,                          
+    DIALOG_CREATEUSER,                          
+    DIALOG_CONFIRMDELETEUSER,                   
+    DIALOG_RENAMEUSER,                          
+    DIALOG_CREATEUSERERROR,                     
+    DIALOG_RENAMEUSERERROR,                     
+    DIALOG_CHEAT,                               
+    DIALOG_CHEATERROR,                          
+    DIALOG_CONTINUE,                            
+    DIALOG_GETREADY,                            
+    DIALOG_RESTARTCONFIRM,                      
+    DIALOG_CONFIRMPURCHASE,                     
+    DIALOG_CONFIRMSELL,                         
+    DIALOG_TIMESUP,                             
+    DIALOG_VIRTUALHELP,                         
+    DIALOG_JUMPAHEAD,                           
+    DIALOG_CRAZY_DAVE,                          
+    DIALOG_STORE_PURCHASE,                      
+    DIALOG_ZEN_SELL,                            
+    DIALOG_MESSAGE,                             
+    DIALOG_IMITATER,                            
+    DIALOG_PURCHASE_PACKET_SLOT,                
     NUM_DIALOGS
 };
 enum DebugTextMode
@@ -599,7 +599,7 @@ enum MessageStyle
     MESSAGE_STYLE_HINT_STAY,
     MESSAGE_STYLE_HINT_TALL_FAST,
     MESSAGE_STYLE_HINT_TALL_UNLOCKMESSAGE,
-    //MESSAGE_STYLE_HINT_TALL_8SECONDS,// 仅内测版
+    
     MESSAGE_STYLE_HINT_TALL_LONG,
     MESSAGE_STYLE_BIG_MIDDLE,
     MESSAGE_STYLE_BIG_MIDDLE_FAST,
@@ -791,33 +791,33 @@ enum PottedPlantNeed
 };
 enum ProjectileMotion
 {
-    MOTION_STRAIGHT = 0,  // 水平向右
-    MOTION_LOBBED = 1,  // 抛物线
-    MOTION_THREEPEATER = 2,  // 偏转向右
-    MOTION_BEE = 3,  // 
-    MOTION_BEE_BACKWARDS = 4,  // 
-    MOTION_PUFF = 5,  // 水平向右（一段时间后消失）
-    MOTION_BACKWARDS = 6,  // 水平向左
-    MOTION_STAR = 7,  // 斜向运动
-    MOTION_FLOAT_OVER = 8,  // 缓慢漂浮向右（无碰撞）
-    MOTION_HOMING = 9   // 追踪
+    MOTION_STRAIGHT = 0,  
+    MOTION_LOBBED = 1,  
+    MOTION_THREEPEATER = 2,  
+    MOTION_BEE = 3,  
+    MOTION_BEE_BACKWARDS = 4,  
+    MOTION_PUFF = 5,  
+    MOTION_BACKWARDS = 6,  
+    MOTION_STAR = 7,  
+    MOTION_FLOAT_OVER = 8,  
+    MOTION_HOMING = 9   
 };
 enum ProjectileType
 {
-    PROJECTILE_PEA = 0,   // 豌豆
-    PROJECTILE_SNOWPEA = 1,   // 冰豌豆
-    PROJECTILE_CABBAGE = 2,   // 卷心菜
-    PROJECTILE_MELON = 3,   // 西瓜
-    PROJECTILE_PUFF = 4,   // 孢子
-    PROJECTILE_WINTERMELON = 5,   // 冰瓜
-    PROJECTILE_FIREBALL = 6,   // 火豌豆
-    PROJECTILE_STAR = 7,   // 星星
-    PROJECTILE_SPIKE = 8,   // 尖刺
-    PROJECTILE_BASKETBALL = 9,   // 篮球
-    PROJECTILE_KERNEL = 10,  // 玉米粒
-    PROJECTILE_COBBIG = 11,  // 玉米加农炮
-    PROJECTILE_BUTTER = 12,  // 黄油
-    PROJECTILE_ZOMBIE_PEA = 13,  // 僵尸豌豆
+    PROJECTILE_PEA = 0,   
+    PROJECTILE_SNOWPEA = 1,   
+    PROJECTILE_CABBAGE = 2,   
+    PROJECTILE_MELON = 3,   
+    PROJECTILE_PUFF = 4,   
+    PROJECTILE_WINTERMELON = 5,   
+    PROJECTILE_FIREBALL = 6,   
+    PROJECTILE_STAR = 7,   
+    PROJECTILE_SPIKE = 8,   
+    PROJECTILE_BASKETBALL = 9,   
+    PROJECTILE_KERNEL = 10,  
+    PROJECTILE_COBBIG = 11,  
+    PROJECTILE_BUTTER = 12,  
+    PROJECTILE_ZOMBIE_PEA = 13,  
     NUM_PROJECTILES = 14
 };
 enum ReanimationType
@@ -1042,59 +1042,59 @@ enum SeedChooserState
 enum SeedType
 {
     ENUM_VALUE(SEED_NONE, -1)
-    ENUM_AUTO_VALUE(SEED_PEASHOOTER)                 // 豌豆射手
-    ENUM_AUTO_VALUE(SEED_SUNFLOWER)                  // 向日葵
-    ENUM_AUTO_VALUE(SEED_CHERRYBOMB)                 // 樱桃炸弹
-    ENUM_AUTO_VALUE(SEED_WALLNUT)                    // 坚果
-    ENUM_AUTO_VALUE(SEED_POTATOMINE)                 // 土豆地雷
-    ENUM_AUTO_VALUE(SEED_SNOWPEA)                    // 寒冰射手
-    ENUM_AUTO_VALUE(SEED_CHOMPER)                    // 大嘴花
-    ENUM_AUTO_VALUE(SEED_REPEATER)                   // 双发射手
-    ENUM_AUTO_VALUE(SEED_PUFFSHROOM)                 // 小喷菇
-    ENUM_AUTO_VALUE(SEED_SUNSHROOM)                  // 阳光菇
-    ENUM_AUTO_VALUE(SEED_FUMESHROOM)                 // 大喷菇
-    ENUM_AUTO_VALUE(SEED_GRAVEBUSTER)                // 墓碑吞噬者
-    ENUM_AUTO_VALUE(SEED_HYPNOSHROOM)                // 魅惑菇
-    ENUM_AUTO_VALUE(SEED_SCAREDYSHROOM)              // 胆小菇
-    ENUM_AUTO_VALUE(SEED_ICESHROOM)                  // 寒冰菇
-    ENUM_AUTO_VALUE(SEED_DOOMSHROOM)                 // 毁灭菇
-    ENUM_AUTO_VALUE(SEED_LILYPAD)                    // 睡莲
-    ENUM_AUTO_VALUE(SEED_SQUASH)                     // 窝瓜
-    ENUM_AUTO_VALUE(SEED_THREEPEATER)                // 三线射手
-    ENUM_AUTO_VALUE(SEED_TANGLEKELP)                 // 缠绕海草
-    ENUM_AUTO_VALUE(SEED_JALAPENO)                   // 火爆辣椒
-    ENUM_AUTO_VALUE(SEED_SPIKEWEED)                  // 地刺
-    ENUM_AUTO_VALUE(SEED_TORCHWOOD)                  // 火炬树桩
-    ENUM_AUTO_VALUE(SEED_TALLNUT)                    // 高坚果
-    ENUM_AUTO_VALUE(SEED_SEASHROOM)                  // 海蘑菇
-    ENUM_AUTO_VALUE(SEED_PLANTERN)                   // 灯笼草
-    ENUM_AUTO_VALUE(SEED_CACTUS)                     // 仙人掌
-    ENUM_AUTO_VALUE(SEED_BLOVER)                     // 三叶草
-    ENUM_AUTO_VALUE(SEED_SPLITPEA)                   // 分裂豌豆
-    ENUM_AUTO_VALUE(SEED_STARFRUIT)                  // 杨桃
-    ENUM_AUTO_VALUE(SEED_PUMPKINSHELL)               // 南瓜头
-    ENUM_AUTO_VALUE(SEED_MAGNETSHROOM)               // 磁力菇
-    ENUM_AUTO_VALUE(SEED_CABBAGEPULT)                // 卷心菜投手
-    ENUM_AUTO_VALUE(SEED_FLOWERPOT)                  // 花盆
-    ENUM_AUTO_VALUE(SEED_KERNELPULT)                 // 玉米投手
-    ENUM_AUTO_VALUE(SEED_INSTANT_COFFEE)             // 即时咖啡
-    ENUM_AUTO_VALUE(SEED_GARLIC)                     // 大蒜
-    ENUM_AUTO_VALUE(SEED_UMBRELLA)                   // 雨伞
-    ENUM_AUTO_VALUE(SEED_MARIGOLD)                   // 金盏花
-    ENUM_AUTO_VALUE(SEED_MELONPULT)                  // 西瓜投手
-    ENUM_AUTO_VALUE(SEED_GATLINGPEA)                 // 加特林豌豆
-    ENUM_AUTO_VALUE(SEED_TWINSUNFLOWER)              // 双子向日葵
-    ENUM_AUTO_VALUE(SEED_GLOOMSHROOM)                // 黑暗菇
-    ENUM_AUTO_VALUE(SEED_CATTAIL)                    // 猫尾草
-    ENUM_AUTO_VALUE(SEED_WINTERMELON)                // 冬瓜投手
-    ENUM_AUTO_VALUE(SEED_GOLD_MAGNET)                // 金币磁力菇
-    ENUM_AUTO_VALUE(SEED_SPIKEROCK)                  // 地刺岩
-    ENUM_AUTO_VALUE(SEED_COBCANNON)                  // 玉米加农炮
-    ENUM_AUTO_VALUE(SEED_IMITATER)                   // 模仿者
-    ENUM_AUTO_VALUE(SEED_EXPLODE_O_NUT)              // 爆炸坚果
-    ENUM_AUTO_VALUE(SEED_GIANT_WALLNUT)              // 巨型坚果
-    ENUM_AUTO_VALUE(SEED_SPROUT)                     // 嫩芽
-    ENUM_AUTO_VALUE(SEED_LEFTPEATER)                 // 左豌豆
+    ENUM_AUTO_VALUE(SEED_PEASHOOTER)                 
+    ENUM_AUTO_VALUE(SEED_SUNFLOWER)                  
+    ENUM_AUTO_VALUE(SEED_CHERRYBOMB)                 
+    ENUM_AUTO_VALUE(SEED_WALLNUT)                    
+    ENUM_AUTO_VALUE(SEED_POTATOMINE)                 
+    ENUM_AUTO_VALUE(SEED_SNOWPEA)                    
+    ENUM_AUTO_VALUE(SEED_CHOMPER)                    
+    ENUM_AUTO_VALUE(SEED_REPEATER)                   
+    ENUM_AUTO_VALUE(SEED_PUFFSHROOM)                 
+    ENUM_AUTO_VALUE(SEED_SUNSHROOM)                  
+    ENUM_AUTO_VALUE(SEED_FUMESHROOM)                 
+    ENUM_AUTO_VALUE(SEED_GRAVEBUSTER)                
+    ENUM_AUTO_VALUE(SEED_HYPNOSHROOM)                
+    ENUM_AUTO_VALUE(SEED_SCAREDYSHROOM)              
+    ENUM_AUTO_VALUE(SEED_ICESHROOM)                  
+    ENUM_AUTO_VALUE(SEED_DOOMSHROOM)                 
+    ENUM_AUTO_VALUE(SEED_LILYPAD)                    
+    ENUM_AUTO_VALUE(SEED_SQUASH)                     
+    ENUM_AUTO_VALUE(SEED_THREEPEATER)                
+    ENUM_AUTO_VALUE(SEED_TANGLEKELP)                 
+    ENUM_AUTO_VALUE(SEED_JALAPENO)                   
+    ENUM_AUTO_VALUE(SEED_SPIKEWEED)                  
+    ENUM_AUTO_VALUE(SEED_TORCHWOOD)                  
+    ENUM_AUTO_VALUE(SEED_TALLNUT)                    
+    ENUM_AUTO_VALUE(SEED_SEASHROOM)                  
+    ENUM_AUTO_VALUE(SEED_PLANTERN)                   
+    ENUM_AUTO_VALUE(SEED_CACTUS)                     
+    ENUM_AUTO_VALUE(SEED_BLOVER)                     
+    ENUM_AUTO_VALUE(SEED_SPLITPEA)                   
+    ENUM_AUTO_VALUE(SEED_STARFRUIT)                  
+    ENUM_AUTO_VALUE(SEED_PUMPKINSHELL)               
+    ENUM_AUTO_VALUE(SEED_MAGNETSHROOM)               
+    ENUM_AUTO_VALUE(SEED_CABBAGEPULT)                
+    ENUM_AUTO_VALUE(SEED_FLOWERPOT)                  
+    ENUM_AUTO_VALUE(SEED_KERNELPULT)                 
+    ENUM_AUTO_VALUE(SEED_INSTANT_COFFEE)             
+    ENUM_AUTO_VALUE(SEED_GARLIC)                     
+    ENUM_AUTO_VALUE(SEED_UMBRELLA)                   
+    ENUM_AUTO_VALUE(SEED_MARIGOLD)                   
+    ENUM_AUTO_VALUE(SEED_MELONPULT)                  
+    ENUM_AUTO_VALUE(SEED_GATLINGPEA)                 
+    ENUM_AUTO_VALUE(SEED_TWINSUNFLOWER)              
+    ENUM_AUTO_VALUE(SEED_GLOOMSHROOM)                
+    ENUM_AUTO_VALUE(SEED_CATTAIL)                    
+    ENUM_AUTO_VALUE(SEED_WINTERMELON)                
+    ENUM_AUTO_VALUE(SEED_GOLD_MAGNET)                
+    ENUM_AUTO_VALUE(SEED_SPIKEROCK)                  
+    ENUM_AUTO_VALUE(SEED_COBCANNON)                  
+    ENUM_AUTO_VALUE(SEED_IMITATER)                   
+    ENUM_AUTO_VALUE(SEED_EXPLODE_O_NUT)              
+    ENUM_AUTO_VALUE(SEED_GIANT_WALLNUT)              
+    ENUM_AUTO_VALUE(SEED_SPROUT)                     
+    ENUM_AUTO_VALUE(SEED_LEFTPEATER)                 
     ENUM_AUTO_VALUE(NUM_SEED_TYPES)
     ENUM_AUTO_VALUE(SEED_BEGHOULED_BUTTON_SHUFFLE)
     ENUM_AUTO_VALUE(SEED_BEGHOULED_BUTTON_CRATER)
@@ -1171,20 +1171,20 @@ enum StorePages
 };
 enum TodCurves
 {
-    CURVE_CONSTANT,             // 常函数曲线
-    CURVE_LINEAR,               // 线性曲线
-    CURVE_EASE_IN,              // 二次曲线（缓入）
-    CURVE_EASE_OUT,             // 二次曲线（缓出）
-    CURVE_EASE_IN_OUT,          // 缓入缓出曲线
-    CURVE_EASE_IN_OUT_WEAK,     // 缓入缓出曲线（效果减弱）
-    CURVE_FAST_IN_OUT,          // 快入快出曲线
-    CURVE_FAST_IN_OUT_WEAK,     // 快入快出曲线（效果减弱）
-    CURVE_WEAK_FAST_IN_OUT,     // 【废弃】弱快入快出曲线
-    CURVE_BOUNCE,               // 弹跳效果曲线
-    CURVE_BOUNCE_FAST_MIDDLE,   // 弹跳效果曲线（尖形）
-    CURVE_BOUNCE_SLOW_MIDDLE,   // 弹跳效果曲线（罩形）
-    CURVE_SIN_WAVE,             // 正弦曲线
-    CURVE_EASE_SIN_WAVE         // 缓入缓出的正弦曲线
+    CURVE_CONSTANT,             
+    CURVE_LINEAR,               
+    CURVE_EASE_IN,              
+    CURVE_EASE_OUT,             
+    CURVE_EASE_IN_OUT,          
+    CURVE_EASE_IN_OUT_WEAK,     
+    CURVE_FAST_IN_OUT,          
+    CURVE_FAST_IN_OUT_WEAK,     
+    CURVE_WEAK_FAST_IN_OUT,     
+    CURVE_BOUNCE,               
+    CURVE_BOUNCE_FAST_MIDDLE,   
+    CURVE_BOUNCE_SLOW_MIDDLE,   
+    CURVE_SIN_WAVE,             
+    CURVE_EASE_SIN_WAVE         
 };
 enum TrialType
 {
@@ -1386,7 +1386,7 @@ enum ZombieType
     ENUM_VALUE(NUM_ZOMBIES_IN_ALMANAC, ZOMBIE_BOSS + 1)
 };
 
-//////////////////////////////
+
 enum AttachmentID { ATTACHMENTID_NULL };
 enum CoinID { COINID_NULL };
 enum ParticleID { PARTICLEID_NULL };

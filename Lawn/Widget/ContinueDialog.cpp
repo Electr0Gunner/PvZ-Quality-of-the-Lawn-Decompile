@@ -7,7 +7,6 @@
 #include "../../Sexy.TodLib/TodFoley.h"
 #include "../../Sexy.TodLib/TodStringFile.h"
 
-//0x4330D0
 ContinueDialog::ContinueDialog(LawnApp* theApp) : LawnDialog(
 	theApp, 
 	Dialogs::DIALOG_CONTINUE, 
@@ -34,20 +33,17 @@ ContinueDialog::ContinueDialog(LawnApp* theApp) : LawnDialog(
     CalcSize(10, 60);
 }
 
-//0x4333D0¡¢0x4333F0
 ContinueDialog::~ContinueDialog()
 {
     delete mContinueButton;
     delete mNewGameButton;
 }
 
-//0x433470
 int ContinueDialog::GetPreferredHeight(int theWidth)
 {
     return LawnDialog::GetPreferredHeight(theWidth) + 40;
 }
 
-//0x433480
 void ContinueDialog::Resize(int theX, int theY, int theWidth, int theHeight)
 {
     LawnDialog::Resize(theX, theY, theWidth, theHeight);
@@ -73,7 +69,6 @@ void ContinueDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mNewGameButton->Resize(mLawnYesButton->mX + mLawnYesButton->mWidth - aBtnWidth + 20, mContinueButton->mY, aBtnWidth, aBtnHeight);
 }
 
-//0x433520
 void ContinueDialog::AddedToManager(WidgetManager* theWidgetManager)
 {
     LawnDialog::AddedToManager(theWidgetManager);
@@ -81,7 +76,6 @@ void ContinueDialog::AddedToManager(WidgetManager* theWidgetManager)
     AddWidget(mNewGameButton);
 }
 
-//0x433590
 void ContinueDialog::RemovedFromManager(WidgetManager* theWidgetManager)
 {
     LawnDialog::RemovedFromManager(theWidgetManager);
@@ -89,7 +83,6 @@ void ContinueDialog::RemovedFromManager(WidgetManager* theWidgetManager)
     RemoveWidget(mNewGameButton);
 }
 
-//0x4335D0
 void ContinueDialog::RestartLoopingSounds()
 {
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RAINING_SEEDS || mApp->IsStormyNightLevel())
@@ -107,7 +100,6 @@ void ContinueDialog::RestartLoopingSounds()
     }
 }
 
-//0x4336C0
 void ContinueDialog::ButtonDepress(int theId)
 {
     if (theId == ContinueDialog::ContinueDialog_Continue)

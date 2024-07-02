@@ -18,9 +18,8 @@
 static const char* FILE_COMPILE_TIME_STRING = "Feb 16 200923:03:38";
 static const unsigned int SAVE_FILE_MAGIC_NUMBER = 0xFEEDDEAD;
 static const unsigned int SAVE_FILE_VERSION = 2U;
-static unsigned int SAVE_FILE_DATE = crc32(0, (Bytef*)FILE_COMPILE_TIME_STRING, strlen(FILE_COMPILE_TIME_STRING));  //[0x6AA7EC]
+static unsigned int SAVE_FILE_DATE = crc32(0, (Bytef*)FILE_COMPILE_TIME_STRING, strlen(FILE_COMPILE_TIME_STRING));  
 
-//0x4813D0
 void SaveGameContext::SyncBytes(void* theDest, int theReadSize)
 {
 	int aReadSize = theReadSize;
@@ -60,7 +59,6 @@ void SaveGameContext::SyncBytes(void* theDest, int theReadSize)
 	}
 }
 
-//0x481470
 void SaveGameContext::SyncInt(int& theInt)
 {
 	if (mReading)
@@ -78,7 +76,6 @@ void SaveGameContext::SyncInt(int& theInt)
 	}
 }
 
-//0x4814C0
 void SaveGameContext::SyncReanimationDef(ReanimatorDefinition*& theDefinition)
 {
 	if (mReading)
@@ -115,7 +112,6 @@ void SaveGameContext::SyncReanimationDef(ReanimatorDefinition*& theDefinition)
 	}
 }
 
-//0x481560
 void SaveGameContext::SyncParticleDef(TodParticleDefinition*& theDefinition)
 {
 	if (mReading)
@@ -151,7 +147,6 @@ void SaveGameContext::SyncParticleDef(TodParticleDefinition*& theDefinition)
 	}
 }
 
-//0x4815F0
 void SaveGameContext::SyncTrailDef(TrailDefinition*& theDefinition)
 {
 	if (mReading)
@@ -187,7 +182,6 @@ void SaveGameContext::SyncTrailDef(TrailDefinition*& theDefinition)
 	}
 }
 
-//0x481690
 void SaveGameContext::SyncImage(Image*& theImage)
 {
 	if (mReading)
@@ -218,7 +212,6 @@ void SaveGameContext::SyncImage(Image*& theImage)
 	}
 }
 
-//0x481710
 void SyncDataIDList(TodList<unsigned int>* theDataIDList, SaveGameContext& theContext, TodAllocator* theAllocator)
 {
 	try
@@ -259,7 +252,6 @@ void SyncDataIDList(TodList<unsigned int>* theDataIDList, SaveGameContext& theCo
 	}
 }
 
-//0x4817C0
 void SyncParticleEmitter(TodParticleSystem* theParticleSystem, TodParticleEmitter* theParticleEmitter, SaveGameContext& theContext)
 {
 	int aEmitterDefIndex = 0;
@@ -287,7 +279,6 @@ void SyncParticleEmitter(TodParticleSystem* theParticleSystem, TodParticleEmitte
 	}
 }
 
-//0x481880
 void SyncParticleSystem(Board* theBoard, TodParticleSystem* theParticleSystem, SaveGameContext& theContext)
 {
 	theContext.SyncParticleDef(theParticleSystem->mParticleDef);
@@ -304,7 +295,6 @@ void SyncParticleSystem(Board* theBoard, TodParticleSystem* theParticleSystem, S
 	}
 }
 
-//0x4818F0
 void SyncReanimation(Board* theBoard, Reanimation* theReanimation, SaveGameContext& theContext)
 {
 	theContext.SyncReanimationDef(theReanimation->mDefinition);
@@ -360,23 +350,22 @@ template <typename T> inline static void SyncDataArray(SaveGameContext& theConte
 	theContext.SyncBytes(theDataArray.mBlock, theDataArray.mMaxUsedCount * sizeof(DataArray<T>::DataArrayItem));
 }
 
-//0x4819D0
 void SyncBoard(SaveGameContext& theContext, Board* theBoard)
 {
 	theContext.SyncBytes(&theBoard->mPaused, sizeof(Board) - offsetof(Board, mPaused));
 
-	SyncDataArray(theContext, theBoard->mZombies);													//0x482190
-	SyncDataArray(theContext, theBoard->mPlants);													//0x482280
-	SyncDataArray(theContext, theBoard->mProjectiles);												//0x482370
-	SyncDataArray(theContext, theBoard->mCoins);													//0x482460
-	SyncDataArray(theContext, theBoard->mLawnMowers);												//0x482550
-	SyncDataArray(theContext, theBoard->mGridItems);												//0x482650
-	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mParticleHolder->mParticleSystems);	//0x482740
-	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mParticleHolder->mEmitters);			//0x482830
-	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mParticleHolder->mParticles);			//0x482920
-	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mReanimationHolder->mReanimations);	//0x482920
-	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mTrailHolder->mTrails);				//0x482650
-	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mAttachmentHolder->mAttachments);		//0x482A10
+	SyncDataArray(theContext, theBoard->mZombies);													
+	SyncDataArray(theContext, theBoard->mPlants);													
+	SyncDataArray(theContext, theBoard->mProjectiles);												
+	SyncDataArray(theContext, theBoard->mCoins);													
+	SyncDataArray(theContext, theBoard->mLawnMowers);												
+	SyncDataArray(theContext, theBoard->mGridItems);												
+	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mParticleHolder->mParticleSystems);	
+	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mParticleHolder->mEmitters);			
+	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mParticleHolder->mParticles);			
+	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mReanimationHolder->mReanimations);	
+	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mTrailHolder->mTrails);				
+	SyncDataArray(theContext, theBoard->mApp->mEffectSystem->mAttachmentHolder->mAttachments);		
 
 	{
 		TodParticleSystem* aParticle = nullptr;
@@ -425,7 +414,6 @@ void SyncBoard(SaveGameContext& theContext, Board* theBoard)
 	}
 }
 
-//0x481CE0
 void FixBoardAfterLoad(Board* theBoard)
 {
 	{
@@ -495,7 +483,6 @@ void FixBoardAfterLoad(Board* theBoard)
 	theBoard->mApp->mMusic->mMusicInterface = theBoard->mApp->mMusicInterface;
 }
 
-//0x481FE0
 bool LawnLoadGame(Board* theBoard, const std::string& theFilePath)
 {
 	SaveGameContext aContext;
@@ -525,7 +512,6 @@ bool LawnLoadGame(Board* theBoard, const std::string& theFilePath)
 	return true;
 }
 
-//0x4820D0
 bool LawnSaveGame(Board* theBoard, const std::string& theFilePath)
 {
 	SaveGameContext aContext;

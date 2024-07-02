@@ -9,27 +9,27 @@ class ChallengeScreen;
 class CutScene
 {
 public:
-    LawnApp*                    mApp;                             //+0x0
-    Board*                      mBoard;                           //+0x4
-    int                         mCutsceneTime;                    //+0x8
-    int                         mSodTime;                         //+0xC
-    int                         mGraveStoneTime;                  //+0x10
-    int                         mReadySetPlantTime;               //+0x14
-    int                         mFogTime;                         //+0x18
-    int                         mBossTime;                        //+0x1C
-    int                         mCrazyDaveTime;                   //+0x20
-    int                         mLawnMowerTime;                   //+0x24
-    int                         mCrazyDaveDialogStart;            //+0x28
-    bool                        mSeedChoosing;                    //+0x2C
-    ReanimationID               mZombiesWonReanimID;              //+0x30
-    bool                        mPreloaded;                       //+0x34
-    bool                        mPlacedZombies;                   //+0x35
-    bool                        mPlacedLawnItems;                 //+0x36
-    int                         mCrazyDaveCountDown;              //+0x38 【推销戴夫倒计时】
-    int                         mCrazyDaveLastTalkIndex;          //+0x3C 【戴夫推销的话的编号】
-    bool                        mUpsellHideBoard;                 //+0x40 【推销隐藏关卡界面】
-    ChallengeScreen*            mUpsellChallengeScreen;           //+0x44 【推销插入的小游戏界面】
-    bool                        mPreUpdatingBoard;                //+0x48 【场景布置阶段的关卡预更新】
+    LawnApp*                    mApp;                             
+    Board*                      mBoard;                           
+    int                         mCutsceneTime;                    
+    int                         mSodTime;                         
+    int                         mGraveStoneTime;                  
+    int                         mReadySetPlantTime;               
+    int                         mFogTime;                         
+    int                         mBossTime;                        
+    int                         mCrazyDaveTime;                   
+    int                         mLawnMowerTime;                   
+    int                         mCrazyDaveDialogStart;            
+    bool                        mSeedChoosing;                    
+    ReanimationID               mZombiesWonReanimID;              
+    bool                        mPreloaded;                       
+    bool                        mPlacedZombies;                   
+    bool                        mPlacedLawnItems;                 
+    int                         mCrazyDaveCountDown;              
+    int                         mCrazyDaveLastTalkIndex;          
+    bool                        mUpsellHideBoard;                 
+    ChallengeScreen*            mUpsellChallengeScreen;           
+    bool                        mPreUpdatingBoard;                
 
 public:
     CutScene();

@@ -24,7 +24,6 @@ namespace Sexy
 };
 
 // ######################################################################################################################################################
-// ############################################################### 以下为动画定义相关内容 ###############################################################
 // ######################################################################################################################################################
 
 constexpr const float DEFAULT_FIELD_PLACEHOLDER = -10000.0f;
@@ -39,18 +38,16 @@ enum ReanimFlags
 class ReanimatorTrack
 {
 public:
-    const char*                     mName;                          //+0x0：轨道名称
-    ReanimatorTransform*            mTransforms;                    //+0x4：每一帧的动画变换的数组
-    int                             mTransformCount;                //+0x8：动画变换数量，即帧数量
+    const char*                     mName;                          
+    ReanimatorTransform*            mTransforms;                    
+    int                             mTransformCount;                
     
 public:
     ReanimatorTrack() : mName(""), mTransforms(nullptr), mTransformCount(0) { }
 };
 
 // ====================================================================================================
-// ★ 【动画器定义】
 // ----------------------------------------------------------------------------------------------------
-// 用于描述一种动画类型与该动画的数据文件的文件名及标志之间的对应关系。
 // ====================================================================================================
 class ReanimatorDefinition
 {
@@ -63,13 +60,11 @@ public:
 public:
     ReanimatorDefinition() : mTracks(nullptr), mTrackCount(0), mFPS(12.0f), mReanimAtlas(nullptr) { }
 };
-extern int gReanimatorDefCount;                     //[0x6A9EE4]
-extern ReanimatorDefinition* gReanimatorDefArray;   //[0x6A9EE8]
+extern int gReanimatorDefCount;                     
+extern ReanimatorDefinition* gReanimatorDefArray;   
 
 // ====================================================================================================
-// ★ 【动画参数】
 // ----------------------------------------------------------------------------------------------------
-// 用于描述一种动画类型与该动画的数据文件的文件名及标志之间的对应关系。
 // ====================================================================================================
 class ReanimationParams
 {
@@ -78,8 +73,8 @@ public:
     const char*                     mReanimFileName;
     int                             mReanimParamFlags;
 };
-extern int gReanimationParamArraySize;              //[0x6A9EEC]
-extern ReanimationParams* gReanimationParamArray;   //[0x6A9EF0]
+extern int gReanimationParamArraySize;              
+extern ReanimationParams* gReanimationParamArray;   
 
 /*inline*/ void                     ReanimationFillInMissingData(float& thePrev, float& theValue);
 /*inline*/ void                     ReanimationFillInMissingData(void*& thePrev, void*& theValue);
@@ -89,10 +84,9 @@ void _cdecl	                        ReanimatorEnsureDefinitionLoaded(Reanimation
 void                                ReanimatorLoadDefinitions(ReanimationParams* theReanimationParamArray, int theReanimationParamArraySize);
 void                                ReanimatorFreeDefinitions();
 
-extern ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS];  //0x6A1340
+extern ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS];  
 
 // ######################################################################################################################################################
-// ############################################################## 以下正式开始动画相关声明 ##############################################################
 // ######################################################################################################################################################
 
 enum
@@ -118,16 +112,14 @@ public:
 };
 
 // ====================================================================================================
-// ★ 【动画器时间】
 // ----------------------------------------------------------------------------------------------------
-// 用于描述动画当前正在播放的时间位置。
 // ====================================================================================================
 class ReanimatorFrameTime
 {
 public:
-    float                           mFraction;                      //+0x0：两帧之间已经过的比例
-    int                             mAnimFrameBeforeInt;            //+0x4：前一个整数帧
-    int                             mAnimFrameAfterInt;             //+0x8：后一个整数帧
+    float                           mFraction;                      
+    int                             mAnimFrameBeforeInt;            
+    int                             mAnimFrameAfterInt;             
 };
 
 class ReanimatorTransform
@@ -152,20 +144,20 @@ public:
 class ReanimatorTrackInstance
 {
 public:
-    int                             mBlendCounter;                  //+0x0
-    int                             mBlendTime;                     //+0x4
-    ReanimatorTransform             mBlendTransform;                //+0x8
-    float                           mShakeOverride;                 //+0x34
-    float                           mShakeX;                        //+0x38
-    float                           mShakeY;                        //+0x3C
-    AttachmentID                    mAttachmentID;                  //+0x40
-    Image*                          mImageOverride;                 //+0x44
-    int                             mRenderGroup;                   //+0x48
-    Color                           mTrackColor;                    //+0x4C
-    bool                            mIgnoreClipRect;                //+0x5C
-    bool                            mTruncateDisappearingFrames;    //+0x5D
-    bool                            mIgnoreColorOverride;           //+0x5E
-    bool                            mIgnoreExtraAdditiveColor;      //+0x5F
+    int                             mBlendCounter;                  
+    int                             mBlendTime;                     
+    ReanimatorTransform             mBlendTransform;                
+    float                           mShakeOverride;                 
+    float                           mShakeX;                        
+    float                           mShakeY;                        
+    AttachmentID                    mAttachmentID;                  
+    Image*                          mImageOverride;                 
+    int                             mRenderGroup;                   
+    Color                           mTrackColor;                    
+    bool                            mIgnoreClipRect;                
+    bool                            mTruncateDisappearingFrames;    
+    bool                            mIgnoreColorOverride;           
+    bool                            mIgnoreExtraAdditiveColor;      
 
 public:
     ReanimatorTrackInstance();

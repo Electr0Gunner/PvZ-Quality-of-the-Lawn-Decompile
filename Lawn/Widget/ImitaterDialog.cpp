@@ -8,7 +8,6 @@
 #include "../../GameConstants.h"
 #include "../../SexyAppFramework/WidgetManager.h"
 
-//0x482B00
 ImitaterDialog::ImitaterDialog() : 
 	LawnDialog(gLawnApp, Dialogs::DIALOG_IMITATER, true, _S("[CHOOSE_SEED_TO_COPY]"), _S(""), _S("[DIALOG_BUTTON_OK]"), Dialog::BUTTONS_YES_NO)
 {
@@ -22,13 +21,11 @@ ImitaterDialog::ImitaterDialog() :
 	mLawnNoButton->mMouseVisible = false;
 }
 
-//0x482CE0
 ImitaterDialog::~ImitaterDialog()
 {
 	delete mToolTip;
 }
 
-//0x482D30
 SeedType ImitaterDialog::SeedHitTest(int x, int y)
 {
 	for (SeedType aSeedType = (SeedType)0; aSeedType < SeedType::SEED_GATLINGPEA; aSeedType = (SeedType)(aSeedType + 1))
@@ -46,7 +43,6 @@ SeedType ImitaterDialog::SeedHitTest(int x, int y)
 	return SeedType::SEED_NONE;
 }
 
-//0x482DD0
 void ImitaterDialog::UpdateCursor()
 {
 	SeedType aSeedType = SeedHitTest(mApp->mWidgetManager->mLastMouseX - mX, mApp->mWidgetManager->mLastMouseY - mY);
@@ -60,7 +56,6 @@ void ImitaterDialog::UpdateCursor()
 	}
 }
 
-//0x482E50
 void ImitaterDialog::Update()
 {
 	LawnDialog::Update();
@@ -68,14 +63,12 @@ void ImitaterDialog::Update()
 	UpdateCursor();
 }
 
-//0x482E70
 void ImitaterDialog::GetSeedPosition(int theIndex, int& x, int& y)
 {
 	x = (theIndex % 8) * (SEED_PACKET_WIDTH + 1) + mWidth / 2 - 210;
 	y = (theIndex / 8) * (SEED_PACKET_HEIGHT + 1) + 112;
 }
 
-//0x482EC0
 void ImitaterDialog::Draw(Graphics* g)
 {
 	LawnDialog::Draw(g);
@@ -93,7 +86,6 @@ void ImitaterDialog::Draw(Graphics* g)
 	mToolTip->Draw(g);
 }
 
-//0x483030
 void ImitaterDialog::ShowToolTip()
 {
 	if (!mApp->mWidgetManager->mMouseIn || !mApp->mActive)
@@ -111,11 +103,11 @@ void ImitaterDialog::ShowToolTip()
 	{
 		RemoveToolTip();
 		uint aRecFlags = mApp->mSeedChooserScreen->SeedNotRecommendedToPick(aSeedType);
-		if (mApp->mSeedChooserScreen->SeedNotAllowedToPick(aSeedType))  // 如果不能携带
+		if (mApp->mSeedChooserScreen->SeedNotAllowedToPick(aSeedType))  
 		{
 			mToolTip->SetWarningText(_S("[NOT_ALLOWED_ON_THIS_LEVEL]"));
 		}
-		else if (aRecFlags)  // 如果不推荐携带
+		else if (aRecFlags)  
 		{
 			if (TestBit(aRecFlags, NotRecommend::NOT_RECOMMENDED_NOCTURNAL))
 			{
@@ -148,7 +140,6 @@ void ImitaterDialog::RemoveToolTip()
 	mToolTipSeed = SeedType::SEED_NONE;
 }
 
-//0x483270
 void ImitaterDialog::MouseDown(int x, int y, int theClickCount)
 {
 	SeedType aSeedType = SeedHitTest(x, y);

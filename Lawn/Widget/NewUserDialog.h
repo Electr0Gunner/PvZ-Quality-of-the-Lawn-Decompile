@@ -7,8 +7,8 @@
 class NewUserDialog : public LawnDialog, public EditListener
 {
 public:
-	LawnApp*			mApp;					//+0x170
-	EditWidget*			mNameEditWidget;		//+0x174
+	LawnApp*			mApp;					
+	EditWidget*			mNameEditWidget;		
 
 public:
 	NewUserDialog(LawnApp* theApp, bool isRename);
