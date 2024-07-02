@@ -419,25 +419,12 @@ void MessageWidget::Draw(Graphics* g)
 
 		if (mMessageStyle == MessageStyle::MESSAGE_STYLE_HOUSE_NAME)
 		{
-			SexyString aSubStr;
 			if (mApp->IsSurvivalMode() && mApp->mBoard->mChallenge->mSurvivalStage > 0)
 			{
 				int aFlags = mApp->mBoard->GetNumWavesPerSurvivalStage() * mApp->mBoard->mChallenge->mSurvivalStage / mApp->mBoard->GetNumWavesPerFlag();
 				SexyString aFlagStr = mApp->Pluralize(aFlags, _S("[ONE_FLAG]"), _S("[COUNT_FLAGS]"));
 				SexyString aSubStr = TodReplaceString(_S("[FLAGS_COMPLETED]"), _S("{FLAGS}"), aFlagStr);
-			}
-
-			if (aSubStr.size() > 0)
-			{
-				TodDrawString(
-					g, 
-					aSubStr, 
-					BOARD_WIDTH / 2 - mApp->mBoard->mX, 
-					aPosY + 26, 
-					Sexy::FONT_HOUSEOFTERROR16, 
-					Color(224, 187, 62, aColor.mAlpha), 
-					DrawStringJustification::DS_ALIGN_CENTER
-				);
+				TodDrawString(g, aSubStr, BOARD_WIDTH / 2 - mApp->mBoard->mX, aPosY + 26, Sexy::FONT_HOUSEOFTERROR16, Color(224, 187, 62, aColor.mAlpha), DrawStringJustification::DS_ALIGN_CENTER);
 			}
 		}
 	}
