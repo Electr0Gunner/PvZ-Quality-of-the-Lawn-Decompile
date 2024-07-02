@@ -217,7 +217,7 @@ void AwardScreen::DrawBottom(Graphics* g, SexyString theTitle, SexyString theAwa
     TodDrawString(g, theTitle, BOARD_WIDTH / 2, 58, Sexy::FONT_DWARVENTODCRAFT24, Color(213, 159, 43), DS_ALIGN_CENTER);
     TodDrawString(g, theAward, BOARD_WIDTH / 2, 326, Sexy::FONT_DWARVENTODCRAFT18YELLOW, Color::White, DS_ALIGN_CENTER);
     TodDrawStringWrapped(g, theMessage, Rect(285, 360, 230, 90), Sexy::FONT_BRIANNETOD16, Color(40, 50, 90), DS_ALIGN_CENTER_VERTICAL_MIDDLE);
-    mState = theAward;
+    mState = TodStringTranslate(theAward);
 }
 
 void AwardScreen::DrawAwardSeed(Graphics* g)
