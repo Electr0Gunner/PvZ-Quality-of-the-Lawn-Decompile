@@ -312,6 +312,7 @@ public:
 	int						mSpeedModifier;
 	int						mQuickLevel;
 	bool					mCrazySeeds;
+	bool					mIs3dAccel; //fake bool
 	bool					mSoftVSyncWait;
 	bool					mUserChanged3DSetting;
 	bool					mAutoEnable3D;

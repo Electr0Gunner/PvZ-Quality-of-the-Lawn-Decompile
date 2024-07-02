@@ -7356,7 +7356,7 @@ void Board::UpdateFog()
 
 void Board::DrawFog(Graphics* g)
 {
-	Image* aImageFog = mApp->Is3DAccelerated() ? Sexy::IMAGE_FOG : Sexy::IMAGE_FOG_SOFTWARE;
+	Image* aImageFog = mApp->Is3dAccel() ? Sexy::IMAGE_FOG : Sexy::IMAGE_FOG_SOFTWARE;
 	for (int x = 0; x < MAX_GRID_SIZE_X; x++)
 	{
 		for (int y = 0; y < MAX_GRID_SIZE_Y + 1; y++)
@@ -7376,7 +7376,7 @@ void Board::DrawFog(Graphics* g)
 
 			int aColorVariant = 255 - aCelLook * 1.5 - aMotion * 1.5;
 			int aLightnessVariant = 255 - aCelLook - aMotion;
-			if (!mApp->Is3DAccelerated())
+			if (!mApp->Is3dAccel())
 			{
 				aPosX += 10;
 				aPosY += 3;
@@ -8499,7 +8499,7 @@ void Board::KeyChar(SexyChar theChar)
 	}
 	if (theChar == _S('%'))
 	{
-		mApp->SwitchScreenMode(mApp->mIsWindowed, !mApp->Is3DAccelerated(), false);
+		mApp->SwitchScreenMode(mApp->mIsWindowed, !mApp->Is3dAccel(), false);
 	}
 	if (theChar == _S('M'))
 	{

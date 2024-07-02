@@ -1018,7 +1018,7 @@ void TodParticleSystem::Draw(Graphics* g)
 
 void TodParticleEmitter::Draw(Graphics* g)
 {
-	bool aHardWare = gSexyAppBase->Is3DAccelerated();
+	bool aHardWare = gSexyAppBase->mIs3dAccel;
 	if ((TestBit(mEmitterDef->mParticleFlags, (int)ParticleFlags::PARTICLE_SOFTWARE_ONLY) && aHardWare) ||
 		(TestBit(mEmitterDef->mParticleFlags, (int)ParticleFlags::PARTICLE_HARDWARE_ONLY) && !aHardWare))
 		return;

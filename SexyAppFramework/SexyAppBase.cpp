@@ -295,6 +295,7 @@ SexyAppBase::SexyAppBase()
 	mAutoCollectCoins = false;
 	mZombieHealthbars = false;
 	mPlantHealthbars = false;
+	mIs3dAccel = false;
 	mCrazySeeds = false;
 
 	int i;
@@ -381,7 +382,7 @@ SexyAppBase::~SexyAppBase()
 	Shutdown();
 
 	// Check if we should write the current 3d setting
-	bool showedMsgBox = false;
+	bool showedMsgBox = false;/*
 	if (mUserChanged3DSetting)
 	{
 		bool writeToRegistry = true;
@@ -430,7 +431,7 @@ SexyAppBase::~SexyAppBase()
 
 		if (aResult==IDNO)
 			RegistryWriteBoolean("Is3D", false);
-	}
+	}*/
 
 
 	DialogMap::iterator aDialogItr = mDialogMap.begin();
@@ -1586,6 +1587,7 @@ void SexyAppBase::WriteToRegistry()
 	RegistryWriteBoolean("ZombieHealthbars", mZombieHealthbars);
 	RegistryWriteBoolean("PlantHealthbars", mPlantHealthbars);
 	RegistryWriteBoolean("CrazyDaveSeeds", mCrazySeeds);
+	RegistryWriteBoolean("3DAcceleration", mIs3dAccel);
 	RegistryWriteInteger("MouseSensitivity", (int) (mMouseSensitivity * 100));
 }
 
@@ -1942,6 +1944,7 @@ void SexyAppBase::ReadFromRegistry()
 	RegistryReadBoolean("ZombieHealthbars", &mZombieHealthbars);
 	RegistryReadBoolean("PlantHealthbars", &mPlantHealthbars);
 	RegistryReadBoolean("CrazyDaveSeeds", &mCrazySeeds);
+	RegistryReadBoolean("3DAcceleration", &mIs3dAccel);
 
 	if (RegistryReadInteger("InProgress", &anInt))
 		mLastShutdownWasGraceful = anInt == 0;
@@ -2346,7 +2349,7 @@ void SexyAppBase::Redraw(Rect* theClipRect)
 			}
 			else if (aResult == DDInterface::RESULT_3D_FAIL)
 			{
-				Set3DAcclerated(false);
+				//Set3DAcclerated(false);
 				return;
 			}
 			else if (aResult != DDInterface::RESULT_OK)
@@ -4874,14 +4877,14 @@ void SexyAppBase::MakeWindow()
 	}
 	else if (aResult == DDInterface::RESULT_3D_FAIL)
 	{
-		Set3DAcclerated(false);
+		//Set3DAcclerated(false);
 		return;
 	}
 	else if (aResult != DDInterface::RESULT_OK)
 	{
 		if (Is3DAccelerated())
 		{
-			Set3DAcclerated(false);
+			//Set3DAcclerated(false);
 			return;
 		}
 		else
@@ -5062,12 +5065,12 @@ void SexyAppBase::SwitchScreenMode(bool wantWindowed, bool is3d, bool force)
 
 	if (mIsWindowed == wantWindowed && !force)
 	{
-		Set3DAcclerated(is3d);
+		//Set3DAcclerated(is3d);
 		return;
 	}
 
 	// Set 3d acceleration preference
-	Set3DAcclerated(is3d,false);
+	//Set3DAcclerated(is3d,false);
 
 	// Always make the app windowed when playing demos, in order to
 	//  make it easier to track down bugs.  We place this after the
@@ -7082,7 +7085,7 @@ void SexyAppBase::Set3DAcclerated(bool is3D, bool reinit)
 
 		if (is3D && aResult != DDInterface::RESULT_OK)
 		{
-			Set3DAcclerated(false, reinit);
+			//Set3DAcclerated(false, reinit);
 			return;
 		}
 		else if (aResult != DDInterface::RESULT_OK)

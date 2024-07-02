@@ -682,7 +682,7 @@ void TodBltMatrix(Graphics* g, Image* theImage, const SexyMatrix3& theTransform,
 {
 	float aOffsetX = 0.0f;
 	float aOffsetY = 0.0f;
-	if (gSexyAppBase->Is3DAccelerated())
+	if (gSexyAppBase->mIs3dAccel)
 	{
 		aOffsetX -= 0.5f;
 		aOffsetY -= 0.5f;

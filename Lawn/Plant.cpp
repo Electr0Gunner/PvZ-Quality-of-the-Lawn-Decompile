@@ -4010,7 +4010,7 @@ void Plant::Draw(Graphics* g)
             Reanimation* aBodyReanim = mApp->ReanimationTryToGet(mBodyReanimID);
             if (aBodyReanim)
             {
-                if (!mApp->Is3DAccelerated() && mSeedType == SeedType::SEED_FLOWERPOT && IsOnBoard() && 
+                if (!mApp->Is3dAccel() && mSeedType == SeedType::SEED_FLOWERPOT && IsOnBoard() &&
                     aBodyReanim->mAnimRate == 0.0f && aBodyReanim->IsAnimPlaying("anim_idle"))
                 {
                     mApp->mReanimatorCache->DrawCachedPlant(g, aOffsetX, aOffsetY, mSeedType, DrawVariation::VARIATION_NORMAL);

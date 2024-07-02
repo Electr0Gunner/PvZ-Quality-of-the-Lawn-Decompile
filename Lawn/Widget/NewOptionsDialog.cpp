@@ -57,7 +57,7 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector, bo
     mSfxVolumeSlider->SetValue(theApp->GetSfxVolume() / 0.65);
 
     mFullscreenCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Fullscreen, this, !theApp->mIsWindowed);
-    mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->Is3DAccelerated());
+    mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->Is3dAccel());
     mDebugModeBox = MakeNewCheckbox(-1, this, mApp->mTodCheatKeys);
     mDebugModeBox->SetVisible(false);
 
@@ -392,19 +392,8 @@ void NewOptionsDialog::CheckboxChecked(int theId, bool checked)
         break;
 
     case NewOptionsDialog::NewOptionsDialog_HardwareAcceleration:
-        if (!checked)
+        if (checked)
         {
-            mApp->DoDialog(
-                Dialogs::DIALOG_INFO,
-                true,
-                _S("Warning"),
-                _S("Some visual bugs could occur with 3D Acceleration OFF.\n\n"
-                    "At the moment they are still being investigated.\n"),
-                _S("OK"),
-                Dialog::BUTTONS_FOOTER
-            );
-        }
-        else {
             if (!mApp->Is3DAccelerationRecommended())
             {
                 mApp->DoDialog(

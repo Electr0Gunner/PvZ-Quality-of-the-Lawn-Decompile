@@ -570,7 +570,7 @@ void Reanimation::MatrixFromTransform(const ReanimatorTransform& theTransform, S
 
 void Reanimation::ReanimBltMatrix(Graphics* g, Image* theImage, SexyMatrix3& theTransform, const Rect& theClipRect, const Color& theColor, int theDrawMode, const Rect& theSrcRect)
 {
-	if (!gSexyAppBase->Is3DAccelerated() &&  
+	if (!gSexyAppBase->mIs3dAccel &&
 		TestBit(gReanimationParamArray[(int)mReanimationType].mReanimParamFlags, (int)ReanimFlags::REANIM_FAST_DRAW_IN_SW_MODE) &&  
 		FloatApproxEqual(theTransform.m01, 0.0f) && FloatApproxEqual(theTransform.m10, 0.0f) &&  
 		theTransform.m00 > 0.0f && theTransform.m11 > 0.0f &&  

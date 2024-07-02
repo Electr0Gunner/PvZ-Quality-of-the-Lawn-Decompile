@@ -340,6 +340,7 @@ public:
 	/*inline*/ bool					CanDoDaisyMode();
 	virtual void					SwitchScreenMode(bool wantWindowed, bool is3d, bool force = false);
 	virtual void					ToggleDebugMode();
+	bool							Is3dAccel();
 	static /*inline*/ void			CenterDialog(Dialog* theDialog, int theWidth, int theHeight);
 	void							GetAchievement(AchievementType theAchievementType);
 	void							UpdateDiscordState(SexyString def = "");
