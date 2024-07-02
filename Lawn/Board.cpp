@@ -566,8 +566,6 @@ void Board::PutInMissingZombies(int theWaveNumber, ZombiePicker* theZombiePicker
 
 void Board::PickZombieWaves()
 {
-	// ====================================================================================================
-	// ====================================================================================================
 	if (mApp->IsAdventureMode())
 	{
 		if (mApp->IsWhackAZombieLevel())
@@ -605,15 +603,11 @@ void Board::PickZombieWaves()
 			mNumWaves = 40;
 	}
 
-	// ====================================================================================================
-	// ====================================================================================================
 	ZombiePicker aZombiePicker;
 	ZombiePickerInit(&aZombiePicker);
 	ZombieType aIntroZombieType = GetIntroducedZombieType();
 	TOD_ASSERT(mNumWaves <= MAX_ZOMBIE_WAVES);
 
-	// ====================================================================================================
-	// ====================================================================================================
 	for (int aWave = 0; aWave < mNumWaves; aWave++)
 	{
 		ZombiePickerInitForWave(&aZombiePicker);
@@ -2410,8 +2404,6 @@ ZombieType Board::PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePi
 
 		const ZombieDefinition& aZombieDef = GetZombieDefinition((ZombieType)aZombieType);
 
-		// ================================================================================================
-		// ================================================================================================
 		GameMode aGameMode = mApp->mGameMode;
 		if (aZombieType == ZombieType::ZOMBIE_BUNGEE && mApp->IsSurvivalEndless(aGameMode))
 		{
@@ -2435,8 +2427,6 @@ ZombieType Board::PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePi
 			}
 		}
 
-		// ================================================================================================
-		// ================================================================================================
 		int aPickWeight = aZombieDef.mPickWeight;
 		if (mApp->IsSurvivalMode())
 		{
@@ -2544,8 +2534,6 @@ bool Board::RowCanHaveZombieType(int theRow, ZombieType theZombieType)
 
 int Board::PickRowForNewZombie(ZombieType theZombieType)
 {
-	// ====================================================================================================
-	// ====================================================================================================
 	GridItem* aRake = GetRake();
 	if (aRake && aRake->mGridItemState == GridItemState::GRIDITEM_STATE_RAKE_ATTRACTING && RowCanHaveZombieType(aRake->mGridY, theZombieType))
 	{
@@ -2554,8 +2542,6 @@ int Board::PickRowForNewZombie(ZombieType theZombieType)
 		return aRake->mGridY;
 	}
 
-	// ====================================================================================================
-	// ====================================================================================================
 	for (int aRow = 0; aRow < MAX_GRID_SIZE_Y; aRow++)
 	{
 		if (!RowCanHaveZombieType(aRow, theZombieType))
@@ -6565,8 +6551,6 @@ void Board::DrawProgressMeter(Graphics* g)
 	if (!HasProgressMeter())
 		return;
 
-	// ====================================================================================================
-	// ====================================================================================================
 	g->DrawImageCel(Sexy::IMAGE_FLAGMETER, 600, 575, 0);
 	int aCelWidth = Sexy::IMAGE_FLAGMETER->GetCelWidth();
 	int aCelHeight = Sexy::IMAGE_FLAGMETER->GetCelHeight();
@@ -6575,8 +6559,6 @@ void Board::DrawProgressMeter(Graphics* g)
 	Rect aDstRect(aCelWidth - aClipWidth + 593, 575, aClipWidth, aCelHeight);
 	g->DrawImage(Sexy::IMAGE_FLAGMETER, aDstRect, aSrcRect);
 	
-	// ====================================================================================================
-	// ====================================================================================================
 	int aPosX = aCelWidth / 2 + 600;
 	Color aColor(224, 187, 98);
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED_TWIST)
@@ -6629,8 +6611,6 @@ void Board::DrawProgressMeter(Graphics* g)
 		}
 	}
 
-	// ====================================================================================================
-	// ====================================================================================================
 	g->DrawImage(Sexy::IMAGE_FLAGMETERLEVELPROGRESS, 638, 589);
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED || 
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED_TWIST ||
@@ -6672,8 +6652,6 @@ void Board::DrawHouseDoorTop(Graphics* g)
 
 void Board::DrawLevel(Graphics* g)
 {
-	// ====================================================================================================
-	// ====================================================================================================
 	SexyString aLevelStr;
 	if (mApp->IsAdventureMode())
 	{
@@ -6707,8 +6685,6 @@ void Board::DrawLevel(Graphics* g)
 		}
 	}
 
-	// ====================================================================================================
-	// ====================================================================================================
 	int aPosX = 780;
 	int aPosY = 595;
 	if (HasProgressMeter())

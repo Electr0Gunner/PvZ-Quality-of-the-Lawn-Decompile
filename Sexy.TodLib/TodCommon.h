@@ -124,7 +124,6 @@ SexyString				TodGetCurrentLevelName();
 bool					TodHasUsedCheatKeys();
 bool					TodAppCloseRequest();
 
-//====================================================================================================//
 /*inline*/ int			RandRangeInt(int theMin, int theMax);
 /*inline*/ float		RandRangeFloat(float theMin, float theMax);
 inline char				ClampByte(char theNum, char theMin, char theMax)			{ return theNum <= theMin ? theMin : theNum >= theMax ? theMax : theNum; }
