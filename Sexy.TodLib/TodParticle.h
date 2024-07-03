@@ -60,7 +60,6 @@ enum ParticleFieldType
 // </Emitter>                                                        —
 // ################################################################################
 
-// ----------------------------------------------------------------------------------------------------
 class FloatParameterTrackNode
 {
 public:
@@ -71,7 +70,6 @@ public:
     TodCurves                   mDistribution;                  
 };
 
-// ----------------------------------------------------------------------------------------------------
 class FloatParameterTrack
 {
 public:
@@ -79,7 +77,6 @@ public:
     int                         mCountNodes;
 };
 
-// ----------------------------------------------------------------------------------------------------
 class ParticleField
 {
 public:
@@ -88,7 +85,6 @@ public:
     FloatParameterTrack         mY;                             
 };
 
-// ----------------------------------------------------------------------------------------------------
 class TodEmitterDefinition
 {
 public:
@@ -145,7 +141,6 @@ public:
     FloatParameterTrack         mAnimationRate;
 };
 
-// ----------------------------------------------------------------------------------------------------
 class TodParticleDefinition
 {
 public:
@@ -156,7 +151,6 @@ public:
 extern int gParticleDefCount;                       
 extern TodParticleDefinition* gParticleDefArray;    
 
-// ----------------------------------------------------------------------------------------------------
 class ParticleParams
 {
 public:

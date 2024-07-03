@@ -21,7 +21,6 @@ enum class DefFieldType : int
     DT_FONT
 };
 
-// ----------------------------------------------------------------------------------------------------
 class DefSymbol
 {
 public:
@@ -29,7 +28,6 @@ public:
     const char*         mSymbolName;                    
 };
 
-// ----------------------------------------------------------------------------------------------------
 class DefField
 {
 public:
@@ -39,7 +37,6 @@ public:
     void*               mExtraData;                     
 };
 
-// ----------------------------------------------------------------------------------------------------
 class DefMap
 {
 public:
@@ -70,7 +67,6 @@ extern DefMap gReanimatorTrackDefMap;
 //
 extern DefMap gReanimatorDefMap;  
 
-// ----------------------------------------------------------------------------------------------------
 class DefinitionArrayDef
 {
 public:
@@ -78,7 +74,6 @@ public:
     int                 mArrayCount;                    
 };
 
-// ----------------------------------------------------------------------------------------------------
 class CompressedDefinitionHeader
 {
 public:
@@ -86,7 +81,6 @@ public:
     unsigned long       mUncompressedSize;              
 };
 
-// ----------------------------------------------------------------------------------------------------
 class DefLoadResPath
 {
 public:

@@ -46,7 +46,6 @@ public:
     ReanimatorTrack() : mName(""), mTransforms(nullptr), mTransformCount(0) { }
 };
 
-// ----------------------------------------------------------------------------------------------------
 class ReanimatorDefinition
 {
 public:
@@ -61,7 +60,6 @@ public:
 extern int gReanimatorDefCount;                     
 extern ReanimatorDefinition* gReanimatorDefArray;   
 
-// ----------------------------------------------------------------------------------------------------
 class ReanimationParams
 {
 public:
@@ -107,7 +105,6 @@ public:
     Reanimation*                    AllocReanimation(float theX, float theY, int theRenderOrder, ReanimationType theReanimationType);
 };
 
-// ----------------------------------------------------------------------------------------------------
 class ReanimatorFrameTime
 {
 public:
