@@ -6066,7 +6066,7 @@ void Board::DrawGameObjects(Graphics* g)
 					aRenderItemCount++;
 				}
 			}
-			if (mApp->mZombieHealthbars)
+			if (mApp->mZombieHealthbars && mApp->mGameMode != GameMode::GAMEMODE_CHALLENGE_INVISIGHOUL)
 			{
 				RenderItem& aRenderItem = aRenderList[aRenderItemCount];
 				aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR_ZOMBIE;
