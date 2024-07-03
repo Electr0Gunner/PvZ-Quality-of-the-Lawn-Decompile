@@ -6022,7 +6022,7 @@ void Board::DrawGameObjects(Graphics* g)
 				{
 					RenderItem& aRenderItem = aRenderList[aRenderItemCount];
 					aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR_PLANT;
-					aRenderItem.mZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, aPlant->mRow, 1);
+					aRenderItem.mZPos = aPlant->mRenderOrder + 1;
 					aRenderItem.mPlant = aPlant;
 					aRenderItemCount++;
 				}
@@ -6070,7 +6070,7 @@ void Board::DrawGameObjects(Graphics* g)
 			{
 				RenderItem& aRenderItem = aRenderList[aRenderItemCount];
 				aRenderItem.mRenderObjectType = RenderObjectType::RENDER_ITEM_HEALTHBAR_ZOMBIE;
-				aRenderItem.mZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, aZombie->mRow, 1);
+				aRenderItem.mZPos = aZombie->mRenderOrder + 1;
 				aRenderItem.mZombie = aZombie;
 				aRenderItemCount++;
 			}
