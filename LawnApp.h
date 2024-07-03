@@ -136,6 +136,7 @@ public:
 	SexyString						mReconVersion;
 	SexyString						mGitCommit;
 	bool							mPlayedQuickplay;
+	time_t							mStartTime;
 	SexyString                      mDetails;
 	SexyString                      mState;
 
