@@ -6,7 +6,6 @@
 #include "../SeedPacket.h"
 #include "../../LawnApp.h"
 #include "AlmanacDialog.h"
-#include "ImitaterDialog.h"
 #include "../System/Music.h"
 #include "../../Resources.h"
 #include "../../Lawn/Plant.h"
