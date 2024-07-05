@@ -784,9 +784,6 @@
     <ClCompile Include="..\Lawn\Widget\SeedChooserScreen.cpp">
       <Filter>Lawn\Widget\Widget Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Lawn\Widget\ImitaterDialog.cpp">
-      <Filter>Lawn\Widget\Widget Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\Lawn\Widget\ChallengeScreen.cpp">
       <Filter>Lawn\Widget\Widget Source</Filter>
     </ClCompile>
@@ -1362,9 +1359,6 @@
     </ClInclude>
     <ClInclude Include="..\Lawn\Zombie.h">
       <Filter>Lawn\Board\Board Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lawn\Widget\ImitaterDialog.h">
-      <Filter>Lawn\Widget\Widget Include</Filter>
     </ClInclude>
     <ClInclude Include="..\Lawn\Widget\StoreScreen.h">
       <Filter>Lawn\Widget\Widget Include</Filter>
