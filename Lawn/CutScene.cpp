@@ -792,7 +792,7 @@ void CutScene::StartLevelIntro()
 	{
 		mCrazyDaveDialogStart = mApp->IsFirstTimeAdventureMode() ? 1301 : 1304;
 	}
-	else if (!mApp->IsFirstTimeAdventureMode() && aLevel == 1 && !mApp->mPlayedQuickplay)
+	else if (!mApp->IsFirstTimeAdventureMode() && aLevel == 1 && (!mApp->mPlayedQuickplay || (mApp->mPlayedQuickplay && mApp->mCrazySeeds)))
 	{
 		mCrazyDaveDialogStart = 1601;
 	}
@@ -2265,4 +2265,9 @@ bool CutScene::IsAfterSeedChooser()
 bool CutScene::ShowZombieWalking()
 {
 	return mCutsceneTime > LostTimePanRightStart;
+}
+
+bool CutScene::IsAfterPanLeft()
+{
+	return mCutsceneTime <= TimePanLeftEnd + mCrazyDaveTime;
 }

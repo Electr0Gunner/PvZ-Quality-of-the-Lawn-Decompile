@@ -6161,11 +6161,7 @@ void Board::DrawGameObjects(Graphics* g)
 	}
 	{
 		int aZPos;
-		if (mTimeStopCounter > 0)
-		{
-			aZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, 0, 0);
-		}
-		else if (mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO && mCutScene->IsAfterSeedChooser())
+		if (mTimeStopCounter > 0 || (mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO && mCutScene->IsAfterPanLeft()))
 		{
 			aZPos = MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, 0, 0);
 		}
