@@ -2267,7 +2267,7 @@ bool CutScene::ShowZombieWalking()
 	return mCutsceneTime > LostTimePanRightStart;
 }
 
-bool CutScene::IsAfterPanLeft()
+bool CutScene::IsPanningLeft()
 {
 	return mCutsceneTime <= TimePanLeftEnd + mCrazyDaveTime;
 }

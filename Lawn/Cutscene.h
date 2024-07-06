@@ -85,7 +85,7 @@ public:
     void                        UpdateIntro();
     void                        DrawIntro(Graphics* g);
     /*inline*/ bool             ShouldRunUpsellBoard();
-    bool                        IsAfterPanLeft();
+    bool                        IsPanningLeft();
 };
 
 #endif
