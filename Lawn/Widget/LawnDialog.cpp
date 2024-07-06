@@ -430,7 +430,7 @@ GameOverDialog::GameOverDialog(const SexyString& theMessage, bool theShowChallen
     mClip = false;
 
     mMenuButton = MakeButton(1, this, _S("[MAIN_MENU_BUTTON]"));
-    mMenuButton->Resize(635 - mX, -10 - mY, 163, 46);
+    mMenuButton->Resize(635 - mX + BOARD_ADDITIONAL_WIDTH, 5 - mY, 163, 46);
 
     gLawnApp->mBoard->mShowShovel = false;
     gLawnApp->mBoard->mMenuButton->mBtnNoDraw = true;
@@ -494,6 +494,6 @@ void GameOverDialog::MouseDrag(int x, int y)
     LawnDialog::MouseDrag(x, y);
     if (mMenuButton)
     {
-        mMenuButton->Resize(635 - mX, -10 - mY, 163, 46);
+        mMenuButton->Resize(635 - mX + BOARD_ADDITIONAL_WIDTH, 5 - mY, 163, 46);
     }
 }
