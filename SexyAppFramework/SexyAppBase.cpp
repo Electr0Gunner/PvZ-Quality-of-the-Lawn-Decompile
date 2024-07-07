@@ -38,6 +38,7 @@
 #include "../PakLib/PakInterface.h"
 #include <string>
 #include <shlobj.h>
+#include <../../GameConstants.h>
 
 #include "memmgr.h"
 
