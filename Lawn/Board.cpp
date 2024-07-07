@@ -7357,7 +7357,8 @@ void Board::DrawFog(Graphics* g)
 
 			int aCelLook = mGridCelLook[x][y % MAX_GRID_SIZE_Y];
 			int aCelCol = aCelLook % 8;
-			float aPosX = x * 80 + mFogOffset - 15;
+			int aPosXOffset = 80;
+			float aPosX = x * aPosXOffset + mFogOffset - 15;
 			float aPosY = y * 85 + 20;
 			float aTime = mMainCounter * PI * 2;
 			float aPhaseX = 6 * PI * x / MAX_GRID_SIZE_X;
@@ -7381,7 +7382,7 @@ void Board::DrawFog(Graphics* g)
 
 			if (x == MAX_GRID_SIZE_X - 1)
 			{
-				g->DrawImageCel(aImageFog, aPosX + 80, aPosY, aCelCol, 0);
+				g->DrawImageCel(aImageFog, aPosX + aPosXOffset, aPosY, aCelCol, 0);
 			}
 			g->SetColorizeImages(false);
 		}

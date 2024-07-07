@@ -131,8 +131,9 @@ public:
     virtual void			MouseWheel(int theDelta);
     void                    UpdateAfterPurchase();
     void                    SliderVal(int theId, double theVal);
-    virtual void				RemovedFromManager(WidgetManager* theWidgetManager);
-    virtual void				AddedToManager(WidgetManager* theWidgetManager);
+    virtual void			RemovedFromManager(WidgetManager* theWidgetManager);
+    virtual void			AddedToManager(WidgetManager* theWidgetManager);
+    void                    ResizeSlider();
 };
 
 #endif

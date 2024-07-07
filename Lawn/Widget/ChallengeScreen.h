@@ -30,11 +30,11 @@ private:
 
 public:
     NewLawnButton*              mBackButton;                                
-    ButtonWidget*               mPageButton[MAX_CHALLANGE_PAGES];           
+    ButtonWidget*               mPageButtons[MAX_CHALLANGE_PAGES];           
     ButtonWidget*               mChallengeButtons[NUM_CHALLENGE_MODES];     
     LawnApp*                    mApp;                                       
     ToolTipWidget*              mToolTip;                                   
-    NewLawnButton*               PageDropper;
+    NewLawnButton*              mPageDropper;
     ChallengePage               mPageIndex;                                 
     bool                        mCheatEnableChallenges;                     
     UnlockingState              mUnlockState;                               
@@ -47,7 +47,7 @@ public:
     const float					mBaseScrollSpeed = 1.0f;
     const float					mScrollAccel = 0.1f;
     float						mMaxScrollPosition;
-    bool						ShowPages;
+    bool						mShowPages;
     Sexy::Slider* mSlider;
 
 public:

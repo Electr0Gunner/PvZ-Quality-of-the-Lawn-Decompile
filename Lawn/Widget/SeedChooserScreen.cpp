@@ -178,9 +178,9 @@ SeedChooserScreen::SeedChooserScreen()
 	mSlider = new Sexy::Slider(IMAGE_OPTIONS_SLIDERSLOT_PLANT, IMAGE_OPTIONS_SLIDERKNOB_PLANT, 0, this);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mSlider->mHorizontal = false;
-	mSlider->Resize(472, 92, 40, 405);
 	mSlider->mThumbOffsetX = -14;
 	mSlider->mNoDraw = true;
+	ResizeSlider();
 
 	mPreviousType = FindSeedInBank(mSeedsInBank - 1);
 }
@@ -306,6 +306,10 @@ void SeedChooserScreen::AddedToManager(WidgetManager* theWidgetManager)
 	AddWidget(mSlider);
 }
 
+void SeedChooserScreen::ResizeSlider()
+{
+	mSlider->Resize(472, 92, 40, IMAGE_SEEDCHOOSER_BACKGROUND->mHeight - (mApp->SeedTypeAvailable(SEED_IMITATER) ? IMAGE_SEEDCHOOSER_IMITATERADDON->mHeight + 4 : 0) - 11);
+}
 
 unsigned int SeedChooserScreen::SeedNotRecommendedToPick(SeedType theSeedType)
 {
@@ -342,7 +346,7 @@ void SeedChooserScreen::Draw(Graphics* g)
 		g->DrawImage(Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON, IMITATER_POS_X, IMITATER_POS_Y);
 	}
 	TodDrawString(g, _S("[CHOOSE_YOUR_PLANTS]"), 229, 110, Sexy::FONT_DWARVENTODCRAFT18YELLOW, Color::White, DS_ALIGN_CENTER);
-
+	mSlider->SliderDraw(g);
 	for (SeedType aSeedType = SEED_PEASHOOTER; aSeedType < NUM_SEEDS_IN_CHOOSER; aSeedType = (SeedType)(aSeedType + 1))
 	{
 		if (aSeedType != SEED_IMITATER)
@@ -432,7 +436,6 @@ void SeedChooserScreen::Draw(Graphics* g)
 	aBoardFrameG.mTransX -= mX;
 	aBoardFrameG.mTransY -= mY;
 	mMenuButton->Draw(&aBoardFrameG);
-	mSlider->SliderDraw(g);
 	mToolTip->Draw(g);
 }
 
@@ -1260,6 +1263,7 @@ void SeedChooserScreen::UpdateAfterPurchase()
 		aChosenSeed.mEndY = aChosenSeed.mY;
 	}
 	EnableStartButton(mSeedsInBank == mBoard->mSeedBank->mNumPackets);
+	ResizeSlider();
 }
 
 
