@@ -295,7 +295,7 @@ SexyAppBase::SexyAppBase()
 	mAutoCollectCoins = false;
 	mZombieHealthbars = false;
 	mPlantHealthbars = false;
-	mIs3dAccel = false;
+	mIs3dAccel = true;
 	mCrazySeeds = false;
 
 	int i;
@@ -1576,17 +1576,17 @@ void SexyAppBase::WriteToRegistry()
 	RegistryWriteInteger("PreferredY", mPreferredY);
 	RegistryWriteInteger("CustomCursors", mCustomCursorsEnabled ? 1 : 0);		
 	RegistryWriteInteger("InProgress", 0);
-	RegistryWriteInteger("SpeedModifier", mSpeedModifier);
-	RegistryWriteInteger("QuickLevel", mQuickLevel);
+	RegistryWriteInteger("QotL_SpeedModifier", mSpeedModifier);
+	RegistryWriteInteger("QotL_QuickLevel", mQuickLevel);
 	RegistryWriteBoolean("WaitForVSync", mWaitForVSync);
-	RegistryWriteBoolean("DiscordPresence", mDiscordPresence);
-	RegistryWriteBoolean("BankKeybinds", mBankKeybinds);
-	RegistryWriteBoolean("ZeroNineBankFormat", mZeroNineBankFormat);
-	RegistryWriteBoolean("AutoCollectSuns", mAutoCollectSuns);
-	RegistryWriteBoolean("AutoCollectCoins", mAutoCollectCoins);
-	RegistryWriteBoolean("ZombieHealthbars", mZombieHealthbars);
-	RegistryWriteBoolean("PlantHealthbars", mPlantHealthbars);
-	RegistryWriteBoolean("CrazyDaveSeeds", mCrazySeeds);
+	RegistryWriteBoolean("QotL_DiscordPresence", mDiscordPresence);
+	RegistryWriteBoolean("QotL_BankKeybinds", mBankKeybinds);
+	RegistryWriteBoolean("QotL_ZeroNineBankFormat", mZeroNineBankFormat);
+	RegistryWriteBoolean("QotL_AutoCollectSuns", mAutoCollectSuns);
+	RegistryWriteBoolean("QotL_AutoCollectCoins", mAutoCollectCoins);
+	RegistryWriteBoolean("QotL_ZombieHealthbars", mZombieHealthbars);
+	RegistryWriteBoolean("QotL_PlantHealthbars", mPlantHealthbars);
+	RegistryWriteBoolean("QotL_CrazyDaveSeeds", mCrazySeeds);
 	RegistryWriteBoolean("3DAcceleration", mIs3dAccel);
 	RegistryWriteInteger("MouseSensitivity", (int) (mMouseSensitivity * 100));
 }
@@ -1929,21 +1929,22 @@ void SexyAppBase::ReadFromRegistry()
 
 	RegistryReadInteger("PreferredX", &mPreferredX);
 	RegistryReadInteger("PreferredY", &mPreferredY);
-	RegistryReadInteger("SpeedModifier", &mSpeedModifier);
-	RegistryReadInteger("QuickLevel", &mQuickLevel);
+	RegistryReadInteger("QotL_SpeedModifier", &mSpeedModifier);
+	RegistryReadInteger("QotL_QuickLevel", &mQuickLevel);
+	mQuickLevel = max(1, min(mQuickLevel, NUM_LEVELS));
 
 	if (RegistryReadInteger("CustomCursors", &anInt))
-		EnableCustomCursors(anInt != 0);	
-			
-	RegistryReadBoolean("WaitForVSync", &mWaitForVSync);	
-	RegistryReadBoolean("DiscordPresence", &mDiscordPresence);
-	RegistryReadBoolean("BankKeybinds", &mBankKeybinds);
-	RegistryReadBoolean("ZeroNineBankFormat", &mZeroNineBankFormat);
-	RegistryReadBoolean("AutoCollectSuns", &mAutoCollectSuns);
-	RegistryReadBoolean("AutoCollectCoins", &mAutoCollectCoins);
-	RegistryReadBoolean("ZombieHealthbars", &mZombieHealthbars);
-	RegistryReadBoolean("PlantHealthbars", &mPlantHealthbars);
-	RegistryReadBoolean("CrazyDaveSeeds", &mCrazySeeds);
+		EnableCustomCursors(anInt != 0);
+
+	RegistryReadBoolean("WaitForVSync", &mWaitForVSync);
+	RegistryReadBoolean("QotL_DiscordPresence", &mDiscordPresence);
+	RegistryReadBoolean("QotL_BankKeybinds", &mBankKeybinds);
+	RegistryReadBoolean("QotL_ZeroNineBankFormat", &mZeroNineBankFormat);
+	RegistryReadBoolean("QotL_AutoCollectSuns", &mAutoCollectSuns);
+	RegistryReadBoolean("QotL_AutoCollectCoins", &mAutoCollectCoins);
+	RegistryReadBoolean("QotL_ZombieHealthbars", &mZombieHealthbars);
+	RegistryReadBoolean("QotL_PlantHealthbars", &mPlantHealthbars);
+	RegistryReadBoolean("QotL_CrazyDaveSeeds", &mCrazySeeds);
 	RegistryReadBoolean("3DAcceleration", &mIs3dAccel);
 
 	if (RegistryReadInteger("InProgress", &anInt))
