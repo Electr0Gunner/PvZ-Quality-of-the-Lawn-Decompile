@@ -89,8 +89,7 @@ void Slider::MouseDown(int x, int y, int theClickCount)
 {
 	if (mHorizontal)
 	{
-		int aThumbX = (int) (mVal * (mWidth - mThumbImage->GetWidth()));
-
+		int aThumbX = (int) (mVal * (mWidth - mThumbImage->GetWidth())) + mThumbOffsetX;;
 		if ((x >= aThumbX) && (x < aThumbX + mThumbImage->GetWidth()))
 		{
 			mWidgetManager->mApp->SetCursor(CURSOR_DRAGGING);
@@ -98,28 +97,20 @@ void Slider::MouseDown(int x, int y, int theClickCount)
 			mRelX = x - aThumbX;
 		}
 		else
-		{
-			// clicked on the bar, set position to mouse click
-			double pos = (double)x / mWidth;
-			SetValue(pos);
-		}
+			SetValue((double)x / mWidth);
 	}
 	else
 	{
 		int aThumbY = (int) (mVal * (mHeight - mThumbImage->GetHeight()));
-
-		if ((y >= aThumbY) && (y < aThumbY + mThumbImage->GetHeight()))
+		int aThumbCenterX = (mWidth - mThumbImage->GetWidth()) / 2 + mThumbOffsetX;
+		if ((x >= aThumbCenterX) && (x < aThumbCenterX + mThumbImage->GetWidth()) && (y >= aThumbY) && (y < aThumbY + mThumbImage->GetHeight()))
 		{
 			mWidgetManager->mApp->SetCursor(CURSOR_DRAGGING);
 			mDragging = true;
 			mRelY = y - aThumbY;
 		}
 		else
-		{
-			// clicked on the bar, set position to mouse click
-			double pos = (double)y / mHeight;
-			SetValue(pos);
-		}
+			SetValue((double)y / mHeight);
 	}
 }
 
@@ -127,8 +118,7 @@ void Slider::MouseMove(int x, int y)
 {
 	if (mHorizontal)
 	{
-		int aThumbX = (int) (mVal * (mWidth - mThumbImage->GetWidth()));
-
+		int aThumbX = (int) (mVal * (mWidth - mThumbImage->GetWidth())) + mThumbOffsetX;
 		if ((x >= aThumbX) && (x < aThumbX + mThumbImage->GetWidth()))
 			mWidgetManager->mApp->SetCursor(CURSOR_DRAGGING);
 		else
@@ -136,9 +126,9 @@ void Slider::MouseMove(int x, int y)
 	}
 	else
 	{
-		int aThumbY = (int) (mVal * (mHeight - mThumbImage->GetHeight()));
-
-		if ((y >= aThumbY) && (y < aThumbY + mThumbImage->GetHeight()))
+		int aThumbY = (int)(mVal * (mHeight - mThumbImage->GetHeight()));
+		int aThumbCenterX = (mWidth - mThumbImage->GetWidth()) / 2 + mThumbOffsetX;
+		if ((x >= aThumbCenterX) && (x < aThumbCenterX + mThumbImage->GetWidth()) && (y >= aThumbY) && (y < aThumbY + mThumbImage->GetHeight()))
 			mWidgetManager->mApp->SetCursor(CURSOR_DRAGGING);
 		else
 			mWidgetManager->mApp->SetCursor(CURSOR_POINTER);

@@ -515,7 +515,7 @@ void SeedChooserScreen::LandFlyingSeed(ChosenSeed& theChosenSeed)
 
 void SeedChooserScreen::UpdateCursor()
 {
-	if (mApp->GetDialogCount() || mBoard->mCutScene->IsInShovelTutorial() || mApp->mGameMode == GAMEMODE_UPSELL) return;
+	if (mApp->GetDialogCount() || mBoard->mCutScene->IsInShovelTutorial() || mApp->mGameMode == GAMEMODE_UPSELL || mSlider->mIsOver || mSlider->mDragging) return;
 	SeedType aMouseSeedType = SeedHitTest(mLastMouseX, mLastMouseY);
 	if (aMouseSeedType != SEED_NONE)
 	{
@@ -783,7 +783,6 @@ void SeedChooserScreen::ButtonDepress(int theId)
 	}
 	else if (theId == SeedChooserScreen::SeedChooserScreen_Store)
 	{
-		mScrollPosition = 0;
 		StoreScreen* aStore = mApp->ShowStoreScreen();
 		aStore->mBackButton->SetLabel("[STORE_BACK_TO_GAME]");
 		aStore->WaitForResult();

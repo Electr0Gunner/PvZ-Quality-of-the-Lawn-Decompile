@@ -297,12 +297,15 @@ void AlmanacDialog::Update()
 		}
 	}
 
-	ZombieType aZombieType = ZombieHitTest(mLastMouseX, mLastMouseY);
-	if (SeedHitTest(mLastMouseX, mLastMouseY) != SeedType::SEED_NONE || (aZombieType != ZOMBIE_INVALID && ZombieIsShown(aZombieType)) ||
-		mCloseButton->IsMouseOver() || mIndexButton->IsMouseOver() || mPlantButton->IsMouseOver() || mZombieButton->IsMouseOver())
-		mApp->SetCursor(CURSOR_HAND);
-	else
-		mApp->SetCursor(CURSOR_POINTER);
+	if (!(mPlantSlider->mIsOver || mPlantSlider->mDragging) && !(mZombieSlider->mIsOver || mZombieSlider->mDragging))
+	{
+		ZombieType aZombieType = ZombieHitTest(mLastMouseX, mLastMouseY);
+		if (SeedHitTest(mLastMouseX, mLastMouseY) != SeedType::SEED_NONE || (aZombieType != ZOMBIE_INVALID && ZombieIsShown(aZombieType)) ||
+			mCloseButton->IsMouseOver() || mIndexButton->IsMouseOver() || mPlantButton->IsMouseOver() || mZombieButton->IsMouseOver())
+			mApp->SetCursor(CURSOR_HAND);
+		else
+			mApp->SetCursor(CURSOR_POINTER);
+	}
 
 	mApp->mPoolEffect->PoolEffectUpdate();
 	MarkDirty();
@@ -910,7 +913,7 @@ SexyString AlmanacDialog::TranslateAndSanitize(SexyString str)
 	for (int i = 0; i < WEIRD_CHARACTERS_COUNT; ++i) {
 		char weirdChar = weirdCharacters[i][0];
 		int pos = 0;
-		while ((pos = ret.find(weirdChar, pos)) != std::string::npos) {
+		while ((pos = ret.find(weirdChar, pos)) != SexyString::npos) {
 			if (pos > 0) {
 				ret.erase(pos - 1, 1);
 				pos--;

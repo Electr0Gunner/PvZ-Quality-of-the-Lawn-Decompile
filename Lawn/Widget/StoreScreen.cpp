@@ -814,7 +814,7 @@ void StoreScreen::ButtonDepress(int theId)
     if (mInCutscene)
         return;
     if (theId == StoreScreen::StoreScreen_Back)
-        mResult = 1000;
+        mApp->KillStoreScreen();
     else if (theId == StoreScreen::StoreScreen_Prev || theId == StoreScreen::StoreScreen_Next)
     {
         mHatchTimer = 50;
