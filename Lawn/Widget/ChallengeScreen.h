@@ -7,7 +7,7 @@
 #include "../../SexyAppFramework/Slider.h"
 using namespace Sexy;
 
-#define NUM_CHALLENGE_MODES ((int)GameMode::NUM_GAME_MODES - 1)
+#define NUM_CHALLENGE_MODES GameMode::NUM_GAME_MODES - 1
 
 class LawnApp;
 class ToolTipWidget;
