@@ -97,7 +97,7 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mLockShakeY = 0;
 	mScrollAmount = 0;
 	mScrollPosition = 0;
-	mMaxScrollPosition = 0.0f;
+	mMaxScrollPosition = 0;
 	mShowPages = false;
 
 	mPageIndex = thePage;
@@ -217,7 +217,7 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mSlider->mHorizontal = false;
 	mSlider->Resize(770, 85, 20, 470);
 	mSlider->mVisible = true;
-	mSlider->mThumbOffsetX = -7;
+	mSlider->mThumbOffsetX = -4;
 
 	mApp->mDetails = "In the Challenge Screen";
 }
@@ -621,14 +621,14 @@ void ChallengeScreen::Update()
 {
 	Widget::Update();
 	UpdateToolTip();
-	float aScrollSpeed = mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel;
-	mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * aScrollSpeed, 0, mMaxScrollPosition);
+	mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * (mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel), 0, mMaxScrollPosition);
 	mScrollAmount *= (1.0f - mScrollAccel);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
+	mSlider->mVisible = mMaxScrollPosition != 0;
 	switch (mPageIndex)
 	{
 	case CHALLENGE_PAGE_CHALLENGE:
-		mApp->UpdateDiscordState("Mini-games");
+		mApp->UpdateDiscordState("Mini-Games");
 		break;
 	case CHALLENGE_PAGE_LIMBO:
 		mApp->UpdateDiscordState("Limbo");
@@ -640,8 +640,6 @@ void ChallengeScreen::Update()
 		mApp->UpdateDiscordState("Puzzle");
 		break;
 	}
-
-	mSlider->mVisible = mMaxScrollPosition > 0.0f;
 
 	if (mShowPages) /// TodAnimateCurve(int theTimeStart, int theTimeEnd, int theTimeAge, int thePositionStart, int thePositionEnd, TodCurves theCurve)
 		mPageDropper->Resize(-30, -10, IMAGE_CHALLENGE_BUTTONS->mWidth, IMAGE_CHALLENGE_BUTTONS->mHeight);

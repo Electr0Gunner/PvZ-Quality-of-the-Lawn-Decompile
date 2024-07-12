@@ -326,19 +326,24 @@ void ZenGarden::FindOpenZenGardenSpot(int& theSpotX, int& theSpotY)
                 continue;  
             }
 
+            bool spotOccupied = false;
             for (int i = 0; i < mApp->mPlayerInfo->mNumPottedPlants; i++)
             {
                 PottedPlant* aPottedPlant = PottedPlantFromIndex(i);
                 if (aPottedPlant->mWhichZenGarden == GardenType::GARDEN_MAIN && aPottedPlant->mX == x && aPottedPlant->mY == y)
                 {
-                    continue;  
+                    spotOccupied = true;
+                    break;
                 }
             }
 
-            aPicks[aPickCount].mX = x;
-            aPicks[aPickCount].mY = y;
-            aPicks[aPickCount].mWeight = 1;
-            aPickCount++;
+            if (!spotOccupied)
+            {
+                aPicks[aPickCount].mX = x;
+                aPicks[aPickCount].mY = y;
+                aPicks[aPickCount].mWeight = 1;
+                aPickCount++;
+            }
         }
     }
 
@@ -915,7 +920,7 @@ void ZenGarden::MouseDownWithFeedingTool(int x, int y, CursorType theCursorType)
                 Reanimation* aWateringCanReanim = mApp->AddReanimation(aPlantToFeed->mX + 32, aPlantToFeed->mY, 0, ReanimationType::REANIM_ZENGARDEN_WATERINGCAN);
                 aWateringCanReanim->PlayReanim("anim_water", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 0, 0.0f);
                 aZenTool->mGridItemReanimID = mApp->ReanimationGetID(aWateringCanReanim);
-                aZenTool->mGridItemState = GridItemState::GRIDITEM_STATE_ZEN_TOOL_GOLD_WATERING_CAN;
+                aZenTool->mGridItemState = GridItemState::GRIDITEM_STATE_ZEN_TOOL_WATERING_CAN;
                 mApp->PlayFoley(FoleyType::FOLEY_WATERING);
             }
         }
