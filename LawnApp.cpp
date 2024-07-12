@@ -1834,6 +1834,7 @@ void LawnApp::UpdateFrames()
 			discordPresence.state = mState.c_str();
 			discordPresence.details = mDetails.c_str();
 			discordPresence.largeImageKey = "logo";
+			discordPresence.largeImageText = mVersion.c_str();
 			discordPresence.startTimestamp = mStartTime;
 			Discord_UpdatePresence(&discordPresence);
 		}
