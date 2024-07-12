@@ -3476,7 +3476,8 @@ void Zombie::SetupReanimForLostArm(unsigned int theDamageFlags)
     case ZombieType::ZOMBIE_BACKUP_DANCER:
         ReanimShowTrack("Zombie_disco_outerarm_lower", RENDER_GROUP_HIDDEN);
         ReanimShowTrack("Zombie_disco_outerhand", RENDER_GROUP_HIDDEN);
-        ReanimShowTrack("Zombie_disco_outerhand_point", RENDER_GROUP_HIDDEN);
+        if (mZombieType == ZombieType::ZOMBIE_DANCER)
+            ReanimShowTrack("Zombie_disco_outerhand_point", RENDER_GROUP_HIDDEN);
         break;
     default:
         ReanimShowPrefix("Zombie_outerarm_lower", RENDER_GROUP_HIDDEN);
