@@ -3559,11 +3559,11 @@ void Zombie::SetupReanimForLostArm(unsigned int theDamageFlags)
             break;
         }
         case ZombieType::ZOMBIE_DANCER:
-            GetTrackPosition("Zombie_outerarm_lower", aPosX, aPosY);
+            GetTrackPosition("Zombie_disco_outerarm_lower", aPosX, aPosY);
             aBodyReanim->SetImageOverride("Zombie_disco_outerarm_upper", IMAGE_REANIM_ZOMBIE_DISCO_OUTERARM_UPPER2);
             break;
         case ZombieType::ZOMBIE_BACKUP_DANCER:
-            GetTrackPosition("Zombie_outerarm_lower", aPosX, aPosY);
+            GetTrackPosition("Zombie_disco_outerarm_lower", aPosX, aPosY);
             aBodyReanim->SetImageOverride("Zombie_disco_outerarm_upper", IMAGE_REANIM_ZOMBIE_BACKUP_OUTERARM_UPPER2); //shout of to Patoke for the GOTY Decomp
             break;
         case ZombieType::ZOMBIE_LADDER:
