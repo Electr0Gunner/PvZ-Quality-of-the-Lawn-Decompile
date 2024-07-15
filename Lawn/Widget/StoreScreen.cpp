@@ -425,7 +425,7 @@ void StoreScreen::Draw(Graphics* g)
     mDrawnOnce = true;
 
     int aStoreSignPosY = TodAnimateCurve(50, 110, mStoreTime, -150, 0, CURVE_EASE_IN_OUT);
-    if (mApp->IsNight())
+    if (mApp->mBoard != nullptr && mApp->mBoard->StageIsNight())
     {
         g->DrawImage(Sexy::IMAGE_STORE_BACKGROUNDNIGHT, 0, 0);
     }
@@ -438,17 +438,17 @@ void StoreScreen::Draw(Graphics* g)
     {
         g->DrawImage(Sexy::IMAGE_STORE_CAR, mShakeX + 196, mShakeY + 138);
         g->DrawImage(Sexy::IMAGE_STORE_HATCHBACKOPEN, mShakeX + 299, mShakeY);
-        if (mApp->IsNight())
+        if (mApp->mBoard != nullptr && mApp->mBoard->StageIsNight())
         {
-            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 688, mShakeY + 193);
+            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 668, mShakeY + 193);
         }
     }
     else
     {
         g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED, mShakeX + 196, mShakeY + 138);
-        if (mApp->IsNight())
+        if (mApp->mBoard != nullptr && mApp->mBoard->StageIsNight())
         {
-            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 688, mShakeY + 193);
+            g->DrawImage(Sexy::IMAGE_STORE_CAR_NIGHT, mShakeX + 668, mShakeY + 193);
             g->DrawImage(Sexy::IMAGE_STORE_CARCLOSED_NIGHT, mShakeX + 337, mShakeY + 187);
         }
     }
