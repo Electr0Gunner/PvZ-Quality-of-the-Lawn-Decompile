@@ -180,7 +180,6 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mSlider->mHorizontal = false;
 	mSlider->Resize(770, 85, 20, 470);
-	mSlider->mVisible = true;
 	mSlider->mThumbOffsetX = -4;
 
 	mApp->mDetails = "In the Challenge Screen";
