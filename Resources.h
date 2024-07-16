@@ -96,7 +96,6 @@ namespace Sexy
 	bool ExtractDelayLoad_ChallengeScreenResources(ResourceManager *theMgr);
 	extern Image* IMAGE_CHALLENGE_BACKGROUND;
 	extern Image* IMAGE_CHALLENGE_BLANK;
-	extern Image* IMAGE_CHALLENGE_BUTTONS;
 	extern Image* IMAGE_CHALLENGE_THUMBNAILS;
 	extern Image* IMAGE_CHALLENGE_WINDOW;
 	extern Image* IMAGE_CHALLENGE_WINDOW_HIGHLIGHT;

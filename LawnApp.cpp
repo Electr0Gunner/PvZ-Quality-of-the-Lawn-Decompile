@@ -42,6 +42,7 @@
 #include "Lawn/Widget/ChallengeScreen.h"
 #include "Lawn/Widget/NewOptionsDialog.h"
 #include "Lawn/Widget/SeedChooserScreen.h"
+#include "Lawn/Widget/ChallengePagesDialog.h"
 #include "SexyAppFramework/WidgetManager.h"
 #include "SexyAppFramework/ResourceManager.h"
 #include "Lawn/Achievements.h"
@@ -126,7 +127,7 @@ LawnApp::LawnApp()
 	mDebugKeysEnabled = false;
 	isFastMode = false;
 	mProdName = "PlantsVsZombies";
-	mVersion = "v1.6.3";
+	mVersion = "v1.7";
 	mReconVersion = "PvZ: QoTL " + mVersion;
 	std::string aTitleName = "Plants vs. Zombies: QoTL";
 	aTitleName += " " + mVersion;
@@ -453,9 +454,8 @@ void LawnApp::PreNewGame(GameMode theGameMode, bool theLookForSavedGame)
 
 void LawnApp::StartQuickPlay()
 {
-	mGameMode = GameMode::GAMEMODE_ADVENTURE;
 	mPlayedQuickplay = true;
-	NewGame(true);
+	NewGame();
 }
 
 void LawnApp::MakeNewBoard()
@@ -501,12 +501,12 @@ bool LawnApp::TryLoadGame()
 	return false;
 }
 
-void LawnApp::NewGame(bool isQuickPlay)
+void LawnApp::NewGame()
 {
 	mFirstTimeGameSelector = false;
 
 	MakeNewBoard();
-	mBoard->InitLevel(isQuickPlay);
+	mBoard->InitLevel();
 	mBoardResult = BoardResult::BOARDRESULT_NONE;
 	mGameScene = GameScenes::SCENE_LEVEL_INTRO;
 
@@ -723,7 +723,7 @@ void LawnApp::EndLevel()
 	mFirstTimeGameSelector = true;
 
 	MakeNewBoard();
-	mBoard->InitLevel(mPlayedQuickplay);
+	mBoard->InitLevel();
 	mBoardResult = BoardResult::BOARDRESULT_NONE;
 	mGameScene = GameScenes::SCENE_LEVEL_INTRO;
 	ShowSeedChooserScreen();
@@ -1158,6 +1158,19 @@ void LawnApp::FinishTimesUpDialog()
 	KillDialog(Dialogs::DIALOG_TIMESUP);
 }
 
+void LawnApp::DoChallengePagesDialog()
+{
+	if (mChallengeScreen == nullptr)
+		return;
+
+	KillDialog(Dialogs::DIALOG_CHALLENGE_PAGES);
+
+	ChallengePagesDialog* aDialog = new ChallengePagesDialog(this);
+	CenterDialog(aDialog, aDialog->mWidth, aDialog->mHeight);
+	AddDialog(Dialogs::DIALOG_CHALLENGE_PAGES, aDialog);
+	mWidgetManager->SetFocus(aDialog);
+}
+
 void LawnApp::DoConfirmSellDialog(const SexyString& theMessage)
 {
 	Dialog* aConfirmDialog = DoDialog(Dialogs::DIALOG_ZEN_SELL, true, _S("[ZEN_SELL_HEADER]"), theMessage, _S(""), Dialog::BUTTONS_YES_NO);
@@ -1272,6 +1285,8 @@ bool LawnApp::KillDialog(int theDialogId)
 				mWidgetManager->SetFocus(mBoard);
 			else if (mGameSelector)
 				mWidgetManager->SetFocus(mGameSelector);
+			else if (mChallengeScreen)
+				mWidgetManager->SetFocus(mChallengeScreen);
 		}
 
 		if (mBoard && !NeedPauseGame())

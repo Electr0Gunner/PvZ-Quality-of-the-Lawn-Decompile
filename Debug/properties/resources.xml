@@ -688,7 +688,6 @@
 <Image id="CHALLENGE_WINDOW_HIGHLIGHT" path="Challenge_Window_Highlight" />
 <Image id="CHALLENGE_BLANK" path="Challenge_Blank" />
 <Image id="CHALLENGE_THUMBNAILS" path="Challenge_Thumbnails" cols="22" />
-<Image id="CHALLENGE_BUTTONS" path="Challenge_Page_Holder" />
 <Image id="SURVIVAL_THUMBNAILS" path="Survival_Thumbnails" cols="11" />
 <Image id="LOCK" path="lock" />
 <Image id="LOCK_OPEN" path="lock_open" />
@@ -712,7 +711,6 @@
 <Image id="ACHIEVEMENT_PIPE" path="achievementEasterEggs/acheesements_pipe" />
 <Image id="ACHIEVEMENT_ZUMA" path="achievementEasterEggs/acheesements_zuma" />
 </Resources>  
-
 
 <Resources id="DelayLoad_QuickPlay">
 <SetDefaults path="images" idprefix="IMAGE_" />

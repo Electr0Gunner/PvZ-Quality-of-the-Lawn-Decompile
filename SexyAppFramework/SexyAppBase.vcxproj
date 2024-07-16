@@ -128,6 +128,7 @@
     <ClCompile Include="..\Lawn\Widget\AchievementScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\AlmanacDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\AwardScreen.cpp" />
+    <ClCompile Include="..\Lawn\Widget\ChallengePagesDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\ChallengeScreen.cpp" />
     <ClCompile Include="..\Lawn\Widget\CheatDialog.cpp" />
     <ClCompile Include="..\Lawn\Widget\ContinueDialog.cpp" />
@@ -694,6 +695,7 @@
     <ClInclude Include="..\Lawn\Widget\AchievementScreen.h" />
     <ClInclude Include="..\Lawn\Widget\AlmanacDialog.h" />
     <ClInclude Include="..\Lawn\Widget\AwardScreen.h" />
+    <ClInclude Include="..\Lawn\Widget\ChallengePagesDialog.h" />
     <ClInclude Include="..\Lawn\Widget\ChallengeScreen.h" />
     <ClInclude Include="..\Lawn\Widget\CheatDialog.h" />
     <ClInclude Include="..\Lawn\Widget\ContinueDialog.h" />

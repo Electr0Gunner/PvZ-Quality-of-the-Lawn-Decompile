@@ -241,7 +241,7 @@ public:
 	inline bool						SyncState(DataSync& theDataSync) { return true; }
 	/*inline*/ void					SaveGame(const std::string& theFileName);
 	bool							LoadGame(const std::string& theFileName);
-	void							InitLevel(bool isQuickPlay = false);
+	void							InitLevel();
 	void							DisplayAdvice(const SexyString& theAdvice, MessageStyle theMessageStyle, AdviceType theHelpIndex);
 	void							StartLevel();
 	Plant*							AddPlant(int theGridX, int theGridY, SeedType theSeedType, SeedType theImitaterType = SeedType::SEED_NONE);

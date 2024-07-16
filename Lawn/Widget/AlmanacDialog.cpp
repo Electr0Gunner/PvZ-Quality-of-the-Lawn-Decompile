@@ -107,6 +107,7 @@ AlmanacDialog::AlmanacDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_ALMANA
 	mZombieSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mZombieSlider->mHorizontal = false;
 	mZombieSlider->Resize(10, 85, 20, 470);
+	mZombieSlider->mThumbOffsetX = -1;
 	mZombieSlider->mVisible = false;
 
 	SetPage(ALMANAC_PAGE_INDEX);

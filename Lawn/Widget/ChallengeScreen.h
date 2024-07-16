@@ -22,19 +22,17 @@ class ChallengeScreen : public Widget, public ButtonListener, public Sexy::Slide
 private:
     enum
     {
-        ChallengeScreen_Back = 100,
-        ChallengeScreen_Mode = 200,
-        ChallengeScreen_Page = 300,
-        ChallengeScreen_Dropper = 400,
+        ChallengeScreen_Back,
+        ChallengeScreen_Selector,
+        ChallengeScreen_Mode = 100
     };
 
 public:
     NewLawnButton*              mBackButton;                                
-    ButtonWidget*               mPageButtons[MAX_CHALLANGE_PAGES];           
+    NewLawnButton*              mChallengesButton;
     ButtonWidget*               mChallengeButtons[NUM_CHALLENGE_MODES];     
     LawnApp*                    mApp;                                       
     ToolTipWidget*              mToolTip;                                   
-    NewLawnButton*              mPageDropper;
     ChallengePage               mPageIndex;                                 
     bool                        mCheatEnableChallenges;                     
     UnlockingState              mUnlockState;                               
@@ -47,8 +45,7 @@ public:
     const float					mBaseScrollSpeed = 1.0f;
     const float					mScrollAccel = 0.1f;
     float						mMaxScrollPosition;
-    bool						mShowPages;
-    Sexy::Slider* mSlider;
+    Sexy::Slider*               mSlider;
 
 public:
     ChallengeScreen(LawnApp* theApp, ChallengePage thePage);
@@ -69,6 +66,8 @@ public:
     virtual void                KeyChar(char theChar) { ; }
     void                        SliderVal(int theId, double theVal);
     virtual void			    MouseWheel(int theDelta);
+    SexyString                  GetPageTitle(ChallengePage thePage);
+    bool                        IsPageUnlocked(ChallengePage thePage);
 
     /*inline*/ bool             IsScaryPotterLevel(GameMode theGameMode);
     /*inline*/ bool             IsIZombieLevel(GameMode theGameMode);

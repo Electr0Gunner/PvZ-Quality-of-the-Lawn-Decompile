@@ -10,7 +10,7 @@
 
 static Color gGameButtonColors[6] = { Color(0, 0, 0), Color(0, 0, 0), Color(0, 0, 0), Color(255, 255, 255), Color(132, 132, 132), Color(212, 212, 212) };
 
-void DrawStoneButton(Graphics* g, int x, int y, int theWidth, int theHeight, bool isDown, bool isHighLighted, const SexyString& theLabel)
+void DrawStoneButton(Graphics* g, int x, int y, int theWidth, int theHeight, bool isDown, bool isHighLighted, const SexyString& theLabel, int theBrightness)
 {
 	Image* aLeftImage = Sexy::IMAGE_BUTTON_LEFT;
 	Image* aMiddleImage = Sexy::IMAGE_BUTTON_MIDDLE;
@@ -27,23 +27,35 @@ void DrawStoneButton(Graphics* g, int x, int y, int theWidth, int theHeight, boo
 		aFontY++;
 		aImageX++;
 	}
-
-	int aRepeat = (theWidth - aLeftImage->mWidth - aRightImage->mWidth) / aMiddleImage->mWidth;
+	int aLeftWidth = aLeftImage->mWidth;
+	int aRightWidth = aRightImage->mWidth;
+	int aMiddleWidth = aMiddleImage->mWidth;
+	Color aOldColor = g->mColor;
+	g->SetColorizeImages(true);
+	g->SetColor(Color(theBrightness, theBrightness, theBrightness));
 	g->DrawImage(aLeftImage, aImageX, y);
-	aImageX += aLeftImage->mWidth;
-	while (aRepeat > 0)
+	aImageX += aLeftWidth;
+	int aRepeat = (theWidth - aLeftWidth - aRightWidth) / aMiddleWidth;
+	for (int i = 0; i < aRepeat; ++i)
 	{
 		g->DrawImage(aMiddleImage, aImageX, y);
-		aImageX += aMiddleImage->mWidth;
-		--aRepeat;
+		aImageX += aMiddleWidth;
+	}
+	int aRemainingWidth = theWidth - aLeftWidth - aRightWidth - aRepeat * aMiddleWidth;
+	if (aRemainingWidth > 0)
+	{
+		g->DrawImage(aMiddleImage, aImageX, y, aRemainingWidth, aMiddleImage->mHeight);
+		aImageX += aRemainingWidth;
 	}
 	g->DrawImage(aRightImage, aImageX, y);
-
 	g->SetFont(isHighLighted ? Sexy::FONT_DWARVENTODCRAFT18BRIGHTGREENINSET : Sexy::FONT_DWARVENTODCRAFT18GREENINSET);
-	aFontX += (theWidth - Sexy::FONT_DWARVENTODCRAFT18GREENINSET->StringWidth(theLabel)) / 2 + 1;
-	aFontY += (theHeight - Sexy::FONT_DWARVENTODCRAFT18GREENINSET->GetAscent() / 6 - 1 + Sexy::FONT_DWARVENTODCRAFT18GREENINSET->GetAscent()) / 2 - 4;
-	g->SetColor(Color::White);
+	int aLabelWidth = Sexy::FONT_DWARVENTODCRAFT18GREENINSET->StringWidth(theLabel);
+	int aLabelAscent = Sexy::FONT_DWARVENTODCRAFT18GREENINSET->GetAscent();
+	aFontX += (theWidth - aLabelWidth) / 2 + 1;
+	aFontY += (theHeight - aLabelAscent / 6 - 1 + aLabelAscent) / 2 - 4;
 	g->DrawString(theLabel, aFontX, aFontY);
+	g->SetColor(aOldColor);
+	g->SetColorizeImages(false);
 }
 
 GameButton::GameButton(int theId)

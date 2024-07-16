@@ -1308,22 +1308,23 @@ void Board::GetZenButtonRect(GameObjectType theObjectType, Rect& theRect)
 	//return theRect;
 }
 
-void Board::InitLevel(bool isQuickPlay)
+void Board::InitLevel()
 {
 	mMainCounter = 0;
 	mEnableGraveStones = false;
 	mSodPosition = 0;
 	mPrevBoardResult = mApp->mBoardResult;
-	
+	if (mApp->mPlayedQuickplay)
+	{
+		mApp->mGameMode = GameMode::GAMEMODE_ADVENTURE;
+		mLevel = mApp->mQuickLevel;
+	}
+	else
+		mLevel = mApp->IsAdventureMode() ? mApp->mPlayerInfo->mLevel : 0;
 	GameMode aGameMode = mApp->mGameMode;
 	if (aGameMode != GameMode::GAMEMODE_TREE_OF_WISDOM && aGameMode != GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
 	{
 		mApp->mMusic->StopAllMusic();
-	}
-	mLevel = mApp->IsAdventureMode() ? mApp->mPlayerInfo->mLevel : 0;
-	if (isQuickPlay)
-	{
-		mLevel = mApp->mQuickLevel;
 	}
 	PickBackground();
 	InitZombieWaves();

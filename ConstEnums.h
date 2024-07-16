@@ -146,12 +146,11 @@ enum BossPart
 };
 enum ChallengePage
 {
-
-    CHALLENGE_PAGE_CHALLENGE = 0,
-    CHALLENGE_PAGE_PUZZLE = 1,
-    CHALLENGE_PAGE_SURVIVAL = 2,
-    CHALLENGE_PAGE_LIMBO = 3,
-    MAX_CHALLANGE_PAGES = 4
+    CHALLENGE_PAGE_CHALLENGE,
+    CHALLENGE_PAGE_PUZZLE,
+    CHALLENGE_PAGE_SURVIVAL,
+    CHALLENGE_PAGE_LIMBO,
+    MAX_CHALLENGE_PAGES
 };
 enum ChallengeState
 {
@@ -323,7 +322,8 @@ enum Dialogs
     DIALOG_ZEN_SELL,                            
     DIALOG_MESSAGE,                             
     DIALOG_IMITATER,                            
-    DIALOG_PURCHASE_PACKET_SLOT,                
+    DIALOG_PURCHASE_PACKET_SLOT,
+    DIALOG_CHALLENGE_PAGES,
     NUM_DIALOGS
 };
 enum DebugTextMode
