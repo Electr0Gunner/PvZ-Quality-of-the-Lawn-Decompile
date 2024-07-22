@@ -238,11 +238,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 		this,
 		"",
 		nullptr,
-		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON,
-		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT,
-		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_HIGHLIGHT
+		Sexy::IMAGE_ACHIEVEMENT_BUTTON,
+		Sexy::IMAGE_ACHIEVEMENT_HIGHLIGHT,
+		Sexy::IMAGE_ACHIEVEMENT_HIGHLIGHT
 	);
-	mAchievementButton->Resize(20, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight - 35, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mWidth, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENT_BUTTON->mHeight);
+	mAchievementButton->Resize(20, mApp->mHeight - Sexy::IMAGE_ACHIEVEMENT_BUTTON->mHeight - 35, Sexy::IMAGE_ACHIEVEMENT_BUTTON->mWidth, Sexy::IMAGE_ACHIEVEMENT_BUTTON->mHeight);
 	mAchievementButton->mClip = false;
 	mAchievementButton->mMouseVisible = false;
 
@@ -251,11 +251,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 		this,
 		"",
 		nullptr,
-		Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON,
-		Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON_HIGHLIGHT,
-		Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON_HIGHLIGHT
+		Sexy::IMAGE_QUICKPLAY_BUTTON,
+		Sexy::IMAGE_QUICKPLAY_BUTTON_HIGHLIGHT,
+		Sexy::IMAGE_QUICKPLAY_BUTTON_HIGHLIGHT
 	);
-	mQuickPlayButton->Resize(300, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON->mHeight - 100, Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON->mWidth, Sexy::IMAGE_SELECTORSCREEN_QUICKPLAY_BUTTON->mHeight);
+	mQuickPlayButton->Resize(300, mApp->mHeight - Sexy::IMAGE_QUICKPLAY_BUTTON->mHeight - 100, Sexy::IMAGE_QUICKPLAY_BUTTON->mWidth, Sexy::IMAGE_QUICKPLAY_BUTTON->mHeight);
 	mQuickPlayButton->mClip = false;
 	mQuickPlayButton->mMouseVisible = false;
 	mQuickPlayButton->SetDisabled(false);
@@ -832,6 +832,7 @@ void GameSelector::Update()
 		mHelpButton->MarkDirty();
 		mQuitButton->MarkDirty();
 		mStoreButton->MarkDirty();
+
 
 		mMovementTimer--;
 	}

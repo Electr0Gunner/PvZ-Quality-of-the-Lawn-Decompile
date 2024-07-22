@@ -80,7 +80,7 @@ void ToolTipWidget::CalculateSize()
 	int aHeight = 6;
 	if (!mTitle.empty())
 	{
-		aHeight = FONT_BRIANNETOD12->GetAscent() + 8;
+		aHeight = FONT_BRIANNETOD16->GetAscent() + 8;
 	}
 	if (!mWarningText.empty())
 	{
@@ -147,9 +147,9 @@ void ToolTipWidget::Draw(Graphics* g)
 
 	if (!mTitle.empty())
 	{
-		g->SetFont(FONT_BRIANNETOD12);
-		g->DrawString(mTitle, aPosX + (mWidth - FONT_BRIANNETOD12->StringWidth(mTitle)) / 2, aPosY + FONT_BRIANNETOD12->GetAscent());
-		aPosY += FONT_BRIANNETOD12->GetAscent() + 2;
+		g->SetFont(FONT_BRIANNETOD16);
+		g->DrawString(mTitle, aPosX + (mWidth - FONT_BRIANNETOD16->StringWidth(mTitle)) / 2, aPosY + FONT_BRIANNETOD16->GetAscent());
+		aPosY += FONT_BRIANNETOD16->GetAscent() + 2;
 	}
 
 	if (!mWarningText.empty())

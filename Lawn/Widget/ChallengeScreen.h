@@ -46,6 +46,8 @@ public:
     const float					mScrollAccel = 0.1f;
     float						mMaxScrollPosition;
     Sexy::Slider*               mSlider;
+    int                         mButtonYOffset;
+    int                         mButtonStartYOffset;
 
 public:
     ChallengeScreen(LawnApp* theApp, ChallengePage thePage);
