@@ -39,7 +39,7 @@ Achievements::Achievements(LawnApp* theApp)
 }
 void Achievements::GiveAchievement(AchievementType theAchivementType)
 {
-	if (!mApp || !mApp->mPlayerInfo || mApp->mPlayerInfo->mEarnedAchievements[theAchivementType])
+	if (!mApp || !mApp->mPlayerInfo || mApp->mPlayerInfo->mEarnedAchievements[theAchivementType] || !HAS_ACHIEVEMENTS)
 		return;
 
 	mApp->mPlayerInfo->mEarnedAchievements[theAchivementType] = true;
@@ -55,7 +55,7 @@ void Achievements::GiveAchievement(AchievementType theAchivementType)
 
 void Achievements::InitAchievement()
 {
-	if (!mApp || !mApp->mPlayerInfo)
+	if (!mApp || !mApp->mPlayerInfo || !HAS_ACHIEVEMENTS)
 		return;
 
 	if (mApp->HasFinishedAdventure()) {
