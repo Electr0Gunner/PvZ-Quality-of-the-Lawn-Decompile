@@ -1206,7 +1206,7 @@ bool LawnApp::KillNewOptionsDialog()
 	NewOptionsDialog* aNewOptionsDialog = (NewOptionsDialog*)GetDialog(Dialogs::DIALOG_NEWOPTIONS);
 	if (aNewOptionsDialog == nullptr)
 		return false;
-
+	bool want3D = aNewOptionsDialog->mRealHardwareAccelerationCheckbox->IsChecked();
 	if (aNewOptionsDialog->mAdvancedMode)
 	{
 		mDiscordPresence = aNewOptionsDialog->mDiscordBox->IsChecked();
@@ -1218,12 +1218,14 @@ bool LawnApp::KillNewOptionsDialog()
 		mZombieHealthbars = aNewOptionsDialog->mZombieHealthbarsBox->IsChecked();
 		mPlantHealthbars = aNewOptionsDialog->mPlantHealthbarsBox->IsChecked();
 		ToggleDebugMode();
+		bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
+		SwitchScreenMode(wantWindowed, want3D, false);
 	}
 	else
 	{
 		bool wantWindowed = !aNewOptionsDialog->mFullscreenCheckbox->IsChecked();
-		bool want3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
-		mIs3dAccel = want3D;
+		bool wantFake3D = aNewOptionsDialog->mHardwareAccelerationCheckbox->IsChecked();
+		mIs3dAccel = wantFake3D;
 		SwitchScreenMode(wantWindowed, want3D, false);
 	}
 
