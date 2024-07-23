@@ -640,7 +640,8 @@ void ChallengeScreen::AddedToManager(WidgetManager* theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
 	AddWidget(mBackButton);
-	AddWidget(mChallengesButton);
+	if (HAS_PAGE_SELECTOR)
+		AddWidget(mChallengesButton);
 	for (ButtonWidget* aButton : mChallengeButtons) AddWidget(aButton);
 	AddWidget(mSlider);
 }
@@ -649,7 +650,8 @@ void ChallengeScreen::RemovedFromManager(WidgetManager* theWidgetManager)
 {
 	Widget::RemovedFromManager(theWidgetManager);
 	RemoveWidget(mBackButton);
-	RemoveWidget(mChallengesButton);
+	if (HAS_PAGE_SELECTOR)
+		RemoveWidget(mChallengesButton);
 	for (ButtonWidget* aButton : mChallengeButtons) RemoveWidget(aButton);
 	RemoveWidget(mSlider);
 }
