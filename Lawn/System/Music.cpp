@@ -116,9 +116,9 @@ void Music::SetupMusicFileForTune(MusicFile theMusicFile, MusicTune theMusicTune
 		} break;
 	case MusicTune::MUSIC_TUNE_FOG_RIGORMORMIST:
 		switch (theMusicFile) {
-		case MusicFile::MUSIC_FILE_MAIN_MUSIC:		aTrackCount = 29;	aTrackStart1 = 0;	aTrackEnd1 = 15;											break;
-		case MusicFile::MUSIC_FILE_HIHATS:			aTrackCount = 29;	aTrackStart1 = 23;	aTrackEnd1 = 23;											break;
-		case MusicFile::MUSIC_FILE_DRUMS:			aTrackCount = 29;	aTrackStart1 = 16;	aTrackEnd1 = 22;											break;
+		case MusicFile::MUSIC_FILE_MAIN_MUSIC:		aTrackCount = 30;	aTrackStart1 = 0;	aTrackEnd1 = 15;											break;
+		case MusicFile::MUSIC_FILE_HIHATS:			aTrackCount = 30;	aTrackStart1 = 23;	aTrackEnd1 = 23;											break;
+		case MusicFile::MUSIC_FILE_DRUMS:			aTrackCount = 30;	aTrackStart1 = 16;	aTrackEnd1 = 22;											break;
 		} break;
 	case MusicTune::MUSIC_TUNE_ROOF_GRAZETHEROOF:
 		switch (theMusicFile) {
