@@ -16,12 +16,17 @@
 #include "../../Sexy.TodLib/TodCommon.h"
 #include "../../Sexy.TodLib/TodStringFile.h"
 
+const Rect cAchievementClipRect = Rect(0, 95, BOARD_WIDTH, 405);
+
 AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchievement)
 {
     mApp = theApp;
     mClip = false;
     mFadeInCounter = 180;
     mAchievementCounter = 360;
+    mScrollAmount = 0;
+    mScrollPosition = 0;
+    mMaxScrollPosition = 0;
 
     mAwardType = theAwardType;
     mShowAchievements = hasAchievement;
@@ -175,21 +180,34 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchiev
 
     mWasDrawn = mMenuButton->mBtnNoDraw;
     mApp->mDetails = "In the Award Screen";
+    if (!mShowAchievements)
+        StartSounds();
+
+    mSlider = new Sexy::Slider(IMAGE_OPTIONS_SLIDERSLOT_PLANT, IMAGE_OPTIONS_SLIDERKNOB_PLANT, AwardScreen::AwardScreen_Slider, this);
+    mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
+    mSlider->mHorizontal = false;
+    mSlider->Resize(180, cAchievementClipRect.mY, 20, cAchievementClipRect.mHeight);
+    mSlider->mThumbOffsetX = -5;
+    mSlider->mNoDraw = true;
 }
 
 AwardScreen::~AwardScreen()
 {
     if (mStartButton) delete mStartButton;
     if (mMenuButton) delete mMenuButton;
+    delete mSlider;
     mApp->UpdateDiscordState();
 }
 
 void AwardScreen::LoadAchievements()
 {
     TodLoadResources("DelayLoad_ChallengeScreen");
-    if (mShowAchievements) {
-        for (int i = 0; i < NUM_ACHIEVEMENTS; i++) {
-            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievements->ReturnShowInAwards(i)) {
+    if (mShowAchievements)
+    {
+        for (int i = 0; i < NUM_ACHIEVEMENTS; i++)
+        {
+            if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievements->ReturnShowInAwards(i))
+            {
                 mShowAchievements = true;
                 break;
             }
@@ -267,7 +285,7 @@ void AwardScreen::Draw(Graphics* g)
             if (mApp->EarnedGoldTrophy())
             {
                 DrawBottom(g, _S("[BEAT_GAME_MESSAGE1]"), _S("[GOLD_SUNFLOWER_TROPHY]"), _S("[BEAT_GAME_MESSAGE2]"));
-                TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 330, 80, 1, 0.7f, 0.7f);
+                TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 325, 65, 1, 0.6f, 0.6f);
             }
             else
             {
@@ -359,7 +377,7 @@ void AwardScreen::Draw(Graphics* g)
         else if (aLevel == 1 && mApp->HasFinishedAdventure())
         {
             DrawBottom(g, _S("[WIN_MESSAGE1]"), _S("[SILVER_SUNFLOWER_TROPHY]"), _S("[WIN_MESSAGE2]"));
-            TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 325, 65, 0, 0.7f, 0.7f);
+            TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 325, 65, 0, 0.6f, 0.6f);
         }
         else
         {
@@ -374,22 +392,31 @@ void AwardScreen::Draw(Graphics* g)
         SexyString aTitleString = _S("ACHIEVEMENTS");
         TodDrawString(g, aTitleString, 400, 58, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DS_ALIGN_CENTER);
         mMenuButton->mBtnNoDraw = true;
-        int yPosIndex = 0;
+        g->SetClipRect(cAchievementClipRect);
+        int totalShown = 0;
+        int maxScroll = 0;
         for (int i = 0; i < NUM_ACHIEVEMENTS; i++)
         {
             if (mApp->mPlayerInfo->mEarnedAchievements[i] && !mApp->mPlayerInfo->mShownedAchievements[i] && mApp->mAchievements->ReturnShowInAwards(i)) 
             {
-                yPosIndex++;
+                totalShown++;
                 SexyString aAchievementName = StrFormat(_S("[ACHIEVEMENT_%s_TITLE]"), mApp->mAchievements->ReturnAchievementName(i).c_str());
                 SexyString aAchievementDesc = StrFormat(_S("[ACHIEVEMENT_%s_DESCRIPTION]"), mApp->mAchievements->ReturnAchievementName(i).c_str());
-                int yPos = TodAnimateCurve(200, 0, mAchievementCounter, BOARD_HEIGHT + 50, 90 + (yPosIndex * 100), TodCurves::CURVE_EASE_IN_OUT);
-
-                TodDrawString(g, aAchievementName, 150, yPos + 20, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
-                //TodDrawString(g, aAchievementDesc, 150, yPos + 50, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 255, 255, 255), DS_ALIGN_LEFT);
-                TodDrawStringWrapped(g, aAchievementDesc, Rect(150, yPos + 30, 258, 230), Sexy::FONT_DWARVENTODCRAFT12, Color(255, 255, 255), DS_ALIGN_LEFT);
-                g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, 60, yPos, i);
+                Rect textRect = Rect(80, 30, 320, 230);
+                int xPos = BOARD_WIDTH / 2 - textRect.mWidth / 2 - 35;
+                int offset = 75;
+                int yPos = 20 + (totalShown * offset) - mScrollPosition;
+                textRect.mX += xPos;
+                textRect.mY += yPos - 2;
+                g->DrawImageCel(Sexy::IMAGE_ACHIEVEMENTS_PORTRAITS, xPos, yPos, i);
+                TodDrawString(g, aAchievementName, textRect.mX, yPos + 23, Sexy::FONT_DWARVENTODCRAFT24, Color(255, 200, 0, 255), DS_ALIGN_LEFT);
+                TodDrawStringWrapped(g, aAchievementDesc, textRect, Sexy::FONT_DWARVENTODCRAFT12, Color(255, 255, 255), DS_ALIGN_LEFT);
+                maxScroll += offset;
             }
         }
+        mMaxScrollPosition = max(0, maxScroll - cAchievementClipRect.mHeight - 5);
+        g->ClearClipRect();
+        mSlider->SliderDraw(g);
 
     }
     else
@@ -432,6 +459,8 @@ void AwardScreen::Update()
 {
     Widget::Update();
     if (mApp->GetDialogCount() > 0) return;
+    if (!(mSlider->mIsOver || mSlider->mDragging))
+        mApp->SetCursor(mStartButton->IsMouseOver() || mMenuButton->IsMouseOver() ? CURSOR_HAND : CURSOR_POINTER);
     mStartButton->Update();
     mMenuButton->Update();
     mApp->SetCursor(mStartButton->IsMouseOver() || mMenuButton->IsMouseOver() ? CURSOR_HAND : CURSOR_POINTER);
@@ -439,6 +468,23 @@ void AwardScreen::Update()
     if (mFadeInCounter > 0) mFadeInCounter--;
     if (mAchievementCounter > 0) mAchievementCounter--;
     mApp->UpdateDiscordState(mState);
+    mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * (mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel), 0, mMaxScrollPosition);
+    mScrollAmount *= (1.0f - mScrollAccel);
+    mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
+    mSlider->mVisible = mMaxScrollPosition != 0 && mShowAchievements;
+    MarkDirty();
+}
+
+void AwardScreen::AddedToManager(WidgetManager* theWidgetManager)
+{
+    Widget::AddedToManager(theWidgetManager);
+    AddWidget(mSlider);
+}
+
+void AwardScreen::RemovedFromManager(WidgetManager* theWidgetManager)
+{
+    Widget::RemovedFromManager(theWidgetManager);
+    RemoveWidget(mSlider);
 }
 
 void AwardScreen::KeyChar(char theChar)
@@ -456,7 +502,7 @@ void AwardScreen::ExitScreen()
         mApp->ShowGameSelector();
         return;
     }
-    if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
+    else if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
     {
         mApp->KillAwardScreen();
         mApp->ShowCreditScreen();
@@ -570,6 +616,8 @@ void AwardScreen::StartButtonPressed()
         {
             ExitScreen();
         }
+        else
+            StartSounds();
         return;
     }
     ExitScreen();
@@ -599,4 +647,36 @@ void AwardScreen::MouseUp(int x, int y, int theClickCount)
             
         }
     }
+}
+
+void AwardScreen::SliderVal(int theId, double theVal)
+{
+    if (!mShowAchievements)
+        return;
+    switch (theId)
+    {
+    case AwardScreen::AwardScreen_Slider:
+        mScrollPosition = theVal * mMaxScrollPosition;
+        break;
+    }
+}
+
+void AwardScreen::MouseWheel(int theDelta)
+{
+    if (!mShowAchievements)
+        return;
+    mScrollAmount -= mBaseScrollSpeed * theDelta;
+    mScrollAmount -= mScrollAmount * mScrollAccel;
+}
+
+void AwardScreen::StartSounds()
+{
+    if (IsPaperNote())
+    {
+        mApp->mMusic->StopAllMusic();
+        mStartButton->mY += 20;
+        mApp->PlayFoley(FOLEY_PAPER);
+    }
+    else
+        mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_ZEN_GARDEN);
 }

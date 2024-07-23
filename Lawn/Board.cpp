@@ -7767,6 +7767,12 @@ void Board::KeyChar(SexyChar theChar)
 
 	TodTraceAndLog("Board cheat key '%c'", theChar);
 
+	if (theChar == _S('u'))
+	{
+		for (int i = 0; i < NUM_ACHIEVEMENTS; i++)
+			mApp->GetAchievement((AchievementType)i);
+	}
+
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
 	{
 		if (theChar == _S('m'))

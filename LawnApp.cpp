@@ -757,8 +757,6 @@ void LawnApp::DoConfirmBackToMain()
 
 void LawnApp::DoNewOptions(bool theFromGameSelector, int x, int y)
 {
-	//FinishModelessDialogs();
-	mCursor->mCursorMode = CURSOR_MODE_NORMAL;
 	NewOptionsDialog* aDialog = new NewOptionsDialog(this, theFromGameSelector, false);
 	CenterDialog(aDialog, IMAGE_OPTIONS_MENUBACK->mWidth, IMAGE_OPTIONS_MENUBACK->mHeight);
 	if (x != -1 && y != -1)
@@ -769,8 +767,6 @@ void LawnApp::DoNewOptions(bool theFromGameSelector, int x, int y)
 
 void LawnApp::DoAdvancedOptions(bool theFromGameSelector, int x, int y)
 {
-	//FinishModelessDialogs();
-
 	NewOptionsDialog* aDialog = new NewOptionsDialog(this, theFromGameSelector, true);
 	CenterDialog(aDialog, IMAGE_OPTIONS_MENUBACK->mWidth, IMAGE_OPTIONS_MENUBACK->mHeight);
 	aDialog->Resize(x, y, aDialog->mWidth, aDialog->mHeight);
@@ -815,7 +811,6 @@ void LawnApp::DoPauseDialog()
 {
 	mBoard->Pause(true);
 	//FinishModelessDialogs();
-	mCursor->mCursorMode = CURSOR_MODE_NORMAL;
 	LawnDialog* aDialog = (LawnDialog*)DoDialog(
 		Dialogs::DIALOG_PAUSED,
 		true,
@@ -858,7 +853,7 @@ Dialog* LawnApp::DoDialog(int theDialogId, bool isModal, const SexyString& theDi
 	SexyString aHeader = TodStringTranslate(theDialogHeader);
 	SexyString aLines = TodStringTranslate(theDialogLines);
 	SexyString aFooter = TodStringTranslate(theDialogFooter);
-
+	SetCursorMode(CURSOR_MODE_NORMAL);
 	Dialog* aDialog = SexyAppBase::DoDialog(theDialogId, isModal, aHeader, aLines, aFooter, theButtonMode);
 	if (mWidgetManager->mFocusWidget == nullptr)
 	{

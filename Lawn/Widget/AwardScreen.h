@@ -3,29 +3,39 @@
 
 #include "../../ConstEnums.h"
 #include "../../SexyAppFramework/Widget.h"
+#include "../../SexyAppFramework/SliderListener.h"
+#include "../../SexyAppFramework/Slider.h"
+
 using namespace Sexy;
 
 class LawnApp;
 class GameButton;
-class AwardScreen : public Widget
+class AwardScreen : public Widget, public SliderListener
 {
 private:
 	enum
 	{
-		AwardScreen_Start = 100,
-		AwardScreen_Menu = 101
+		AwardScreen_Start,
+		AwardScreen_Menu,
+		AwardScreen_Slider
 	};
 
 public:
-	GameButton*			mStartButton;		
-	GameButton*			mMenuButton;		
-	LawnApp*			mApp;				
-	int					mFadeInCounter;		
+	GameButton* mStartButton;
+	GameButton* mMenuButton;
+	LawnApp* mApp;
+	int					mFadeInCounter;
 	int					mAchievementCounter;
-	AwardType			mAwardType;			
+	AwardType			mAwardType;
 	bool				mShowAchievements;
 	bool				mWasDrawn;
 	SexyString			mState;
+	Sexy::Slider* mSlider;
+	float				mScrollPosition;
+	float				mScrollAmount;
+	const float			mBaseScrollSpeed = 1.75f;
+	const float			mScrollAccel = 0.1f;
+	float				mMaxScrollPosition;
 
 public:
 	AwardScreen(LawnApp* theApp, AwardType theAwardType, bool hasAchievement);
@@ -33,18 +43,20 @@ public:
 
 	/*inline*/ bool		IsPaperNote();
 	void				LoadAchievements();
-	virtual void		Resize(int theX, int theY, int theWidth, int theHeight) { Widget::Resize(theX, theY, theWidth, theHeight); }
 	void				DrawBottom(Graphics* g, SexyString theTitle, SexyString theAward, SexyString theMessage);
 	void				DrawAwardSeed(Graphics* g);
 	virtual void		Draw(Graphics* g);
 	virtual void		Update();
-	virtual void		AddedToManager(WidgetManager* theWidgetManager) { Widget::AddedToManager(theWidgetManager); }
-	virtual void		RemovedFromManager(WidgetManager* theWidgetManager) { Widget::RemovedFromManager(theWidgetManager); }
+	virtual void		AddedToManager(WidgetManager* theWidgetManager);
+	virtual void		RemovedFromManager(WidgetManager* theWidgetManager);
 	virtual void		KeyChar(char theChar);
 	void				StartButtonPressed();
 	void				ExitScreen();
 	virtual void		MouseDown(int x, int y, int theClickCount);
 	virtual void		MouseUp(int x, int y, int theClickCount);
+	virtual void        SliderVal(int theId, double theVal);
+	virtual void		MouseWheel(int theDelta);
+	void				StartSounds();
 };
 
 #endif
