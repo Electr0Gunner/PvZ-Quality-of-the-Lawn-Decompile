@@ -52,3 +52,11 @@ const int           STORESCREEN_COINBANK_X = 650;
 const int           STORESCREEN_COINBANK_Y = 559;
 const int           STORESCREEN_PAGESTRING_X = 470;
 const int           STORESCREEN_PAGESTRING_Y = 500;
+
+
+////////////////////////////////////////////////////////////
+///						QOTL VARIABLES					 ///
+////////////////////////////////////////////////////////////
+
+const bool			HAS_QUICKPLAY = true;
+const bool			HAS_ACHIEVEMENTS = true;
