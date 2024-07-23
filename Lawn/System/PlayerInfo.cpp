@@ -68,6 +68,7 @@ void PlayerInfo::SyncDetails(DataSync& theSync)
 	theSync.SyncLong(mHasSeenUpsell);
 	theSync.SyncLong(mPlaceHolderPlayerStats);
 	theSync.SyncLong(mNumPottedPlants);
+	theSync.SyncLong(mNumPottedPlants);
 	
 	TOD_ASSERT(mNumPottedPlants <= MAX_POTTED_PLANTS);
 	for (int i = 0; i < mNumPottedPlants; i++)
@@ -102,8 +103,10 @@ void PlayerInfo::LoadDetails()
 	}
 	catch (DataReaderException&)
 	{
-		TodTrace("Failed to player data, resetting it\n");
+		TodTrace("Failed to get player data, resetting it\n");
+		TodErrorMessageBox("The save data is corrupted. \nResetting", _S("Error"));
 		Reset();
+		exit(0);
 	}
 }
 
