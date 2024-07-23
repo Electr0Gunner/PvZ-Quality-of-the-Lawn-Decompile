@@ -180,8 +180,9 @@ ChallengeScreen::ChallengeScreen(LawnApp* theApp, ChallengePage thePage)
 	mSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT_PLANT, IMAGE_OPTIONS_SLIDERKNOB_PLANT, 0, this);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)));
 	mSlider->mHorizontal = false;
-	mSlider->Resize(770, 85, 20, 470);
-	mSlider->mThumbOffsetX = -4;
+	mSlider->Resize(775, cChallengeRect.mY, 20, cChallengeRect.mHeight);
+	mSlider->mThumbOffsetX = -5;
+
 
 	mApp->mDetails = "In the Challenge Screen";
 }
@@ -371,14 +372,14 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 	ButtonWidget* aChallengeButton = mChallengeButtons[theChallengeIndex];
 	if (aChallengeButton->mVisible)
 	{
+		aChallengeButton->mMouseVisible = cChallengeRect.Contains(mWidgetManager->mLastMouseX, mWidgetManager->mLastMouseY);
 		ChallengeDefinition& aDef = GetChallengeDefinition(theChallengeIndex);
-		int offsetY = aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 125 : 93;
-		aChallengeButton->mX = 38 + aDef.mCol * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 157 : 155);
-		aChallengeButton->mY = offsetY + aDef.mRow * (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 145 : 119) - mScrollPosition;
-		int aPosX = aChallengeButton->mX;
-		int aPosY = aChallengeButton->mY;
+		aChallengeButton->mX = 38 + aDef.mCol * 155;
+		mButtonStartYOffset = cChallengeRect.mY + (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 34 : 2);
 		mButtonYOffset = cButtonHeight + (aDef.mPage == CHALLENGE_PAGE_SURVIVAL ? 30 : 2);
 		aChallengeButton->mY = mButtonStartYOffset + aDef.mRow * mButtonYOffset - mScrollPosition;
+		int aPosX = aChallengeButton->mX;
+		int aPosY = aChallengeButton->mY;
 		if (aChallengeButton->mIsDown)
 		{
 			aPosX++;
@@ -550,7 +551,6 @@ void ChallengeScreen::Draw(Graphics* g)
 		if (aDef.mRow >= aHighestRow && aDef.mPage == mPageIndex)
 			aHighestRow = aDef.mRow;
 	}
-
 	mMaxScrollPosition = max(0, (aHighestRow * mButtonYOffset) + cButtonHeight + (mButtonStartYOffset - cChallengeRect.mY) - cChallengeRect.mHeight);
 
 	mToolTip->Draw(g);
