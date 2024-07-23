@@ -15,9 +15,9 @@ using namespace Sexy;
 class ProjectileDefinition
 {
 public:
-    ProjectileType          mProjectileType;
-    int                     mImageRow;
-    int                     mDamage;
+    ProjectileType          mProjectileType; //the type of the projectile
+    int                     mImageRow; // (UNUSED) image row of the projectile used in betas
+    int                     mDamage; // how much damage it deals
 };
 extern ProjectileDefinition gProjectileDefinition[NUM_PROJECTILES];  
 

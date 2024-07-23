@@ -132,18 +132,7 @@ LawnApp::LawnApp()
 	std::string aTitleName = "Plants vs. Zombies: QoTL";
 	aTitleName += " " + mVersion;
 #ifdef _DEBUG
-	mGitCommit = exec_getStr("git rev-parse --short HEAD");
-	if (mGitCommit != "") {
-		if (mGitCommit.back() == '\n')
-			mGitCommit.pop_back();
-	}
 	aTitleName += " DEBUG";
-	if (mGitCommit == "")
-	{
-		mGitCommit = "None";
-	}
-	else
-		aTitleName += " (" + mGitCommit + ")";
 #endif
 
 	mTitle = StringToSexyStringFast(aTitleName);

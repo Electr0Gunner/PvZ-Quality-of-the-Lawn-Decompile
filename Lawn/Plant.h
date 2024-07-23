@@ -164,13 +164,13 @@ public:
     int                     mStartRow;                      
     ParticleSystemID        mParticleID;                    
     int                     mShootingCounter;               
-    ReanimationID           mBodyReanimID;                  
-    ReanimationID           mHeadReanimID;                  
+    ReanimationID           mBodyReanimID;      // main reanimation of the plant            
+    ReanimationID           mHeadReanimID;      // extra reanims for the heads of split pea and threepeater etc...
     ReanimationID           mHeadReanimID2;                 
     ReanimationID           mHeadReanimID3;                 
-    ReanimationID           mBlinkReanimID;                 
-    ReanimationID           mLightReanimID;                 
-    ReanimationID           mSleepingReanimID;              
+    ReanimationID           mBlinkReanimID;     // the blinking animation
+    ReanimationID           mLightReanimID;     // reanimation of the plantern aura
+    ReanimationID           mSleepingReanimID;  // the ZZZ from the sleeping plants
     int                     mBlinkCountdown;                
     int                     mRecentlyEatenCountdown;        
     int                     mEatenFlashCountdown;           
@@ -301,15 +301,15 @@ float                       PlantFlowerPotHeightOffset(SeedType theSeedType, flo
 class PlantDefinition
 {
 public:
-    SeedType                mSeedType;          
-    Image**                 mPlantImage;        
-    ReanimationType         mReanimationType;   
-    int                     mPacketIndex;       
-    int                     mSeedCost;          
-    int                     mRefreshTime;       
-    PlantSubClass           mSubClass;          
-    int                     mLaunchRate;        
-    const SexyChar*         mPlantName;         
+    SeedType                mSeedType;         // identifier of the plant, ex: SEED_PEASHOOTER  
+    Image**                 mPlantImage;       // leftover from beta builds, before reanims were added, for info look at beta lawn of the dead footage
+    ReanimationType         mReanimationType;  // reanimation type of the plant, used in mBodyReanimID
+    int                     mPacketIndex;      // unused, not much info about it, most likely used for the seed packet plant display before reanims
+    int                     mSeedCost;         // the sun cost
+    int                     mRefreshTime;      // time before you can plant it again !in frames!
+    PlantSubClass           mSubClass;         // for Shooter plants ex: peashooter, 2 variants SUBCLASS_NORMAL and SUBCLASS_SHOOTER
+    int                     mLaunchRate;       // how often the plant does its ability
+    const SexyChar*         mPlantName;        // plant name
 };
 extern PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES];
 

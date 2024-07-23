@@ -23,10 +23,10 @@ public:
 class AchievementDefinition
 {
 public:
-    AchievementType             mAchievementType;
-    int                         mAchievementIconIndex;
-    const SexyChar*             mAchievementName;
-    bool                        mShowInAwards;
+    AchievementType             mAchievementType; // achievement identifier
+    int                         mAchievementIconIndex; // icon index in the spritesheet
+    const SexyChar*             mAchievementName; // the name used for description choosing etc
+    bool                        mShowInAwards; // if it should appear in the awards menu after it was given
 };
 
 extern AchievementDefinition gAchievementDefs[NUM_ACHIEVEMENTS];

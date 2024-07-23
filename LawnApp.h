@@ -134,7 +134,6 @@ public:
 	bool							isFastMode;
 	SexyString						mVersion;
 	SexyString						mReconVersion;
-	SexyString						mGitCommit;
 	bool							mPlayedQuickplay;
 	time_t							mStartTime;
 	SexyString                      mDetails;
