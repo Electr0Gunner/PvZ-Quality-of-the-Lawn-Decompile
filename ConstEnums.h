@@ -250,6 +250,11 @@ enum CursorType
     CURSOR_TYPE_WHEEELBARROW,
     CURSOR_TYPE_TREE_FOOD
 };
+enum CursorMode
+{
+    CURSOR_MODE_NORMAL,
+    CURSOR_MODE_INVISIBLE,
+};
 enum DamageFlags
 {
     DAMAGE_BYPASSES_SHIELD = 0,

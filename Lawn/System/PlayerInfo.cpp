@@ -68,7 +68,6 @@ void PlayerInfo::SyncDetails(DataSync& theSync)
 	theSync.SyncLong(mHasSeenUpsell);
 	theSync.SyncLong(mPlaceHolderPlayerStats);
 	theSync.SyncLong(mNumPottedPlants);
-	theSync.SyncLong(mNumPottedPlants);
 	
 	TOD_ASSERT(mNumPottedPlants <= MAX_POTTED_PLANTS);
 	for (int i = 0; i < mNumPottedPlants; i++)

@@ -2953,18 +2953,22 @@ void Board::UpdateCursor()
 	if (mChallenge->mBeghouledMouseCapture || aShowDrag)
 	{
 		mApp->SetCursor(Sexy::CURSOR_DRAGGING);
+		mApp->SetCursorMode(CursorMode::CURSOR_MODE_NORMAL);
 	}
 	else if (aShowFinger)
 	{
 		mApp->SetCursor(Sexy::CURSOR_HAND);
+		mApp->SetCursorMode(CursorMode::CURSOR_MODE_NORMAL);
 	}
 	else if (aHideCursor)
 	{
 		mApp->SetCursor(Sexy::CURSOR_NONE);
+		mApp->SetCursorMode(CursorMode::CURSOR_MODE_INVISIBLE);
 	}
 	else
 	{
 		mApp->SetCursor(Sexy::CURSOR_POINTER);
+		mApp->SetCursorMode(CursorMode::CURSOR_MODE_NORMAL);
 	}
 }
 

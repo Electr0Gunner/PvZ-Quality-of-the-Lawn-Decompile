@@ -434,6 +434,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="CursorWidget.cpp" />
     <ClCompile Include="D3DInterface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -959,6 +960,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="CritSect.h" />
+    <ClInclude Include="CursorWidget.h" />
     <ClInclude Include="D3DInterface.h" />
     <ClInclude Include="D3DTester.h" />
     <ClInclude Include="DDImage.h" />

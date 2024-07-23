@@ -44,6 +44,7 @@
 #include "Lawn/Widget/SeedChooserScreen.h"
 #include "Lawn/Widget/ChallengePagesDialog.h"
 #include "SexyAppFramework/WidgetManager.h"
+#include "SexyAppFramework/CursorWidget.h"
 #include "SexyAppFramework/ResourceManager.h"
 #include "Lawn/Achievements.h"
 
@@ -88,6 +89,7 @@ LawnApp::LawnApp()
 	mQuickPlayScreen = nullptr;
 	mMiniCreditsScreen = nullptr;
 	mAchievementScreen = nullptr;
+	mCursor = nullptr;
 	mSoundSystem = nullptr;
 	mKonamiCheck = nullptr;
 	mMustacheCheck = nullptr;
@@ -271,6 +273,11 @@ LawnApp::~LawnApp()
 	{
 		mWidgetManager->RemoveWidget(mQuickPlayScreen);
 		delete mQuickPlayScreen;
+	}
+	if (mCursor)
+	{
+		mWidgetManager->RemoveWidget(mCursor);
+		delete mCursor;
 	}
 
 	delete mProfileMgr;
@@ -751,7 +758,7 @@ void LawnApp::DoConfirmBackToMain()
 void LawnApp::DoNewOptions(bool theFromGameSelector, int x, int y)
 {
 	//FinishModelessDialogs();
-
+	mCursor->mCursorMode = CURSOR_MODE_NORMAL;
 	NewOptionsDialog* aDialog = new NewOptionsDialog(this, theFromGameSelector, false);
 	CenterDialog(aDialog, IMAGE_OPTIONS_MENUBACK->mWidth, IMAGE_OPTIONS_MENUBACK->mHeight);
 	if (x != -1 && y != -1)
@@ -808,7 +815,7 @@ void LawnApp::DoPauseDialog()
 {
 	mBoard->Pause(true);
 	//FinishModelessDialogs();
-
+	mCursor->mCursorMode = CURSOR_MODE_NORMAL;
 	LawnDialog* aDialog = (LawnDialog*)DoDialog(
 		Dialogs::DIALOG_PAUSED,
 		true,
@@ -1381,7 +1388,12 @@ void LawnApp::Init()
 	mWidgetManager->SetFocus(mTitleScreen);
 	mAchievements = new Achievements(this);
 	mAchievements->InitAchievement();
-
+	if (HAS_CUSTOM_CURSOR)
+	{
+		mCursor = new CursorWidget();
+		mWidgetManager->AddWidget(mCursor);
+		mWidgetManager->BringToFront(mCursor);
+	}
 #ifdef _DEBUG
 	int aDuration = mTimer.GetDuration();
 	TodTrace("loading: 'profiles' %d ms", aDuration);
@@ -1823,6 +1835,12 @@ void LawnApp::UpdateFrames()
 		}
 
 		CheckForGameEnd();
+
+		if (mCursor && HAS_CUSTOM_CURSOR)
+		{
+			mCursor->SetImage(IMAGE_MOUSE_CURSOR);
+			mWidgetManager->BringToFront(mCursor);
+		}
 	}
 
 	static time_t lastUpdateTime = time(NULL);
@@ -3402,6 +3420,12 @@ void LawnApp::PreloadForUser()
 
 void LawnApp::EnforceCursor()
 {
+	if (HAS_CUSTOM_CURSOR)
+	{
+		::SetCursor(NULL);
+		return;
+	}
+
 	if (mSEHOccured || !mMouseIn)
 	{
 		::SetCursor(LoadCursor(NULL, IDC_ARROW));
@@ -3697,6 +3721,14 @@ void LawnApp::ToggleDebugMode()
 bool LawnApp::Is3dAccel()
 {
 	return mIs3dAccel;
+}
+
+void LawnApp::SetCursorMode(CursorMode theCursorMode)
+{
+	if (HAS_CUSTOM_CURSOR && mCursor)
+	{
+		mCursor->mCursorMode = theCursorMode;
+	}
 }
 
 /* #################################################################################################### */

@@ -29,6 +29,7 @@ class MusicInterface;
 class MemoryImage;
 class HTTPTransfer;
 class Dialog;
+class CursorWidget;
 
 class ResourceManager;
 
