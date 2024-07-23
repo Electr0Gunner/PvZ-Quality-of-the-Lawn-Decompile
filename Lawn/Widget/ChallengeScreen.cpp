@@ -508,7 +508,7 @@ void ChallengeScreen::Update()
 {
 	Widget::Update();
 	UpdateToolTip();
-	mApp->UpdateDiscordState(GetPageTitle(mPageIndex));
+	mApp->UpdateDiscordState(TodStringTranslate(GetPageTitle(mPageIndex)));
 	mScrollPosition = ClampFloat(mScrollPosition += mScrollAmount * (mBaseScrollSpeed + abs(mScrollAmount) * mScrollAccel), 0, mMaxScrollPosition);
 	mScrollAmount *= (1.0f - mScrollAccel);
 	mSlider->SetValue(max(0.0, min(mMaxScrollPosition, mScrollPosition)) / mMaxScrollPosition);
