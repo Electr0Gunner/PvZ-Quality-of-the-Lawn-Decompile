@@ -61,3 +61,4 @@ const int           STORESCREEN_PAGESTRING_Y = 500;
 const bool			HAS_QUICKPLAY = true;
 const bool			HAS_ACHIEVEMENTS = true;
 const bool			HAS_PAGE_SELECTOR = true;
+const bool			HAS_FAST_FOWARD_BUTTON = true;

@@ -5639,7 +5639,8 @@ void Board::Update()
 	{
 		mFastButton->mDisabled = aDisabled;
 	}
-	mFastButton->Update();
+	if (HAS_FAST_FOWARD_BUTTON)
+		mFastButton->Update();
 	if (mStoreButton)
 	{
 		mStoreButton->mDisabled = aDisabled;
@@ -7403,7 +7404,8 @@ void Board::DrawUITop(Graphics* g)
 	}
 
 	mMenuButton->Draw(g);
-	mFastButton->Draw(g);
+	if (HAS_FAST_FOWARD_BUTTON)
+		mFastButton->Draw(g);
 
 	if (mTimeStopCounter > 0)
 	{
