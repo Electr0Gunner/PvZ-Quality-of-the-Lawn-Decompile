@@ -6514,6 +6514,14 @@ void Zombie::StartWalkAnim(int theBlendTime)
     {
         PlayZombieReanim("anim_dance", ReanimLoopType::REANIM_LOOP, theBlendTime, 0.0f);
     }
+    else if (mZombiePhase == ZombiePhase::PHASE_POLEVAULTER_PRE_VAULT)
+    {
+        PlayZombieReanim("anim_run", ReanimLoopType::REANIM_LOOP, theBlendTime, 0.0f);
+    }
+    else if (mZombiePhase == ZombiePhase::PHASE_POGO_BOUNCING)
+    {
+        PlayZombieReanim("anim_pogo", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, theBlendTime, 40.0f);
+    }
     else
     {
         int aWalkAnimVariant = Rand(2);

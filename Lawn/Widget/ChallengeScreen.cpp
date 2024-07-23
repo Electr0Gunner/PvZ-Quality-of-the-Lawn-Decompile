@@ -429,59 +429,7 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 				aName = _S("?");
 			}
 
-			int aNameLen = aName.size();
-			if (aNameLen < 13)
-			{
-				TodDrawString(g, aName, aPosX + 52, aPosY + 96, Sexy::FONT_BRIANNETOD12, aTextColor, DS_ALIGN_CENTER);
-			}
-			else
-			{
-				int aHalfPos = (mPageIndex == CHALLENGE_PAGE_SURVIVAL && !aChallengeButton->mDisabled) ? 7 : (aNameLen / 2 - 1);
-				const SexyChar* aSpacedChar = _S(aName.c_str() + aHalfPos, _S(' '));
-				while(aSpacedChar[0]!=' ')
-				{
-					aHalfPos++;
-					aSpacedChar = _S(aName.c_str() + aHalfPos, _S(' '));
-					if(aSpacedChar[0]=='\0')
-					{
-						aHalfPos--;
-						aSpacedChar = _S(aName.c_str() + aHalfPos, _S(' '));
-						break;
-					}
-				}
-				aHalfPos--;
-				aSpacedChar = _S(aName.c_str() + aHalfPos, _S(' '));
-
-				
-				if (aSpacedChar == nullptr)
-				{
-					aSpacedChar = _S(aName.c_str(), _S(' '));
-				}
-
-				int aLine1Len = aNameLen;
-				int aLine2Len = 0;
-				if (aSpacedChar != nullptr)
-				{
-					aLine1Len = aSpacedChar - aName.c_str();
-					aLine2Len = aNameLen - aLine1Len - 1;
-				}
-				
-				auto topStr=aName.substr(0, aLine1Len+1);
-				auto botStr=aName.substr(aLine1Len + 1, aLine2Len);
-				if(botStr.empty())
-				{
-					TodDrawString(g, aName, aPosX + 52, aPosY + 96, Sexy::FONT_BRIANNETOD12, aTextColor, DS_ALIGN_CENTER);
-				}
-				else
-				{
-					TodDrawString(g, topStr, aPosX + 52, aPosY + 88, Sexy::FONT_BRIANNETOD12, aTextColor, DS_ALIGN_CENTER);
-					if (aLine2Len > 0)
-					{
-						TodDrawString(g, botStr, aPosX + 52, aPosY + 102, Sexy::FONT_BRIANNETOD12, aTextColor, DS_ALIGN_CENTER);
-					}
-				}
-			
-			}
+			TodDrawStringWrapped(g, aName, Rect(aPosX + 6, aPosY + 74, 94, 33), Sexy::FONT_BRIANNETOD12, aTextColor, DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 
 			int aRecord = mApp->mPlayerInfo->mChallengeRecords[theChallengeIndex];
 			if (theChallengeIndex == mUnlockChallengeIndex)
