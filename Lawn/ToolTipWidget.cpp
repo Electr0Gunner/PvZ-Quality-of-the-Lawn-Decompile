@@ -64,7 +64,7 @@ void ToolTipWidget::CalculateSize()
 {
 	std::vector<SexyString> aLines;
 
-	int aTitleWidth = FONT_BRIANNETOD12->StringWidth(mTitle);
+	int aTitleWidth = FONT_BRIANNETOD16->StringWidth(mTitle);
 	int aWarningWidth = FONT_BRIANNETOD12->StringWidth(mWarningText);
 	int aMaxWidth = max(aTitleWidth, aWarningWidth);
 
