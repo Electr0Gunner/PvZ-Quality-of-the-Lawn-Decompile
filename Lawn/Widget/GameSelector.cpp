@@ -802,8 +802,8 @@ void GameSelector::Update()
 		//int aPosY = TodAnimateCurve(75, 0, mAchievementTimer, 0, -mApp->mHeight, TodCurves::CURVE_EASE_IN_OUT);
 		int aPosY = CalcYPos(mCurrentY, mDestinationY);
 		int aPosX = CalcXPos(mCurrentX, mDestinationX);
-		mY = aPosY;
-		mX = aPosX;
+		Move(aPosX, aPosY);
+		
 
 		if (mApp->mAchievementScreen)
 			mApp->mAchievementScreen->mY = aPosY + mApp->mHeight - 1;
