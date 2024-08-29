@@ -361,14 +361,24 @@ MemoryImage* ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 		aReanim.AssignRenderGroupToTrack("boss_head2", RENDER_GROUP_HIDDEN);
 		aReanim.Draw(&aMemoryGraphics);
 	}
+	else if (aZombieDef.mReanimationType == ReanimationType::REANIM_BALLOON)
+	{
+		Reanimation aReanim;
+		aReanim.ReanimationInitializeType(aPosX, aPosY, aZombieDef.mReanimationType);
+		aReanim.SetFramesForLayer("anim_idle");
+
+		Reanimation aPropellerReanim;
+		aPropellerReanim.ReanimationInitializeType(40.0f, 39.0f, ReanimationType::REANIM_BALLOON);
+		aPropellerReanim.SetFramesForLayer("Propeller");
+
+		aReanim.Draw(&aMemoryGraphics);
+		aPropellerReanim.Draw(&aMemoryGraphics);
+	}
 	else if (aZombieDef.mReanimationType == ReanimationType::REANIM_GARGANTUAR && theZombieType == ZombieType::ZOMBIE_REDEYE_GARGANTUAR)
 	{
 		Reanimation aReanim;
 		aReanim.ReanimationInitializeType(aPosX, aPosY, aZombieDef.mReanimationType);
 		aReanim.SetFramesForLayer("anim_idle");
-		Zombie::SetupReanimLayers(&aReanim, aUseZombieType);
-
-		aReanim.Draw(&aMemoryGraphics);
 		aReanim.SetImageOverride("anim_head1", IMAGE_REANIM_ZOMBIE_GARGANTUAR_HEAD_REDEYE);
 		aReanim.Draw(&aMemoryGraphics);
 	}

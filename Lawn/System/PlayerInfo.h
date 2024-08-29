@@ -72,8 +72,8 @@ public:
     int                 mPlaceHolderPlayerStats;            
     int                 mNumPottedPlants;                   
     PottedPlant         mPottedPlant[MAX_POTTED_PLANTS];    
-    bool                mEarnedAchievements[20];
-    bool                mShownedAchievements[20];
+    bool                mEarnedAchievements[NUM_ACHIEVEMENTS];
+    bool                mShownedAchievements[NUM_ACHIEVEMENTS];
 
 public:
     PlayerInfo();

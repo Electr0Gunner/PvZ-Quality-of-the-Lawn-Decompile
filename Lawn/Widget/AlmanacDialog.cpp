@@ -769,8 +769,12 @@ int AlmanacDialog::ZombieHasDescription(ZombieType theZombieType)
 
 void AlmanacDialog::GetZombiePosition(ZombieType theZombieType, int& x, int& y)
 {
-	x = theZombieType % zombieRows * 85 + 22;
-	y = theZombieType / zombieRows * zombieHeight + (zombieHeight + zombieOffsetY) - mScrollPosition;
+	int aZombieIndex = (int)theZombieType;
+	if (theZombieType == ZombieType::ZOMBIE_BOSS)
+		aZombieIndex += 2;
+
+	x = aZombieIndex % zombieRows * 85 + 22;
+	y = aZombieIndex / zombieRows * zombieHeight + (zombieHeight + zombieOffsetY) - mScrollPosition;
 }
 
 ZombieType AlmanacDialog::ZombieHitTest(int x, int y)

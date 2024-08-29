@@ -583,7 +583,7 @@ void Reanimation::ReanimBltMatrix(Graphics* g, Image* theImage, SexyMatrix3& the
 		int aPosY = FloatRoundToInt(theTransform.m12 - aScaleY * theSrcRect.mHeight * 0.5f);
 		int aOldMode = g->GetDrawMode();  
 		g->SetDrawMode(theDrawMode);
-		Rect aOldClipRect = g->mClipRect;  
+		Rect aOldClipRect = g->mClipRect;  //NOTE: this breaks the game selector clipping for some reason when transitioning when the actual 3d accel is off
 		g->SetClipRect(theClipRect);
 
 		if (FloatApproxEqual(aScaleX, 1.0f) && FloatApproxEqual(aScaleY, 1.0f))  

@@ -3286,8 +3286,15 @@ void LawnApp::DrawCrazyDave(Graphics* g)
 			TodDrawString(g, _S("click to continue"), aPosX + 139, aPosY + 140, FONT_PICO129, Color::Black, DrawStringJustification::DS_ALIGN_CENTER);
 		}
 	}
-
-	aCrazyDaveReanim->Draw(g);
+	
+	if (mGameMode == GameMode::GAMEMODE_UPSELL)
+	{
+		Graphics aDaveGraphics(*g);
+		aDaveGraphics.ClearClipRect();
+		aCrazyDaveReanim->Draw(&aDaveGraphics);
+	}
+	else
+		aCrazyDaveReanim->Draw(g);
 }
 
 int LawnApp::GetNumPreloadingTasks()

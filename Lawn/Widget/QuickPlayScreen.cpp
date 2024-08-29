@@ -417,6 +417,8 @@ void QuickPlayScreen::ExitScreen()
 
 void QuickPlayScreen::PreviousLevel()
 {
+    if (mApp->mWidgetManager->mKeyDown[(int)KeyCode::KEYCODE_SHIFT])
+        mApp->mQuickLevel -= 9;
     mApp->mQuickLevel = ClampInt(mApp->mQuickLevel - 1, 1, NUM_LEVELS);
     ChooseBackground();
     ResetZombie();
@@ -425,6 +427,8 @@ void QuickPlayScreen::PreviousLevel()
 
 void QuickPlayScreen::NextLevel()
 {
+    if (mApp->mWidgetManager->mKeyDown[(int)KeyCode::KEYCODE_SHIFT])
+        mApp->mQuickLevel += 9;
     mApp->mQuickLevel = ClampInt(mApp->mQuickLevel + 1, 1, NUM_LEVELS);
     ChooseBackground();
     ResetZombie();

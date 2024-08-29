@@ -1715,7 +1715,8 @@ void CutScene::ClearUpsellBoard()
 	Reanimation* aReanim = nullptr;
 	while (mBoard->IterateReanimations(aReanim))
 	{
-		aReanim->ReanimationDie();
+		if (aReanim->mReanimationType != ReanimationType::REANIM_CRAZY_DAVE)
+			aReanim->ReanimationDie();
 	}
 	mBoard->mPoolSparklyParticleID = ParticleSystemID::PARTICLESYSTEMID_NULL;
 
@@ -1909,6 +1910,7 @@ void CutScene::LoadUpsellChallengeScreen()
 {
 	ClearUpsellBoard();
 	mUpsellChallengeScreen = new ChallengeScreen(mApp, ChallengePage::CHALLENGE_PAGE_CHALLENGE);
+	mUpsellChallengeScreen->mWidgetManager = mApp->mWidgetManager;
 }
 
 void CutScene::LoadUpsellBoardRoof()
@@ -2025,6 +2027,7 @@ void CutScene::UpdateUpsell()
 	if (mCrazyDaveLastTalkIndex == -1)
 	{
 		mApp->CrazyDaveTalkIndex(mCrazyDaveDialogStart);
+		mCrazyDaveLastTalkIndex = mCrazyDaveDialogStart;
 		mCrazyDaveCountDown = ParseTalkTimeFromMessage();
 		return;
 	}
@@ -2039,7 +2042,7 @@ void CutScene::UpdateUpsell()
 		if (!mCrazyDaveCountDown)
 		{
 			mBoard->mStoreButton->Resize(510, 420, 210, 46);
-			mBoard->mMenuButton->Resize(510, 480, 210, 46);
+			mBoard->mMenuButton->Resize(510, 380, 210, 46);
 			mBoard->mMenuButton->mBtnNoDraw = false;
 			mBoard->mStoreButton->mBtnNoDraw = false;
 		}
@@ -2067,7 +2070,7 @@ void CutScene::UpdateUpsell()
 	Reanimation* aCrazyDaveReanim = mApp->ReanimationTryToGet(mApp->mCrazyDaveReanimID);
 	switch (mCrazyDaveLastTalkIndex)
 	{
-	case 3305:  
+	case 3305:
 	{
 		Reanimation* aReanimSquash = mApp->AddReanimation(0, 0, 0, ReanimationType::REANIM_SQUASH);
 		aReanimSquash->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
@@ -2078,7 +2081,7 @@ void CutScene::UpdateUpsell()
 		break;
 	}
 
-	case 3306:  
+	case 3306:
 	{
 		Reanimation* aReanimThreepeater = mApp->AddReanimation(0, 0, 0, ReanimationType::REANIM_THREEPEATER);
 		aReanimThreepeater->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
@@ -2097,7 +2100,7 @@ void CutScene::UpdateUpsell()
 		break;
 	}
 
-	case 3307:  
+	case 3307:
 	{
 		Reanimation* aReanimMagnet = mApp->AddReanimation(0, 0, 0, ReanimationType::REANIM_MAGNETSHROOM);
 		aReanimMagnet->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
@@ -2109,46 +2112,46 @@ void CutScene::UpdateUpsell()
 		break;
 	}
 
-	case 3309:  
+	case 3309:
 		aCrazyDaveReanim->FindSubReanim(ReanimationType::REANIM_THREEPEATER)->ReanimationDie();
 		aCrazyDaveReanim->FindSubReanim(ReanimationType::REANIM_MAGNETSHROOM)->ReanimationDie();
 		break;
 
-	case 3312:  
+	case 3312:
 		mApp->mMusic->MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_MINIGAME_LOONBOON);
 		LoadUpsellBoardPool();
 		mApp->PlaySample(SOUND_FINALWAVE);
 		mUpsellHideBoard = false;
 		break;
 
-	case 3313:  
+	case 3313:
 		LoadUpsellBoardFog();
 		mApp->PlaySample(SOUND_HUGE_WAVE);
 		mUpsellHideBoard = false;
 		break;
 
-	case 3314:  
+	case 3314:
 		LoadUpsellChallengeScreen();
 		mApp->PlaySample(SOUND_FINALWAVE);
 		mUpsellHideBoard = false;
 		break;
 
-	case 3315:  
+	case 3315:
 		ClearUpsellBoard();
 		mApp->PlaySample(SOUND_FINALWAVE);
 		mUpsellHideBoard = true;
 		mApp->AddTodParticle(592, 240, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0), ParticleEffect::PARTICLE_PERSENT_PICK_UP_ARROW);
 		break;
 
-	case 3316:  
+	case 3316:
 		LoadUpsellBoardRoof();
 		mApp->PlaySample(SOUND_HUGE_WAVE);
 		mUpsellHideBoard = false;
 		break;
 
-	case 3317:  
+	case 3317:
 		ClearUpsellBoard();
-		mBoard->mMenuButton->mBtnNoDraw = true;
+		mBoard->mMenuButton->mBtnNoDraw = false;
 		mUpsellHideBoard = true;
 		break;
 	}
