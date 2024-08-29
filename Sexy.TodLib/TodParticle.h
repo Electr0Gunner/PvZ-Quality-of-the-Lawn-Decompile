@@ -154,8 +154,8 @@ extern TodParticleDefinition* gParticleDefArray;
 class ParticleParams
 {
 public:
-    ParticleEffect              mParticleEffect;
-    const char*                 mParticleFileName;
+    ParticleEffect              mParticleEffect; //the identifier
+    const char*                 mParticleFileName; // file name
 };
 extern int gParticleParamArraySize;                 
 extern ParticleParams* gParticleParamArray;         

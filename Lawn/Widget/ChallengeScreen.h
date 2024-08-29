@@ -78,12 +78,12 @@ public:
 class ChallengeDefinition
 {
 public:
-    GameMode                    mChallengeMode;
-    int                         mChallengeIconIndex;
-    ChallengePage               mPage;
-    int                         mRow;
-    int                         mCol;
-    const SexyChar*             mChallengeName;
+    GameMode                    mChallengeMode; //identifier of the challenge ex: CHALLENGE_GAMEMODE_FINAL_BOSS
+    int                         mChallengeIconIndex; // index of the thumbnail
+    ChallengePage               mPage; //the page ex:  CHALLENGE_PAGE_PUZZLE
+    int                         mRow; // the row in the specific page
+    int                         mCol; // the same but the collumn
+    const SexyChar*             mChallengeName; //the name
 };
 extern ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES];
 

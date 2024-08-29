@@ -399,11 +399,11 @@ class ZombieDefinition
 {
 public:
     ZombieType                      mZombieType; // zombie identifier ex: ZOMBIE_NORMAL
-    ReanimationType                 mReanimationType; //zombie reanim
-    int                             mZombieValue; // points used in waves (ACTUAL USE IS UNKNOWN)
+    ReanimationType                 mReanimationType; //zombie reanim ex: REANIM_ZOMBIE
+    int                             mZombieValue; // points value used to determine if it should appear in a wave (see PickZombieWaves() in Board.cpp for info)
     int                             mStartingLevel; // the first level the zombie appears in
-    int                             mFirstAllowedWave; // first spawning wave its allowed to spawn, (WAVE IS NOT A EQUAL TO A FLAG, 10 waves = 1 flag)
-    int                             mPickWeight; // actual weight used in choosing if it can spawn the zombie
+    int                             mFirstAllowedWave; // first spawning wave its allowed to spawn, (10 waves = 1 flag)
+    int                             mPickWeight; // actual weight used in choosing the zombie type (see PickZombieType() in Board.cpp for info)
     const SexyChar*                 mZombieName; // the name
 };
 extern ZombieDefinition gZombieDefs[NUM_ZOMBIE_TYPES];  

@@ -63,9 +63,9 @@ extern ReanimatorDefinition* gReanimatorDefArray;
 class ReanimationParams
 {
 public:
-    ReanimationType                 mReanimationType;
-    const char*                     mReanimFileName;
-    int                             mReanimParamFlags;
+    ReanimationType                 mReanimationType; //the reanim type ex: REANIM_ZOMBIE
+    const char*                     mReanimFileName; // the file name !!EXCLUDING THE .compiled PART!!
+    int                             mReanimParamFlags; //flags for drawing, see ReanimFlags
 };
 extern int gReanimationParamArraySize;              
 extern ReanimationParams* gReanimationParamArray;   

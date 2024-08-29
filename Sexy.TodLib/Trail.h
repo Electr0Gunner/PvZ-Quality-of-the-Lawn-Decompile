@@ -29,8 +29,8 @@ enum TrailFlags
 class TrailParams
 {
 public:
-	TrailType				mTrailType;
-	const char*				mTrailFileName;
+	TrailType				mTrailType; //the type
+	const char*				mTrailFileName; // file name
 };
 
 extern int gTrailParamArraySize;  
