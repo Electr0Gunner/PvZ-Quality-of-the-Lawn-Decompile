@@ -1,7 +1,15 @@
-# PvZ Quality of the Lawn-Decompile - ARCHIVED/DISCONTINUED
 
 # SUPPORT FOR THIS PROJECT HAS ENDED
-### A replacement can be found here: https://github.com/LawnProject/ResoddedFramework/tree/dev [ITS IN DEVELOPMENT]
+Quality of the Lawn is an outdated (and by my standards) horrible base.
+As such, it was time for someone else to replace it:
+[ResoddedFramework](https://github.com/LawnProject/ResoddedFramework)
+It's currently in development and it's much better then QotL is better in every single way.
+- Recoded Engine (Using newer and more modern APIs)
+- Optimized code
+It's recommended you choose ResoddedFramework
+
+
+# PvZ Quality of the Lawn-Decompile - ARCHIVED/DISCONTINUED
 
  A edit of the PvZ Decompile that adds QoL features
 
